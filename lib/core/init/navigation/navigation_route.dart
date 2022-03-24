@@ -14,7 +14,7 @@ class NavigationRoute {
     switch (args.name) {
       default:
         return defaultNavigate(
-            const MyHomePage(title: 'Flutter Demo Home Page'),
+            const Home(),
             NavigationConstants.DEFAULT);
     }
   }
