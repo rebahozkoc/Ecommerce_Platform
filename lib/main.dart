@@ -5,6 +5,7 @@ import 'package:mobile/core/init/cache/locale_manager.dart';
 import 'package:mobile/core/init/lang/language_manager.dart';
 import 'package:mobile/core/init/navigation/navigation_route.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
+import 'package:mobile/view/Home/view/home_view.dart';
 
 Future<void> main() async {
   await _init();
@@ -45,6 +46,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text("Home Page")));
+    return const HomeView();
   }
 }
