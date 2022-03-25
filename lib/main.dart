@@ -5,6 +5,9 @@ import 'package:mobile/core/init/cache/locale_manager.dart';
 import 'package:mobile/core/init/lang/language_manager.dart';
 import 'package:mobile/core/init/navigation/navigation_route.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
+import 'package:mobile/core/init/theme/app_theme.dart';
+import 'package:mobile/core/init/theme/light_theme.dart';
+import 'package:mobile/locator.dart';
 import 'package:mobile/view/Home/view/home_view.dart';
 
 Future<void> main() async {
@@ -21,6 +24,7 @@ Future<void> _init() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocaleManager.preferencesInit();
   await EasyLocalization.ensureInitialized();
+  await setupLocator();
 }
 
 class MyApp extends StatelessWidget {
@@ -30,6 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppThemeLight.instance.theme,
       navigatorKey: NavigationService.instance.navigatorKey,
       onGenerateRoute: NavigationRoute.instance.generateRoute,
       localizationsDelegates: context.localizationDelegates,
@@ -37,6 +42,12 @@ class MyApp extends StatelessWidget {
       locale: context.locale,
       //darkTheme: DarkThemeData(),
       home: const Home(),
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: AvoidGlowBehavior(),
+          child: child!,
+        );
+      },
     );
   }
 }
