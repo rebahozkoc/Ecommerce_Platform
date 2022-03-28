@@ -8,7 +8,7 @@ import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/app_theme.dart';
 import 'package:mobile/core/init/theme/light_theme.dart';
 import 'package:mobile/locator.dart';
-import 'package:mobile/view/bottomBar/view/bottombar_view.dart';
+import 'package:mobile/core/widgets/bottombar_view.dart';
 
 Future<void> main() async {
   await _init();

@@ -1,3 +1,7 @@
 {
-    "defaultText": "Default Text"
+    "explore": "Explore",
+    "categories": "Categories",
+    "account": "Account",
+    "shopList": "Shop List",
+    "favorites": "Favorites"
 }

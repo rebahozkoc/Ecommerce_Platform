@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/view/account/view/account_view.dart';
+import 'package:mobile/view/categories/view/categories_view.dart';
+import 'package:mobile/view/favorites/view/favorites_view.dart';
 import 'package:mobile/view/home/view/home_view.dart';
+import 'package:mobile/view/shopList/view/shoplist_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BottomBarView extends StatelessWidget {
@@ -8,10 +12,10 @@ class BottomBarView extends StatelessWidget {
   List<Widget> _buildScreens() {
     return [
       const HomeView(),
-      const HomeView(),
-      const HomeView(),
-      const HomeView(),
-      const HomeView(),
+      const CategoriesView(),
+      const ShopListView(),
+      const FavoritesView(),
+      const AccountView(),
     ];
   }
 
@@ -42,8 +46,8 @@ class BottomBarView extends StatelessWidget {
           activeColorPrimary: const Color(0xFFFF6600),
           inactiveColorPrimary: const Color(0xFFD8D8D8)),
       PersistentBottomNavBarItem(
-          icon: const Icon(Icons.settings),
-          inactiveIcon: const Icon(Icons.settings_outlined),
+          icon: const Icon(Icons.person_rounded),
+          inactiveIcon: const Icon(Icons.person_outline_rounded),
           iconSize: 28,
           activeColorPrimary: const Color(0xFFFF6600),
           inactiveColorPrimary: const Color(0xFFD8D8D8))
