@@ -75,7 +75,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ],
     );
-
     final forgotLabel = TextButton(
       child: Text(
         'Forgot password?',
