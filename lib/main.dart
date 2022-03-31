@@ -9,7 +9,8 @@ import 'package:mobile/core/init/theme/app_theme.dart';
 import 'package:mobile/core/init/theme/light_theme.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/bottombar_view.dart';
-
+import 'package:mobile/view/Home/view/home_view.dart';
+import 'package:mobile/view/Login/view/login_view.dart';
 
 Future<void> main() async {
   await _init();
