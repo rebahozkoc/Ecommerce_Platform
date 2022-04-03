@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/init/theme/color_theme.dart';
 
 import 'app_theme.dart';
 
@@ -14,8 +15,8 @@ class AppThemeLight extends AppTheme {
 
   @override
   ThemeData get theme => ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-        primaryColor: const Color(0xFFFF6600),
+        scaffoldBackgroundColor: AppColors.white,
+        primaryColor: AppColors.primary,
         textTheme: textTheme,
         appBarTheme: appBarTheme,
         floatingActionButtonTheme: floatingActionButtonTheme,
@@ -28,9 +29,9 @@ class AppThemeLight extends AppTheme {
     return TextButtonThemeData(
       style: ButtonStyle(
         foregroundColor:
-            MaterialStateColor.resolveWith((states) => const Color(0xFFFF6600)),
+            MaterialStateColor.resolveWith((states) => AppColors.primary),
         overlayColor:
-            MaterialStateColor.resolveWith((states) => Colors.transparent),
+            MaterialStateColor.resolveWith((states) => AppColors.transparent),
       ),
     );
   }
@@ -38,13 +39,13 @@ class AppThemeLight extends AppTheme {
   TextTheme get textTheme {
     return const TextTheme(
       bodyText1: TextStyle(
-        color: Color(0xFFFF6600),
+        color: AppColors.primary,
       ),
       bodyText2: TextStyle(
-        color: Color(0xFFFF944D),
+        color: AppColors.primaryLight,
       ),
       subtitle1: TextStyle(
-        color: Color.fromARGB(255, 0, 0, 0),
+        color: AppColors.black,
       ),
     );
   }

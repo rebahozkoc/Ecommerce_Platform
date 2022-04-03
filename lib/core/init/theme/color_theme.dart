@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
-class ColorScheme {
-  static ColorScheme? _instace;
-  static ColorScheme? get instance {
-    _instace ??= ColorScheme._init();
-    return _instace;
-  }
+class AppColors {
+  static const Color primary = Color(0xFFFF6600);
+  static const Color secondary = Color(0xFFDDDDDD);
+  static const Color primaryLight = Color(0xFFff944e);
 
-  ColorScheme._init();
+  static const Color brown = Color(0xffa87e6f);
+  static const Color red = Color(0xffc10e0e);
+  static const Color white = Color(0xffffffff);
+  static const Color gray = Color(0xffa5a6ae);
+  static const Color lightGray = Color(0xfff7f7f7);
+  static const Color darkGray = Color(0xff676870);
+  static const Color black = Color(0xff020306);
 
-  final Color brown = const Color(0xffa87e6f);
-  final Color red = const Color(0xffc10e0e);
-  final Color white = const Color(0xffffffff);
-  final Color gray = const Color(0xffa5a6ae);
-  final Color lightGray = const Color(0xfff7f7f7);
-  final Color darkGray = const Color(0xff676870);
-  final Color black = const Color(0xff020306);
-
-  final Color azure = const Color(0xff27928d);
+  static const Color azure = Color(0xff27928d);
+  static const transparent = Colors.transparent;
 }
