@@ -15,7 +15,7 @@ class AppThemeLight extends AppTheme {
 
   @override
   ThemeData get theme => ThemeData(
-        scaffoldBackgroundColor: AppColors.white,
+        scaffoldBackgroundColor: const Color(0xFFECEDF5),
         primaryColor: AppColors.primary,
         textTheme: textTheme,
         appBarTheme: appBarTheme,
@@ -52,15 +52,15 @@ class AppThemeLight extends AppTheme {
 
   AppBarTheme get appBarTheme {
     return const AppBarTheme(
-      color: Colors.white,
+      color: AppColors.transparent,
       elevation: 0,
       centerTitle: true,
-      titleTextStyle: TextStyle(fontSize: 20, color: Color(0xFF161F3D)),
+      titleTextStyle: TextStyle(fontSize: 20, color: AppColors.tertiary, fontWeight: FontWeight.bold),
       iconTheme: IconThemeData(
-        color: Color(0xFF161F3D), //change your color here
+        color: AppColors.tertiary, //change your color here
       ),
       actionsIconTheme: IconThemeData(
-        color: Color(0xFF161F3D), //change your color here
+        color: AppColors.tertiary, //change your color here
       ),
     );
   }

@@ -8,10 +8,9 @@ class LargeProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
         width: 240,
-        height: 260,
         child: Stack(children: [
           _image(),
           _content(),
@@ -24,9 +23,9 @@ class LargeProduct extends StatelessWidget {
     borderRadius: const BorderRadius.all(Radius.circular(8)),
     child: CachedNetworkImage(
           imageUrl:
-              "https://www.lovehappensmag.com/blog/wp-content/uploads/2021/01/Kara-Smith-KES-foyer-1.jpg",
+              "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
           width: 264,
-          height: 284,
+          height: 340,
           fit: BoxFit.fill,
         ),
   );
