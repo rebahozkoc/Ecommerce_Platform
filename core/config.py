@@ -30,6 +30,9 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = os.getenv('DATABASE_URL')
     DB_NAME: str = os.getenv('DB_NAME')
+    CELERY_BROKER_URL: str = os.getenv('CELERY_BROKER_URL')
+    CELERY_RESULT_BACKEND: str = os.getenv('CELERY_RESULT_BACKEND')
+    
 
     
 settings=Settings()
