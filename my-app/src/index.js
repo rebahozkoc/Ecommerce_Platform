@@ -13,6 +13,7 @@ import SignIn from "./components/signIn/SignIn";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
+    <Route path="/SignIn" element={<SignIn />} />
       <Route path="/" element={<App />}>
         <Route path="expenses" element={<Expenses />} />
         <Route path="invoices" element={<Invoices />}>
@@ -34,7 +35,7 @@ ReactDOM.render(
             </main>
           }
         />
-        <Route path="components/signIn/SignIn" element={<SignIn />}></Route>
+        
       </Route>
     </Routes>
   </BrowserRouter>,

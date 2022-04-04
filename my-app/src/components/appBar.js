@@ -134,9 +134,8 @@ export default function PrimarySearchAppBar() {
       <nav>
         <Grid container spacing={2}>
           <Grid item xs={7} sm={4}>
-            <Button onClick={<Link to="/components/signIn/SignIn"></Link>}>
-              Sign Up
-            </Button>
+            <Link to="/SignIn">
+              Sign In</Link>
           </Grid>
           <Grid item xs={8} sm={7}>
             <Button onClick={handleMenuClose}>Create Account</Button>
