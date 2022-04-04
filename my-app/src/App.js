@@ -1,28 +1,19 @@
 import { Outlet, Link } from "react-router-dom";
 import ResponsiveAppBar from "./components/responsiveAppBar";
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
-
+import PrimarySearchAppBar from "./components/appBar";
+import themeOptions from "./components/theme"; 
+import { ThemeProvider } from "@emotion/react";
 // use default theme
 // const theme = createTheme();
 
 // Or Create your Own theme:
-const theme = createTheme({
-  palette: {
-    secondary: {
-      main: '#E6920A'
-    },
-    primary: {
-      main: '#FFFFFF'
-  }
-},
-});
 
 export default function App() {
   console.log("App rendered");
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={themeOptions}>
     <div>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <PrimarySearchAppBar></PrimarySearchAppBar>
       <nav
         style={{
           borderBottom: "solid 1px",
@@ -55,6 +46,6 @@ Nulla non ante nec risus vestibulum sodales. Orci varius natoque penatibus et ma
  </p>
     </div>
 
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 }
