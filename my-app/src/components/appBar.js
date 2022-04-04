@@ -21,19 +21,8 @@ import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlin
 import { useTheme } from "@mui/material/styles";
 import { Outlet, Link } from "react-router-dom";
 
-<<<<<<< HEAD
-import { useTheme } from '@mui/material/styles';
-
-  
-
-
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-=======
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
->>>>>>> c5e0a89f349fd4edff0f432e3a2383c2d308e2c3
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
@@ -219,29 +208,6 @@ export default function PrimarySearchAppBar() {
 
   const theme = useTheme();
   return (
-<<<<<<< HEAD
-    <AppBar 
-      position="sticky"
-      elevation={0}
-      color="secondary"
-      >
-        <Toolbar>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }}>  </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-=======
     <AppBar position="sticky" elevation={1} color="secondary">
       <Toolbar>
         <Search>
@@ -271,7 +237,6 @@ export default function PrimarySearchAppBar() {
               display: "flex",
               flexDirection: "column",
             }}
->>>>>>> c5e0a89f349fd4edff0f432e3a2383c2d308e2c3
           >
             <Button
               size="large"

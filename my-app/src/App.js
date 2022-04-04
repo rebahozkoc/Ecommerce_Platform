@@ -1,13 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
-<<<<<<< HEAD
 import ResponsiveAppBar from "./components/AppBarUnder";
 import PrimarySearchAppBar from "./components/AppBar";
 import themeOptions from "./components/theme"; 
-=======
-import ResponsiveAppBar from "./components/responsiveAppBar";
-import PrimarySearchAppBar from "./components/appBar";
-import themeOptions from "./components/theme";
->>>>>>> c5e0a89f349fd4edff0f432e3a2383c2d308e2c3
 import { ThemeProvider } from "@emotion/react";
 import Footer from "./components/footer/Footer";
 // use default theme
