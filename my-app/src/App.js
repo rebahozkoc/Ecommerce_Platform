@@ -1,8 +1,9 @@
 import { Outlet, Link } from "react-router-dom";
-import ResponsiveAppBar from "./components/responsiveAppBar";
-import PrimarySearchAppBar from "./components/appBar";
+import ResponsiveAppBar from "./components/AppBarUnder";
+import PrimarySearchAppBar from "./components/AppBar";
 import themeOptions from "./components/theme"; 
 import { ThemeProvider } from "@emotion/react";
+import Footer from "./components/footer/Footer";
 // use default theme
 // const theme = createTheme();
 
@@ -14,6 +15,7 @@ export default function App() {
     <ThemeProvider theme={themeOptions}>
     <div>
       <PrimarySearchAppBar></PrimarySearchAppBar>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <nav
         style={{
           borderBottom: "solid 1px",
@@ -45,7 +47,7 @@ Duis a congue nunc. Donec urna lectus, commodo eget leo id, consectetur cursus a
 Nulla non ante nec risus vestibulum sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris et nisl diam. Integer ac accumsan orci. Pellentesque tempus, neque eget consectetur sagittis, risus augue finibus neque, ac blandit libero est auctor diam. Vivamus accumsan sit amet neque in egestas. Sed varius, velit aliquam vulputate molestie, nibh enim pulvinar turpis, aliquam sagittis quam nunc a ipsum. In eget lacinia sapien. Proin hendrerit at sapien egestas venenatis. Vestibulum turpis lorem, malesuada a augue in, convallis lacinia ligula. Maecenas libero augue, eleifend id facilisis vel, sollicitudin sed nisi. Fusce ut tellus tincidunt, fringilla orci non, gravida magna. Vestibulum rutrum, elit vitae tincidunt ullamcorper, ante diam fermentum purus, a lacinia nisl est tincidunt eros. Duis vitae dignissim nisl. Proin vel varius libero, sed dapibus lectus.
  </p>
     </div>
-
+    <Footer/>
     </ThemeProvider>
   );
 }

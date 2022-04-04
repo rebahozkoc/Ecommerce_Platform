@@ -19,7 +19,6 @@ import themeOptions from './theme';
 
 import { useTheme } from '@mui/material/styles';
 
-
   
 
 
@@ -166,7 +165,7 @@ export default function PrimarySearchAppBar() {
   return (
     <AppBar 
       position="sticky"
-      elevation={1}
+      elevation={0}
       color="secondary"
       >
         <Toolbar>
