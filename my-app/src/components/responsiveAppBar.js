@@ -82,6 +82,11 @@ const ResponsiveAppBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -105,9 +110,7 @@ const ResponsiveAppBar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   return (
-    <ThemeProvider theme={theme}>
-    <AppBar 
-    style={{background: "white"}}
+    <AppBar
     position="sticky"
     elevation={1}
     >
@@ -117,7 +120,6 @@ const ResponsiveAppBar = () => {
             variant="h6"
             noWrap
             component="div"
-            color={"#FF9500"}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
             Voidture
@@ -160,7 +162,6 @@ const ResponsiveAppBar = () => {
             </Menu>
           </Box>
           <Typography
-            color = "#FF9500"
             variant="h6"
             noWrap
             component="div"
@@ -210,7 +211,7 @@ const ResponsiveAppBar = () => {
             </Menu>
           </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="primary">
+            <IconButton size="large" aria-label="show 4 new mails" color="secondary">
               <Badge badgeContent={4} color="error">
                 <MailIcon />
               </Badge>
@@ -251,7 +252,6 @@ const ResponsiveAppBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
-    </ThemeProvider>
   );
 };
 export default ResponsiveAppBar;
