@@ -10,7 +10,6 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
-import App from "../App";
 import { Stack } from "@mui/material";
 
 const pages = [

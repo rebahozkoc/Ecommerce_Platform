@@ -1,19 +1,18 @@
-import {createTheme, responsiveFontSizes  } from '@mui/material/styles';
-import { deepmerge } from '@mui/utils';
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { deepmerge } from "@mui/utils";
 
-
-let themeOptions = createTheme ({
+let themeOptions = createTheme({
   palette: {
-    type: 'light',
+    type: "light",
     primary: {
-      main: '#ff6600',
-      light: '#ffb74d',
+      main: "#ff6600",
+      light: "#ffb74d",
     },
     secondary: {
-      main: '#dddddd',
+      main: "#dddddd",
     },
     white: {
-      main: '#ffffff',
+      main: "#ffffff",
     },
   },
   props: {
@@ -24,55 +23,55 @@ let themeOptions = createTheme ({
       dense: true,
     },
     MuiTable: {
-      size: 'small',
+      size: "small",
     },
     MuiButton: {
-      size: 'small',
+      size: "small",
     },
     MuiButtonGroup: {
-      size: 'small',
+      size: "small",
     },
     MuiCheckbox: {
-      size: 'small',
+      size: "small",
     },
     MuiFab: {
-      size: 'small',
+      size: "small",
     },
     MuiFormControl: {
-      margin: 'dense',
-      size: 'small',
+      margin: "dense",
+      size: "small",
     },
     MuiFormHelperText: {
-      margin: 'dense',
+      margin: "dense",
     },
     MuiIconButton: {
-      size: 'small',
+      size: "small",
     },
     MuiInputBase: {
-      margin: 'dense',
+      margin: "dense",
     },
     MuiInputLabel: {
-      margin: 'dense',
+      margin: "dense",
     },
     MuiRadio: {
-      size: 'small',
+      size: "small",
     },
     MuiSwitch: {
-      size: 'small',
+      size: "small",
     },
     MuiTextField: {
-      margin: 'dense',
-      size: 'small',
+      margin: "dense",
+      size: "small",
     },
     MuiAppBar: {
-      color: 'default',
+      color: "default",
     },
   },
   overrides: {
     MuiAppBar: {
       colorInherit: {
-        backgroundColor: '#ffffff',
-        color: '#000000',
+        backgroundColor: "#ffffff",
+        color: "#000000",
       },
     },
   },
@@ -81,8 +80,6 @@ let themeOptions = createTheme ({
 });
 
 themeOptions = responsiveFontSizes(themeOptions);
-themeOptions = createTheme(deepmerge(themeOptions, ));
-
-
+themeOptions = createTheme(deepmerge(themeOptions));
 
 export default themeOptions;

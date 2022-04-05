@@ -9,13 +9,16 @@ import Expenses from "./routes/expenses";
 import Invoices from "./routes/invoices";
 import Invoice from "./routes/invoice";
 import SignIn from "./components/signIn/SignIn";
-
+import ShoppingCard from "./components/card/ShoppingCard";
+import SignUp from "./components/signIn/SignUp";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-    <Route path="/SignIn" element={<SignIn />} />
+      <Route path="/SignIn" element={<SignIn />} />
+      <Route path="/SignUp" element={<SignUp />} />
       <Route path="/" element={<App />}>
         <Route path="expenses" element={<Expenses />} />
+        <Route path="ShoppingCard" element={<ShoppingCard />} />
         <Route path="invoices" element={<Invoices />}>
           <Route
             index
@@ -35,7 +38,6 @@ ReactDOM.render(
             </main>
           }
         />
-        
       </Route>
     </Routes>
   </BrowserRouter>,

@@ -16,7 +16,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import themeOptions from "./theme";
+import themeOptions from "../theme";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { useTheme } from "@mui/material/styles";
 import { Outlet, Link } from "react-router-dom";
@@ -134,11 +134,14 @@ export default function PrimarySearchAppBar() {
       <nav>
         <Grid container spacing={2}>
           <Grid item xs={7} sm={4}>
-            <Link to="/SignIn">
-              Sign In</Link>
+            <Link to="/SignIn" underline="none">
+              <Button>Sign In</Button>
+            </Link>
           </Grid>
           <Grid item xs={8} sm={7}>
-            <Button onClick={handleMenuClose}>Create Account</Button>
+            <Link to="/SignUp" underline="none">
+              <Button>Create Account</Button>
+            </Link>
           </Grid>
         </Grid>
         <Grid
