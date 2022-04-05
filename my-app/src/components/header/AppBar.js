@@ -13,13 +13,13 @@ import Menu from "@mui/material/Menu";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import MoreIcon from "@mui/icons-material/MoreVert";
-import themeOptions from "./theme";
+import themeOptions from "../theme";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { useTheme } from "@mui/material/styles";
 import { Outlet, Link } from "react-router-dom";
+import ShoppingCard from "../card/ShoppingCard";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -69,7 +69,15 @@ export default function PrimarySearchAppBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const [isLogged, setIsLogged] = React.useState(false);
+  const [isCard, setIsCard] = React.useState(false);
 
+  const openCard = () => {
+    setIsCard(true);
+  };
+
+  const closeCard = () => {
+    setIsCard(false);
+  };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -90,6 +98,7 @@ export default function PrimarySearchAppBar() {
   const logIn = () => {
     setIsLogged(true);
   };
+
   const logOut = () => {
     setIsLogged(false);
   };
@@ -134,11 +143,14 @@ export default function PrimarySearchAppBar() {
       <nav>
         <Grid container spacing={2}>
           <Grid item xs={7} sm={4}>
-            <Link to="/SignIn">
-              Sign In</Link>
+            <Link to="/SignIn" underline="none">
+              <Button>Sign In</Button>
+            </Link>
           </Grid>
           <Grid item xs={8} sm={7}>
-            <Button onClick={handleMenuClose}>Create Account</Button>
+            <Link to="/SignUp" underline="none">
+              <Button>Create Account</Button>
+            </Link>
           </Grid>
         </Grid>
         <Grid
@@ -207,96 +219,105 @@ export default function PrimarySearchAppBar() {
 
   const theme = useTheme();
   return (
-    <AppBar position="sticky" elevation={1} color="secondary">
-      <Toolbar>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
-        <Box sx={{ flexGrow: 1 }}> </Box>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ display: { xs: "none", sm: "block" } }}
-        >
-          Voidture
-        </Typography>
-
-        <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <Box
-            sx={{
-              fontWeight: "bold",
-              display: "flex",
-              flexDirection: "column",
-            }}
+    <>
+      {isCard && <ShoppingCard></ShoppingCard>}
+      <AppBar position="sticky" elevation={1} color="secondary">
+        <Toolbar>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          <Box sx={{ flexGrow: 1 }}> </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
           >
+            Voidture
+          </Typography>
+
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{
+                fontWeight: "bold",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Button
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+                <Box sx={{ fontSize: 8 }}>
+                  <div>&nbsp;</div> Profile
+                </Box>
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                fontWeight: "bold",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Button
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge badgeContent={4} color="error">
+                  <FavoriteOutlinedIcon />
+                </Badge>
+                <Box sx={{ fontSize: 8 }}>
+                  <div>&nbsp;</div> Favourites
+                </Box>
+              </Button>
+            </Box>
+
             <Button
               size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              aria-label="show 17 new notifications"
               color="inherit"
+              onClick={openCard}
             >
-              <AccountCircle />
-              <Box sx={{ fontSize: 8 }}>
-                <div>&nbsp;</div> Profile
-              </Box>
-            </Button>
-          </Box>
-          <Box
-            sx={{
-              fontWeight: "bold",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Button size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <FavoriteOutlinedIcon />
+              <Badge badgeContent={17} color="error">
+                <ShoppingBasketOutlinedIcon />
               </Badge>
               <Box sx={{ fontSize: 8 }}>
-                <div>&nbsp;</div> Favourites
+                <div>&nbsp;</div> Basket
               </Box>
             </Button>
           </Box>
-          <Button
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={17} color="error">
-              <ShoppingBasketOutlinedIcon />
-            </Badge>
-            <Box sx={{ fontSize: 8 }}>
-              <div>&nbsp;</div> Basket
-            </Box>
-          </Button>
-        </Box>
-        <Box sx={{ display: { xs: "flex", md: "none" } }}>
-          <Button
-            size="large"
-            aria-label="show more"
-            aria-controls={mobileMenuId}
-            aria-haspopup="true"
-            onClick={handleMobileMenuOpen}
-            color="inherit"
-          >
-            <MoreIcon />
-          </Button>
-        </Box>
-      </Toolbar>
-      {renderMobileMenu}
-      {isLogged && renderMenu}
-      {!isLogged && renderMenu2}
-    </AppBar>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <Button
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </Button>
+          </Box>
+        </Toolbar>
+        {renderMobileMenu}
+        {isLogged && renderMenu}
+        {!isLogged && renderMenu2}
+      </AppBar>
+    </>
   );
 }
