@@ -72,7 +72,7 @@ export default function Footer() {
                 }}
               >
                 Telephone Enquiry:<div>&nbsp;</div>
-                <Box sx={{ fontWeight: "normal" }}>+905353323835</Box>
+                <Box sx={{fontWeight: "normal"}}>+905353323835</Box>
               </Box>
               <Box
                 sx={{

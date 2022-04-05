@@ -205,9 +205,8 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
-  const theme = useTheme();
   return (
-    <AppBar position="sticky" elevation={1} color="secondary">
+    <AppBar position="sticky" elevation={0} color="inherit">
       <Toolbar>
         <Search>
           <SearchIconWrapper>
@@ -220,10 +219,10 @@ export default function PrimarySearchAppBar() {
         </Search>
         <Box sx={{ flexGrow: 1 }}> </Box>
         <Typography
-          variant="h6"
+          variant="h3"
           noWrap
           component="div"
-          sx={{ display: { xs: "none", sm: "block" } }}
+          sx={{m:2, display: { xs: "none", sm: "block" } }}
         >
           Voidture
         </Typography>
