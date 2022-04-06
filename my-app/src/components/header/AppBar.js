@@ -15,7 +15,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
-
+import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 
 import { Link } from "react-router-dom";
@@ -66,7 +66,7 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const [isShop, setIsShop] = React.useState(false);
   const [isLogged, setIsLogged] = React.useState(false);
 
   const handleProfileMenuOpen = (event) => {
@@ -85,7 +85,12 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+  const shopIn = () => {
+    setIsShop(true);
+  };
+  const shopOut = () => {
+    setIsShop(false);
+  };
   const logIn = () => {
     setIsLogged(true);
   };
@@ -197,8 +202,13 @@ export default function PrimarySearchAppBar() {
         <p>Favourites</p>
       </MenuItem>
       <MenuItem>
-        <Button size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="primary">
+        <Button
+          size="large"
+          aria-label="show 4 new mails"
+          color="inherit"
+          onClick={shopIn}
+        >
+          <Badge badgeContent={4} color="error">
             <ShoppingBasketOutlinedIcon />
           </Badge>
         </Button>
@@ -273,6 +283,7 @@ export default function PrimarySearchAppBar() {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
+            onClick={shopIn}
           >
             <Badge badgeContent={17} color="primary">
               <ShoppingBasketOutlinedIcon />
@@ -298,6 +309,7 @@ export default function PrimarySearchAppBar() {
       {renderMobileMenu}
       {isLogged && renderMenu}
       {!isLogged && renderMenu2}
+      {isShop && <SmallShopCard onConfirm={shopOut}></SmallShopCard>}
     </AppBar>
   );
 }
