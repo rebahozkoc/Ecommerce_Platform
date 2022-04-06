@@ -10,6 +10,7 @@ import 'package:mobile/core/widgets/productItems/highlight_product.dart';
 import 'package:mobile/core/widgets/productItems/medium_product.dart';
 import 'package:mobile/core/widgets/search_button.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/home/view/home_shimmer_view.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -47,11 +48,14 @@ class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
         viewModel = model;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-        );
-      },
+        return FutureBuilder(
+            future: viewModel.load(),
+            builder: ((context, snapshot) => snapshot.hasData
+                ? Scaffold(
+                    appBar: _appBar(),
+                    body: _body(),
+                  )
+                : const HomeShimmerView()));      },
     );
   }
 
