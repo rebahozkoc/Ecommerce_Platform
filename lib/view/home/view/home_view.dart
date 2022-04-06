@@ -5,8 +5,10 @@ import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/customScrollPhysics.dart';
+import 'package:mobile/core/widgets/productItems/advert_product.dart';
 import 'package:mobile/core/widgets/productItems/large_product.dart';
 import 'package:mobile/core/widgets/productItems/medium_product.dart';
+import 'package:mobile/core/widgets/search_button.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
 
@@ -17,8 +19,24 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends BaseState<HomeView> {
+class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
   late HomeViewModel viewModel;
+  late TabController controller;
+  int index = 0;
+
+  @override
+  void initState() {
+    controller = TabController(length: 3, vsync: this);
+    controller.addListener(_setActiveTabIndex);
+    super.initState();
+  }
+
+  void _setActiveTabIndex() {
+    setState(() {
+      index = controller.index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -48,52 +66,31 @@ class _HomeViewState extends BaseState<HomeView> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              _search(),
+              const SearchButtonWidget(),
+              _advertisements(),
               _highlights(),
               _categories(),
               _categories(),
-              const SizedBox(height: 12,)
+              const SizedBox(
+                height: 12,
+              )
             ],
           ),
         ),
       );
 
-  Container _search() {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      width: MediaQuery.of(context).size.width,
-      height: 48,
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x19575B7D),
-            spreadRadius: 0,
-            blurRadius: 12,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text(
-            "Search...",
-            style: TextStyle(
-              color: AppColors.darkGray,
-            ),
-          ),
-          Icon(
-            Icons.search,
-            color: AppColors.darkGray,
-          )
-        ],
-      ),
-    );
-  }
+  SizedBox _advertisements() => SizedBox(
+        width: double.infinity,
+        height: 240,
+        child: TabBarView(
+          controller: controller,
+          children: const [
+            AdvertProduct(),
+            AdvertProduct(),
+            AdvertProduct(),
+          ],
+        ),
+      );
 
   SizedBox _highlights() {
     return SizedBox(
@@ -102,7 +99,7 @@ class _HomeViewState extends BaseState<HomeView> {
       child: ListView.builder(
         primary: true,
         scrollDirection: Axis.horizontal,
-        physics: const CustomScrollPhysics(itemDimension: 258),
+        physics: const CustomScrollPhysics(itemDimension: 296),
         itemCount: 5,
         itemBuilder: (context, index) => const LargeProduct(),
       ),

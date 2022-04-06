@@ -10,7 +10,7 @@ class LargeProduct extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
-        width: 240,
+        width: 264,
         child: Stack(children: [
           _image(),
           _content(),
