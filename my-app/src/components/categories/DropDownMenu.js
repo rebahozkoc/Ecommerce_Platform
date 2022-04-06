@@ -6,12 +6,18 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Check from '@mui/icons-material/Check';
-
+import { Card } from '@mui/material';
+import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 export default function DropDownMenu(props) {
   
   console.log('DropDownMenu');
   return (
-    <Paper sx={{ width: 320 }}
+    <Paper 
+    color="primary"
+    maxWidth="sm"
+    square={true}
+    sx={{position: 'fixed', backgroundColor: 'white', width: '150%' }}
     style = {props.style}>
       <p>Heeeeyy
       </p>
