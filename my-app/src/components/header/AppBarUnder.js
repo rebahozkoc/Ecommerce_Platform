@@ -12,6 +12,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import { Stack } from "@mui/material";
 
+import DropDownMenu from "../categories/DropDownMenu";
+
 const pages = [
   "Living Room",
   "Bedroom",
@@ -31,8 +33,29 @@ const ResponsiveAppBar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  const [myStyle, setStyle] = React.useState({ display: "none" });
+
+  const handleDropDownMenuOpen = () => {
+    setStyle({ display: "block" });
+  };
+
+  const handleDropDownMenuClose = () => {
+    setStyle({ display: "none" });
+  };
+  // Dropdown menu
+  /*
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleHover = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  */
 
   return (
+    <div>
     <AppBar position="static" color="inherit">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -66,7 +89,13 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                // todo : handleCloseNavMenu
+                <MenuItem
+                 key={page} 
+                 onClick={handleCloseNavMenu}
+                 onMouseOver={handleDropDownMenuOpen}
+                 onMouseLeave={handleDropDownMenuClose}
+                 >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -83,6 +112,8 @@ const ResponsiveAppBar = () => {
               {pages.map((page) => (
                 <Button
                   key={page}
+                  onMouseOver={handleDropDownMenuOpen}
+                  onMouseOut={handleDropDownMenuClose}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
@@ -94,6 +125,9 @@ const ResponsiveAppBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    <DropDownMenu style={myStyle}></DropDownMenu>
+    </div>
+    
   );
 };
 export default ResponsiveAppBar;

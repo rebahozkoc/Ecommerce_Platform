@@ -23,9 +23,9 @@ import { Link } from "react-router-dom";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.primary.light, 0.3),
+  backgroundColor: alpha(theme.palette.secondary.main, 0.3),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.secondary.dark, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -47,7 +47,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "#9e3f08",
+  color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -190,7 +190,7 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem>
         <Button size="large" color="inherit">
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={17} color="primary">
             <FavoriteOutlinedIcon />
           </Badge>
         </Button>
@@ -198,7 +198,7 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem>
         <Button size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={4} color="primary">
             <ShoppingBasketOutlinedIcon />
           </Badge>
         </Button>
@@ -261,7 +261,7 @@ export default function PrimarySearchAppBar() {
             }}
           >
             <Button size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={4} color="primary">
                 <FavoriteOutlinedIcon />
               </Badge>
               <Box sx={{ fontSize: 8 }}>
@@ -274,7 +274,7 @@ export default function PrimarySearchAppBar() {
             aria-label="show 17 new notifications"
             color="inherit"
           >
-            <Badge badgeContent={17} color="error">
+            <Badge badgeContent={17} color="primary">
               <ShoppingBasketOutlinedIcon />
             </Badge>
             <Box sx={{ fontSize: 8 }}>
