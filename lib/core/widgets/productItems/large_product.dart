@@ -7,72 +7,51 @@ class LargeProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SizedBox(
-        width: 264,
-        child: Stack(children: [
-          _image(),
-          _content(),
-        ]),
-      ),
-    );
-  }
-
-  ClipRRect _image() => ClipRRect(
-    borderRadius: const BorderRadius.all(Radius.circular(8)),
-    child: CachedNetworkImage(
-          imageUrl:
-              "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
-          width: 264,
-          height: 340,
-          fit: BoxFit.fill,
-        ),
-  );
-
-  Padding _content() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _price(),
-              _favoriteButton(),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _productInfo(),
-              _shoppingCartButton(),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Container _price() {
-    return Container(
-      child: const Text(
-        "580₺",
-        style: TextStyle(
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      child: Container(
+        decoration: const BoxDecoration(
           color: AppColors.white,
         ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [_content(), _infos(), Container()],
+        ),
       ),
-      height: 22,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(3)),
-        color: AppColors.primary,
+    );
+  }
+
+  SizedBox _content() {
+    return SizedBox(
+      child: Stack(children: [
+        _image(),
+        Container(
+          alignment: Alignment.topRight,
+          padding: const EdgeInsets.all(6),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _favoriteButton(),
+              const SizedBox(height: 12),
+              _shoppingCartButton(),
+            ],
+          ),
+        )
+      ]),
+    );
+  }
+
+  Expanded _image() {
+    return Expanded(
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: CachedNetworkImage(
+          imageUrl:
+              "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
+          width: double.infinity,
+          fit: BoxFit.fill,
+        ),
       ),
-      padding: const EdgeInsets.fromLTRB(7.5, 2.5, 7.5, 2.5),
     );
   }
 
@@ -81,10 +60,10 @@ class LargeProduct extends StatelessWidget {
           debugPrint("Favorite Button Clicked...");
         }),
         child: Container(
-          height: 22,
-          width: 22,
+          height: 28,
+          width: 28,
           decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(11)),
+            borderRadius: BorderRadius.all(Radius.circular(14)),
             color: AppColors.white,
           ),
           child: const Icon(
@@ -94,48 +73,15 @@ class LargeProduct extends StatelessWidget {
         ),
       );
 
-  Container _productInfo() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      width: 180,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            'English or Club Sofa',
-            softWrap: true,
-            style: TextStyle(
-              color: AppColors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(
-            height: 6,
-          ),
-          Text(
-            'Goal Design',
-            softWrap: true,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              color: AppColors.white,
-              fontSize: 10,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   InkWell _shoppingCartButton() => InkWell(
         onTap: (() {
           debugPrint("Shopping Cart Button Clicked...");
         }),
         child: Container(
-          height: 22,
-          width: 22,
+          height: 28,
+          width: 28,
           decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(11)),
+            borderRadius: BorderRadius.all(Radius.circular(13)),
             color: AppColors.primary,
           ),
           child: const Icon(
@@ -143,6 +89,55 @@ class LargeProduct extends StatelessWidget {
             color: AppColors.white,
             size: 12,
           ),
+        ),
+      );
+
+  SizedBox _infos() => SizedBox(
+        height: 72,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [_producer(), _price()],
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Text _title() => const Text(
+        "Wing Chair",
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          color: AppColors.tertiary,
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      );
+
+  Text _producer() => const Text(
+        "Goal Design",
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          color: AppColors.darkGray,
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
+        ),
+      );
+
+  Text _price() => const Text(
+        "380₺",
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
         ),
       );
 }

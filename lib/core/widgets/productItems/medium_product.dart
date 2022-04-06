@@ -7,18 +7,15 @@ class MediumProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        child: Container(
-          width: 120,
-          height: 185,
-          decoration: const BoxDecoration(
-            color: AppColors.white,
-          ),
-          child: Column(children: [_content(), _infos()]),
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      child: Container(
+        width: 120,
+        height: 185,
+        decoration: const BoxDecoration(
+          color: AppColors.white,
         ),
+        child: Column(children: [_content(), _infos()]),
       ),
     );
   }

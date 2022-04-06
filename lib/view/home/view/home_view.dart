@@ -6,7 +6,7 @@ import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/customScrollPhysics.dart';
 import 'package:mobile/core/widgets/productItems/advert_product.dart';
-import 'package:mobile/core/widgets/productItems/large_product.dart';
+import 'package:mobile/core/widgets/productItems/highlight_product.dart';
 import 'package:mobile/core/widgets/productItems/medium_product.dart';
 import 'package:mobile/core/widgets/search_button.dart';
 import 'package:mobile/locator.dart';
@@ -71,9 +71,7 @@ class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
               _highlights(),
               _categories(),
               _categories(),
-              const SizedBox(
-                height: 12,
-              )
+              const SizedBox(height: 12)
             ],
           ),
         ),
@@ -101,7 +99,7 @@ class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
         scrollDirection: Axis.horizontal,
         physics: const CustomScrollPhysics(itemDimension: 296),
         itemCount: 5,
-        itemBuilder: (context, index) => const LargeProduct(),
+        itemBuilder: (context, index) => const HighlightProduct(),
       ),
     );
   }
@@ -119,11 +117,13 @@ class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 185,
-      child: ListView.builder(
+      child: ListView.separated(
         primary: true,
         scrollDirection: Axis.horizontal,
         itemCount: 8,
+        padding: const EdgeInsets.only(left: 16, right: 16),
         itemBuilder: (context, index) => const MediumProduct(),
+        separatorBuilder: (context, index) => const SizedBox(width: 16),
       ),
     );
   }
