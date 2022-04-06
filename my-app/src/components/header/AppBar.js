@@ -13,18 +13,17 @@ import Menu from "@mui/material/Menu";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import MoreIcon from "@mui/icons-material/MoreVert";
-import themeOptions from "../theme";
+
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import { useTheme } from "@mui/material/styles";
-import { Outlet, Link } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.primary.light, 0.3),
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
@@ -48,7 +47,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: "#9e3f08",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -225,7 +224,7 @@ export default function PrimarySearchAppBar() {
           variant="h3"
           noWrap
           component="div"
-          sx={{m:2, display: { xs: "none", sm: "block" } }}
+          sx={{ m: 2, display: { xs: "none", sm: "block" } }}
         >
           Voidture
         </Typography>

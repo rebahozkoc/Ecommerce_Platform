@@ -66,6 +66,23 @@ let themeOptions = createTheme({
     MuiAppBar: {
       color: "default",
     },
+    MuiContainer: {},
+    MuiIcon: {
+      marginRight: "20px",
+    },
+    MuiButtons: {
+      marginTop: "40px",
+    },
+    MuiCardGrid: {
+      padding: "20px 0",
+    },
+    MuiCard: { height: "100%", display: "flex", flexDirection: "column" },
+    MuiCardMedia: {
+      paddingTop: "56.25%",
+    },
+    MuiCardContent: {
+      flexGrow: 1,
+    },
   },
   overrides: {
     MuiAppBar: {
@@ -75,8 +92,6 @@ let themeOptions = createTheme({
       },
     },
   },
-
-  
 });
 
 themeOptions = responsiveFontSizes(themeOptions);

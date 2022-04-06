@@ -40,7 +40,8 @@ const MediaCardHandler = () => {
     <>
       <MediaCard myId={buttonNo}></MediaCard>
       <FormControl>
-        <FormLabel id="demo-row-radio-buttons-group-label"></FormLabel>
+        <FormLabel id="demo-row-radio-buttons-group-label "></FormLabel>
+
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
@@ -49,32 +50,32 @@ const MediaCardHandler = () => {
           <FormControlLabel
             value="0"
             control={<Radio onClick={Clicked} data-id={0} />}
-            checked={buttonNo == 0}
+            checked={buttonNo === 0}
           />
           <FormControlLabel
             value="1"
             control={<Radio onClick={Clicked} data-id={1} />}
-            checked={buttonNo == 1}
+            checked={buttonNo === 1}
           />
           <FormControlLabel
             value="2"
             control={<Radio onClick={Clicked} data-id={2} />}
-            checked={buttonNo == 2}
+            checked={buttonNo === 2}
           />
           <FormControlLabel
             value="3"
             control={<Radio onClick={Clicked} data-id={3} />}
-            checked={buttonNo == 3}
+            checked={buttonNo === 3}
           />
           <FormControlLabel
             value="4"
             control={<Radio onClick={Clicked} data-id={4} />}
-            checked={buttonNo == 4}
+            checked={buttonNo === 4}
           />
           <FormControlLabel
             value="5"
             control={<Radio onClick={Clicked} data-id={5} />}
-            checked={buttonNo == 5}
+            checked={buttonNo === 5}
           />
         </RadioGroup>
       </FormControl>
