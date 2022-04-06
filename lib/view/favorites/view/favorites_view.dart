@@ -5,6 +5,7 @@ import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/core/widgets/productItems/large_product.dart';
 import 'package:mobile/core/widgets/search_button.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/favorites/view/favorites_shimmer_view.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 
 class FavoritesView extends StatefulWidget {
@@ -26,10 +27,14 @@ class _FavoritesViewState extends State<FavoritesView> {
         viewModel = model;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-        );
+        return FutureBuilder(
+            future: viewModel.load(),
+            builder: ((context, snapshot) => snapshot.hasData
+                ? Scaffold(
+                    appBar: _appBar(),
+                    body: _body(),
+                  )
+                : const FavoritesShimmerView()));
       },
     );
   }
