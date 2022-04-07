@@ -15,7 +15,6 @@ export default function DropDownMenu(props) {
   return (
     <Paper 
     color="primary"
-    maxWidth="sm"
     square={true}
     sx={{position: 'fixed', backgroundColor: 'white', width: '150%' }}
     style = {props.style}>
