@@ -14,6 +14,9 @@ import { Stack } from "@mui/material";
 import DropDownMenu from "../categories/DropDownMenu";
 import { TabPanel, TabList, TabContext } from "@mui/lab";
 import { Tab } from "@mui/material";
+
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+
 const pages = [
   "Living Room",
   "Bedroom",
@@ -34,14 +37,26 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
   const [myStyle, setStyle] = React.useState({ display: "none" });
-
+  const [open, openHandler] = React.useState(false);
   const handleDropDownMenuOpen = () => {
-    setStyle({ display: "block" });
+    if (open) {
+      setStyle({ display: "none" });
+      openHandler(false);
+    } else {
+      setStyle({ display: "block" });
+      openHandler(true);
+    }
   };
 
   const handleDropDownMenuClose = () => {
     setStyle({ display: "none" });
   };
+
+  const handleClickAwayDropDown = () => {
+    openHandler(false);
+    setStyle({ display: "none" });
+  };
+
   // Dropdown menu
   /*
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -102,20 +117,6 @@ const ResponsiveAppBar = () => {
               </Menu>
             </Box>
 
-            <TabContext value="1">
-              <Box sx={{ borderBottom: 1, borderColor: "secondary" }}>
-                <TabList
-                  onChange={handleDropDownMenuOpen}
-                  onMouseOver={handleDropDownMenuOpen}
-                  onMouseLeave={handleDropDownMenuClose}
-                  aria-label="lab API tabs example"
-                >
-                  <Tab label="Item One" value="1" />
-                  <Tab label="Item Two" value="2" />
-                  <Tab label="Item Three" value="3" />
-                </TabList>
-              </Box>
-            </TabContext>
             <Box
               sx={{
                 flexGrow: 1,
@@ -123,23 +124,23 @@ const ResponsiveAppBar = () => {
                 display: { xs: "none", md: "inline" },
               }}
             >
-              <Stack
-                direction="row"
-                justifyContent="space-around"
-                paddingBottom="0"
-              >
-                {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onMouseOver={handleDropDownMenuOpen}
-                    onMouseOut={handleDropDownMenuClose}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page}
-                  </Button>
-                ))}
-              </Stack>
+              <ClickAwayListener onClickAway={handleClickAwayDropDown}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-around"
+                  paddingBottom="0"
+                >
+                  {pages.map((page) => (
+                    <Button
+                      key={page}
+                      onClick={handleDropDownMenuOpen}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page}
+                    </Button>
+                  ))}
+                </Stack>
+              </ClickAwayListener>
             </Box>
           </Toolbar>
         </Container>
