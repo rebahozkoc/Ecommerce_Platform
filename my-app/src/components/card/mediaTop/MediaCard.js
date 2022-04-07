@@ -7,7 +7,7 @@ export default function MediaCard(props) {
       component="img"
       height="400"
       image={`furn${props.myId + 1}.jpg`}
-      alt="green iguana"
+      alt="Voidture no Item"
     />
   );
 }

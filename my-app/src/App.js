@@ -5,11 +5,14 @@ import themeOptions from "./components/theme";
 import { ThemeProvider } from "@emotion/react";
 import Footer from "./components/footer/Footer";
 import MediaCardTogether from "./components/card/mediaTop/MediaCardTogether";
-import CategoryCard from "./components/card/mediaMiddle/CategoryCard";
-import CardItem from "./components/card/mediaMiddle/CardItem";
-import { Grid, Container, Card } from "@mui/material";
+import CategoryCardHandler from "./components/card/mediaMiddle/CategoryCardHandler";
+import CardItem from "./components/card/mediaMiddle/functions/CardItem";
+import { Grid, Container, Card, Box } from "@mui/material";
 import MediaCard from "./components/card/mediaTop/MediaCard";
 import "./App.css";
+import CardHalfTogether from "./components/card/mediaMiddle/CardHalfTogether";
+import CardHalfReverse from "./components/card/mediaMiddle/CardHalfReverse";
+import CardItemHandler from "./components/card/mediaMiddle/CardItemHandler";
 // Or Create your Own theme:
 const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 const cards2 = [9, 10, 11, 12, 13, 14, 15, 16];
@@ -20,29 +23,11 @@ export default function App() {
       <div>
         <PrimarySearchAppBar></PrimarySearchAppBar>
         <ResponsiveAppBar></ResponsiveAppBar>
-        <nav
-          style={{
-            borderBottom: "solid 1px",
-            paddingBottom: "1rem",
-          }}
-        >
-          <Link to="/invoices">Invoices</Link> |{" "}
-          <Link to="/expenses">Expenses</Link>
-        </nav>
-        <Outlet />
+
         <MediaCardTogether></MediaCardTogether>
 
-        <h2 className="h2Center">Our Furn</h2>
-        <Container maxWidth="lg" height="400">
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={3}>
-                <CategoryCard></CategoryCard>
-              </Grid>
-            ))}
-            ;
-          </Grid>
-        </Container>
+        <CategoryCardHandler item={cards}></CategoryCardHandler>
+        <CardHalfReverse></CardHalfReverse>
         <Card
           sx={{
             bgcolor: "background.paper",
@@ -54,17 +39,10 @@ export default function App() {
         >
           <MediaCard myId={4}></MediaCard>
         </Card>
-        <h2 className="h2Center">Promotions</h2>
-        <Container maxWidth="lg" height="400">
-          <Grid container spacing={4}>
-            {cards2.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={3}>
-                <CardItem></CardItem>
-              </Grid>
-            ))}
-            ;
-          </Grid>
-        </Container>
+
+        <CardItemHandler item={cards2}></CardItemHandler>
+
+        <CardHalfTogether></CardHalfTogether>
       </div>
       <Footer />
     </ThemeProvider>

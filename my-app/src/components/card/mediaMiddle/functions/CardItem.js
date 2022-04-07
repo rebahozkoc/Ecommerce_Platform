@@ -11,12 +11,10 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import themeOptions from "../../theme";
+import CommentIcon from "@mui/icons-material/Comment";
+import themeOptions from "../../../theme";
 import { ThemeProvider } from "@emotion/react";
-
+import { Box, Stack } from "@mui/material";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -28,7 +26,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CategoryCard = () => {
+const CardItem = () => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -38,19 +36,38 @@ const CategoryCard = () => {
   return (
     <ThemeProvider theme={themeOptions}>
       <Card sx={{ maxWidth: 400 }}>
+        <CardHeader
+          title="item title not necessary deletable"
+          subheader="Until when promotion continues"
+        />
         <CardMedia
           component="img"
           height="194"
-          image={`furn3.jpg`}
+          image={`furn4.jpg`}
           alt="Voidture not Found"
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            This place will consist the information about category.
+            This place will consist the information about item and the money
           </Typography>
         </CardContent>
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "inline" } }}>
+          <Stack direction="row" justifyContent="space-evenly" spacing={2}>
+            <CardActions sx={{ display: { xs: "none", md: "inline" } }}>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShoppingBasketOutlinedIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <CommentIcon />
+              </IconButton>
+            </CardActions>
+          </Stack>
+        </Box>
       </Card>
     </ThemeProvider>
   );
 };
-export default CategoryCard;
+export default CardItem;
