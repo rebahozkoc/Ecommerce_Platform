@@ -3,6 +3,7 @@ import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/categories/view/categories_shimmer_view.dart';
 import 'package:mobile/view/categories/viewmodel/categories_view_model.dart';
 
 class CategoriesView extends StatefulWidget {
@@ -24,10 +25,14 @@ class _CategoriesViewState extends State<CategoriesView> {
         viewModel = model;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-        );
+        return FutureBuilder(
+            future: viewModel.load(),
+            builder: ((context, snapshot) => snapshot.hasData
+                ? Scaffold(
+                    appBar: _appBar(),
+                    body: _body(),
+                  )
+                : const CategoriesShimmerView()));
       },
     );
   }
