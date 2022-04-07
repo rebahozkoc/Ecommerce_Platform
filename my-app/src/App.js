@@ -7,7 +7,8 @@ import Footer from "./components/footer/Footer";
 import MediaCardTogether from "./components/card/mediaTop/MediaCardTogether";
 import CategoryCard from "./components/card/mediaMiddle/CategoryCard";
 import CardItem from "./components/card/mediaMiddle/CardItem";
-import { Grid, Container } from "@mui/material";
+import { Grid, Container, Card } from "@mui/material";
+import MediaCard from "./components/card/mediaTop/MediaCard";
 import "./App.css";
 // Or Create your Own theme:
 const cards = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -42,6 +43,17 @@ export default function App() {
             ;
           </Grid>
         </Container>
+        <Card
+          sx={{
+            bgcolor: "background.paper",
+            boxShadow: 1,
+            borderRadius: 2,
+            p: 2,
+            minWidth: 300,
+          }}
+        >
+          <MediaCard myId={4}></MediaCard>
+        </Card>
         <h2 className="h2Center">Promotions</h2>
         <Container maxWidth="lg" height="400">
           <Grid container spacing={4}>

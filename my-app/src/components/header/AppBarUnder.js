@@ -102,7 +102,7 @@ const ResponsiveAppBar = () => {
               </Menu>
             </Box>
 
-            <TabContext value={1}>
+            <TabContext value="1">
               <Box sx={{ borderBottom: 1, borderColor: "secondary" }}>
                 <TabList
                   onChange={handleDropDownMenuOpen}
