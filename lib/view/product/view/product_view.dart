@@ -36,51 +36,53 @@ class _ProductViewState extends State<ProductView> {
 
   AppBar _appBar(){
     return AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.black),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
       title: Text("Product Details"),
+
     );
   }
 
-  SizedBox _body() => SizedBox(
-    width: double.infinity,
-    child: SingleChildScrollView(
-      child: Column(
-        children: [
-          PageProduct(),
-          Column(
+  ListView _body() => ListView(
+    children: [
+      RoundedContainer(
+          child: Column(
             children: [
-              Container(
-                color: AppColors.white,
-                child: Column(
-                  children: [
-                    ProductDetails(),
-                  ],
-                ),
-              ),
+              PageProduct(),
             ],
-          ),
-        ],
-      )
-    ),
+          )
+      ),
+    ],
   );
 }
 
-class ProductDetails extends StatelessWidget {
-  const ProductDetails({Key? key}) : super(key: key);
+
+class RoundedContainer extends StatelessWidget {
+  const RoundedContainer({
+    Key? key,
+    required this.child,
+}) : super(key: key);
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            "Product Title",
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-      ],
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(bottom: 20),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(40),
+          bottomRight: Radius.circular(40),
+        )
+      ),
+      child: child,
     );
   }
 }
+
 
