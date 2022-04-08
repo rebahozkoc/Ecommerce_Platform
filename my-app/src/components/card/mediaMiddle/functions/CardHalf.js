@@ -1,8 +1,7 @@
 import * as React from "react";
 import { styled, useTheme, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-
+import { Link } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CardMedia, Card } from "@mui/material";
 
@@ -36,12 +35,14 @@ const CardHalf = (props) => {
         anchor={props.way}
         open={open}
       >
-        <CardMedia
-          component="img"
-          height="400"
-          image={`furn${1}.jpg`}
-          alt="Voidture no Item"
-        />
+        <Link to="/Dummy" underline="none">
+          <CardMedia
+            component="img"
+            height="400"
+            image={`furn${1}.jpg`}
+            alt="Voidture no Item"
+          />
+        </Link>
       </Card>
     </Box>
   );

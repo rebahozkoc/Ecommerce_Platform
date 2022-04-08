@@ -32,12 +32,12 @@ export default function Footer() {
             <Grid item xs={12} sm={4}>
               <Box borderBottom={1}>Account</Box>
               <Box>
-                <Link href="/" color="inherit">
+                <Link href="/SignIn" color="inherit">
                   Login
                 </Link>
               </Box>
               <Box>
-                <Link href="/" color="inherit">
+                <Link href="/SignUp" color="inherit">
                   Register
                 </Link>
               </Box>
@@ -72,7 +72,7 @@ export default function Footer() {
                 }}
               >
                 Telephone Enquiry:<div>&nbsp;</div>
-                <Box sx={{fontWeight: "normal"}}>+905353323835</Box>
+                <Box sx={{ fontWeight: "normal" }}>+905353323835</Box>
               </Box>
               <Box
                 sx={{

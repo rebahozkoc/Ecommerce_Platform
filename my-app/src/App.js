@@ -1,4 +1,3 @@
-import { Outlet, Link } from "react-router-dom";
 import ResponsiveAppBar from "./components/header/AppBarUnder";
 import PrimarySearchAppBar from "./components/header/AppBar";
 import themeOptions from "./components/theme";
@@ -6,8 +5,7 @@ import { ThemeProvider } from "@emotion/react";
 import Footer from "./components/footer/Footer";
 import MediaCardTogether from "./components/card/mediaTop/MediaCardTogether";
 import CategoryCardHandler from "./components/card/mediaMiddle/CategoryCardHandler";
-import CardItem from "./components/card/mediaMiddle/functions/CardItem";
-import { Grid, Container, Card, Box } from "@mui/material";
+import { Card } from "@mui/material";
 import MediaCard from "./components/card/mediaTop/MediaCard";
 import "./App.css";
 import CardHalfTogether from "./components/card/mediaMiddle/CardHalfTogether";
@@ -20,30 +18,29 @@ export default function App() {
   console.log("App rendered");
   return (
     <ThemeProvider theme={themeOptions}>
-      <div>
-        <PrimarySearchAppBar></PrimarySearchAppBar>
-        <ResponsiveAppBar></ResponsiveAppBar>
+      <PrimarySearchAppBar></PrimarySearchAppBar>
+      <ResponsiveAppBar></ResponsiveAppBar>
 
-        <MediaCardTogether></MediaCardTogether>
+      <MediaCardTogether></MediaCardTogether>
 
-        <CategoryCardHandler item={cards}></CategoryCardHandler>
-        <CardHalfReverse></CardHalfReverse>
-        <Card
-          sx={{
-            bgcolor: "background.paper",
-            boxShadow: 1,
-            borderRadius: 2,
-            p: 2,
-            minWidth: 300,
-          }}
-        >
-          <MediaCard myId={4}></MediaCard>
-        </Card>
+      <CategoryCardHandler item={cards}></CategoryCardHandler>
+      <CardHalfReverse></CardHalfReverse>
+      <Card
+        sx={{
+          bgcolor: "background.paper",
+          boxShadow: 1,
+          borderRadius: 2,
+          p: 2,
+          minWidth: 300,
+        }}
+      >
+        <MediaCard myId={4}></MediaCard>
+      </Card>
 
-        <CardItemHandler item={cards2}></CardItemHandler>
+      <CardItemHandler item={cards2}></CardItemHandler>
 
-        <CardHalfTogether></CardHalfTogether>
-      </div>
+      <CardHalfTogether></CardHalfTogether>
+
       <Footer />
     </ThemeProvider>
   );

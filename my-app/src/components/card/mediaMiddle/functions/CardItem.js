@@ -6,15 +6,15 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import themeOptions from "../../../theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, Stack } from "@mui/material";
+import { Link } from "react-router-dom";
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -40,12 +40,14 @@ const CardItem = () => {
           title="item title not necessary deletable"
           subheader="Until when promotion continues"
         />
-        <CardMedia
-          component="img"
-          height="194"
-          image={`furn4.jpg`}
-          alt="Voidture not Found"
-        />
+        <Link to="/Dummy" underline="none">
+          <CardMedia
+            component="img"
+            height="194"
+            image={`furn4.jpg`}
+            alt="Voidture not Found"
+          />
+        </Link>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             This place will consist the information about item and the money
