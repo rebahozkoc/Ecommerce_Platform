@@ -6,6 +6,7 @@ load_dotenv()
 
 DEBUG = os.getenv("DEBUG", 'False').lower() in ('true', '1', 't')
 
+
 if DEBUG:
     BASE_URL = os.getenv('DEVELOPMENT_URL')
 else:
@@ -13,6 +14,7 @@ else:
 
 class Settings(BaseSettings):
     DEBUG: bool = DEBUG
+    TESTING: bool = os.getenv("TESTING", 'False').lower() in ('true', '1', 't')
 
     APP_NAME: str = "urdan"
     APP_DESCRIPTION: str = "Furniture eCommerce"
@@ -29,10 +31,17 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES')
 
     DATABASE_URL: str = os.getenv('DATABASE_URL')
+    DB_URL: str = f"{DATABASE_URL}_test" if TESTING else str(DATABASE_URL)
+
     DB_NAME: str = os.getenv('DB_NAME')
     CELERY_BROKER_URL: str = os.getenv('CELERY_BROKER_URL')
     CELERY_RESULT_BACKEND: str = os.getenv('CELERY_RESULT_BACKEND')
-    
+
+    TEST_SUPERUSER_EMAIL: str = os.getenv('TEST_SUPERUSER_EMAIL')
+    TEST_USER_EMAIL: str = os.getenv('TEST_USER_EMAIL')
+    TEST_USER_PASSWORD: str = os.getenv('TEST_USER_PASSWORD')
+
+    CRYPTO_ALGORITHM: str = os.getenv('CRYPTO_ALGORITHM')
 
     
 settings=Settings()
