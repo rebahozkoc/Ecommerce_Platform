@@ -25,11 +25,10 @@ services:
     app:
         container_name: app
         build: .
-        command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
         volumes:
             - .:/app
         ports:
-            - 8000:8000
+            - 80:80
         depends_on:
             - db
         restart: always
