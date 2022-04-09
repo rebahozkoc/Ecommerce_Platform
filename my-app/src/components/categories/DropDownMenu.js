@@ -1,28 +1,40 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Check from '@mui/icons-material/Check';
-import { Card } from '@mui/material';
-import { Container } from '@mui/material';
-import { Box } from '@mui/material';
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Divider from "@mui/material/Divider";
+import { Stack } from "@mui/material";
+import Column from "./Column";
+import DiscountItem from './DiscountItem';
+
+const columnItems = [
+  "Coach",
+  "Sofa",
+  "Chair",
+  "Pillow",
+  "Bookshelf",
+  "TV Stand",
+];
+
 export default function DropDownMenu(props) {
-  
-  console.log('DropDownMenu');
+  console.log("DropDownMenu");
   return (
-    <Paper 
-    color="primary"
-    square={true}
-    sx={{position: 'fixed', backgroundColor: 'white', width: '150%' }}
-    style = {props.style}>
-      <p>Heeeeyy
-      </p>
-      <p>
-        Hoooppp
-      </p>
+    <Paper
+      color="red"
+      square={true}
+      sx={{ position: "fixed", backgroundColor: "#F6F6F6", width: "100%" }}
+      style={props.style}
+    >
+      <Stack direction="row" justifyContent="space-between" >
+
+      <Stack direction="row" justifyContent="space-between"
+      divider={<Divider orientation="vertical" />}>
+      <Column columnItems={columnItems}></Column>
+      <Column columnItems={columnItems}></Column>
+      <Column columnItems={columnItems}></Column>
+      </Stack>
+
+      <DiscountItem></DiscountItem>
+      <DiscountItem></DiscountItem>
+      </Stack>
     </Paper>
   );
 }
