@@ -17,8 +17,10 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import { Link } from "react-router-dom";
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,8 +68,23 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [isShop, setIsShop] = React.useState(false);
   const [isLogged, setIsLogged] = React.useState(false);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickBasket = () => {
+    setOpen((prev) => !prev);
+  };
+
+  
+  const handleClickAwayBasket = (e) => {
+    if (("basket-button" !== e.path[2].id)){
+      setOpen(false);
+
+    }
+  };
+
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -85,12 +102,7 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const shopIn = () => {
-    setIsShop(true);
-  };
-  const shopOut = () => {
-    setIsShop(false);
-  };
+
   const logIn = () => {
     setIsLogged(true);
   };
@@ -203,12 +215,14 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem>
         <Button
+          id = "basket-button"
+          value ="basket-button-value"
           size="large"
-          aria-label="show 4 new mails"
+          aria-label="show items on the basket"
           color="inherit"
-          onClick={shopIn}
+          onClick={handleClickBasket}
         >
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={4} color="primary">
             <ShoppingBasketOutlinedIcon />
           </Badge>
         </Button>
@@ -280,10 +294,13 @@ export default function PrimarySearchAppBar() {
             </Button>
           </Box>
           <Button
+            id = "basket-button"
             size="large"
+            value ="basket-button-value"
+
             aria-label="show 17 new notifications"
             color="inherit"
-            onClick={shopIn}
+            onClick={handleClickBasket}
           >
             <Badge badgeContent={17} color="primary">
               <ShoppingBasketOutlinedIcon />
@@ -309,7 +326,14 @@ export default function PrimarySearchAppBar() {
       {renderMobileMenu}
       {isLogged && renderMenu}
       {!isLogged && renderMenu2}
-      {isShop && <SmallShopCard onConfirm={shopOut}></SmallShopCard>}
+
+      
+      <ClickAwayListener onClickAway={handleClickAwayBasket}>
+      <Box>
+      {open &&<SmallShopCard onConfirm={handleClickBasket}></SmallShopCard>}
+      </Box>
+       </ClickAwayListener>
+
     </AppBar>
   );
 }

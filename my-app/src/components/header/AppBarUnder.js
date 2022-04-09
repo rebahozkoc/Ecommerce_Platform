@@ -124,24 +124,22 @@ const ResponsiveAppBar = () => {
                 display: { xs: "none", md: "inline" },
               }}
             >
-                              <ClickAwayListener onClickAway={handleClickAwayDropDown}>
-              <Stack
-                direction="row"
-                justifyContent="space-around"
-                paddingBottom="0"
-              >
-
-                {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleDropDownMenuOpen}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page}
-                  </Button>
-                ))}
-                
-              </Stack>
+              <ClickAwayListener onClickAway={handleClickAwayDropDown}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-around"
+                  paddingBottom="0"
+                >
+                  {pages.map((page) => (
+                    <Button
+                      key={page}
+                      onClick={handleDropDownMenuOpen}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page}
+                    </Button>
+                  ))}
+                </Stack>
               </ClickAwayListener>
             </Box>
           </Toolbar>
