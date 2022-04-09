@@ -30,10 +30,10 @@ def run_migrations_online() -> None:
     """
     Run migrations in 'online' mode
     """
-    DB_URL = f"{settings.DATABASE_URL}_test" if os.environ.get("TESTING") else str(settings.DATABASE_URL)
+    
 
     # handle testing config for migrations
-    if os.environ.get("TESTING"):
+    if settings.TESTING:
         # connect to primary db
         default_engine = create_engine(str(settings.DATABASE_URL), isolation_level="AUTOCOMMIT")
         # drop testing db if it exists and create a fresh one
@@ -42,7 +42,7 @@ def run_migrations_online() -> None:
             default_conn.execute(f"CREATE DATABASE {settings.DB_NAME}_test")
 
     connectable = config.attributes.get("connection", None)
-    config.set_main_option("sqlalchemy.url", DB_URL)
+    config.set_main_option("sqlalchemy.url", settings.DB_URL)
 
     if connectable is None:
         connectable = engine_from_config(
