@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import Rating from "@mui/material/Rating";
+import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import IconButton from "@mui/material/IconButton";
@@ -26,16 +26,11 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CardItem = (props) => {
+const CardItem = () => {
   const [expanded, setExpanded] = React.useState(false);
-  const addFavourite = () => {
-    console.log("added to favourite");
-  };
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
-  const ratingChanged = () => {
-    console.log("hello");
   };
 
   return (
@@ -49,60 +44,30 @@ const CardItem = (props) => {
           <CardMedia
             component="img"
             height="194"
-            image={props.imageId}
+            image={`furn4.jpg`}
             alt="Voidture not Found"
           />
         </Link>
-        <Stack spacing={{ xs: 0, sm: 0, md: 0 }} sx={{ paddingBottom: 0 }}>
-          <Stack
-            direction="row"
-            justifyContent="space-evenly"
-            spacing={2}
-            sx={{ height: "30px" }}
-          >
-            <Typography variant="body2" color="text.secondary">
-              Item title
-            </Typography>
-            <IconButton aria-label="add to favorites" onClick={addFavourite}>
-              <FavoriteIcon />
-            </IconButton>
-          </Stack>
-
-          <Stack
-            direction="row"
-            justifyContent="space-evenly"
-            spacing={2}
-            sx={{ height: "30px" }}
-          >
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              fontWeight="bold"
-            >
-              {props.cost}
-            </Typography>
-            <CardActions>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            This place will consist the information about item and the money
+          </Typography>
+        </CardContent>
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "inline" } }}>
+          <Stack direction="row" justifyContent="space-evenly" spacing={2}>
+            <CardActions sx={{ display: { xs: "none", md: "inline" } }}>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
               <IconButton aria-label="share">
                 <ShoppingBasketOutlinedIcon />
               </IconButton>
-            </CardActions>
-          </Stack>
-
-          <Stack
-            direction="row"
-            justifyContent="space-evenly"
-            spacing={2}
-            sx={{ height: "30px" }}
-          >
-            <CardActions>
-              <Rating name="read-only" value={3} readOnly />
-
               <IconButton aria-label="share">
                 <CommentIcon />
               </IconButton>
             </CardActions>
           </Stack>
-        </Stack>
+        </Box>
       </Card>
     </ThemeProvider>
   );

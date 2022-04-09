@@ -20,11 +20,10 @@ export default function App() {
     <ThemeProvider theme={themeOptions}>
       <PrimarySearchAppBar></PrimarySearchAppBar>
       <ResponsiveAppBar></ResponsiveAppBar>
-
       <MediaCardTogether></MediaCardTogether>
-
       <CategoryCardHandler item={cards}></CategoryCardHandler>
       <CardHalfReverse></CardHalfReverse>
+      // Additional Widget
       <Card
         sx={{
           bgcolor: "background.paper",
@@ -36,11 +35,8 @@ export default function App() {
       >
         <MediaCard myId={4}></MediaCard>
       </Card>
-
       <CardItemHandler item={cards2}></CardItemHandler>
-
       <CardHalfTogether></CardHalfTogether>
-
       <Footer />
     </ThemeProvider>
   );

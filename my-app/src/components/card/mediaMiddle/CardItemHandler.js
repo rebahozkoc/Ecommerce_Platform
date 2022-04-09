@@ -9,7 +9,7 @@ const CardItemHandler = (props) => {
         <Grid container spacing={4}>
           {cards2.map((card) => (
             <Grid item key={card} xs={12} sm={6} md={3}>
-              <CardItem></CardItem>
+              <CardItem imageId="furn3.jpg" cost="1500$"></CardItem>
             </Grid>
           ))}
         </Grid>
