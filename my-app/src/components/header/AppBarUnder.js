@@ -9,11 +9,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import Grid from "@mui/material/Grid";
+
 import { Stack } from "@mui/material";
 import DropDownMenu from "../categories/DropDownMenu";
-import { TabPanel, TabList, TabContext } from "@mui/lab";
-import { Tab } from "@mui/material";
 
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
@@ -82,9 +80,7 @@ const ResponsiveAppBar = () => {
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
+              ></IconButton>
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorElNav}

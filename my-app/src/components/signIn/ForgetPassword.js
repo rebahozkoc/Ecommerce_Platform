@@ -1,11 +1,12 @@
-import * as React from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import themeOptions from "../theme";
+import PrimarySearchAppBar from "../header/AppBar";
+import ResponsiveAppBar from "../header/AppBarUnder";
+import Footer from "../footer/Footer";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
@@ -13,13 +14,7 @@ import {
   Container,
 } from "@mui/material";
 
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const theme = createTheme();
-
-export default function SignIn() {
+const ForgetPassword = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -28,9 +23,10 @@ export default function SignIn() {
       password: data.get("password"),
     });
   };
-
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themeOptions}>
+      <PrimarySearchAppBar></PrimarySearchAppBar>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -41,17 +37,23 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "orange" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h2" variant="h4" sx={{ fontWeight: 800 }}>
+            Password assistance
+          </Typography>
+          <Box sx={{ m: 1 }} />
+          <Typography
+            component="h2"
+            variant="body1"
+            sx={{ fontWeight: "bold" }}
+          >
+            Enter the email address or mobile phone number associated with your
+            Amazon account.
           </Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
+            sx={{ mt: 1, width: 400 }}
           >
             <TextField
               margin="normal"
@@ -63,36 +65,16 @@ export default function SignIn() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Continue
             </Button>
             <Grid container>
-              <Grid item xs>
-                <nav>
-                  <Link href="/forgetPassword" variant="body2">
-                    Forgot password?
-                  </Link>
-                </nav>
-              </Grid>
               <Grid item>
                 <Link href="/SignUp" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -102,6 +84,9 @@ export default function SignIn() {
           </Box>
         </Box>
       </Container>
+      <Box sx={{ m: 2 }} />
+      <Footer />
     </ThemeProvider>
   );
-}
+};
+export default ForgetPassword;

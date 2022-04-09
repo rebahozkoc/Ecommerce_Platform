@@ -13,7 +13,6 @@ import Menu from "@mui/material/Menu";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-
 import MoreIcon from "@mui/icons-material/MoreVert";
 import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
@@ -150,12 +149,18 @@ export default function PrimarySearchAppBar() {
       <nav>
         <Grid container spacing={2}>
           <Grid item xs={7} sm={4}>
-            <Link to="/SignIn" underline="none">
+            <Link
+              to="/SignIn"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <Button>Sign In</Button>
             </Link>
           </Grid>
           <Grid item xs={8} sm={7}>
-            <Link to="/SignUp" underline="none">
+            <Link
+              to="/SignUp"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <Button>Create Account</Button>
             </Link>
           </Grid>
@@ -169,7 +174,12 @@ export default function PrimarySearchAppBar() {
           style={{ minHeight: "4vh" }}
         >
           <Grid item xs={3}>
-            <Button onClick={handleMenuClose}>Orders</Button>
+            <Link
+              to="/Dummy"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button onClick={handleMenuClose}>Orders</Button>
+            </Link>
           </Grid>
         </Grid>
       </nav>
@@ -194,23 +204,27 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem onClick={handleProfileMenuOpen}>
-        <Button
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </Button>
+        <Link to="/Dummy" style={{ textDecoration: "none", color: "black" }}>
+          <Button
+            size="large"
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </Button>
+        </Link>
         <p>Profile</p>
       </MenuItem>
       <MenuItem>
-        <Button size="large" color="inherit">
-          <Badge badgeContent={17} color="primary">
-            <FavoriteOutlinedIcon />
-          </Badge>
-        </Button>
+        <Link to="/Dummy" style={{ textDecoration: "none", color: "black" }}>
+          <Button size="large" color="inherit">
+            <Badge badgeContent={17} color="primary">
+              <FavoriteOutlinedIcon />
+            </Badge>
+          </Button>
+        </Link>
         <p>Favourites</p>
       </MenuItem>
       <MenuItem>
@@ -284,14 +298,23 @@ export default function PrimarySearchAppBar() {
               flexDirection: "column",
             }}
           >
-            <Button size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="primary">
-                <FavoriteOutlinedIcon />
-              </Badge>
-              <Box sx={{ fontSize: 8 }}>
-                <div>&nbsp;</div> Favourites
-              </Box>
-            </Button>
+            <Link
+              to="/Dummy"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge badgeContent={4} color="primary">
+                  <FavoriteOutlinedIcon />
+                </Badge>
+                <Box sx={{ fontSize: 8 }}>
+                  <div>&nbsp;</div> Favourites
+                </Box>
+              </Button>
+            </Link>
           </Box>
           <Button
             id = "basket-button"
