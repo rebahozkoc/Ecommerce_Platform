@@ -30,7 +30,7 @@ const CategoryCard = () => {
   return (
     <ThemeProvider theme={themeOptions}>
       <Card sx={{ maxWidth: 400 }}>
-        <Link to="/Dummy" underline="none">
+        <Link to="/Categories" underline="none">
           <CardMedia
             component="img"
             height="194"

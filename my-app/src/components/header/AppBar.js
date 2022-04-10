@@ -16,10 +16,9 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 import { Link } from "react-router-dom";
-
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,15 +74,11 @@ export default function PrimarySearchAppBar() {
     setOpen((prev) => !prev);
   };
 
-  
   const handleClickAwayBasket = (e) => {
-    if (("basket-button" !== e.path[2].id)){
+    if ("basket-button" !== e.path[2].id) {
       setOpen(false);
-
     }
   };
-
-
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -229,8 +224,8 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem>
         <Button
-          id = "basket-button"
-          value ="basket-button-value"
+          id="basket-button"
+          value="basket-button-value"
           size="large"
           aria-label="show items on the basket"
           color="inherit"
@@ -258,14 +253,16 @@ export default function PrimarySearchAppBar() {
           />
         </Search>
         <Box sx={{ flexGrow: 1 }}> </Box>
-        <Typography
-          variant="h3"
-          noWrap
-          component="div"
-          sx={{ m: 2, display: { xs: "none", sm: "block" } }}
-        >
-          Voidture
-        </Typography>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <Typography
+            variant="h3"
+            noWrap
+            component="div"
+            sx={{ m: 2, display: { xs: "none", sm: "block" } }}
+          >
+            Voidture
+          </Typography>
+        </Link>
 
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -317,10 +314,9 @@ export default function PrimarySearchAppBar() {
             </Link>
           </Box>
           <Button
-            id = "basket-button"
+            id="basket-button"
             size="large"
-            value ="basket-button-value"
-
+            value="basket-button-value"
             aria-label="show 17 new notifications"
             color="inherit"
             onClick={handleClickBasket}
@@ -350,13 +346,16 @@ export default function PrimarySearchAppBar() {
       {isLogged && renderMenu}
       {!isLogged && renderMenu2}
 
-      
       <ClickAwayListener onClickAway={handleClickAwayBasket}>
-      <Box>
-      {open &&<SmallShopCard onConfirm={handleClickBasket}></SmallShopCard>}
-      </Box>
-       </ClickAwayListener>
-
+        <Box>
+          {open && (
+            <SmallShopCard
+              onConfirm={handleClickBasket}
+              cards={[111, 1232, 31, 123, 532]}
+            ></SmallShopCard>
+          )}
+        </Box>
+      </ClickAwayListener>
     </AppBar>
   );
 }
