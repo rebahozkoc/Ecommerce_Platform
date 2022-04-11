@@ -351,7 +351,56 @@ export default function PrimarySearchAppBar() {
           {open && (
             <SmallShopCard
               onConfirm={handleClickBasket}
-              cards={[111, 1232, 31, 123, 532]}
+              cards={[
+                {
+                  key: 61,
+                  imageId: "furn1.jpg",
+                  cost: 1200,
+                  title: "Sofa",
+                  description:
+                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                },
+                {
+                  key: 62,
+                  imageId: "furn2.jpg",
+                  cost: 120,
+                  title: "Sofa",
+                  description:
+                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                },
+                {
+                  key: 63,
+                  imageId: "furn3.jpg",
+                  cost: 1300,
+                  title: "Sofa",
+                  description:
+                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                },
+                {
+                  key: 64,
+                  imageId: "furn4.jpg",
+                  cost: 1515,
+                  title: "Sofa",
+                  description:
+                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                },
+                {
+                  key: 65,
+                  imageId: "furn5.jpg",
+                  cost: 121.22,
+                  title: "Sofa",
+                  description:
+                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                },
+                {
+                  key: 66,
+                  imageId: "furn6.jpg",
+                  cost: 123.67,
+                  title: "Sofa",
+                  description:
+                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                },
+              ]}
             ></SmallShopCard>
           )}
         </Box>
