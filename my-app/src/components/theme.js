@@ -14,6 +14,9 @@ let themeOptions = createTheme({
     white: {
       main: "#ffffff",
     },
+    background: {
+      default: '#F7F3F0',
+    },
   },
   props: {
     MuiList: {

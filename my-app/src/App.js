@@ -11,6 +11,9 @@ import "./App.css";
 import CardHalfTogether from "./components/card/mediaMiddle/CardHalfTogether";
 import CardHalfReverse from "./components/card/mediaMiddle/CardHalfReverse";
 import CardItemHandler from "./components/card/mediaMiddle/CardItemHandler";
+import MediaCardStyled from "./components/card/mediaTop/MediaCardStyled";
+
+
 // Or Create your Own theme:
 const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 const cards2 = [9, 10, 11, 12, 13, 14, 15, 16];
@@ -20,7 +23,10 @@ export default function App() {
     <ThemeProvider theme={themeOptions}>
       <PrimarySearchAppBar></PrimarySearchAppBar>
       <ResponsiveAppBar></ResponsiveAppBar>
-      <MediaCardTogether></MediaCardTogether>
+      
+      <MediaCardStyled></MediaCardStyled>
+
+      
       <CategoryCardHandler item={cards}></CategoryCardHandler>
       <CardHalfReverse></CardHalfReverse>
       // Additional Widget
