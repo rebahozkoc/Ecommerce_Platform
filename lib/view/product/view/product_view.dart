@@ -38,10 +38,19 @@ class _ProductViewState extends State<ProductView> {
     return AppBar(
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () {
+          debugPrint("Back button pressed");
+        },
       ),
       title: Text("Product Details"),
-
+      actions: [
+        IconButton(
+            onPressed: (){
+          debugPrint("Cart Button Pressed");
+        },
+        icon: Icon(Icons.shopping_bag),
+        )
+      ],
     );
   }
 
@@ -54,8 +63,17 @@ class _ProductViewState extends State<ProductView> {
             ],
           )
       ),
+      Expanded(child:
+      Container(
+        width: double.infinity,
+        height: 100,
+        color: AppColors.primary,
+      ),
+      ),
+
     ],
   );
+
 }
 
 
@@ -70,7 +88,6 @@ class RoundedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
       padding: EdgeInsets.only(bottom: 20),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -84,5 +101,7 @@ class RoundedContainer extends StatelessWidget {
     );
   }
 }
+
+
 
 

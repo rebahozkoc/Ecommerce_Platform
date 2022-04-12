@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/core/widgets/customScrollPhysics.dart';
 
 class PageProduct extends StatelessWidget {
   const PageProduct({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class PageProduct extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [_content(), _infos(), Container()],
-
+          
         ),
       )
     );
@@ -46,7 +47,6 @@ class PageProduct extends StatelessWidget {
                   _incrementButton(),
                 ],
               ),
-
             ],
           ),
         )
@@ -67,6 +67,17 @@ class PageProduct extends StatelessWidget {
       ),
     );
   }
+
+  ClipRRect _smallImage() => ClipRRect(
+    borderRadius: const BorderRadius.all(Radius.circular(8)),
+    child: CachedNetworkImage(
+      imageUrl:
+      "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
+      width: 100,
+      height: 100,
+      fit: BoxFit.fill,
+    ),
+  );
 
   InkWell _favoriteButton() => InkWell(
     onTap: (() {
@@ -106,7 +117,6 @@ class PageProduct extends StatelessWidget {
   );
 
   SizedBox _infos() => SizedBox(
-    height: 72,
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -120,6 +130,20 @@ class PageProduct extends StatelessWidget {
           ),
           _itemNo(),
           _producer(),
+          _descriptionTitle(),
+          _description(),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Similar Item",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColors.tertiary,
+              fontSize: 18,
+            ),
+          ),
+          _similar(),
         ],
       ),
     ),
@@ -213,9 +237,12 @@ class PageProduct extends StatelessWidget {
     ),
   );
 
-  Row _description() => Row(
+  Row _descriptionTitle() => Row(
     mainAxisAlignment: MainAxisAlignment.start,
-    children: [
+    children: const [
+      SizedBox(
+        height: 50,
+      ),
          Text(
         "Description",
         style: TextStyle(
@@ -226,5 +253,51 @@ class PageProduct extends StatelessWidget {
       ),
     ],
   );
+
+  Row _description() => Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      const SizedBox(
+        height: 10,
+      ),
+      Flexible(
+          child: Text(
+            "People have been using natural objects, such as tree stumps, rocks and moss, as furniture since the beginning of human civilisation. Archaeological research.",
+            style: TextStyle(
+              color: AppColors.darkGray,
+              fontWeight: FontWeight.w200,
+              fontSize: 14,
+            ),
+          ))
+    ],
+  );
+
+  SizedBox _similarItem() {
+    return SizedBox(
+      width: 1000,
+      height: 100,
+      child: ListView.builder(
+        primary: true,
+        scrollDirection: Axis.horizontal,
+        physics: const CustomScrollPhysics(itemDimension: 120),
+        itemCount: 5,
+        itemBuilder: (context, index) => _similar(),
+      ),
+    );
+  }
+
+  Padding _similar() => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: SizedBox(
+      width: 100,
+      child: Stack(children: [
+        _smallImage(),
+      ]),
+    ),
+  );
+
+
+
+
 
 }
