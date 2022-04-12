@@ -87,15 +87,20 @@ const SmallShopCard = (props) => {
                 justifyContent: "center",
               }}
             >
-              <Button
-                sx={{
-                  backgroundColor: "#ff6600",
-                  display: "block",
-                  padding: (8, 1, 8, 1),
-                }}
+              <Link
+                to="/Basket"
+                style={{ textDecoration: "none", color: "black" }}
               >
-                <Typography sx={{ color: "black" }}>My Basket</Typography>
-              </Button>
+                <Button
+                  sx={{
+                    backgroundColor: "#ff6600",
+                    display: "block",
+                    padding: (8, 1, 8, 1),
+                  }}
+                >
+                  <Typography sx={{ color: "black" }}>My Basket</Typography>
+                </Button>
+              </Link>
             </Link>
           </Stack>
         </Drawer>

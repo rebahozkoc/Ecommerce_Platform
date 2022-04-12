@@ -11,9 +11,11 @@ import SignUp from "./components/signIn/SignUp";
 import ForgetPassword from "./components/signIn/ForgetPassword";
 import Dummy from "./components/Dummy";
 import CategoryProduct from "./containers/categoryProduct";
+import ShoppingBasket from "./components/shoppingBasket/ShoppingBasket";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
+      <Route path="/Basket" element={<ShoppingBasket />} />
       <Route path="/Categories" element={<CategoryProduct />} />
       <Route path="/Dummy" element={<Dummy />} />
       <Route path="forgetPassword" element={<ForgetPassword />} />

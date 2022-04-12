@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 
 import { Stack } from "@mui/material";
-import DropDownMenu from "../categories/DropDownMenu";
+import DropDownMenu from "./categories/DropDownMenu";
 
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 

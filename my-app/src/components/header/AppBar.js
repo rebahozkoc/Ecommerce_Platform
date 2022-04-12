@@ -292,7 +292,7 @@ export default function PrimarySearchAppBar() {
           color="inherit"
           onClick={handleClickBasket}
         >
-          <Badge badgeContent={4} color="primary">
+          <Badge badgeContent={c.length} color="primary">
             <ShoppingBasketOutlinedIcon />
           </Badge>
         </Button>
@@ -382,7 +382,7 @@ export default function PrimarySearchAppBar() {
             color="inherit"
             onClick={handleClickBasket}
           >
-            <Badge badgeContent={17} color="primary">
+            <Badge badgeContent={c.length} color="primary">
               <ShoppingBasketOutlinedIcon />
             </Badge>
             <Box sx={{ fontSize: 8 }}>
