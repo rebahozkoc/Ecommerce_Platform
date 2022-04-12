@@ -1,11 +1,8 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import Rating from "@mui/material/Rating";
 import CardActions from "@mui/material/CardActions";
-import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
@@ -27,16 +24,9 @@ const ExpandMore = styled((props) => {
 
 const SmallItem = (props) => {
   const [expanded, setExpanded] = React.useState(false);
-  const addFavourite = () => {
-    console.log("added to favourite");
+  const removeHandler = () => {
+    props.delete(props.id);
   };
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-  const ratingChanged = () => {
-    console.log("hello");
-  };
-
   return (
     <ThemeProvider theme={themeOptions}>
       <Card sx={{ maxWidth: 500, maxHeight: 500 }}>
@@ -73,7 +63,7 @@ const SmallItem = (props) => {
             {props.cost}$
           </Typography>
           <CardActions>
-            <IconButton aria-label="share">
+            <IconButton aria-label="share" onClick={removeHandler}>
               <DeleteOutlinedIcon />
             </IconButton>
           </CardActions>

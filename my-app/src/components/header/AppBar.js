@@ -19,7 +19,50 @@ import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlin
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 import { Link } from "react-router-dom";
-
+let c = [
+  {
+    key: 61,
+    imageId: "furn1.jpg",
+    cost: 1200,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 62,
+    imageId: "furn2.jpg",
+    cost: 120,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 63,
+    imageId: "furn3.jpg",
+    cost: 1300,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 64,
+    imageId: "furn4.jpg",
+    cost: 1515,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 65,
+    imageId: "furn5.jpg",
+    cost: 121.22,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 66,
+    imageId: "furn6.jpg",
+    cost: 123.67,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+];
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -61,6 +104,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  const [filter, setFilter] = React.useState(-1);
+
+  const RemoveCardHand = (toDelete) => {
+    setFilter(toDelete);
+    console.log(filter);
+  };
+  const filterCards = () => {
+    c = c.filter(function (card) {
+      return card.key != filter;
+    });
+
+    console.log(c);
+  };
+  React.useEffect(() => {
+    console.log(filter);
+    filterCards();
+    setFilter(-1);
+  }, [filter]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -351,56 +412,8 @@ export default function PrimarySearchAppBar() {
           {open && (
             <SmallShopCard
               onConfirm={handleClickBasket}
-              cards={[
-                {
-                  key: 61,
-                  imageId: "furn1.jpg",
-                  cost: 1200,
-                  title: "Sofa",
-                  description:
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                },
-                {
-                  key: 62,
-                  imageId: "furn2.jpg",
-                  cost: 120,
-                  title: "Sofa",
-                  description:
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                },
-                {
-                  key: 63,
-                  imageId: "furn3.jpg",
-                  cost: 1300,
-                  title: "Sofa",
-                  description:
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                },
-                {
-                  key: 64,
-                  imageId: "furn4.jpg",
-                  cost: 1515,
-                  title: "Sofa",
-                  description:
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                },
-                {
-                  key: 65,
-                  imageId: "furn5.jpg",
-                  cost: 121.22,
-                  title: "Sofa",
-                  description:
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                },
-                {
-                  key: 66,
-                  imageId: "furn6.jpg",
-                  cost: 123.67,
-                  title: "Sofa",
-                  description:
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                },
-              ]}
+              cards={c}
+              removeCard={RemoveCardHand}
             ></SmallShopCard>
           )}
         </Box>

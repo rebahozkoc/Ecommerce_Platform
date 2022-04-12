@@ -9,10 +9,6 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { Link } from "react-router-dom";
 import { Typography, Button, ThemeProvider, Stack } from "@mui/material";
 import SmallItem from "./SmallItem";
@@ -30,6 +26,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const SmallShopCard = (props) => {
+  const removeCardHandler = (id) => {
+    props.removeCard(id);
+  };
   const theme = useTheme();
   const open = true;
   let totalCost = 0;
@@ -66,6 +65,8 @@ const SmallShopCard = (props) => {
                   cost={card.cost}
                   description={card.description}
                   title={card.title}
+                  id={card.key}
+                  delete={removeCardHandler}
                 >
                   {(totalCost += card.cost)}
                 </SmallItem>
@@ -73,9 +74,9 @@ const SmallShopCard = (props) => {
             ))}
           </List>
           <Divider variant="fullWidth" />
+          <Box sx={{ m: 2 }} />
           <Typography variant="body2" sx={{ color: "black" }}>
             The total cost is {totalCost}$.
-            <Box sx={{ m: 2 }} />
           </Typography>
           <Stack justifyContent="center" alignItems="center">
             <Link
@@ -97,7 +98,6 @@ const SmallShopCard = (props) => {
               </Button>
             </Link>
           </Stack>
-          <Box sx={{ m: 1 }} />
         </Drawer>
       </Box>
     </ThemeProvider>

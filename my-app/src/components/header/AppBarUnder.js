@@ -55,18 +55,6 @@ const ResponsiveAppBar = () => {
     setStyle({ display: "none" });
   };
 
-  // Dropdown menu
-  /*
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleHover = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  */
-
   return (
     <div>
       <AppBar position="static" color="inherit">
