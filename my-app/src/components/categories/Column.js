@@ -11,7 +11,6 @@ import DraftsIcon from "@mui/icons-material/Drafts";
 
 import { Paper } from "@mui/material";
 
-
 const Column = (props) => {
     const columnItems = props.columnItems
   return (

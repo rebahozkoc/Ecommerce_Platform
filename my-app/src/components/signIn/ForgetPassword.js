@@ -26,7 +26,6 @@ const ForgetPassword = () => {
   return (
     <ThemeProvider theme={themeOptions}>
       <PrimarySearchAppBar></PrimarySearchAppBar>
-      <ResponsiveAppBar></ResponsiveAppBar>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -85,7 +84,6 @@ const ForgetPassword = () => {
         </Box>
       </Container>
       <Box sx={{ m: 2 }} />
-      <Footer />
     </ThemeProvider>
   );
 };

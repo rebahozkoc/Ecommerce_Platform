@@ -14,10 +14,8 @@ import {
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const theme = createTheme();
+import { ThemeProvider } from "@mui/material";
+import themeOptions from "../theme";
 
 export default function SignIn() {
   const handleSubmit = (event) => {
@@ -30,7 +28,7 @@ export default function SignIn() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themeOptions}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
