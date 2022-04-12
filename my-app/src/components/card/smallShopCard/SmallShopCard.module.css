@@ -19,6 +19,10 @@
   overflow: hidden;
 }
 
+.link {
+  justify-content: center;
+}
+
 .header {
   background: #4f005f;
   padding: 1rem;

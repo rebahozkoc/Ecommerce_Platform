@@ -10,9 +10,11 @@ import SignIn from "./components/signIn/SignIn";
 import SignUp from "./components/signIn/SignUp";
 import ForgetPassword from "./components/signIn/ForgetPassword";
 import Dummy from "./components/Dummy";
+import CategoryProduct from "./containers/categoryProduct";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
+      <Route path="/Categories" element={<CategoryProduct />} />
       <Route path="/Dummy" element={<Dummy />} />
       <Route path="forgetPassword" element={<ForgetPassword />} />
       <Route path="/SignIn/" element={<SignIn />}></Route>

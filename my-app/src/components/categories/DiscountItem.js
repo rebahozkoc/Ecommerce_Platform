@@ -10,12 +10,10 @@ import { ThemeProvider } from "@emotion/react";
 import { Link } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 
-
 const DiscountItem = () => {
-
-    return(
+  return (
     <ThemeProvider theme={themeOptions}>
-      <Card sx={{ maxWidth: 400 }}>
+      <Card sx={{ maxWidth: 400 }} key={123131241}>
         <Link to="/Dummy" underline="none">
           <CardMedia
             component="img"
@@ -25,8 +23,7 @@ const DiscountItem = () => {
         </Link>
       </Card>
     </ThemeProvider>
-    )
+  );
 };
-
 
 export default DiscountItem;

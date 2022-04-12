@@ -12,14 +12,13 @@ import DraftsIcon from "@mui/icons-material/Drafts";
 import { Paper } from "@mui/material";
 
 const Column = (props) => {
-    const columnItems = props.columnItems
+  const columnItems = props.columnItems;
   return (
-    <Box sx={{ width: "100%", maxWidth: 300, minWidth: 250}}>
+    <Box sx={{ width: "100%", maxWidth: 300, minWidth: 250 }}>
       <nav aria-label="category-items">
-        <List
-        dense>
+        <List dense>
           {columnItems.map((item) => (
-            <ListItem>
+            <ListItem key={item}>
               <ListItemButton>
                 <ListItemText primary={item} />
               </ListItemButton>

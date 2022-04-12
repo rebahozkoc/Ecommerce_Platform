@@ -16,11 +16,53 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 import { Link } from "react-router-dom";
-
-
+let c = [
+  {
+    key: 61,
+    imageId: "furn1.jpg",
+    cost: 1200,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 62,
+    imageId: "furn2.jpg",
+    cost: 120,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 63,
+    imageId: "furn3.jpg",
+    cost: 1300,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 64,
+    imageId: "furn4.jpg",
+    cost: 1515,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 65,
+    imageId: "furn5.jpg",
+    cost: 121.22,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+  {
+    key: 66,
+    imageId: "furn6.jpg",
+    cost: 123.67,
+    title: "Sofa",
+    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+  },
+];
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -62,6 +104,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  const [filter, setFilter] = React.useState(-1);
+
+  const RemoveCardHand = (toDelete) => {
+    setFilter(toDelete);
+    console.log(filter);
+  };
+  const filterCards = () => {
+    c = c.filter(function (card) {
+      return card.key != filter;
+    });
+
+    console.log(c);
+  };
+  React.useEffect(() => {
+    console.log(filter);
+    filterCards();
+    setFilter(-1);
+  }, [filter]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -75,15 +135,11 @@ export default function PrimarySearchAppBar() {
     setOpen((prev) => !prev);
   };
 
-  
   const handleClickAwayBasket = (e) => {
-    if (("basket-button" !== e.path[2].id)){
+    if ("basket-button" !== e.path[2].id) {
       setOpen(false);
-
     }
   };
-
-
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -229,8 +285,8 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem>
         <Button
-          id = "basket-button"
-          value ="basket-button-value"
+          id="basket-button"
+          value="basket-button-value"
           size="large"
           aria-label="show items on the basket"
           color="inherit"
@@ -258,14 +314,16 @@ export default function PrimarySearchAppBar() {
           />
         </Search>
         <Box sx={{ flexGrow: 1 }}> </Box>
-        <Typography
-          variant="h3"
-          noWrap
-          component="div"
-          sx={{ m: 2, display: { xs: "none", sm: "block" } }}
-        >
-          Voidture
-        </Typography>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <Typography
+            variant="h3"
+            noWrap
+            component="div"
+            sx={{ m: 2, display: { xs: "none", sm: "block" } }}
+          >
+            Voidture
+          </Typography>
+        </Link>
 
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -317,10 +375,9 @@ export default function PrimarySearchAppBar() {
             </Link>
           </Box>
           <Button
-            id = "basket-button"
+            id="basket-button"
             size="large"
-            value ="basket-button-value"
-
+            value="basket-button-value"
             aria-label="show 17 new notifications"
             color="inherit"
             onClick={handleClickBasket}
@@ -350,13 +407,17 @@ export default function PrimarySearchAppBar() {
       {isLogged && renderMenu}
       {!isLogged && renderMenu2}
 
-      
       <ClickAwayListener onClickAway={handleClickAwayBasket}>
-      <Box>
-      {open &&<SmallShopCard onConfirm={handleClickBasket}></SmallShopCard>}
-      </Box>
-       </ClickAwayListener>
-
+        <Box>
+          {open && (
+            <SmallShopCard
+              onConfirm={handleClickBasket}
+              cards={c}
+              removeCard={RemoveCardHand}
+            ></SmallShopCard>
+          )}
+        </Box>
+      </ClickAwayListener>
     </AppBar>
   );
 }
