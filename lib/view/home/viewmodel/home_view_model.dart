@@ -13,4 +13,9 @@ abstract class _HomeViewModelBase with Store, BaseViewModel {
   void init() {}
 
   void dispose() {}
+
+  Future<bool> load() async =>
+      await Future.delayed(const Duration(milliseconds: 500), () {
+        return true;
+      });
 }
