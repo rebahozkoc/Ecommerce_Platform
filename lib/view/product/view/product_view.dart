@@ -54,6 +54,7 @@ class _ProductViewState extends State<ProductView> {
     );
   }
 
+
   ListView _body() => ListView(
     children: [
       RoundedContainer(
@@ -63,13 +64,13 @@ class _ProductViewState extends State<ProductView> {
             ],
           )
       ),
-      Expanded(child:
-      Container(
-        width: double.infinity,
-        height: 100,
-        color: AppColors.primary,
-      ),
-      ),
+      BottomContainer(child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          addToCart(),
+          buyNow(),
+        ],
+      )),
 
     ],
   );
@@ -98,6 +99,26 @@ class RoundedContainer extends StatelessWidget {
         )
       ),
       child: child,
+    );
+  }
+}
+
+class BottomContainer extends StatelessWidget {
+  const BottomContainer({Key? key, required this.child}) : super(key: key);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+        ),
+        child: child,
+      ),
     );
   }
 }

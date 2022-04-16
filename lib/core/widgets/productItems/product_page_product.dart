@@ -296,8 +296,43 @@ class PageProduct extends StatelessWidget {
     ),
   );
 
-
-
-
-
 }
+
+OutlinedButton addToCart() => OutlinedButton(
+  onPressed: (){
+    debugPrint("Add to cart button pressed...");
+  },
+  child: Text(
+    "Add To Cart",
+    style: TextStyle(
+      color: AppColors.white,
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+    ),
+  ),
+  style: OutlinedButton.styleFrom(
+    primary: AppColors.primary,
+    fixedSize: Size(150, 50),
+    side: BorderSide(width: 1.0, color: AppColors.white)
+  ),
+);
+
+OutlinedButton buyNow() => OutlinedButton(
+  onPressed: (){
+    debugPrint("Buy now button pressed...");
+  },
+  child: Text(
+    "Buy Now",
+    style: TextStyle(
+      color: AppColors.black,
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+    ),
+  ),
+  style: OutlinedButton.styleFrom(
+    backgroundColor: AppColors.white,
+      primary: AppColors.white,
+      fixedSize: Size(150, 50),
+      side: BorderSide(width: 1.0, color: AppColors.white)
+  ),
+);
