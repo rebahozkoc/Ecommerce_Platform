@@ -9,7 +9,6 @@ import 'package:mobile/core/init/theme/app_theme.dart';
 import 'package:mobile/core/init/theme/light_theme.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/bottombar_view.dart';
-import 'package:mobile/view/product/view/product_view.dart';
 
 Future<void> main() async {
   await _init();
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       //darkTheme: DarkThemeData(),
-      home: const ProductView(),
+      home: const Home(),
       builder: (context, child) {
         return ScrollConfiguration(
           behavior: AvoidGlowBehavior(),
