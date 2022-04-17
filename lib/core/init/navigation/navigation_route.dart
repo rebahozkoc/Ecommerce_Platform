@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_animation.dart';
 import 'package:mobile/main.dart';
+import 'package:mobile/view/search/view/search_view.dart';
 
 class NavigationRoute {
   static final NavigationRoute _instance = NavigationRoute._init();
@@ -12,10 +13,10 @@ class NavigationRoute {
 
   Route<dynamic> generateRoute(RouteSettings args) {
     switch (args.name) {
+      case NavigationConstants.SEARCH:
+        return bottomToTopNavigate(const SearchView(), NavigationConstants.SEARCH);
       default:
-        return defaultNavigate(
-            const Home(),
-            NavigationConstants.DEFAULT);
+        return defaultNavigate(const Home(), NavigationConstants.DEFAULT);
     }
   }
 

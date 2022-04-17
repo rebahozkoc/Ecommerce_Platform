@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
 class SearchButtonWidget extends StatelessWidget {
@@ -6,24 +8,28 @@ class SearchButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      width: MediaQuery.of(context).size.width,
-      height: 48,
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x19575B7D),
-            spreadRadius: 0,
-            blurRadius: 12,
-            offset: Offset(0, 4),
-          ),
-        ],
+    return InkWell(
+      onTap: (() => NavigationService.instance
+          .navigateToPage(path: NavigationConstants.SEARCH)),
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        width: MediaQuery.of(context).size.width,
+        height: 48,
+        decoration: const BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x19575B7D),
+              spreadRadius: 0,
+              blurRadius: 12,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: _searchContent(),
       ),
-      child: _searchContent(),
     );
   }
 
