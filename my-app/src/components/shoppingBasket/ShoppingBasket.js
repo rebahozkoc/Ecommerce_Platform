@@ -274,6 +274,8 @@ const ShoppingBasket = () => {
                     }}
                   >
                     <Button
+                      fullWidth
+                      variant="contained"
                       sx={{
                         backgroundColor: "#ff6600",
                         display: "block",
