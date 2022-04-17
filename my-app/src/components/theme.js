@@ -15,7 +15,7 @@ let themeOptions = createTheme({
       main: "#ffffff",
     },
     background: {
-      default: '#F7F3F0',
+      default: "#F7F3F0",
     },
   },
   props: {
