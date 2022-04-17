@@ -4,6 +4,7 @@ import 'package:mobile/view/auth/login/viewmodel/login_view_model.dart';
 import 'package:mobile/view/categories/viewmodel/categories_view_model.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
+import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 
 GetIt locator = GetIt.instance;
@@ -18,6 +19,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => AccountViewModel());
   locator.registerLazySingleton(() => FavoritesViewModel());
   locator.registerLazySingleton(() => LoginViewModel());
+  locator.registerLazySingleton(() => ProductViewModel());
+
 }
 
 Future<void> resetLocator() async {
