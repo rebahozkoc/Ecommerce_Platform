@@ -8,8 +8,8 @@ import { CssBaseline } from "@mui/material";
 const addressListPage = () => {
   return (
     <ThemeProvider theme={themeOptions}>
-        
-      <Box sx={{ bgcolor: "white.main", ml: 12, mr: 12}}>
+      <CssBaseline/>
+      <Box sx={{ml: 12, mr: 12}}>
         <AddressListHeader></AddressListHeader>
         <Box
           sx={{

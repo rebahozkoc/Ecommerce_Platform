@@ -7,6 +7,7 @@ import HttpsTwoToneIcon from "@mui/icons-material/HttpsTwoTone";
 const addressListHeader = () => {
   return (
     <ThemeProvider theme={themeOptions}>
+      <CssBaseline/>
       <AppBar color="transparent" elevation={0} position="static">
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="h2" noWrap component="div" sx={{ m: 2, pl: 16 }}>

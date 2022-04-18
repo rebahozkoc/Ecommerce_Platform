@@ -190,7 +190,7 @@ const ShoppingBasket = () => {
                   overflow: "auto",
                 }}
               >
-                <Card sx={{ backgroundColor: "#EAECEC" }}>
+                <Card sx={{ backgroundColor: "#EAECEC", borderRadius: 0  }}>
                   <Typography
                     align="center"
                     variant="body1"
@@ -200,7 +200,7 @@ const ShoppingBasket = () => {
                     Order Summary
                   </Typography>
                 </Card>
-                <Card sx={{ padding: (2, 2, 2, 2) }}>
+                <Card elevation={0} sx={{ padding: (2, 2, 2, 2), borderRadius: 0}}>
                   <Stack direction="row">
                     <Typography
                       align="left"
@@ -274,12 +274,13 @@ const ShoppingBasket = () => {
                     }}
                   >
                     <Button
-                      fullWidth
+                      
                       variant="contained"
                       sx={{
                         backgroundColor: "#ff6600",
                         display: "block",
                         padding: (8, 1, 8, 1),
+                        mb: 2,
                         justify: "center",
                       }}
                     >
