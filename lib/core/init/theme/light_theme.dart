@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
 import 'app_theme.dart';
@@ -53,9 +54,12 @@ class AppThemeLight extends AppTheme {
   AppBarTheme get appBarTheme {
     return const AppBarTheme(
       color: AppColors.transparent,
+      systemOverlayStyle:
+          SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
       elevation: 0,
       centerTitle: true,
-      titleTextStyle: TextStyle(fontSize: 20, color: AppColors.tertiary, fontWeight: FontWeight.bold),
+      titleTextStyle: TextStyle(
+          fontSize: 20, color: AppColors.tertiary, fontWeight: FontWeight.bold),
       iconTheme: IconThemeData(
         color: AppColors.tertiary, //change your color here
       ),
