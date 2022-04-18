@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
-import 'package:mobile/core/extension/string_extension.dart';
-import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/productItems/product_page_product.dart';
@@ -37,18 +35,18 @@ class _ProductViewState extends State<ProductView> {
   AppBar _appBar(){
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
+        icon: const Icon(Icons.arrow_back, color: AppColors.black),
         onPressed: () {
           debugPrint("Back button pressed");
         },
       ),
-      title: Text("Product Details"),
+      title: const Text("Product Details"),
       actions: [
         IconButton(
             onPressed: (){
           debugPrint("Cart Button Pressed");
         },
-        icon: Icon(Icons.shopping_bag),
+        icon: const Icon(Icons.shopping_bag),
         )
       ],
     );
@@ -59,7 +57,7 @@ class _ProductViewState extends State<ProductView> {
     children: [
       RoundedContainer(
           child: Column(
-            children: [
+            children: const [
               PageProduct(),
             ],
           )
@@ -89,9 +87,9 @@ class RoundedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 20),
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
@@ -114,7 +112,7 @@ class BottomContainer extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 100,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.primary,
         ),
         child: child,

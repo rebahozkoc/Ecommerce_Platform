@@ -135,7 +135,7 @@ class PageProduct extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             "Similar Item",
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -228,7 +228,7 @@ class PageProduct extends StatelessWidget {
     );
   }
 
-  Text _cartCounter() => Text(
+  Text _cartCounter() => const Text(
     "1",
     style: TextStyle(
       fontSize: 16,
@@ -256,8 +256,8 @@ class PageProduct extends StatelessWidget {
 
   Row _description() => Row(
     mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      const SizedBox(
+    children: const [
+      SizedBox(
         height: 10,
       ),
       Flexible(
@@ -302,7 +302,7 @@ OutlinedButton addToCart() => OutlinedButton(
   onPressed: (){
     debugPrint("Add to cart button pressed...");
   },
-  child: Text(
+  child: const Text(
     "Add To Cart",
     style: TextStyle(
       color: AppColors.white,
@@ -312,8 +312,8 @@ OutlinedButton addToCart() => OutlinedButton(
   ),
   style: OutlinedButton.styleFrom(
     primary: AppColors.primary,
-    fixedSize: Size(150, 50),
-    side: BorderSide(width: 1.0, color: AppColors.white)
+    fixedSize: const Size(150, 50),
+    side: const BorderSide(width: 1.0, color: AppColors.white)
   ),
 );
 
@@ -321,7 +321,7 @@ OutlinedButton buyNow() => OutlinedButton(
   onPressed: (){
     debugPrint("Buy now button pressed...");
   },
-  child: Text(
+  child: const Text(
     "Buy Now",
     style: TextStyle(
       color: AppColors.black,
@@ -332,7 +332,7 @@ OutlinedButton buyNow() => OutlinedButton(
   style: OutlinedButton.styleFrom(
     backgroundColor: AppColors.white,
       primary: AppColors.white,
-      fixedSize: Size(150, 50),
-      side: BorderSide(width: 1.0, color: AppColors.white)
+      fixedSize: const Size(150, 50),
+      side: const BorderSide(width: 1.0, color: AppColors.white)
   ),
 );
