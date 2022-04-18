@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
@@ -33,7 +34,10 @@ class _SearchViewState extends BaseState<SearchView> {
   }
 
   CustomScrollView _body() => CustomScrollView(
-        slivers: [_appBar(), _gridView()],
+        slivers: [
+          _appBar(),
+          _content(),
+        ],
       );
 
   SliverAppBar _appBar() {
@@ -68,12 +72,21 @@ class _SearchViewState extends BaseState<SearchView> {
         ),
         child: TextFormField(
           cursorColor: AppColors.primary,
+          onChanged: (text) => viewModel.onTextChanged(),
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.search,
+          autocorrect: false,
+          focusNode: viewModel.searchNode,
+          controller: viewModel.searchController,
           decoration: const InputDecoration(
-            contentPadding: EdgeInsets.only(top:28,left: 12),
-            suffixIcon: Icon(Icons.search,color: AppColors.darkGray,),
+            contentPadding: EdgeInsets.only(top: 28, left: 12),
+            suffixIcon: Icon(
+              Icons.search,
+              color: AppColors.darkGray,
+            ),
             floatingLabelAlignment: FloatingLabelAlignment.center,
             hintText: "Search...",
-            hintStyle: TextStyle(color: AppColors.darkGray,fontSize: 14),
+            hintStyle: TextStyle(color: AppColors.darkGray, fontSize: 14),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 borderSide: BorderSide.none),
@@ -84,6 +97,34 @@ class _SearchViewState extends BaseState<SearchView> {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 borderSide: BorderSide.none),
           ),
+        ),
+      ),
+    );
+  }
+
+  Observer _content() => Observer(
+      builder: (BuildContext context) =>
+          !viewModel.isSearchEmpty ? _gridView() : _emptyInfo());
+
+  SliverFillRemaining _emptyInfo() {
+    return SliverFillRemaining(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(
+              Icons.search,
+              size: 48,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(12,20,12,0),
+              child: Text(
+                "Don't worry results will be listed here as you search",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: AppColors.tertiary,fontSize: 22),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -113,40 +154,6 @@ class _SearchViewState extends BaseState<SearchView> {
             LargeProduct(),
             LargeProduct(),
             LargeProduct(),
-          ],
-        ),
-      );
-
-  Container _categoryContainer() => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: AppColors.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x19575B7D),
-              spreadRadius: 0,
-              blurRadius: 12,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                color: Colors.grey,
-              ),
-            ),
-            const Text(
-              "Category",
-              style: TextStyle(
-                  height: 2,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.tertiary),
-            )
           ],
         ),
       );

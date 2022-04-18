@@ -46,6 +46,7 @@ dependencies:
   build_runner: ^2.1.8
   simple_animations: ^4.0.1
   shimmer: ^2.0.0
+  flutter_mobx: ^2.0.4
 
 dev_dependencies:
   flutter_test:

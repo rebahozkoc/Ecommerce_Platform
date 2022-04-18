@@ -10,7 +10,32 @@ abstract class _SearchViewModelBase with Store, BaseViewModel {
   void setContext(BuildContext context) => this.context = context;
 
   @override
-  void init() {}
+  void init() {
+    searchNode.addListener(_listener);
+  }
 
-  void dispose() {}
+  void dispose() {
+    searchNode.removeListener(_listener);
+  }
+
+  @observable
+  bool isFocused = false;
+
+  @observable
+  bool isSearchEmpty = true;
+
+  FocusNode searchNode = FocusNode();
+
+  @observable
+  TextEditingController searchController = TextEditingController();
+
+  @action
+  void _listener() {
+    isFocused = searchNode.hasFocus;
+  }
+
+  @action
+  Future<void> onTextChanged() async {
+      isSearchEmpty = searchController.text.length < 3;
+  }
 }
