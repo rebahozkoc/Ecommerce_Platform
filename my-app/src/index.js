@@ -12,6 +12,8 @@ import ForgetPassword from "./components/signIn/ForgetPassword";
 import Dummy from "./components/Dummy";
 import CategoryProduct from "./containers/categoryProduct";
 import ShoppingBasket from "./components/shoppingBasket/ShoppingBasket";
+import AddressListPage from "./components/payment/addressList/addressListPage";
+
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
@@ -21,7 +23,9 @@ ReactDOM.render(
       <Route path="forgetPassword" element={<ForgetPassword />} />
       <Route path="/SignIn/" element={<SignIn />}></Route>
       <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/address-list" element={<AddressListPage />} />
       <Route path="/" element={<App />}></Route>
+      
     </Routes>
   </BrowserRouter>,
   document.getElementById("root")

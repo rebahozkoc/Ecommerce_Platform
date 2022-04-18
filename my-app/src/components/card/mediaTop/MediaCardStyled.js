@@ -18,7 +18,7 @@ export default function MediaCardStyled(props){
     ]
 
     return (
-        <Carousel>
+        <Carousel sx={{zIndex: '0'}}>
             {
                 items.map( (item, i) => <Item key={i} item={item} /> )
             }
@@ -29,13 +29,14 @@ export default function MediaCardStyled(props){
 function Item(props)
 {
     return (
-        <Link to="/Dummy" underline="none">
+        <Link to="/Dummy" underline="none" sx={{zIndex: '0'}}>
             
         <CardMedia
           component="img"
           height={450}
           image={props.item.image}
-          alt={props.item.description}>
+          alt={props.item.description}
+          sx={{zIndex: '0'}}>
             
         </CardMedia></Link>
     )

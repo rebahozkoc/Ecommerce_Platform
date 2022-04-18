@@ -1,10 +1,9 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Column from "./Column";
 import DiscountItem from "./DiscountItem";
-
 const columnItems = [
   "Coach",
   "Sofa",
@@ -16,13 +15,11 @@ const columnItems = [
 
 export default function DropDownMenu(props) {
   return (
-    <Paper
-      color="red"
-      square={true}
-      sx={{ position: "fixed", backgroundColor: "#F6F6F6", width: "100%" }}
-      style={props.style}
-    >
-      <Stack direction="row" justifyContent="space-between">
+    <Box
+    bgcolor="#EBEBEB"
+
+      sx={{zIndex: '1090', width: '100%', display: 'block' }}>
+      <Stack direction="row" justifyContent="center" sx={{pt:4, pb:4, pl:2, pr:2}}>
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -32,10 +29,15 @@ export default function DropDownMenu(props) {
           <Column columnItems={columnItems}></Column>
           <Column columnItems={columnItems}></Column>
         </Stack>
+        <Box sx={{width:40}}></Box>
+        <Stack direction="row"
+          justifyContent="flex-end">
 
         <DiscountItem></DiscountItem>
+        <Box sx={{width:20}}></Box>
         <DiscountItem></DiscountItem>
+        </Stack>
       </Stack>
-    </Paper>
+    </Box>
   );
 }

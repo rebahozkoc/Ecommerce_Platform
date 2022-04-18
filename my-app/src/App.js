@@ -29,7 +29,7 @@ export default function App() {
       
       <CategoryCardHandler item={cards}></CategoryCardHandler>
       <CardHalfReverse></CardHalfReverse>
-      // Additional Widget
+      
       <Card
         sx={{
           bgcolor: "background.paper",

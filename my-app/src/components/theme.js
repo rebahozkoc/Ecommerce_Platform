@@ -14,8 +14,12 @@ let themeOptions = createTheme({
     white: {
       main: "#ffffff",
     },
+    black: { main: "#000000" },
     background: {
-      default: '#F7F3F0',
+      default: "#F7F3F0",
+    },
+    transparent: {
+      main: "transparent",
     },
   },
   props: {

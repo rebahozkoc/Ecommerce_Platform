@@ -5,15 +5,12 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 
-import { Stack } from "@mui/material";
+import { Popper, Stack } from "@mui/material";
 import DropDownMenu from "./categories/DropDownMenu";
-
-import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const pages = [
   "Living Room",
@@ -34,7 +31,9 @@ const ResponsiveAppBar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  /*
   const [myStyle, setStyle] = React.useState({ display: "none" });
+  
   const [open, openHandler] = React.useState(false);
   const handleDropDownMenuOpen = () => {
     if (open) {
@@ -46,19 +45,48 @@ const ResponsiveAppBar = () => {
     }
   };
 
+
   const handleDropDownMenuClose = () => {
+    console.log("handleDropDownMenuClose")
     setStyle({ display: "none" });
   };
+
+  
 
   const handleClickAwayDropDown = () => {
     openHandler(false);
     setStyle({ display: "none" });
   };
 
+  */
+
+  /*
+  //Drop down menu button handlers (Popover)
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(document.getElementById("myStack"));
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  */
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : document.getElementById("myStack"));
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
   return (
     <div>
-      <AppBar position="static" color="inherit">
-        <Container maxWidth="xl">
+      <AppBar position="static" color="inherit" id="myStack">
+        <Container maxWidth="false">
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -89,12 +117,7 @@ const ResponsiveAppBar = () => {
               >
                 {pages.map((page) => (
                   // todo : handleCloseNavMenu
-                  <MenuItem
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    onMouseOver={handleDropDownMenuOpen}
-                    onMouseLeave={handleDropDownMenuClose}
-                  >
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
@@ -108,29 +131,54 @@ const ResponsiveAppBar = () => {
                 display: { xs: "none", md: "inline" },
               }}
             >
-              <ClickAwayListener onClickAway={handleClickAwayDropDown}>
-                <Stack
-                  direction="row"
-                  justifyContent="space-around"
-                  paddingBottom="0"
-                >
-                  {pages.map((page) => (
-                    <Button
-                      key={page}
-                      onClick={handleDropDownMenuOpen}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      {page}
-                    </Button>
-                  ))}
-                </Stack>
-              </ClickAwayListener>
+              <Stack
+                direction="row"
+                justifyContent="space-around"
+                paddingBottom="0"
+              >
+                {pages.map((page, i) => (
+                  <Button
+                    aria-describedby={id}
+                    onClick={handleClick}
+                    key={i}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Stack>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
-      <DropDownMenu style={myStyle}></DropDownMenu>
+      <Popper
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        placement="bottom-start"
+        sx={{display: "block",  width: '100%' }}
+      >
+        <DropDownMenu />
+      </Popper>
     </div>
   );
 };
 export default ResponsiveAppBar;
+
+/*
+      <Popover
+        gutterBottom="False"
+        sx={{ padding: 0 }}
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <DropDownMenu></DropDownMenu>
+      </Popover>
+
+      */
