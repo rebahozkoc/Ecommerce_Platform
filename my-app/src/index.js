@@ -6,7 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import SignIn from "./components/signIn/SignIn";
-
+import ResetPassword from "./components/signIn/resetPassword";
 import SignUp from "./components/signIn/SignUp";
 import ForgetPassword from "./components/signIn/ForgetPassword";
 import Dummy from "./components/Dummy";
@@ -20,7 +20,8 @@ ReactDOM.render(
       <Route path="/Basket" element={<ShoppingBasket />} />
       <Route path="/Categories" element={<CategoryProduct />} />
       <Route path="/Dummy" element={<Dummy />} />
-      <Route path="forgetPassword" element={<ForgetPassword />} />
+      <Route path="/forgetPassword" element={<ForgetPassword />}></Route>
+      <Route path="resetPass" element={<ResetPassword />} />
       <Route path="/SignIn/" element={<SignIn />}></Route>
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/address-list" element={<AddressListPage />} />
