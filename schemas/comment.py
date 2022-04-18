@@ -5,7 +5,8 @@ from pydantic import BaseModel
 class CommentBase(BaseModel):
     id: Optional[int]
     product_id: int
-    text: str
+    content: str
+
     class Config:
         orm_mode = True
 

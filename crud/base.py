@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from db.base_class import Base
-
+from models.comment import Comment
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
@@ -23,8 +23,15 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    def get(self, db: Session, id: Any) -> Optional[ModelType]:
-        return db.query(self.model).filter(self.model.id == id).first()
+    def get(self, db: Session, field: str, value: Any) -> Optional[ModelType]:
+        model_attribute = getattr(self.model, field) # get attribute
+        model_filter = model_attribute == value
+        data = db.query(self.model).filter(model_filter).first()
+        if not data:
+            pass
+            #raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+            #        detail={"message": f"User with the {field} {value} is not available"})
+        return data
 
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100

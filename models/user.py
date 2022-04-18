@@ -10,4 +10,4 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean(), default=True)
 
-    children = relationship("Comment", back_populates="user")
+    comments = relationship("Comment", back_populates="user")
