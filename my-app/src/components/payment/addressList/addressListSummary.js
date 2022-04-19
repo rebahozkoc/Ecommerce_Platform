@@ -105,7 +105,7 @@ export default function AddressListSummary(props) {
         </Card>
         <Stack justifyContent="center" alignItems="center">
           <Link
-            to="/Dummy"
+            to={props.link}
             style={{
               textDecoration: "none",
               color: "black",

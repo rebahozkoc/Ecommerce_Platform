@@ -13,7 +13,7 @@ import Dummy from "./components/Dummy";
 import CategoryProduct from "./containers/categoryProduct";
 import ShoppingBasket from "./components/shoppingBasket/ShoppingBasket";
 import AddressListPage from "./components/payment/addressList/addressListPage";
-
+import PaymentPage from "./components/payment/creditCard/paymentPage";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
@@ -25,6 +25,7 @@ ReactDOM.render(
       <Route path="/SignIn/" element={<SignIn />}></Route>
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/address-list" element={<AddressListPage />} />
+      <Route path="/payment" element={<PaymentPage />} />
       <Route path="/" element={<App />}></Route>
       
     </Routes>
