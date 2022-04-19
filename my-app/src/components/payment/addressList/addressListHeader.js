@@ -1,32 +1,27 @@
-import themeOptions from "../../theme";
-import { AppBar, ThemeProvider, Box, CssBaseline } from "@mui/material";
+import { AppBar} from "@mui/material";
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import HttpsTwoToneIcon from "@mui/icons-material/HttpsTwoTone";
+
+import LockIcon from "@mui/icons-material/Lock";
 const addressListHeader = () => {
   return (
-    <ThemeProvider theme={themeOptions}>
-      <CssBaseline/>
-      <AppBar color="transparent" elevation={0} position="static">
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h2" noWrap component="div" sx={{ m: 2, pl: 16 }}>
-            Voidture
+    <AppBar color="transparent" elevation={0} position="static">
+      <Stack direction="row" justifyContent="space-between">
+        <Typography variant="h2" noWrap component="div" sx={{ m: 2, pl: 16 }}>
+          Voidture
+        </Typography>
+        <Stack direction="column" justifyContent="center" alignItems="center">
+          <LockIcon fontSize="large" sx={{mt:3, mr: 30, display: {  xs: "none", lg: "block" }}}></LockIcon>
+          <Typography
+            variant="subtitle2"
+            sx={{ pb: 2, pr: 30, display: { xs: "none", lg: "block"} }}
+            style={{ color: "red" }}
+          >
+            SSL SECURED
           </Typography>
-          <Stack direction="column" justifyContent="center" alignItems="center">
-            
-              <LockOutlinedIcon
-                fontSize="large"
-                sx={{ pt: 3, pr: 12 }}
-              ></LockOutlinedIcon>
-            
-            <Typography variant="subtitle2"  sx={{ pb: 2, pr: 12 }} style={{ color: 'red' }}>
-              SSL SECURED
-            </Typography>
-          </Stack>
         </Stack>
-      </AppBar>
-    </ThemeProvider>
+      </Stack>
+    </AppBar>
   );
 };
 

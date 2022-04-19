@@ -90,13 +90,13 @@ const ShoppingBasket = () => {
 
   const filterCards = () => {
     c = c.filter(function (card) {
-      return card.key != filter;
+      return card.key !== filter;
     });
   };
 
   const incCard = () => {
     for (let i = 0; i < c.length; i++) {
-      if (c[i].key == change2) {
+      if (c[i].key === change2) {
         if (c[i].count < c[i].stock) {
           c[i].count++;
         }
@@ -107,7 +107,7 @@ const ShoppingBasket = () => {
 
   const decCard = () => {
     for (let i = 0; i < c.length; i++) {
-      if (c[i].key == change1) {
+      if (c[i].key === change1) {
         if (c[i].count > 0) {
           c[i].count--;
         }
