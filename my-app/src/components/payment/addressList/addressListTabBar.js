@@ -2,6 +2,8 @@ import AddressListTabBarCard from './addressListTabBarCard';
 import { Grid } from '@mui/material';
 import { Stack, Box } from '@mui/material';
 import AddressListForm from './addressListForm';
+import PaymentForm from './paymentForm';
+
 /*
 const addressListTabBar = () => {
     return <div>
@@ -27,7 +29,8 @@ const addressListTabBar = (props) => {
         <AddressListTabBarCard title="ADDRESS INFORMATION" description="Select a saved address or create a new address." isOpen={props.isAddress} direction={"address"}/>
         <AddressListTabBarCard title="PAYMENT INFORMATION" description="Select a saved credit card or enter your credit card information." isOpen={!props.isAddress} direction={"card"}/>
         </Stack>
-        <AddressListForm></AddressListForm>
+        {props.isAddress ? <AddressListForm/> : <PaymentForm/>}
+        
         
     </Stack>
     </Box>

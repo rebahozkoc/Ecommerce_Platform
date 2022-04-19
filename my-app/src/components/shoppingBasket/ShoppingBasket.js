@@ -267,7 +267,7 @@ const ShoppingBasket = () => {
                 </Card>
                 <Stack justifyContent="center" alignItems="center">
                   <Link
-                    to="/Dummy"
+                    to="/address-list"
                     style={{
                       textDecoration: "none",
                       color: "black",
