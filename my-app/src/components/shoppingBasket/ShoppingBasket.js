@@ -90,13 +90,13 @@ const ShoppingBasket = () => {
 
   const filterCards = () => {
     c = c.filter(function (card) {
-      return card.key != filter;
+      return card.key !== filter;
     });
   };
 
   const incCard = () => {
     for (let i = 0; i < c.length; i++) {
-      if (c[i].key == change2) {
+      if (c[i].key === change2) {
         if (c[i].count < c[i].stock) {
           c[i].count++;
         }
@@ -107,7 +107,7 @@ const ShoppingBasket = () => {
 
   const decCard = () => {
     for (let i = 0; i < c.length; i++) {
-      if (c[i].key == change1) {
+      if (c[i].key === change1) {
         if (c[i].count > 0) {
           c[i].count--;
         }
@@ -190,7 +190,7 @@ const ShoppingBasket = () => {
                   overflow: "auto",
                 }}
               >
-                <Card sx={{ backgroundColor: "#EAECEC" }}>
+                <Card sx={{ backgroundColor: "#EAECEC", borderRadius: 0  }}>
                   <Typography
                     align="center"
                     variant="body1"
@@ -200,7 +200,7 @@ const ShoppingBasket = () => {
                     Order Summary
                   </Typography>
                 </Card>
-                <Card sx={{ padding: (2, 2, 2, 2) }}>
+                <Card elevation={0} sx={{ padding: (2, 2, 2, 2), borderRadius: 0}}>
                   <Stack direction="row">
                     <Typography
                       align="left"
@@ -267,19 +267,20 @@ const ShoppingBasket = () => {
                 </Card>
                 <Stack justifyContent="center" alignItems="center">
                   <Link
-                    to="/Dummy"
+                    to="/address-list"
                     style={{
                       textDecoration: "none",
                       color: "black",
                     }}
                   >
                     <Button
-                      fullWidth
+                      
                       variant="contained"
                       sx={{
                         backgroundColor: "#ff6600",
                         display: "block",
                         padding: (8, 1, 8, 1),
+                        mb: 2,
                         justify: "center",
                       }}
                     >

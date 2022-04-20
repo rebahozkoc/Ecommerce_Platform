@@ -25,7 +25,7 @@ export default function App() {
       <MediaCardStyled></MediaCardStyled>
       <CategoryCardHandler item={cards}></CategoryCardHandler>
       <CardHalfReverse></CardHalfReverse>
-      // Additional Widget
+      
       <Card
         sx={{
           bgcolor: "background.paper",

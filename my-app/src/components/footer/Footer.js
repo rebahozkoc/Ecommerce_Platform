@@ -1,12 +1,12 @@
 import { Container, Grid, Box, Link, Typography } from "@mui/material";
 
-export default function Footer() {
+export default function Footer(props) {
   return (
     <footer>
       <Box
         px={{ xs: 3, sm: 10 }}
         py={{ xs: 3, sm: 5 }}
-        bgcolor="text.secondary"
+        bgcolor= {props.bgcolor ? props.bgcolor: "text.secondary"}
         color="white"
       >
         <Container maxWidth="lg">

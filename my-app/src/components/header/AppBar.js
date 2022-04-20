@@ -118,7 +118,6 @@ export default function PrimarySearchAppBar() {
     console.log(c);
   };
   React.useEffect(() => {
-    console.log(filter);
     filterCards();
     setFilter(-1);
   }, [filter]);

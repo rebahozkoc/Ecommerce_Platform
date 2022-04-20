@@ -14,7 +14,7 @@ import { Paper } from "@mui/material";
 const Column = (props) => {
   const columnItems = props.columnItems;
   return (
-    <Box sx={{ width: "100%", maxWidth: 300, minWidth: 250 }}>
+    <Box sx={{}}>
       <nav aria-label="category-items">
         <List dense>
           {columnItems.map((item) => (
