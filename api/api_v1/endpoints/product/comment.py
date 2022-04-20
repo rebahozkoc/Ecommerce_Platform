@@ -1,14 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from typing import Any, List
+from api import deps
 
 import crud, models, schemas
-from schemas import ProductBase, CommentBase
-from api import deps
+from schemas import Response
+from typing import Any, List
 
 router = APIRouter()
 
-@router.get("/{product_id}/comments",
+
+@router.get(
+    "/{product_id}/comments", response_model=Response[List[schemas.CommentBase]]
 )
 def get_comments_of_product(
     product_id: int,
@@ -19,40 +21,35 @@ def get_comments_of_product(
     """
     Retrieve comments of a particular product.
     """
-    product = crud.product.get(db=db, field="id", value=product_id)
-    return product
+    product = crud.product.get_comments(db=db, id=product_id, skip=skip, limit=limit)
+    return Response(data=product, isSuccess=True)
 
 
-@router.post("/{product_id}/comments", 
-    response_model=CommentBase
-)
+@router.post("/{product_id}/comments", response_model=Response[schemas.CommentBase])
 def create_comment(
     *,
-    comment_in:CommentBase,
+    comment_in: schemas.CommentCreate,
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     """
     Create new comment.
     """
-    
+    comment_in.user_id = current_user.id
+    product = crud.product.get(db=db, field="id", value=comment_in.product_id)
     comment = crud.comment.create(db=db, obj_in=comment_in)
-    return comment
+    return Response(data=comment, isSuccess=True)
 
 
-
-@router.delete("/comments/{comment_id}", response_model=CommentBase)
+@router.delete("/comments/{comment_id}", response_model=Response[schemas.CommentBase])
 def delete_comment(
     *,
-    id: int,
+    comment_id: int,
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     """
     Delete a comment.
     """
-    comment = crud.comment.get(db=db, id=id)
-    if not comment:
-        raise HTTPException(status_code=404, detail="Comment not found")
-    crud.comment.remove(db=db, id=id)
-    return comment
+    comment = crud.comment.remove(db=db, id=comment_id, current_user=current_user.id)
+    return Response(data=comment, isSuccess=True)

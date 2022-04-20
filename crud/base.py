@@ -1,5 +1,6 @@
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
+from fastapi import HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -28,9 +29,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         model_filter = model_attribute == value
         data = db.query(self.model).filter(model_filter).first()
         if not data:
-            pass
-            #raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-            #        detail={"message": f"User with the {field} {value} is not available"})
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                    detail={"message": f"Data with the {field} {value} is not available"})
         return data
 
     def get_multi(
@@ -67,7 +67,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return db_obj
 
     def remove(self, db: Session, *, id: int) -> ModelType:
-        obj = db.query(self.model).get(id)
+        obj = self.get(db=db, field="id", value=id)
         db.delete(obj)
         db.commit()
         return obj
