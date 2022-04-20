@@ -12,6 +12,7 @@ import ForgetPassword from "./components/signIn/ForgetPassword";
 import Dummy from "./components/Dummy";
 import CategoryProduct from "./containers/categoryProduct";
 import ShoppingBasket from "./components/shoppingBasket/ShoppingBasket";
+import Product from "./components/product/Product";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
@@ -20,11 +21,13 @@ ReactDOM.render(
       <Route path="/Dummy" element={<Dummy />} />
       <Route path="/forgetPassword" element={<ForgetPassword />}></Route>
       <Route path="resetPass" element={<ResetPassword />} />
+      <Route path="/product" element={<Product />} />
       <Route path="/SignIn/" element={<SignIn />}></Route>
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/" element={<App />}></Route>
     </Routes>
   </BrowserRouter>,
+
   document.getElementById("root")
 );
 
