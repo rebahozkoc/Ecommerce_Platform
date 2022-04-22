@@ -9,13 +9,13 @@ class CartProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        height: 128,
+        height: 120,
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         //padding: const EdgeInsets.all(12),
           width: double.infinity,
         decoration: BoxDecoration(
           color:  AppColors.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,7 +30,7 @@ class CartProduct extends StatelessWidget {
               children: [
                 const SizedBox(width: 20),
                 const Padding( // TODO: consts to be deleted
-                  padding: EdgeInsets.fromLTRB(10, 30, 5, 5),
+                  padding: EdgeInsets.fromLTRB(10, 25, 5, 5),
                   child: Text(
                       "Slipover armchair",
                     style: TextStyle(
@@ -73,9 +73,10 @@ class CartProduct extends StatelessWidget {
             ),
             Row(
               children: [
-                //_buttons(),
+                _buttons(),
               ],
-            )
+            ),
+            
           ],
         ),
       ),
@@ -85,7 +86,7 @@ class CartProduct extends StatelessWidget {
 
 ClipRRect imageClip(){
   return ClipRRect(
-    borderRadius: BorderRadius.circular(8),
+    borderRadius: BorderRadius.circular(12),
     child: _image(),
   );
 }
@@ -109,14 +110,13 @@ Container _buttons(){
   return Container(
     width: 80,
     height: 40,
-    color: AppColors.primary,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12),
+      color: AppColors.primary,
+    ),
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        TextButton(onPressed: (){},
-            child: Text("-"),
-        ),
-        Text("1"),
-        TextButton(onPressed: (){}, child: Text("+")),
       ],
     ),
   );

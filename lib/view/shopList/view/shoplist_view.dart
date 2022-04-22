@@ -35,7 +35,16 @@ class _ShopListViewState extends State<ShopListView> {
 
   AppBar _appBar() {
     return AppBar(
+
       title: Text(LocaleKeys.shopList.locale),
+      actions: [
+        IconButton(
+          onPressed: (){
+            debugPrint("Edit button pressed");
+          },
+          icon: const Icon(Icons.edit),
+        )
+      ],
     );
   }
 
