@@ -49,16 +49,19 @@ class _ShopListViewState extends State<ShopListView> {
   }
 
   Center _body() => Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CartProduct(),
-            CartProduct(),
-            CartProduct(),
-            CartProduct(),
-          ],
-        ),
+    child: SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CartProduct(),
+          CartProduct(),
+          CartProduct(),
+          CartProduct(),
+          CartProduct(),
+        ],
+      ),
+    )
       );
 }

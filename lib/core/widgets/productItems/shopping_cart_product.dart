@@ -108,16 +108,12 @@ Expanded _image() {
 
 Container _buttons(){
   return Container(
-    width: 80,
-    height: 40,
+    width: 50,
+    height: 30,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
       color: AppColors.primary,
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-      ],
+
     ),
   );
 }

@@ -5,6 +5,8 @@ import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/auth/login/viewmodel/login_view_model.dart';
 
+import '../../../../core/init/theme/color_theme.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -37,7 +39,7 @@ class _LoginViewState extends State<LoginView> {
           padding: const EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             title,
-            const SizedBox(height: 48.0),
+            const SizedBox(height: 12.0),
             email,
             const SizedBox(height: 16.0),
             password,
@@ -49,44 +51,54 @@ class _LoginViewState extends State<LoginView> {
         ),
       );
 
-  final title = Text(
-    LocaleKeys.login.locale,
-    style: const TextStyle(
-      color: Color(0xFFFF6600),
-      fontSize: 48,
-      fontWeight: FontWeight.w500,
+  final title = const Text(
+    "WELCOME",
+    style: TextStyle(
+      color: AppColors.black,
+      fontSize: 36,
+      fontWeight: FontWeight.w800,
+      letterSpacing: 0.01,
     ),
   );
 
   final email = TextFormField(
     keyboardType: TextInputType.emailAddress,
     autofocus: false,
-    decoration: InputDecoration(
-      hintText: LocaleKeys.email.locale,
-      contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+    decoration: const InputDecoration(
+      labelText: "Email",
+      labelStyle: TextStyle(color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),
+      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: AppColors.secondary)),
+      focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: AppColors.primary)),
     ),
   );
 
   final password = TextFormField(
     autofocus: false,
     obscureText: true,
-    decoration: InputDecoration(
-      hintText: LocaleKeys.password.locale,
+    decoration: const InputDecoration(
+      labelText: "Password",
+      labelStyle: TextStyle(color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),
       contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.secondary)),
+      focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primary)),
     ),
   );
 
   final loginButton = Padding(
     padding: const EdgeInsets.symmetric(vertical: 16.0),
-    child: RaisedButton(
+    child: MaterialButton(
+      height: 50,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(12),
       ),
       onPressed: () {},
       padding: const EdgeInsets.all(12),
-      color: const Color(0xFFFF6600),
+      color: AppColors.primary,
       child: Text(LocaleKeys.login.locale,
           style: const TextStyle(color: Colors.white)),
     ),
@@ -107,7 +119,7 @@ class _LoginViewState extends State<LoginView> {
         child: Text(
           LocaleKeys.signUp.locale,
           style: const TextStyle(
-            color: Color(0xFFFF944D),
+            color: AppColors.primary,
             fontSize: 16.0,
           ),
         ),
