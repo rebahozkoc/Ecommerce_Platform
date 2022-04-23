@@ -45,7 +45,7 @@ const CardItem = (props) => {
           title="item title not necessary deletable"
           subheader="Until when promotion continues"
         />
-        <Link to="/Dummy" underline="none">
+        <Link to="/product" underline="none">
           <CardMedia
             component="img"
             height="194"
