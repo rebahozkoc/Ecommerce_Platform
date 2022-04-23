@@ -1,111 +1,85 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { Box } from '@mui/material';
-export default function AddressListForm() {
+import * as React from "react";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { Box } from "@mui/material";
+import AddressListAddNew from "./addressListAddNew";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import AddressListGetOld from "./addressListGetOld";
+
+export default function AddressListForm(props) {
+  //const addressList = props.addressList;
+  const addressList = [
+    ["Address List", "This is a description of the address list"],
+    ["Home", "Fakülteler Mah, Oba Sk. No:1, 06590 Çankaya/Ankara"],
+    ["Dormitory", "Sabanci University, 34956 Tuzla, Istanbul, Turkey"],
+  ];
+  const [value, setValue] = React.useState("01");
+  const [newAddress, setNewAddress] = React.useState(false);
+  
+  
+
+
+
+  const handleChange = (event) => {
+    console.log("handleChange");
+    console.log(event.target.value);
+    setValue(event.target.value);
+    if (event.target.value === "new") {
+      setNewAddress(true);
+    }else{
+      setNewAddress(false);
+    }
+  };
+
   return (
     <React.Fragment>
-        <Box sx={{maxWidth:750, p:4}}>
-      <Typography variant="h6" gutterBottom>
-        Shipping address
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
-          />
-        </Grid>
-      </Grid>
+      <Box sx={{ maxWidth: 750, pl: 4, pr: 4, pb:4, pt:3 }}>
+        <FormControl>
+          <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            value={value}
+            onChange={handleChange}
+          >
+            {addressList.map((address, index) => {
+              console.log(index);
+              return (
+                <FormControlLabel
+                  key={index}
+                  value={index}
+                  control={<Radio />}
+                  label={
+                    <AddressListGetOld
+                      title={address[0]}
+                      description={address[1]}
+                    />
+                  }
+                />
+              );
+            })}
+
+            <FormControlLabel
+              key={-1}
+              value="new"
+              control={<Radio />}
+              label={
+                <AddressListGetOld
+                  title={"Add New Address"}
+                  description={"Create a new address..."}
+                />
+              }
+            />
+          </RadioGroup>
+        </FormControl>
       </Box>
+      {newAddress ? <AddressListAddNew />: <div> </div>}
     </React.Fragment>
   );
 }

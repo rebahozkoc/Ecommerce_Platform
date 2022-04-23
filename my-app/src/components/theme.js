@@ -10,6 +10,7 @@ let themeOptions = createTheme({
     },
     secondary: {
       main: "#dddddd",
+      light: "#eeeeee",
     },
     white: {
       main: "#ffffff",
