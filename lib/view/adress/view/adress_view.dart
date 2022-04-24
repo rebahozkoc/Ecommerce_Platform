@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
+import 'package:mobile/core/widgets/adress_widget.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/adress/viewmodel/adress_view_model.dart';
 
@@ -32,10 +33,24 @@ class _AddressViewState extends BaseState<AddressView> {
   }
 
   AppBar _appBar() => AppBar(
-        title: Text("Shipping Address"),
+        title: const Text("Shipping Address"),
       );
 
-  Center _body() => Center(
-    child: Text("Shipping Address"),
-  );
+  SizedBox _body() => SizedBox(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [_adresses()],
+          ),
+        ),
+      );
+
+  ListView _adresses() => ListView.separated(
+      primary: true,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) => const AddressWidget(
+          latitude: 37.42796133580664, longitude: -122.085749655962),
+      separatorBuilder: (context, index) => const SizedBox(height: 16),
+      itemCount: 2);
 }
