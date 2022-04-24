@@ -4,6 +4,7 @@ import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
+import 'package:mobile/core/widgets/productItems/shopping_cart_product.dart';
 
 class ShopListView extends StatefulWidget {
   const ShopListView({Key? key}) : super(key: key);
@@ -34,11 +35,33 @@ class _ShopListViewState extends State<ShopListView> {
 
   AppBar _appBar() {
     return AppBar(
+
       title: Text(LocaleKeys.shopList.locale),
+      actions: [
+        IconButton(
+          onPressed: (){
+            debugPrint("Edit button pressed");
+          },
+          icon: const Icon(Icons.edit),
+        )
+      ],
     );
   }
 
   Center _body() => Center(
-        child: Text(LocaleKeys.shopList.locale),
+    child: SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CartProduct(),
+          CartProduct(),
+          CartProduct(),
+          CartProduct(),
+          CartProduct(),
+        ],
+      ),
+    )
       );
 }

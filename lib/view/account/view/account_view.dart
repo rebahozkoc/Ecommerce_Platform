@@ -7,6 +7,7 @@ import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/account/viewmodel/account_view_model.dart';
+import 'package:mobile/view/auth/login/view/login_view.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -77,7 +78,9 @@ class _AccountViewState extends State<AccountView> {
                 bgColor: AppColors.primary,
                 iconBgColor: AppColors.white,
                 textColor: AppColors.white,
-                action: () => debugPrint("Clicked Logout")),
+                action: () => {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView())),
+            }),
           ],
         ),
       );
