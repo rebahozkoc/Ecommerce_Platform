@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
-import 'package:mobile/core/widgets/productItems/track_product.dart';
+import 'package:mobile/core/widgets/productItems/track_product_big.dart';
+import 'package:mobile/core/widgets/productItems/track_product_small.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
 import 'package:mobile/core/widgets/customScrollPhysics.dart';
@@ -60,7 +61,12 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
 
         children: [
           _advertisements(),
-          TrackProduct(),
+          TrackProductSmall(),
+          TrackProductBig(),
+          TrackProductBig(),
+          TrackProductBig(),
+
+
         ],
       ),
     ),
@@ -72,9 +78,9 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
     child: TabBarView(
       controller: controller,
       children: const [
-          TrackProduct(),
-          TrackProduct(),
-        TrackProduct(),
+          TrackProductSmall(),
+          TrackProductSmall(),
+        TrackProductSmall(),
 
       ],
     ),
