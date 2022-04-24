@@ -6,5 +6,5 @@ T = TypeVar("T")
 
 class Response(GenericModel, Generic[T]):
     message: Optional[str]
-    isSuccess: Optional[bool]
+    isSuccess: Optional[bool] = True
     data: Optional[T] = {}
