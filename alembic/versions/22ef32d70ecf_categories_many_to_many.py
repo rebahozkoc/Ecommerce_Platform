@@ -1,8 +1,8 @@
-"""category models
+"""categories many to many
 
-Revision ID: 0b6af7facee6
+Revision ID: 22ef32d70ecf
 Revises: b8eb59a178cb
-Create Date: 2022-04-22 17:36:44.099109
+Create Date: 2022-04-24 14:42:11.482871
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0b6af7facee6'
+revision = '22ef32d70ecf'
 down_revision = 'b8eb59a178cb'
 branch_labels = None
 depends_on = None
