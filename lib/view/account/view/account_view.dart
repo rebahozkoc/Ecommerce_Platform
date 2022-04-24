@@ -58,11 +58,11 @@ class _AccountViewState extends State<AccountView> {
             ProfileButtons(
                 icon: Icons.account_balance_wallet,
                 titles: "My Purchases",
-                action: () => debugPrint("Clicked Purchases")),
+                action: () => viewModel),
             ProfileButtons(
                 icon: Icons.location_on_sharp ,
                 titles: "My Adress",
-                action: () => debugPrint("Clicked Adress")),
+                action: () => viewModel.navigateToAdressView(context)),
             ProfileButtons(
                 icon: Entypo.credit_card,
                 titles: "Payment Method",
