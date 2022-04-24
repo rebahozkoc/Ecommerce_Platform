@@ -54,7 +54,7 @@ class _ShopListViewState extends State<ShopListView> {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: const [
           CartProduct(),
           CartProduct(),
           CartProduct(),

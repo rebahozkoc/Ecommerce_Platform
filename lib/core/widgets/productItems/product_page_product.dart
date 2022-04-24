@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
-import 'package:mobile/core/widgets/customScrollPhysics.dart';
+//import 'package:mobile/core/widgets/customScrollPhysics.dart';
 
 class PageProduct extends StatelessWidget {
   const PageProduct({Key? key}) : super(key: key);
@@ -272,19 +272,19 @@ class PageProduct extends StatelessWidget {
     ],
   );
 
-  SizedBox _similarItem() {
-    return SizedBox(
-      width: 1000,
-      height: 100,
-      child: ListView.builder(
-        primary: true,
-        scrollDirection: Axis.horizontal,
-        physics: const CustomScrollPhysics(itemDimension: 120),
-        itemCount: 5,
-        itemBuilder: (context, index) => _similar(),
-      ),
-    );
-  }
+  // SizedBox _similarItem() {
+  //   return SizedBox(
+  //     width: 1000,
+  //     height: 100,
+  //     child: ListView.builder(
+  //       primary: true,
+  //       scrollDirection: Axis.horizontal,
+  //       physics: const CustomScrollPhysics(itemDimension: 120),
+  //       itemCount: 5,
+  //       itemBuilder: (context, index) => _similar(),
+  //     ),
+  //   );
+  // }
 
   Padding _similar() => Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16),

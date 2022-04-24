@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/model/base_view_model.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobx/mobx.dart';
 part 'login_view_model.g.dart';
 
@@ -13,4 +15,7 @@ abstract class _LoginViewModelBase with Store , BaseViewModel {
   void init() {}
 
   void dispose() {}
+
+  void submit() => NavigationService.instance
+      .navigateToPageClear(path: NavigationConstants.BOTTOM_BAR);
 }

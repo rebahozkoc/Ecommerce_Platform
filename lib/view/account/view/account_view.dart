@@ -7,7 +7,6 @@ import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/account/viewmodel/account_view_model.dart';
-import 'package:mobile/view/auth/login/view/login_view.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -59,10 +58,10 @@ class _AccountViewState extends State<AccountView> {
             ProfileButtons(
                 icon: Icons.account_balance_wallet,
                 titles: "My Purchases",
-                action: () => debugPrint("Clicked Purchases")),
+                action: () => viewModel.navigateToOrders(context)),
             ProfileButtons(
                 icon: Icons.location_on_sharp ,
-                titles: "My Adress",
+                titles: "My Address",
                 action: () => debugPrint("Clicked Adress")),
             ProfileButtons(
                 icon: Entypo.credit_card,
@@ -78,9 +77,7 @@ class _AccountViewState extends State<AccountView> {
                 bgColor: AppColors.primary,
                 iconBgColor: AppColors.white,
                 textColor: AppColors.white,
-                action: () => {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView())),
-            }),
+                action: () => viewModel.logout()),
           ],
         ),
       );

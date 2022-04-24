@@ -44,7 +44,7 @@ class _LoginViewState extends State<LoginView> {
             const SizedBox(height: 16.0),
             password,
             const SizedBox(height: 24.0),
-            loginButton,
+            loginButton(),
             forgotLabel,
             register,
           ],
@@ -81,7 +81,7 @@ class _LoginViewState extends State<LoginView> {
     decoration: const InputDecoration(
       labelText: "Password",
       labelStyle: TextStyle(color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),
-      contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+      contentPadding:  EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.secondary)),
       focusedBorder: UnderlineInputBorder(
@@ -89,14 +89,14 @@ class _LoginViewState extends State<LoginView> {
     ),
   );
 
-  final loginButton = Padding(
+  Padding loginButton() => Padding(
     padding: const EdgeInsets.symmetric(vertical: 16.0),
     child: MaterialButton(
       height: 50,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      onPressed: () {},
+      onPressed: () => viewModel.submit(),
       padding: const EdgeInsets.all(12),
       color: AppColors.primary,
       child: Text(LocaleKeys.login.locale,

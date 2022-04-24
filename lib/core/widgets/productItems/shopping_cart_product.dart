@@ -29,7 +29,7 @@ class CartProduct extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(width: 20),
-                const Padding( // TODO: consts to be deleted
+                const Padding(
                   padding: EdgeInsets.fromLTRB(10, 25, 5, 5),
                   child: Text(
                       "Slipover armchair",
@@ -41,7 +41,7 @@ class CartProduct extends StatelessWidget {
                   ),
                 ),
                 Row(
-                  children: const [ // TODO: consts to be deleted
+                  children: const [
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 5, 5, 10),
                       child: Text(

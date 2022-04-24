@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_animation.dart';
+import 'package:mobile/core/widgets/bottombar_view.dart';
 import 'package:mobile/main.dart';
+import 'package:mobile/view/auth/login/view/login_view.dart';
+import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/search/view/search_view.dart';
 
 class NavigationRoute {
@@ -14,9 +17,19 @@ class NavigationRoute {
   Route<dynamic> generateRoute(RouteSettings args) {
     switch (args.name) {
       case NavigationConstants.SEARCH:
-        return bottomToTopNavigate(const SearchView(), NavigationConstants.SEARCH);
+        return bottomToTopNavigate(
+            const SearchView(), NavigationConstants.SEARCH);
+      case NavigationConstants.LOGIN:
+        return bottomToTopNavigate(
+            const LoginView(), NavigationConstants.LOGIN);
+      case NavigationConstants.ORDERS:
+        return bottomToTopNavigate(
+            const OrdersView(), NavigationConstants.ORDERS);
+      case NavigationConstants.BOTTOM_BAR:
+        return bottomToTopNavigate(
+            const BottomBarView(), NavigationConstants.BOTTOM_BAR);
       default:
-        return defaultNavigate(const Home(), NavigationConstants.DEFAULT);
+        return defaultNavigate(const BottomBarView(), NavigationConstants.DEFAULT);
     }
   }
 
