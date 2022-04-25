@@ -13,6 +13,7 @@ class AppColors {
   static const Color lightGray = Color(0xfff7f7f7);
   static const Color darkGray = Color(0xff676870);
   static const Color black = Color(0xff020306);
+  static const Color textColorGray = Color(0xFF424242);
 
   static const Color azure = Color(0xff27928d);
   static const transparent = Colors.transparent;
