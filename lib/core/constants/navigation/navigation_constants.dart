@@ -7,6 +7,7 @@ class NavigationConstants {
   static const HOME = '/shopList';
   static const FAVORITES = '/favorites';
   static const ACCOUNT = '/account';
+  static const ADRESS = '/address';
   static const CATEGORIES = '/categories';
   static const ORDERS = '/orders';
   static const LOGIN = '/login';

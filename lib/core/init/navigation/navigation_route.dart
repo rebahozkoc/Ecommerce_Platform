@@ -6,6 +6,7 @@ import 'package:mobile/core/widgets/bottombar_view.dart';
 import 'package:mobile/main.dart';
 import 'package:mobile/view/auth/login/view/login_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
+import 'package:mobile/view/adress/view/adress_view.dart';
 import 'package:mobile/view/search/view/search_view.dart';
 
 class NavigationRoute {
@@ -28,6 +29,9 @@ class NavigationRoute {
       case NavigationConstants.BOTTOM_BAR:
         return bottomToTopNavigate(
             const BottomBarView(), NavigationConstants.BOTTOM_BAR);
+      case NavigationConstants.ADRESS:
+        return cupertinoNavigate(
+            const AddressView(), NavigationConstants.ADRESS);
       default:
         return defaultNavigate(const BottomBarView(), NavigationConstants.DEFAULT);
     }
