@@ -4,7 +4,7 @@ import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/address_widget.dart';
 import 'package:mobile/locator.dart';
-import 'package:mobile/view/adress/viewmodel/adress_view_model.dart';
+import 'package:mobile/view/address/viewmodel/address_view_model.dart';
 
 class AddressView extends StatefulWidget {
   const AddressView({Key? key}) : super(key: key);
@@ -15,11 +15,11 @@ class AddressView extends StatefulWidget {
 
 class _AddressViewState extends BaseState<AddressView> {
   int count = 3;
-  late AdressViewModel viewModel;
+  late AddressViewModel viewModel;
   @override
   Widget build(BuildContext context) {
     return BaseView(
-      viewModel: locator<AdressViewModel>(),
+      viewModel: locator<AddressViewModel>(),
       onModelReady: (dynamic model) async {
         model.setContext(context);
         model.init();

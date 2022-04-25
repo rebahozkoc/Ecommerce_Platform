@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/locator.dart';
-import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
+import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 
-class OrdersView extends StatefulWidget {
-  const OrdersView({Key? key}) : super(key: key);
+class PaymentView extends StatefulWidget {
+  const PaymentView({Key? key}) : super(key: key);
 
   @override
-  State<OrdersView> createState() => _OrdersViewState();
+  State<PaymentView> createState() => _PaymentViewState();
 }
 
-class _OrdersViewState extends BaseState<OrdersView> {
-  late OrdersViewModel viewModel;
-
+class _PaymentViewState extends BaseState<PaymentView> {
+  late PaymentViewModel viewModel;
   @override
   Widget build(BuildContext context) {
     return BaseView(
-      viewModel: locator<OrdersViewModel>(),
+      viewModel: locator<PaymentViewModel>(),
       onModelReady: (dynamic model) async {
         model.setContext(context);
         model.init();
@@ -33,10 +32,10 @@ class _OrdersViewState extends BaseState<OrdersView> {
   }
 
   AppBar _appBar() => AppBar(
-        title: const Text("Orders"),
+        title: const Text("Payment Method"),
       );
 
   Center _body() => const Center(
-    child: Text("Orders"),
-  );
+        child: Text("Payment Method"),
+      );
 }
