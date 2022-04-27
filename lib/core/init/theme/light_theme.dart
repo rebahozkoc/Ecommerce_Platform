@@ -111,7 +111,8 @@ class AppThemeLight extends AppTheme {
   ElevatedButtonThemeData get elevatedButtonTheme {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: const Color(0xFF5271FF),
+        minimumSize: const Size(80, 48),
+        primary:  AppColors.primary,
         shadowColor: Colors.transparent,
         elevation: 0,
       ),

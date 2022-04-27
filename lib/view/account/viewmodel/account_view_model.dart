@@ -3,6 +3,8 @@ import 'package:mobile/core/base/model/base_view_model.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
+import 'package:mobile/view/address/view/address_view.dart';
+import 'package:mobile/view/payment/view/payment_view.dart';
 import 'package:mobx/mobx.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 part 'account_view_model.g.dart';
@@ -22,6 +24,24 @@ abstract class _AccountViewModelBase with Store, BaseViewModel {
         context,
         screen: const OrdersView(),
         settings: const RouteSettings(name: NavigationConstants.ORDERS),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      );
+
+  void navigateToPaymentView(BuildContext context) =>
+      pushNewScreenWithRouteSettings(
+        context,
+        screen: const PaymentView(),
+        settings: const RouteSettings(name: NavigationConstants.PAYMENT),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      );
+
+  void navigateToAdressView(BuildContext context) =>
+      pushNewScreenWithRouteSettings(
+        context,
+        screen: const AddressView(),
+        settings: const RouteSettings(name: NavigationConstants.ADRESS),
         withNavBar: true,
         pageTransitionAnimation: PageTransitionAnimation.cupertino,
       );

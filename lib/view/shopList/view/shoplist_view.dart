@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
@@ -13,7 +14,7 @@ class ShopListView extends StatefulWidget {
   State<ShopListView> createState() => _ShopListViewState();
 }
 
-class _ShopListViewState extends State<ShopListView> {
+class _ShopListViewState extends BaseState<ShopListView> {
   late ShopListViewModel viewModel;
   @override
   Widget build(BuildContext context) {

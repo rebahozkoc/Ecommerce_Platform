@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
@@ -15,7 +16,7 @@ class CategoriesView extends StatefulWidget {
   State<CategoriesView> createState() => _CategoriesViewState();
 }
 
-class _CategoriesViewState extends State<CategoriesView> {
+class _CategoriesViewState extends BaseState<CategoriesView> {
   late CategoriesViewModel viewModel;
   @override
   Widget build(BuildContext context) {

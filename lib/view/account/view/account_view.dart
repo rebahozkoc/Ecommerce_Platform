@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/extension/string_extension.dart';
@@ -15,7 +16,7 @@ class AccountView extends StatefulWidget {
   State<AccountView> createState() => _AccountViewState();
 }
 
-class _AccountViewState extends State<AccountView> {
+class _AccountViewState extends BaseState<AccountView> {
   late AccountViewModel viewModel;
   @override
   Widget build(BuildContext context) {
@@ -60,19 +61,19 @@ class _AccountViewState extends State<AccountView> {
                 titles: "My Purchases",
                 action: () => viewModel.navigateToOrders(context)),
             ProfileButtons(
-                icon: Icons.location_on_sharp ,
-                titles: "My Address",
-                action: () => debugPrint("Clicked Adress")),
+                icon: Icons.location_on_sharp,
+                titles: "My Adress",
+                action: () => viewModel.navigateToAdressView(context)),
             ProfileButtons(
                 icon: Entypo.credit_card,
                 titles: "Payment Method",
-                action: () => debugPrint("Clicked Payment")),
+                action: () => viewModel.navigateToPaymentView(context)),
             ProfileButtons(
                 icon: Icons.settings_outlined,
                 titles: "Settings",
                 action: () => debugPrint("Clicked Setting")),
             ProfileButtons(
-                icon: Icons.logout ,
+                icon: Icons.logout,
                 titles: "Logout",
                 bgColor: AppColors.primary,
                 iconBgColor: AppColors.white,

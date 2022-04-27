@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/core/widgets/address_widget.dart';
 import 'package:mobile/core/widgets/productItems/track_product_big.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
@@ -67,9 +68,20 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
     ),
   );
 
-  Padding _orderID() => const Padding(
-    padding: EdgeInsets.all(12.0),
-    child: Text("Order ID: 123-456-789"),
+  Container _orderID() => Container(
+    width: double.infinity,
+    child: Padding(
+      padding: EdgeInsets.all(12.0),
+      child: Row(
+        children: [
+          Text("Order-ID: 123-456-789",
+          style: TextStyle(
+            color: AppColors.black,
+            fontWeight: FontWeight.w700,
+          ),)
+        ],
+      ),
+    ),
   );
 
 
@@ -93,7 +105,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
           ),
           Row(
             children: const [
-              Text("Delivery Address",
+              Text("Orta Mahallesi, Üniversite Caddesi\nNo:27 Tuzla, 34956 İstanbul",
                 style: TextStyle(
                   color: AppColors.black,
                   fontSize: 14,
@@ -102,8 +114,57 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
               ),
             ],
           ),
+          Row(
+            children: const [
+              Text(
+                "Charles Leclerc - 90505***4567",
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: const [
+              Text("Billing Address",
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: const [
+              Text("Orta Mahallesi, Üniversite Caddesi\nNo:27 Tuzla, 34956 İstanbul",
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: const [
+              Text(
+                "Charles Leclerc - 90505***4567",
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
         ],
       ),
     ),
   );
+
+
 }
