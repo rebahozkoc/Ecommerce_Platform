@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/widgets/productItems/track_product_big.dart';
-import 'package:mobile/core/widgets/productItems/track_product_small.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
 import 'package:mobile/core/widgets/customScrollPhysics.dart';
@@ -55,36 +54,29 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
       );
 
   Center _body() =>  Center(
-    child: SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-
+    child: Expanded(
+      child: ListView(
         children: [
-          _advertisements(),
-          TrackProductSmall(),
-          TrackProductBig(),
-          TrackProductBig(),
-          TrackProductBig(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
 
+          children: [
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+
+          ],
+        ),
 
         ],
-      ),
+      )
     ),
+
   );
 
-  SizedBox _advertisements() => SizedBox(
-    width: double.infinity,
-    height: 200,
-    child: TabBarView(
-      controller: controller,
-      children: const [
-          TrackProductSmall(),
-          TrackProductSmall(),
-        TrackProductSmall(),
-
-      ],
-    ),
-  );
 }
 
 

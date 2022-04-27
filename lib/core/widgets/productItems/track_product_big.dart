@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
 class TrackProductBig extends StatelessWidget {
-  const TrackProductBig({Key? key}) : super(key: key);
+  final VoidCallback action;
+  const TrackProductBig({Key? key, required this.action}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: action,
       child: Container(
         height: 80,
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
