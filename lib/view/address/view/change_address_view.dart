@@ -4,6 +4,7 @@ import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/address/viewmodel/change_address_view_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ChangeAddressView extends StatefulWidget {
   const ChangeAddressView({Key? key}) : super(key: key);
@@ -43,7 +44,12 @@ class _ChangeAddressViewState extends BaseState<ChangeAddressView> {
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [_title(), _personalTitle(), _nameContainer()],
+              children: [
+                _title(),
+                _personalTitle(),
+                _nameContainer(),
+                _phoneContainer()
+              ],
             ),
           ),
         ),
@@ -93,15 +99,81 @@ class _ChangeAddressViewState extends BaseState<ChangeAddressView> {
               ),
             ),
           ),
-          TextFormField(
-            cursorColor: Colors.indigoAccent,
-            keyboardType: TextInputType.text,
-            style: TextStyle(),
-            decoration: const InputDecoration(
-              hintText: "Name",
-            
-            ),
-          )
+          Observer(builder: (_) {
+            return TextFormField(
+              cursorColor: Colors.indigoAccent,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.search,
+              autocorrect: false,
+              focusNode: viewModel.nameNode,
+              controller: viewModel.nameController,
+              decoration: const InputDecoration(
+                hintText: "Name",
+                filled: true,
+                fillColor: AppColors.white,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderSide: BorderSide.none),
+                disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderSide: BorderSide.none),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(
+                    color: AppColors.primary,
+                    width: 1.5,
+                  ),
+                ),
+              ),
+            );
+          })
         ],
+      );
+
+  Padding _phoneContainer() => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Receiver Phone Number",
+                  style: TextStyle(
+                    color: AppColors.textColorGray,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              Observer(builder: (_) {
+                return TextFormField(
+                  cursorColor: Colors.indigoAccent,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.search,
+                  autocorrect: false,
+                  focusNode: viewModel.phoneNode,
+                  controller: viewModel.phoneController,
+                  decoration: const InputDecoration(
+                    hintText: "Phone Number",
+                    filled: true,
+                    fillColor: AppColors.white,
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide.none),
+                    disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide.none),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderSide: BorderSide(
+                        color: AppColors.primary,
+                        width: 1.5,
+                      ),
+                    ),
+                  ),
+                );
+              })
+            ]),
       );
 }
