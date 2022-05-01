@@ -5,6 +5,9 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/material';
+import themeOptions from '../../theme';
+
+
 export default function PaymentForm() {
   return (
     <React.Fragment>
@@ -55,10 +58,10 @@ export default function PaymentForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
-          />
+          <Box sx={{mt:40}}>
+          <Typography color="text.secondary">Your credit card information is not stored by Voidture Inc., the payment infrastructure is provided by MasterCard.</Typography>
+          <img src="/masterpass.png" width={400} alt="Mastercard" />
+          </Box>        
         </Grid>
       </Grid>
       </Box>

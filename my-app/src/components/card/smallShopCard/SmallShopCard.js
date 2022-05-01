@@ -98,7 +98,7 @@ const SmallShopCard = (props) => {
                     padding: (8, 1, 8, 1),
                   }}
                 >
-                  <Typography sx={{ color: "black" }}>My Basket</Typography>
+                  <Typography sx={{ color: "#000000" }}>My Basket</Typography>
                 </Button>
               </Link>
             </Link>

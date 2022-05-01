@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {useNavigate} from 'react-router-dom';
 import {useCallback} from 'react';
-
+import themeOptions from '../../theme';
 export default function OutlinedCard(props) {
   const isOpen = props.isOpen;
   const direction = props.direction;
@@ -23,7 +23,7 @@ export default function OutlinedCard(props) {
 
   const card = (
     <React.Fragment>
-      <CardContent onClick={isOpen ? {} :handleOnClick} sx={{maxWidth: 400, minHeight: 120, }}>
+      <CardContent onClick={isOpen ? ()=>{} :handleOnClick} sx={{maxWidth: 400, minHeight: 120, }}>
   
         <Typography variant="h6" component="div" fontWeight= {550} color="primary.main">
         {props.title}
@@ -39,9 +39,6 @@ export default function OutlinedCard(props) {
   );
 
   return (
-    <Box sx={{}}>
-      <Card variant="outlined"  sx={{bgcolor: isOpen ? "#FFFFFF" :"#EAECEC", border:0, borderRadius:0}}>{card}</Card>
-      
-    </Box>
+      <Card variant="outlined"  sx={{bgcolor: isOpen ? "#FFFFFF" :themeOptions.palette.secondary.light , border:0, borderRadius:0}}>{card}</Card>
   );
 }
