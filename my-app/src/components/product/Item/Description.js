@@ -6,7 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import themeOptions from "../theme";
+import themeOptions from "../../theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, Stack, Divider, Button } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CommentCard = (props) => {
+const Description = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [outStock, setoutStock] = React.useState(false);
   const [notZero, setnotzero] = React.useState(false);
@@ -32,14 +32,14 @@ const CommentCard = (props) => {
   };
 
   const decreaser = () => {
-    props.dec(props.id);
+    props.dec();
     setoutStock(false);
     if (props.count == 0) {
       setnotzero(true);
     }
   };
   const increaser = () => {
-    props.inc(props.id);
+    props.inc();
     setnotzero(false);
     if (props.count == props.stock) {
       setoutStock(true);
@@ -51,52 +51,40 @@ const CommentCard = (props) => {
   }, [outStock, notZero]);
   return (
     <ThemeProvider theme={themeOptions}>
-      <Box disableRipple sx={{ width: 800 }}>
-        <Stack direction="row" spacing={2} sx={{ height: "60px" }}>
-          <Stack direction="column">
+      <Box
+        disableRipple
+        sx={{ width: 800, backgroundColor: "white", padding: (1, 1, 1, 1) }}
+      >
+        <Stack direction="column" spacing={2} sx={{ height: "60px" }}>
+          <Stack direction="column" spacing={1}>
             <Typography variant="body1">{props.title}</Typography>
             <Divider />
             <Typography variant="body2">{props.description}</Typography>
             <Box sx={{ m: 2 }} />
             <Typography
-              variant="body2"
+              variant="body1"
               color="text.secondary"
               fontWeight="bold"
             >
-              Price: {props.cost}$
+              Stock Availability: {props.stock}
             </Typography>
           </Stack>
-          <Stack direction="column">
+
+          <Typography variant="body1" color="text.secondary" fontWeight="bold">
+            Delivery Time: {props.time}
+          </Typography>
+
+          <Stack direction="column" spacing={1}>
             <Typography
               variant="body1"
               color="text.secondary"
               fontWeight="bold"
             >
-              Delivery Time
-            </Typography>
-
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              fontWeight="bold"
-            >
-              some date time
-            </Typography>
-          </Stack>
-          <Box sx={{ m: 2 }} />
-          <Stack direction="column">
-            <Box sx={{ m: 1 }} />
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              fontWeight="bold"
-            >
-              {" "}
               Item Count
             </Typography>
             <Stack
               direction="row"
-              maxHeight="30px"
+              maxWidth="170px"
               sx={{
                 border: 2,
                 borderColor: "black",
@@ -109,13 +97,16 @@ const CommentCard = (props) => {
               </CardActions>
               <Box sx={{ borderLeft: 2 }}></Box>
               <Box sx={{ m: 1 }} />
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                fontWeight="bold"
-              >
-                {props.count}
-              </Typography>
+              <Stack direction="column">
+                <Box sx={{ m: 1 }} />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  fontWeight="bold"
+                >
+                  {props.count}
+                </Typography>
+              </Stack>
               <Box sx={{ m: 1 }} />
               <Box sx={{ borderRight: 2 }}></Box>
               <CardActions>
@@ -146,34 +137,27 @@ const CommentCard = (props) => {
             )}
           </Stack>
           <Box sx={{ m: 1 }} />
-          <Stack direction="column">
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              fontWeight="bold"
-            >
-              Total Price
-            </Typography>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ fontSize: 12 }}
-            >
-              {(props.cost * props.count).toFixed(2)}
-            </Typography>
-          </Stack>
 
+          <Typography variant="body1" color="text.secondary" fontWeight="bold">
+            Total Price {(props.cost * props.count).toFixed(2)}$
+          </Typography>
           <CardActions>
-            <IconButton aria-label="share" onClick={removeHandler}>
-              <DeleteOutlinedIcon />
-            </IconButton>
+            <Button
+              onClick={props.clickHandler}
+              variant="contained"
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (8, 1, 8, 1),
+                justify: "center",
+              }}
+            >
+              <Typography sx={{ color: "black" }}>Add to Basket</Typography>
+            </Button>
           </CardActions>
         </Stack>
-        <Box sx={{ m: 8 }} />
-
-        <Divider />
       </Box>
     </ThemeProvider>
   );
 };
-export default CommentCard;
+export default Description;

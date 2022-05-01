@@ -154,7 +154,7 @@ const ShoppingBasket = () => {
               >
                 <List>
                   {c.map((card) => (
-                    <ListItem button key={card.key}>
+                    <ListItem key={card.key}>
                       <ShoppingCard
                         imageId={card.imageId}
                         cost={card.cost}
@@ -190,7 +190,7 @@ const ShoppingBasket = () => {
                   overflow: "auto",
                 }}
               >
-                <Card sx={{ backgroundColor: "#EAECEC", borderRadius: 0  }}>
+                <Card sx={{ backgroundColor: "#EAECEC", borderRadius: 0 }}>
                   <Typography
                     align="center"
                     variant="body1"
@@ -200,7 +200,10 @@ const ShoppingBasket = () => {
                     Order Summary
                   </Typography>
                 </Card>
-                <Card elevation={0} sx={{ padding: (2, 2, 2, 2), borderRadius: 0}}>
+                <Card
+                  elevation={0}
+                  sx={{ padding: (2, 2, 2, 2), borderRadius: 0 }}
+                >
                   <Stack direction="row">
                     <Typography
                       align="left"
@@ -274,7 +277,6 @@ const ShoppingBasket = () => {
                     }}
                   >
                     <Button
-                      
                       variant="contained"
                       sx={{
                         backgroundColor: "#ff6600",
