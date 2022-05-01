@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_animation.dart';
 import 'package:mobile/core/widgets/bottombar_view.dart';
-import 'package:mobile/main.dart';
 import 'package:mobile/view/auth/login/view/login_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
