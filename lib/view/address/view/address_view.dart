@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/address_widget.dart';
 import 'package:mobile/locator.dart';
@@ -74,7 +76,8 @@ class _AddressViewState extends BaseState<AddressView> {
             )),
         child: InkWell(
           onTap: () {
-            debugPrint("Adds new shipping adress clicked");
+            NavigationService.instance
+                .navigateToPage(path: NavigationConstants.CHANGE_ADRESS);
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_animation.dart';
 import 'package:mobile/core/widgets/bottombar_view.dart';
-import 'package:mobile/main.dart';
+import 'package:mobile/view/address/view/change_address_view.dart';
 import 'package:mobile/view/auth/login/view/login_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
@@ -32,8 +32,12 @@ class NavigationRoute {
       case NavigationConstants.ADRESS:
         return cupertinoNavigate(
             const AddressView(), NavigationConstants.ADRESS);
+      case NavigationConstants.CHANGE_ADRESS:
+        return bottomToTopNavigate(
+            const ChangeAddressView(), NavigationConstants.CHANGE_ADRESS);
       default:
-        return defaultNavigate(const BottomBarView(), NavigationConstants.DEFAULT);
+        return defaultNavigate(
+            const BottomBarView(), NavigationConstants.DEFAULT);
     }
   }
 

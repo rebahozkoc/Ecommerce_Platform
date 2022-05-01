@@ -8,6 +8,7 @@ class NavigationConstants {
   static const FAVORITES = '/favorites';
   static const ACCOUNT = '/account';
   static const ADRESS = '/address';
+  static const CHANGE_ADRESS = '/changeAddress';
   static const PAYMENT = '/payment';
   static const CATEGORIES = '/categories';
   static const ORDERS = '/orders';
