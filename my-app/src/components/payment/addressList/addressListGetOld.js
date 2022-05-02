@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import themeOptions from '../../theme';
+import { Box } from '@mui/material';
 
 export default function addressListGetOld(props) {
   return (
@@ -20,7 +21,8 @@ export default function addressListGetOld(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Delete</Button>
+        <Box sx={{display: { md: props.isAddress ? "none" : "block" }}}>
+        <Button size="small">Delete</Button></Box>
       </CardActions>
     </Card>
   );

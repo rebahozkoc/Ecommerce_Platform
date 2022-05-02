@@ -3,7 +3,6 @@ import PrimarySearchAppBar from "./components/header/AppBar";
 import themeOptions from "./components/theme";
 import { ThemeProvider } from "@emotion/react";
 import Footer from "./components/footer/Footer";
-import MediaCardTogether from "./components/card/mediaTop/MediaCardTogether";
 import CategoryCardHandler from "./components/card/mediaMiddle/CategoryCardHandler";
 import { Card } from "@mui/material";
 import MediaCard from "./components/card/mediaTop/MediaCard";
@@ -17,7 +16,6 @@ import MediaCardStyled from "./components/card/mediaTop/MediaCardStyled";
 const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 const cards2 = [9, 10, 11, 12, 13, 14, 15, 16];
 export default function App() {
-  console.log("App rendered");
   return (
     <ThemeProvider theme={themeOptions}>
       <PrimarySearchAppBar></PrimarySearchAppBar>

@@ -22,6 +22,10 @@ let themeOptions = createTheme({
     transparent: {
       main: "transparent",
     },
+
+    action: {
+      disabled: "#000000"
+    }
   },
   props: {
     MuiList: {
