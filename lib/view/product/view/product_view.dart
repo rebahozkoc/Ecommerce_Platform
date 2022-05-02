@@ -28,11 +28,28 @@ class _ProductViewState extends BaseState<ProductView> {
         return Scaffold(
           appBar: _appBar(),
           body: _body(),
+          bottomNavigationBar: Container(
+            height: 100,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(12.0),
+                topLeft: Radius.circular(12.0),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                addToCart(),
+                buyNow(),
+              ],
+            ),
+          ),
         );
       },
     );
   }
-
+  
   AppBar _appBar(){
     return AppBar(
       leading: IconButton(
@@ -63,14 +80,6 @@ class _ProductViewState extends BaseState<ProductView> {
             ],
           )
       ),
-      BottomContainer(child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          addToCart(),
-          buyNow(),
-        ],
-      )),
-
     ],
   );
 
@@ -93,8 +102,8 @@ class RoundedContainer extends StatelessWidget {
       decoration: const BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(40),
-          bottomRight: Radius.circular(40),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
         )
       ),
       child: child,
@@ -102,25 +111,6 @@ class RoundedContainer extends StatelessWidget {
   }
 }
 
-class BottomContainer extends StatelessWidget {
-  const BottomContainer({Key? key, required this.child}) : super(key: key);
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        width: double.infinity,
-        height: 100,
-        decoration: const BoxDecoration(
-          color: AppColors.primary,
-        ),
-        child: child,
-      ),
-    );
-  }
-}
 
 
 
