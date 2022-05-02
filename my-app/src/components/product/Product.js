@@ -17,191 +17,171 @@ import ResponsiveAppBar from "../header/AppBarUnder";
 import Footer from "../footer/Footer";
 import themeOptions from "../theme";
 import { ThemeProvider } from "@emotion/react";
-import CommentCard from "./Comment";
+import CommentCard from "./Comment/Comment";
 import { CssBaseline } from "@mui/material/";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
-let c = [
+import Ratings from "./Comment/Ratings";
+import Images from "./Item/Images";
+import Description from "./Item/Description";
+import NewReview from "./Comment/NewReview";
+
+let points = [0, 0, 0, 0, 0, 0, 0];
+let comments = [
   {
-    key: 61,
-    imageId: "furn1.jpg",
-    cost: 1200,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 2,
-    stock: 40,
+    id: 1,
+    name: "Gorkem",
+    date: "date",
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    rating: 4,
+    topic: "Little Lorem İpsum",
   },
   {
-    key: 62,
-    imageId: "furn2.jpg",
-    cost: 120,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 2,
+    id: 2,
+    name: "Rebah",
+    date: "date",
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    rating: 4,
+    topic: "Little Lorem İpsum",
   },
   {
-    key: 63,
-    imageId: "furn3.jpg",
-    cost: 1300,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 3,
+    id: 3,
+    name: "Furkan",
+    date: "date",
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    rating: 3,
+    topic: "Little Lorem İpsum",
   },
   {
-    key: 64,
-    imageId: "furn4.jpg",
-    cost: 1515,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 4,
+    id: 4,
+    name: "Albert",
+    date: "date",
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    rating: 5,
+    topic: "Little Lorem İpsum",
   },
   {
-    key: 65,
-    imageId: "furn5.jpg",
-    cost: 121.22,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 6,
-    stock: 6,
+    id: 5,
+    name: "Selim",
+    date: "date",
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    rating: 1,
+    topic: "Little Lorem İpsum",
   },
   {
-    key: 66,
-    imageId: "furn6.jpg",
-    cost: 123.67,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 4123,
+    id: 6,
+    name: "Yasin",
+    date: "date",
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    rating: 4,
+    topic: "Little Lorem İpsum",
   },
 ];
 
-const Product = () => {
-  const [filter, setFilter] = React.useState(-1);
-  const [change1, setChange1] = React.useState(-1);
-  const [change2, setChange2] = React.useState(-1);
-  const [value, setValue] = React.useState(2);
+let itemTemp = {
+  count: 0,
+  stock: 5,
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet tellus cras adipiscing enim eu. Id eu nisl nunc mi ipsum faucibus vitae aliquet. Penatibus et magnis dis parturient. Commodo ullamcorper a lacus vestibulum sed arcu. Aliquam vestibulum morbi blandit cursus risus. Nibh praesent tristique magna sit amet purus gravida quis blandit. Varius vel pharetra vel turpis. Eu nisl nunc mi ipsum.",
+  title: "Furniture Name",
+  cost: 100,
+  time: "10/10/2022",
+};
 
-  const removeCardHandler = (toDelete) => {
-    setFilter(toDelete);
-    console.log(filter);
+const Product = () => {
+  const [makeComment, setMakeComment] = React.useState(false);
+
+  const clickHandler = () => {
+    setMakeComment(true);
+  };
+  const closeComment = () => {
+    setMakeComment(false);
+  };
+  const cancelComment = () => {
+    setMakeComment(false);
   };
 
-  const filterCards = () => {
-    c = c.filter(function (card) {
-      return card.key != filter;
+  const comment = () => {
+    points[0] = 0;
+    points[1] = 0;
+    points[2] = 0;
+    points[3] = 0;
+    points[4] = 0;
+    points[5] = 0;
+    points[6] = 0;
+    comments.map((card) => {
+      points[card.rating - 1]++;
+      points[5]++;
+      points[6] += card.rating;
     });
   };
+  comment();
+  React.useEffect(() => {
+    comment();
+    console.log(points[5]);
+  }, [makeComment]);
+
+  const [change, setChange] = React.useState(false);
 
   const incCard = () => {
-    for (let i = 0; i < c.length; i++) {
-      if (c[i].key == change2) {
-        if (c[i].count < c[i].stock) {
-          c[i].count++;
-        }
-        return;
-      }
+    if (itemTemp.count < itemTemp.stock) {
+      setChange(true);
+      itemTemp.count++;
     }
   };
-
   const decCard = () => {
-    for (let i = 0; i < c.length; i++) {
-      if (c[i].key == change1) {
-        if (c[i].count > 0) {
-          c[i].count--;
-        }
-        return;
-      }
+    if (itemTemp.count > 0) {
+      setChange(true);
+      itemTemp.count--;
     }
   };
-  const decreaserHandler = (toChange) => {
-    setChange1(toChange);
-  };
-  const increaserHandler = (toChange) => {
-    setChange2(toChange);
-  };
-  React.useEffect(() => {
-    console.log(filter);
-    filterCards();
-    setFilter(-1);
-  }, [filter]);
 
   React.useEffect(() => {
-    incCard();
-    setChange2(-1);
-  }, [change2]);
-  React.useEffect(() => {
-    decCard();
-    setChange1(-1);
-  }, [change1]);
-  let totalCost = 0;
+    setChange(false);
+  }, [change]);
+
   return (
     <>
       <ThemeProvider theme={themeOptions}>
         <CssBaseline />
         <PrimarySearchAppBar></PrimarySearchAppBar>
         <ResponsiveAppBar></ResponsiveAppBar>
-        <Box sx={{ m: 2 }} />
+
+        <Stack
+          spacing={3}
+          display="flex"
+          direction="row"
+          sx={{ padding: (3, 3, 3, 3), backgroundColor: "white" }}
+        >
+          <Images></Images>
+          <Description
+            description={itemTemp.description}
+            title={itemTemp.title}
+            cost={itemTemp.cost}
+            id={itemTemp.title}
+            stock={itemTemp.stock}
+            count={itemTemp.count}
+            dec={decCard}
+            inc={incCard}
+            time={itemTemp.time}
+          ></Description>
+        </Stack>
+
         <Divider />
         <Box sx={{ m: 1 }} />
         <Container maxWidth="none" sx={{ backgroundColor: "white" }}>
           <Grid container spacing={2}>
-            <Grid item key={2} xs={3}>
-              <Box
-                sx={{
-                  backgroundColor: "white",
-                  overflow: "auto",
-                }}
-              >
-                <Box
-                  sx={{
-                    "& > legend": { mt: 2 },
-                  }}
-                >
-                  <Typography component="legend">Controlled</Typography>
-                  <Rating
-                    name="simple-controlled"
-                    value={value}
-                    onChange={(event, newValue) => {
-                      setValue(newValue);
-                    }}
-                  />
-                  <Typography component="legend">Read only</Typography>
-                  <Rating name="read-only" value={value} readOnly />
-                  <Typography component="legend">Disabled</Typography>
-                  <Rating name="disabled" value={value} disabled />
-                  <Typography component="legend">No rating given</Typography>
-                  <Rating name="no-value" value={null} />
-                </Box>
-                <Stack justifyContent="center" alignItems="center">
-                  <Link
-                    to="/Dummy"
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                    }}
-                  >
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#ff6600",
-                        display: "block",
-                        padding: (8, 1, 8, 1),
-                        justify: "center",
-                      }}
-                    >
-                      <Typography sx={{ color: "black" }}>
-                        Make a comment
-                      </Typography>
-                    </Button>
-                  </Link>
-                </Stack>
-              </Box>
+            <Grid item key={2} xs={2}>
+              <Ratings points={points} clickHandler={clickHandler}></Ratings>
             </Grid>
+
             <Grid item key={1} xs={9}>
               <Box
                 sx={{
@@ -210,22 +190,18 @@ const Product = () => {
                 }}
               >
                 <List>
-                  {c.map((card) => (
-                    <ListItem button key={card.key}>
+                  {comments.map((card) => (
+                    <ListItem key={card.id}>
                       <CommentCard
-                        imageId={card.imageId}
-                        cost={card.cost}
-                        description={card.description}
-                        title={card.title}
-                        id={card.key}
-                        delete={removeCardHandler}
+                        name={card.name}
+                        rating={card.rating}
+                        comment={card.comment}
+                        topic={card.topic}
+                        date={card.date}
+                        id={card.id}
                         stock={card.stock}
                         count={card.count}
-                        dec={decreaserHandler}
-                        inc={increaserHandler}
-                      >
-                        {(totalCost += card.cost * card.count)}
-                      </CommentCard>
+                      ></CommentCard>
                     </ListItem>
                   ))}
                 </List>
@@ -242,6 +218,12 @@ const Product = () => {
           </Grid>
         </Container>
         <Box sx={{ m: 2 }} />
+        {makeComment && (
+          <NewReview
+            onConfirm={closeComment}
+            onCancel={cancelComment}
+          ></NewReview>
+        )}
       </ThemeProvider>
       <Footer />
     </>
