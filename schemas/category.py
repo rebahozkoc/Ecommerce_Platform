@@ -1,4 +1,4 @@
-from typing import List
+from typing import Optional, List
 
 from pydantic import BaseModel, Field
 
@@ -9,6 +9,7 @@ SubCategory
 
 
 class SubCategoryBase(BaseModel):
+    id: int = Field(alias="subcategory_id")
     title: str = Field(alias="subcategory_title")
 
     class Config:
@@ -16,16 +17,16 @@ class SubCategoryBase(BaseModel):
         allow_population_by_field_name = True
 
 
-class SubCategoryCreate(SubCategoryBase):
-    pass
+class SubCategoryCreate(BaseModel):
+    title: str
+
+    class Config:
+        orm_mode = True
+        allow_population_by_field_name = True
 
 
-class SubCategoryUpdate(SubCategoryBase):
-    pass
-
-
-class SubCategoryInDBBase(SubCategoryBase):
-    pass
+class SubCategoryUpdate(SubCategoryCreate):
+    category_id: Optional[int] = None
 
 
 class SubCategoryList(BaseModel):
@@ -49,6 +50,10 @@ class CategoryBase(BaseModel):
         allow_population_by_field_name = True
 
 
+class CategoryORM(CategoryBase):
+    id: int = Field(alias="category_id")
+
+
 class CategoryCreate(CategoryBase):
     title: str
 
@@ -60,3 +65,8 @@ class CategoryUpdate(CategoryCreate):
 class CategoryShow(CategoryBase):
     id: int
     subcategories: List[SubCategoryBase]
+
+
+class SubCategoryShow(SubCategoryBase):
+    id: int
+    categories: List[CategoryORM]

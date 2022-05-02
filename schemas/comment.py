@@ -14,7 +14,6 @@ class CommentBase(BaseModel):
 
 
 class CommentCreate(BaseModel):
-    product_id: int
     content: str
 
     class Config:

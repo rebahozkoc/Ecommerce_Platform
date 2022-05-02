@@ -12,8 +12,8 @@ class CategorySubCategory(Base):
     category_id = Column(ForeignKey("category.id"))
     subcategory_id = Column(ForeignKey("subcategory.id"))
 
-    category = relationship("Category", back_populates="subcategories")
-    subcategory = relationship("SubCategory", back_populates="categories")
+    category = relationship("Category", cascade="all,delete", back_populates="subcategories")
+    subcategory = relationship("SubCategory", cascade="all,delete", back_populates="categories")
 
     # proxies
     category_title = association_proxy(target_collection="category", attr="title")
@@ -31,6 +31,9 @@ class Category(Base):
         "CategorySubCategory", cascade="all,delete", back_populates="category"
     )
 
+    def __init__(self, title):
+        self.title = title
+
 
 class SubCategory(Base):
     __tablename__ = "subcategory"
@@ -40,3 +43,6 @@ class SubCategory(Base):
     categories = relationship(
         "CategorySubCategory", cascade="all,delete", back_populates="subcategory"
     )
+    
+    def __init__(self, title):
+        self.title = title
