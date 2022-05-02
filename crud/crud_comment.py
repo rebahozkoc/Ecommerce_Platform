@@ -7,15 +7,7 @@ from schemas.comment import CommentCreate, CommentUpdate
 
 
 class CRUDComment(CRUDBase[Comment, CommentCreate, CommentUpdate]):
-    def remove(self, db: Session, *, id: int, current_user: int) -> Comment:
-        obj = self.get(db=db, field="id", value=id)
+    pass
 
-        if obj.user_id != current_user:
-            raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
-                    detail={"message": f"You can't delete this comment!"})
-
-        db.delete(obj)
-        db.commit()
-        return obj
 
 comment = CRUDComment(Comment)
