@@ -7,12 +7,13 @@ import Checkbox from '@mui/material/Checkbox';
 import { Box, Button } from '@mui/material';
 import themeOptions from '../../theme';
 
-const addressListAddNew = () => {
+const addressListAddNew = (props) => {
+  const data = props.data;
     return (
         <React.Fragment>
         <Box sx={{maxWidth:750, p:4}}>
       <Typography variant="h6" gutterBottom>
-        Shipping address
+      {data ? data["title"]: "Shipping address"}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -21,6 +22,8 @@ const addressListAddNew = () => {
             id="firstName"
             name="firstName"
             label="First name"
+            defaultValue= {data ? data["firstName"]: ""}
+
             fullWidth
             autoComplete="given-name"
             variant="standard"
@@ -32,6 +35,7 @@ const addressListAddNew = () => {
             id="lastName"
             name="lastName"
             label="Last name"
+            defaultValue= {data ? data["lastName"]: ""}
             fullWidth
             autoComplete="family-name"
             variant="standard"
@@ -43,6 +47,8 @@ const addressListAddNew = () => {
             id="address1"
             name="address1"
             label="Address line 1"
+            defaultValue= {data ? data["description"]: ""}
+
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
@@ -53,6 +59,8 @@ const addressListAddNew = () => {
             id="address2"
             name="address2"
             label="Address line 2"
+            defaultValue= {data ? data["description"]: ""}
+
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"

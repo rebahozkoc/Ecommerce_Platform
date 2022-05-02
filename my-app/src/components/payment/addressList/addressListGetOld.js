@@ -13,7 +13,7 @@ export default function addressListGetOld(props) {
     return (
 <Card sx={{width: props.isProfile ? 220: 350, minHeight: 100, display: "block", borderRadius:4, bgcolor:themeOptions.palette.secondary.dark, m:1}}>
       <CardContent sx={{pb:0, mb:0}}>
-        <CardActionArea onClick={props.onClick} >
+        <CardActionArea id={props.id} onClick={props.onClick} >
         <Typography variant="h6" component="div" sx={{ mb: 1 }} align="center">
          {props.title}
         </Typography>
@@ -42,7 +42,7 @@ export default function addressListGetOld(props) {
       <CardActions>
         <Box sx={{display: { md: "block" }}}>
         {props.isProfile ? (
-              <Button size="small" color="primary" onClick={props.onClick}>
+              <Button id={props.id} size="small" color="primary" onClick={props.onClick}>
                 Edit
               </Button>
             ) : (
