@@ -71,7 +71,7 @@ export default function AddressListForm(props) {
               control={<Radio />}
               label={
                 <AddressListGetOld
-                  isAddress={true}
+                  isNew={true}
                   title={"Add New Address"}
                   description={"Create a new address..."}
                 />
