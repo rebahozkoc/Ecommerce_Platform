@@ -11,34 +11,34 @@ abstract class _ChangeAddressViewModelBase with Store, BaseViewModel {
   void setContext(BuildContext context) => this.context = context;
 
   @override
-  void init() {
-    nameNode.addListener(_listener);
-    phoneNode.addListener(_listener);
-  }
+  void init() {}
 
-  void dispose() {
-    nameNode.removeListener(_listener);
-    phoneNode.removeListener(_listener);
-  }
+  void dispose() {}
 
   @action
-  void _listener() {
-    nameFocused = nameNode.hasFocus;
-    phoneFocused = phoneNode.hasFocus;
-  }
-
-  @observable
-  bool nameFocused = false, phoneFocused = false;
-
-  @observable
-  FocusNode nameNode = FocusNode();
-
-  @observable
-  FocusNode phoneNode = FocusNode();
+  void _listener() {}
 
   @observable
   TextEditingController nameController = TextEditingController();
 
   @observable
   TextEditingController phoneController = TextEditingController();
+
+  @observable
+  TextEditingController provinceController = TextEditingController();
+
+  @observable
+  TextEditingController cityController = TextEditingController();
+
+  @observable
+  TextEditingController postalCodeController = TextEditingController();
+
+  @observable
+  TextEditingController countryController = TextEditingController();
+
+  @observable
+  TextEditingController adressController = TextEditingController();
+
+  @observable
+  TextEditingController adressNameController = TextEditingController();
 }
