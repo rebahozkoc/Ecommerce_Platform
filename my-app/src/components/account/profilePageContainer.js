@@ -33,6 +33,7 @@ const ProfilePageContainer = (props) => {
     ["Coupons", "../coupons"],
     ["My Information", "../update-information"],
     ["Addresses", "../update-address"],
+    ["Payment Methods", "../update-payment"],
     ["Favorites", "../update-favorites"],
   ];
 

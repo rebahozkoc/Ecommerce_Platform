@@ -5,7 +5,7 @@ const UpdateFavoritesPage = () => {
 
 
     return (
-        <ProfilePageContainer pageIndex={4}></ProfilePageContainer>
+        <ProfilePageContainer pageIndex={5}></ProfilePageContainer>
     )
 };
 

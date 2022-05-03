@@ -2,7 +2,7 @@ import AddressListTabBarCard from './addressListTabBarCard';
 import { Grid } from '@mui/material';
 import { Stack, Box } from '@mui/material';
 import AddressListForm from './addressListForm';
-import PaymentForm from './paymentForm';
+import PaymentForm from '../creditCard/paymentForm';
 
 /*
 const addressListTabBar = () => {
