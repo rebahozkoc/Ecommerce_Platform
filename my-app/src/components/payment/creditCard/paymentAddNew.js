@@ -6,21 +6,33 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/material';
 import themeOptions from '../../theme';
+import { Button } from '@mui/material';
 
+export default function PaymentAddNew(props) {
+    const data = props.data;
 
-export default function PaymentForm() {
   return (
     <React.Fragment>
       <Box sx={{maxWidth:750, p:4}}>
-      <Typography variant="h6" gutterBottom>
-        Payment method
-      </Typography>
       <Grid container spacing={3}>
+      <Grid item xs={12} md={6}>
+          <TextField
+            required
+            id="paymentName"
+            label="Payment Method Name"
+            defaultValue= {data ? data["title"]: ""}
+            fullWidth
+            autoComplete="cc-name"
+            variant="standard"
+          />
+        </Grid>
         <Grid item xs={12} md={6}>
           <TextField
             required
             id="cardName"
             label="Name on card"
+            defaultValue= {data ? data["name"]: ""}
+
             fullWidth
             autoComplete="cc-name"
             variant="standard"
@@ -32,6 +44,8 @@ export default function PaymentForm() {
             id="cardNumber"
             label="Card number"
             fullWidth
+            defaultValue= {data ? data["cardNumber"]: ""}
+
             autoComplete="cc-number"
             variant="standard"
           />
@@ -42,6 +56,8 @@ export default function PaymentForm() {
             id="expDate"
             label="Expiry date"
             fullWidth
+            defaultValue= {data ? data["expireDate"]: ""}
+
             autoComplete="cc-exp"
             variant="standard"
           />
@@ -53,15 +69,21 @@ export default function PaymentForm() {
             label="CVV"
             helperText="Last three digits on signature strip"
             fullWidth
+            defaultValue= {data ? data["cvv"]: ""}
+
             autoComplete="cc-csc"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{mt:40}}>
-          <Typography color="text.secondary">Your credit card information is not stored by Voidture Inc., the payment infrastructure is provided by MasterCard.</Typography>
-          <img src="/masterpass.png" width={400} alt="Mastercard" />
-          </Box>        
+                 
+        </Grid>
+        <Grid item xs={12}>
+        <Button sx={{bgcolor:themeOptions.palette.primary.light}}>
+          <Typography variant="button" sx={{color: themeOptions.palette.black.main}}>
+            Save
+          </Typography>
+        </Button>
         </Grid>
       </Grid>
       </Box>

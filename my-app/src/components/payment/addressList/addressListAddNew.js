@@ -12,9 +12,20 @@ const addressListAddNew = (props) => {
     return (
         <React.Fragment>
         <Box sx={{maxWidth:750, p:4}}>
-      <Typography variant="h6" gutterBottom>
-      {data ? data["title"]: "Shipping address"}
-      </Typography>
+      
+      <TextField
+            required
+            id="addressName"
+            name="addressName"
+            label="Address Name"
+            defaultValue= {data ? data["title"]: ""}
+            fullWidth
+            autoComplete="address-name"
+            variant="standard"
+          />
+          <br></br>
+          <br>
+          </br>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
