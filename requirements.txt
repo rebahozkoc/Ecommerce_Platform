@@ -2,7 +2,6 @@ aioredis==2.0.1
 alembic==1.7.7
 amqp==5.1.0
 anyio==3.5.0
-anyjson==0.3.3
 asgi-lifespan==1.0.1
 asgiref==3.5.0
 async-timeout==4.0.2
