@@ -21,6 +21,7 @@ import UpdateInformationPage from "./components/account/updateInformationPage";
 import UpdateAddressPage from "./components/account/updateAddressPage";
 import UpdateFavoritesPage from "./components/account/updateFavoritesPage";
 import UpdatePaymentPage from "./components/account/updatePaymentPage";
+import PaymentSuccessPage from "./components/payment/paymentSuccess/paymentSuccessPage";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
@@ -40,7 +41,7 @@ ReactDOM.render(
       <Route path="/update-address" element={<UpdateAddressPage />} />
       <Route path="/update-favorites" element={<UpdateFavoritesPage />} />
       <Route path="/update-payment" element={<UpdatePaymentPage/>} />
-
+      <Route path="/payment-success" element={<PaymentSuccessPage/>} />
       
       
       <Route path="/" element={<App />}></Route>

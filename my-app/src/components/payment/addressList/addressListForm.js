@@ -19,7 +19,7 @@ export default function AddressListForm(props) {
     ["Home", "Fakülteler Mah, Oba Sk. No:1, 06590 Çankaya/Ankara"],
     ["Dormitory", "Sabanci University, 34956 Tuzla, Istanbul, Turkey"],
   ];
-  const [value, setValue] = React.useState("01");
+  const [value, setValue] = React.useState(0);
   const [newAddress, setNewAddress] = React.useState(false);
 
   const handleChange = (event) => {
@@ -41,6 +41,7 @@ export default function AddressListForm(props) {
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
+            defaultValue={0}
             value={value}
             onChange={handleChange}
           >

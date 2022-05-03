@@ -14,7 +14,7 @@ const paymentPage = () => {
         <AddressListHeader></AddressListHeader>
         <Stack direction="row" justifyContent="center" spacing={4}>
           <AddressListTabBar isAddress={false}></AddressListTabBar>
-          <AddressListSummary totalCost={1000} isAddress={false} buttonText={"MAKE PAYMENT"} link={"/Dummy"}></AddressListSummary>
+          <AddressListSummary totalCost={1000} isAddress={false} buttonText={"MAKE PAYMENT"} link={"/payment-success"}></AddressListSummary>
         </Stack>
 
         
