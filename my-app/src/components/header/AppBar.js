@@ -2,7 +2,6 @@ import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import { Stack } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -220,7 +219,7 @@ export default function PrimarySearchAppBar() {
             <Typography sx={{ color: "black" }}>Coupons</Typography>
           </Button>
         </Link>
-        <Link to="/payment" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/update-payment" style={{ textDecoration: "none", color: "black" }}>
           <Button
             fullWidth
             sx={{

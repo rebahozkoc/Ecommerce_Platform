@@ -15,7 +15,7 @@ export default function AddressListForm(props) {
     ["Akbank", "Rebah Özkoç 1111 1111 2222 2222 *** **/****"],
     ["Garanti BBVA", "Rebah Özkoç 1111 1111 2222 2222 *** **/****"],
   ];
-  const [value, setValue] = React.useState("01");
+  const [value, setValue] = React.useState(0);
   const [newAddress, setNewAddress] = React.useState(false);
 
   const handleChange = (event) => {
@@ -39,6 +39,7 @@ export default function AddressListForm(props) {
             name="controlled-radio-buttons-group"
             value={value}
             onChange={handleChange}
+            defaultValue={0}
           >
             {addressList.map((address, index) => {
               console.log(index);
