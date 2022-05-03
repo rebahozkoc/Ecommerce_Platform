@@ -1,9 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from tkinter import Image
+from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 from sqlalchemy.orm import Session
 import crud, schemas
 from typing import List
 from api import deps
 from schemas.response import Response
+from fastapi.responses import FileResponse
+from utilities.image import ImageUtilities
 
 router = APIRouter()
 
@@ -41,16 +44,31 @@ async def get_category_by_id(id: int, db: Session = Depends(deps.get_db)):
     return Response(data=category)
 
 
+@router.get("/{id}/image", response_class=FileResponse)
+async def get_category_image(id: int, db: Session = Depends(deps.get_db)):
+    """
+    Returns the category image
+    """
+    category = crud.category.get(db=db, field="id", value=id)
+    if not category:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Category does not exists."},
+        )
+    return ImageUtilities.get_image_url(category.image_url)
+
+
 @router.post("/")
 async def create_category(
     *,
-    category_in: schemas.CategoryCreate,
+    category_in: schemas.CategoryCreate = Depends(),
+    image: UploadFile = File(...),
     db: Session = Depends(deps.get_db),
 ):
     """
-    Creates category from title.
+    Creates category from title and image.
     """
-    category = crud.category.create(db, obj_in=category_in)
+    category = crud.category.create(db, obj_in=category_in, image=image)
     if not category:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -66,7 +84,8 @@ async def create_category(
 async def update_category(
     *,
     id: int,
-    category_in: schemas.CategoryUpdate,
+    category_in: schemas.CategoryUpdate = Depends(),
+    image: UploadFile = File(None),
     db: Session = Depends(deps.get_db),
 ):
     """
@@ -78,8 +97,9 @@ async def update_category(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Category does not exists."},
         )
-
-    category = crud.category.update(db, db_obj=current_category, obj_in=category_in)
+    category = crud.category.update(
+        db, db_obj=current_category, image=image, obj_in=category_in
+    )
     return Response(message="Updated successfully")
 
 
@@ -102,4 +122,6 @@ async def remove_category(
             detail={"message": f"Category does not exists."},
         )
     category = crud.category.remove(db=db, id=id)
+    # TODO: Do it in celery
+    ImageUtilities.remove_image(path=category.image_url)
     return Response(message="Deleted successfully")
