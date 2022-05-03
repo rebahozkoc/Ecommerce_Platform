@@ -1,7 +1,7 @@
 from typing import Optional, List
 
-from pydantic import BaseModel, Field
-
+from pydantic import BaseModel, Field, validator, Extra
+from utilities.image import ImageUtilities
 
 """
 SubCategory
@@ -61,10 +61,14 @@ class CategoryCreate(CategoryBase):
 class CategoryUpdate(CategoryCreate):
     pass
 
-
 class CategoryShow(CategoryBase):
     id: int
+    image_url: str
     subcategories: List[SubCategoryBase]
+
+    @validator("image_url")
+    def static_image(cls, image_url):
+        return ImageUtilities.get_image_url(image_url)
 
 
 class SubCategoryShow(SubCategoryBase):

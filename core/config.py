@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     API_URL: str = BASE_URL + str(CURRENT_API_VERSION)
     API_V1_STR: str = "/api/v1"
 
+    MEDIA_FOLDER: str = os.getenv("MEDIA_FOLDER", "media")
+
     ACCESS_TOKEN_EXPIRE_MINUTES: int = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 3600)
 
     DATABASE_URL: str = os.getenv("DATABASE_URL")

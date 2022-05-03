@@ -7,6 +7,8 @@ from typing import Any, Optional, List
 from sqlalchemy.orm import Session, joinedload
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 from sqlalchemy.orm import Session
+from fastapi import UploadFile
+from utilities.image import ImageUtilities
 
 
 class CRUDCategory(
@@ -37,15 +39,37 @@ class CRUDCategory(
             .all()
         )
 
-    def create(self, db: Session, *, obj_in: schemas.CategoryCreate) -> Category:
+    def create(
+        self, db: Session, *, obj_in: schemas.CategoryCreate, image: UploadFile
+    ) -> Category:
         obj_in_data = jsonable_encoder(obj_in)
         db_obj = self.model(**obj_in_data)  # type: ignore
         if self.get(db=db, field="title", value=obj_in.title):
             return None
+        db_obj.image_url = ImageUtilities.save_image(image, "categories")
+        db.commit()
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
         return db_obj
+
+    def update(
+        self,
+        db: Session,
+        *,
+        db_obj: Category,
+        image: UploadFile,
+        obj_in: Union[schemas.CategoryUpdate, Dict[str, Any]]
+    ) -> Category:
+        if isinstance(obj_in, dict):
+            update_data = obj_in
+        else:
+            update_data = obj_in.dict(exclude_unset=True)
+        if image:
+            ImageUtilities.remove_image(path=db_obj.image_url)
+            ImageUtilities.save_image(image, "categories")
+            update_data["image_url"] = ImageUtilities.save_image(image, "categories")
+        return super().update(db, db_obj=db_obj, obj_in=update_data)
 
 
 category = CRUDCategory(Category)

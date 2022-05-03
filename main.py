@@ -5,6 +5,7 @@ from core.celery_worker import create_task
 from fastapi.responses import JSONResponse
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
+from fastapi.staticfiles import StaticFiles
 
 
 app = FastAPI(
@@ -14,6 +15,7 @@ app = FastAPI(
 )
 
 app.include_router(api_router_v1, prefix=settings.API_V1_STR)
+app.mount("/media", StaticFiles(directory="media"), name="media")
 
 
 @app.get("/")
