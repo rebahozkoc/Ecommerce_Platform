@@ -108,14 +108,12 @@ export default function PrimarySearchAppBar() {
 
   const RemoveCardHand = (toDelete) => {
     setFilter(toDelete);
-    console.log(filter);
   };
   const filterCards = () => {
     c = c.filter(function (card) {
-      return card.key != filter;
+      return card.key !== filter;
     });
 
-    console.log(c);
   };
   React.useEffect(() => {
     filterCards();

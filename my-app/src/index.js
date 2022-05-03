@@ -15,6 +15,11 @@ import ShoppingBasket from "./components/shoppingBasket/ShoppingBasket";
 import Product from "./components/product/Product";
 import AddressListPage from "./components/payment/addressList/addressListPage";
 import PaymentPage from "./components/payment/creditCard/paymentPage";
+import OrderPage from "./components/account/orderPage";
+import CouponPage from "./components/account/couponPage";
+import UpdateInformationPage from "./components/account/updateInformationPage";
+import UpdateAddressPage from "./components/account/updateAddressPage";
+import UpdateFavoritesPage from "./components/account/updateFavoritesPage";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
@@ -28,6 +33,14 @@ ReactDOM.render(
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/address-list" element={<AddressListPage />} />
       <Route path="/payment" element={<PaymentPage />} />
+      <Route path="/orders" element={<OrderPage />} />
+      <Route path="/coupons" element={<CouponPage />} />
+      <Route path="/update-information" element={<UpdateInformationPage />} />
+      <Route path="/update-address" element={<UpdateAddressPage />} />
+      <Route path="/update-favorites" element={<UpdateFavoritesPage />} />
+      
+      
+      
       <Route path="/" element={<App />}></Route>
     </Routes>
   </BrowserRouter>,

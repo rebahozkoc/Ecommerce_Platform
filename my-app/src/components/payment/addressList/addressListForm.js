@@ -21,10 +21,6 @@ export default function AddressListForm(props) {
   ];
   const [value, setValue] = React.useState("01");
   const [newAddress, setNewAddress] = React.useState(false);
-  
-  
-
-
 
   const handleChange = (event) => {
     console.log("handleChange");
@@ -32,14 +28,14 @@ export default function AddressListForm(props) {
     setValue(event.target.value);
     if (event.target.value === "new") {
       setNewAddress(true);
-    }else{
+    } else {
       setNewAddress(false);
     }
   };
 
   return (
     <React.Fragment>
-      <Box sx={{ maxWidth: 750, pl: 4, pr: 4, pb:4, pt:3 }}>
+      <Box sx={{ maxWidth: 750, pl: 4, pr: 4, pb: 4, pt: 3 }}>
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
           <RadioGroup
@@ -64,22 +60,20 @@ export default function AddressListForm(props) {
                 />
               );
             })}
-
-            <FormControlLabel
-              key={-1}
-              value="new"
-              control={<Radio />}
-              label={
-                <AddressListGetOld
-                  title={"Add New Address"}
-                  description={"Create a new address..."}
-                />
-              }
-            />
           </RadioGroup>
         </FormControl>
+        <Box sx={{ml:4}}>
+          <AddressListGetOld
+            onClick={() => {
+              setNewAddress(!newAddress);
+            }}
+            isNew={true}
+            title={"Add New Address"}
+            description={"Create a new address..."}
+          />
+        </Box>
       </Box>
-      {newAddress ? <AddressListAddNew />: <div> </div>}
+      {newAddress ? <AddressListAddNew /> : <div> </div>}
     </React.Fragment>
   );
 }
