@@ -19,7 +19,7 @@ const OrderItem = (props) => {
       <CardContent sx={{ pt: 3 }}>
         <Stack direction="row" alignItems="center">
           
-          <img src={order.orderImage} height={64} alt="order-image" />
+          <img src={order.orderImage} height={64} alt={order.orderId} />
 
           <Stack
             direction="column"
@@ -55,7 +55,7 @@ const OrderItem = (props) => {
 
             
             <Stack direction="row" gap={1}>
-                <Typography variant="h6" bold style={{ fontWeight: 600 }}>
+                <Typography variant="h6" style={{ fontWeight: 600 }}>
                     Order total: {order.orderTotal} $
                 </Typography>
             </Stack>
