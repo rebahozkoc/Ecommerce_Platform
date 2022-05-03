@@ -13,15 +13,24 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import themeOptions from "../theme";
-
+import axios from "axios";
 export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    axios
+      .post("http://164.92.208.145/api/v1/auth/registration", {
+        email: data.get("email"),
+        is_active: true,
+        full_name: `${data.get("firstName")} ${data.get("lastName")}`,
+        password: data.get("password"),
+      })
+      .then(function (response) {
+        window.location.href = "http://localhost:3000/SignIn";
+      })
+      .catch(function (error) {
+        alert("Wrong Registration");
+      });
   };
 
   return (

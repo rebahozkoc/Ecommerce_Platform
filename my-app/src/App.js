@@ -11,33 +11,52 @@ import CardHalfTogether from "./components/card/mediaMiddle/CardHalfTogether";
 import CardHalfReverse from "./components/card/mediaMiddle/CardHalfReverse";
 import CardItemHandler from "./components/card/mediaMiddle/CardItemHandler";
 import MediaCardStyled from "./components/card/mediaTop/MediaCardStyled";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
 // Or Create your Own theme:
 const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 const cards2 = [9, 10, 11, 12, 13, 14, 15, 16];
+export const loggedState = atom({
+  key: "logged", // unique ID (with respect to other atoms/selectors)
+  default: true, // default value (aka initial value)
+});
+export const userId = atom({
+  key: "userId", // unique ID (with respect to other atoms/selectors)
+  default: -1, // default value (aka initial value)
+});
 export default function App() {
+  //const [isLogged, setIsLogged] = React.useState(true);
+
   return (
-    <ThemeProvider theme={themeOptions}>
-      <PrimarySearchAppBar></PrimarySearchAppBar>
-      <ResponsiveAppBar></ResponsiveAppBar>
-      <MediaCardStyled></MediaCardStyled>
-      <CategoryCardHandler item={cards}></CategoryCardHandler>
-      <CardHalfReverse></CardHalfReverse>
-      
-      <Card
-        sx={{
-          bgcolor: "background.paper",
-          boxShadow: 1,
-          borderRadius: 2,
-          p: 2,
-          minWidth: 300,
-        }}
-      >
-        <MediaCard myId={4}></MediaCard>
-      </Card>
-      <CardItemHandler item={cards2}></CardItemHandler>
-      <CardHalfTogether></CardHalfTogether>
-      <Footer />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={themeOptions}>
+        <PrimarySearchAppBar></PrimarySearchAppBar>
+        <ResponsiveAppBar></ResponsiveAppBar>
+        <MediaCardStyled></MediaCardStyled>
+        <CategoryCardHandler item={cards}></CategoryCardHandler>
+        <CardHalfReverse></CardHalfReverse>
+
+        <Card
+          sx={{
+            bgcolor: "background.paper",
+            boxShadow: 1,
+            borderRadius: 2,
+            p: 2,
+            minWidth: 300,
+          }}
+        >
+          <MediaCard myId={4}></MediaCard>
+        </Card>
+        <CardItemHandler item={cards2}></CardItemHandler>
+        <CardHalfTogether></CardHalfTogether>
+        <Footer />
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }

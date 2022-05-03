@@ -21,6 +21,7 @@
     "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "recoil": "^0.7.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

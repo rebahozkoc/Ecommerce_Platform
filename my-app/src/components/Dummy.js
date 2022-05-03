@@ -37,7 +37,7 @@ const Dummy = () => {
     <Card key={item.id} title={item.id} description={item.body}></Card>
   ));
   */
-  return <div>asdasda</div>;
+  return <h1>Welcome to Dummy Page</h1>;
 };
 
 export default Dummy;

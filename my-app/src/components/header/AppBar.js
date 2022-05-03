@@ -18,6 +18,14 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { loggedState, userId } from "../../App";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
 import { Link } from "react-router-dom";
 let c = [
@@ -124,7 +132,7 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [isLogged, setIsLogged] = React.useState(true);
+  const [isLogged, setIsLogged] = useRecoilState(loggedState);
 
   const [open, setOpen] = React.useState(false);
 
@@ -155,12 +163,6 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const logIn = () => {
-    setIsLogged(true);
-  };
-  const logOut = () => {
-    setIsLogged(false);
-  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -245,6 +247,20 @@ export default function PrimarySearchAppBar() {
             <Typography sx={{ color: "black" }}>Address</Typography>
           </Button>
         </Link>
+        <Button
+          fullWidth
+          sx={{
+            display: "block",
+            padding: (1, 1, 1, 1),
+            mb: 0,
+            justify: "center",
+          }}
+          onClick={() => {
+            setIsLogged(false);
+          }}
+        >
+          <Typography sx={{ color: "black" }}>Sign Out</Typography>
+        </Button>
       </Stack>
     </Menu>
   );
@@ -270,7 +286,6 @@ export default function PrimarySearchAppBar() {
             <Button
               fullWidth
               sx={{
-                backgroundColor: "#ff6600",
                 display: "block",
                 padding: (1, 1, 1, 1),
                 mb: 1,
@@ -285,10 +300,9 @@ export default function PrimarySearchAppBar() {
             <Button
               fullWidth
               sx={{
-                backgroundColor: "#ff6600",
                 display: "block",
                 padding: (1, 1, 1, 1),
-                mb: 0,
+                mb: 1,
                 justify: "center",
               }}
             >
