@@ -1,6 +1,7 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
+import { Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -113,7 +114,6 @@ export default function PrimarySearchAppBar() {
     c = c.filter(function (card) {
       return card.key !== filter;
     });
-
   };
   React.useEffect(() => {
     filterCards();
@@ -124,7 +124,7 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [isLogged, setIsLogged] = React.useState(false);
+  const [isLogged, setIsLogged] = React.useState(true);
 
   const [open, setOpen] = React.useState(false);
 
@@ -178,9 +178,74 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Stack direction="column">
+        <Link
+          to="/update-information"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Button
+            fullWidth
+            sx={{
+              display: "block",
+              padding: (1, 1, 1, 1),
+              mb: 0,
+            }}
+          >
+            <Typography sx={{ color: "black" }}>My Account</Typography>
+          </Button>
+        </Link>
+        <Link to="/orders" style={{ textDecoration: "none", color: "black" }}>
+          <Button
+            fullWidth
+            sx={{
+              display: "block",
+              padding: (1, 1, 1, 1),
+              mb: 0,
+            }}
+          >
+            <Typography sx={{ color: "black" }}>Orders</Typography>
+          </Button>
+        </Link>
+        <Link to="/coupons" style={{ textDecoration: "none", color: "black" }}>
+          <Button
+            fullWidth
+            sx={{
+              display: "block",
+              padding: (1, 1, 1, 1),
+              mb: 0,
+            }}
+          >
+            <Typography sx={{ color: "black" }}>Coupons</Typography>
+          </Button>
+        </Link>
+        <Link to="/payment" style={{ textDecoration: "none", color: "black" }}>
+          <Button
+            fullWidth
+            sx={{
+              display: "block",
+              padding: (1, 1, 1, 1),
+              mb: 0,
+            }}
+          >
+            <Typography sx={{ color: "black" }}>Payment</Typography>
+          </Button>
+        </Link>
+        <Link
+          to="/update-address"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Button
+            fullWidth
+            sx={{
+              display: "block",
+              padding: (1, 1, 1, 1),
+              mb: 0,
+            }}
+          >
+            <Typography sx={{ color: "black" }}>Address</Typography>
+          </Button>
+        </Link>
+      </Stack>
     </Menu>
   );
   const renderMenu2 = (
@@ -200,41 +265,37 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <nav>
-        <Grid container spacing={2}>
-          <Grid item xs={7} sm={4}>
-            <Link
-              to="/SignIn"
-              style={{ textDecoration: "none", color: "black" }}
+        <Stack direction="column">
+          <Link to="/SignIn" style={{ textDecoration: "none", color: "black" }}>
+            <Button
+              fullWidth
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (1, 1, 1, 1),
+                mb: 1,
+                justify: "center",
+              }}
             >
-              <Button>Sign In</Button>
-            </Link>
-          </Grid>
-          <Grid item xs={8} sm={7}>
-            <Link
-              to="/SignUp"
-              style={{ textDecoration: "none", color: "black" }}
+              <Typography sx={{ color: "black" }}>Sign In</Typography>
+            </Button>
+          </Link>
+
+          <Link to="/SignUp" style={{ textDecoration: "none", color: "black" }}>
+            <Button
+              fullWidth
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (1, 1, 1, 1),
+                mb: 0,
+                justify: "center",
+              }}
             >
-              <Button>Create Account</Button>
-            </Link>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-          style={{ minHeight: "4vh" }}
-        >
-          <Grid item xs={3}>
-            <Link
-              to="/Dummy"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <Button onClick={handleMenuClose}>Orders</Button>
-            </Link>
-          </Grid>
-        </Grid>
+              <Typography sx={{ color: "black" }}>Create Account</Typography>
+            </Button>
+          </Link>
+        </Stack>
       </nav>
     </Menu>
   );
@@ -312,15 +373,16 @@ export default function PrimarySearchAppBar() {
         </Search>
         <Box sx={{ flexGrow: 1 }}> </Box>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-
           <Box
             component="img"
             sx={{
-            height: 74, pt:2, pb:1
+              height: 74,
+              pt: 2,
+              pb: 1,
             }}
             alt="Your logo."
             src={"voidtureLogo.png"}
-        />
+          />
         </Link>
 
         <Box sx={{ flexGrow: 1 }} />
