@@ -30,53 +30,45 @@ const addressListAddNew = (props) => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            defaultValue= {data ? data["firstName"]: ""}
+            id="name"
+            name="name"
+            label="Your Name"
+            defaultValue= {data ? data["name"]: ""}
 
             fullWidth
-            autoComplete="given-name"
+            autoComplete="full-name"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            defaultValue= {data ? data["lastName"]: ""}
+            id="phoneNumber"
+            name="phoneNumber"
+            label="Phone Number"
+            defaultValue= {data ? data["phoneNumber"]: ""}
+
             fullWidth
-            autoComplete="family-name"
+            autoComplete="full-name"
             variant="standard"
           />
         </Grid>
+        
         <Grid item xs={12}>
           <TextField
             required
-            id="address1"
-            name="address1"
-            label="Address line 1"
+            id="address"
+            name="address"
+            label="Address"
             defaultValue= {data ? data["description"]: ""}
-
+            minRows={2}
             fullWidth
+            multiline
             autoComplete="shipping address-line1"
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            defaultValue= {data ? data["description"]: ""}
 
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -84,6 +76,7 @@ const addressListAddNew = (props) => {
             name="city"
             label="City"
             fullWidth
+            defaultValue= {data ? data["city"]: ""}
             autoComplete="shipping address-level2"
             variant="standard"
           />
@@ -93,6 +86,7 @@ const addressListAddNew = (props) => {
             id="state"
             name="state"
             label="State/Province/Region"
+            defaultValue= {data ? data["province"]: ""}
             fullWidth
             variant="standard"
           />
@@ -103,6 +97,7 @@ const addressListAddNew = (props) => {
             id="zip"
             name="zip"
             label="Zip / Postal code"
+            defaultValue= {data ? data["zip"]: ""}
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
@@ -114,6 +109,7 @@ const addressListAddNew = (props) => {
             id="country"
             name="country"
             label="Country"
+            defaultValue= {data ? data["country"]: ""}
             fullWidth
             autoComplete="shipping country"
             variant="standard"

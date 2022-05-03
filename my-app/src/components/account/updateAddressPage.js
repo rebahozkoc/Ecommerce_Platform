@@ -14,9 +14,9 @@ import AddressListAddNew from "../payment/addressList/addressListAddNew";
 
 const UpdateAddressPage = () => {
   const addressList = [
-    {"index": 0, "title": "Address List", "firstName": "John", "lastName": "Doe", "description": "This is a description of the address list"},
-    {"index": 1, "title": "Home", "firstName": "Rebah", "lastName": "Özkoç", "description": "Fakülteler Mah, Oba Sk. No:1, 06590 Çankaya/Ankara"},
-    {"index": 2, "title": "Dormitory", "firstName": "Görkem", "lastName": "Yar", "description": "Sabanci University, 34956 Tuzla, Istanbul, Turkey"},
+    {"index": 0, "title": "Address List", "name": "John Doe", "phoneNumber": "05071111144", "description": "This is a description of the address list",  "zip": "34956", "province": "Tuzla", "city": "Istanbul","country": "Turkey"},
+    {"index": 1, "title": "Home", "name": "Rebah Özkoç", "phoneNumber": "05071111144", "description": "Fakülteler Mah, Oba Sk. No:1", "zip": "06590", "province": "Çankaya", "city": "Ankara","country": "Turkey"},
+    {"index": 2, "title": "Dormitory", "name": "Görkem Yar", "phoneNumber": "05071111144", "description": "Sabanci University", "zip": "34956", "province": "Tuzla", "city": "Istanbul","country": "Turkey"},
     ];
 
 
@@ -52,7 +52,7 @@ const UpdateAddressPage = () => {
               isProfile={true}
               isNew={index === addressList.length - 1 ? true : false}
               title={address["title"]}
-              description={address["description"]}
+              description={address["description"] + " " + address["zip"] + " " + address["province"] + " " + address["city"] + " " + address["country"]}
               id={address["index"]}
               onClick={handleClickOpen}
             />
