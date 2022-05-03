@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, EmailStr
+
+from schemas.address import AddressBase
 
 
 # Shared properties
@@ -8,6 +10,7 @@ class UserBase(BaseModel):
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
     full_name: Optional[str] = None
+    addresses: Optional[List[AddressBase]] = None
 
 
 # Properties to receive via API on creation
@@ -19,6 +22,8 @@ class UserCreate(UserBase):
 # Properties to receive via API on update
 class UserUpdate(UserBase):
     password: Optional[str] = None
+
+
 
 
 class UserInDBBase(UserBase):

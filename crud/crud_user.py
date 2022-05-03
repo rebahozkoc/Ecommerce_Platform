@@ -1,11 +1,13 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from sqlalchemy.orm import Session
 
 from core.security import get_password_hash, verify_password
 from crud.base import CRUDBase
 from models.user import User
+import schemas
 from schemas.user import UserCreate, UserUpdate
+from fastapi import status, HTTPException
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -46,7 +48,13 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
 
     def is_active(self, user: User) -> bool:
         return user.is_active
-
+    
+    def get_addresses(self, db: Session, id: int, skip: int, limit: int) -> List[schemas.AddressBase]:
+        user_info = db.query(User).filter(User.id == id).first()
+        if not user_info:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                    detail={"message": f"User does not exists"})
+        return user_info.address.offset(skip).limit(limit).all()
 
 
 user = CRUDUser(User)
