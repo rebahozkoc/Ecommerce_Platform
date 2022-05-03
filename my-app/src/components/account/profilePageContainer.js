@@ -19,14 +19,18 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router-dom";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
 const ProfilePageContainer = (props) => {
   const pageIndex = props.pageIndex;
 
-  
   const navigate = useNavigate();
-
-
 
   const columnItems = [
     ["Orders", "../orders"],
@@ -37,11 +41,14 @@ const ProfilePageContainer = (props) => {
     ["Favorites", "../update-favorites"],
   ];
 
-  const handleOnClickList = columnItems.map((item) => {return () => { navigate(item[1])  }});
-
+  const handleOnClickList = columnItems.map((item) => {
+    return () => {
+      navigate(item[1]);
+    };
+  });
 
   return (
-    <div>
+    <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
         <CssBaseline />
         <PrimarySearchAppBar></PrimarySearchAppBar>
@@ -86,13 +93,14 @@ const ProfilePageContainer = (props) => {
                           }}
                         >
                           {pageIndex === index ? (
-                            <ListItemButton sx={{ pr: 0 }}
-                            >
+                            <ListItemButton sx={{ pr: 0 }}>
                               <ListItemText primary={item[0]} />
-                              <ListItemIcon><ArrowForwardIosIcon fontSize="small"></ArrowForwardIosIcon></ListItemIcon>
+                              <ListItemIcon>
+                                <ArrowForwardIosIcon fontSize="small"></ArrowForwardIosIcon>
+                              </ListItemIcon>
                             </ListItemButton>
                           ) : (
-                            <ListItemButton onClick={handleOnClickList[index]} >
+                            <ListItemButton onClick={handleOnClickList[index]}>
                               <ListItemText primary={item[0]} />
                             </ListItemButton>
                           )}
@@ -105,19 +113,21 @@ const ProfilePageContainer = (props) => {
               </Box>
             </Grid>
             <Grid item key={1} xs={9}>
-            <Box
+              <Box
                 sx={{
                   padding: (2, 2, 2, 2),
                   backgroundColor: "white",
                 }}
-              >{props.widget}</Box>
-              </Grid>
+              >
+                {props.widget}
+              </Box>
+            </Grid>
           </Grid>
         </Container>
         <Box sx={{ m: 2 }} />
       </ThemeProvider>
       <Footer />
-    </div>
+    </RecoilRoot>
   );
 };
 

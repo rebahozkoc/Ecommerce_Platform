@@ -26,6 +26,13 @@ import Ratings from "./Comment/Ratings";
 import Images from "./Item/Images";
 import Description from "./Item/Description";
 import NewReview from "./Comment/NewReview";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
 let points = [0, 0, 0, 0, 0, 0, 0];
 let comments = [
@@ -148,7 +155,7 @@ const Product = () => {
   }, [change]);
 
   return (
-    <>
+    <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
         <CssBaseline />
         <PrimarySearchAppBar></PrimarySearchAppBar>
@@ -226,7 +233,7 @@ const Product = () => {
         )}
       </ThemeProvider>
       <Footer />
-    </>
+    </RecoilRoot>
   );
 };
 export default Product;

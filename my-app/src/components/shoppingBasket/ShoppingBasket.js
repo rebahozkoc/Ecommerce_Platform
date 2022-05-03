@@ -21,6 +21,14 @@ import ShoppingCard from "./ShoppingCard";
 import { CssBaseline } from "@mui/material/";
 import { Link } from "react-router-dom";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
+
 let c = [
   {
     key: 61,
@@ -137,7 +145,7 @@ const ShoppingBasket = () => {
   }, [change1]);
   let totalCost = 0;
   return (
-    <>
+    <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
         <CssBaseline />
         <PrimarySearchAppBar></PrimarySearchAppBar>
@@ -299,7 +307,7 @@ const ShoppingBasket = () => {
         <Box sx={{ m: 2 }} />
       </ThemeProvider>
       <Footer />
-    </>
+    </RecoilRoot>
   );
 };
 export default ShoppingBasket;

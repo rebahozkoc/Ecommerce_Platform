@@ -5,6 +5,13 @@ import ResponsiveAppBar from "../components/header/AppBarUnder";
 import Footer from "../components/footer/Footer";
 import { Box } from "@mui/material";
 import CardItemHandler from "../components/card/mediaMiddle/CardItemHandler";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
 const cards = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -21,7 +28,7 @@ const CategoryProduct = () => {
   };
 
   return (
-    <>
+    <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
         <PrimarySearchAppBar></PrimarySearchAppBar>
         <ResponsiveAppBar></ResponsiveAppBar>
@@ -29,7 +36,7 @@ const CategoryProduct = () => {
       </ThemeProvider>
       <Box sx={{ m: 2 }} />
       <Footer />
-    </>
+    </RecoilRoot>
   );
 };
 export default CategoryProduct;
