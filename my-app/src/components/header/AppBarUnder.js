@@ -13,7 +13,7 @@ import axios from "axios";
 import { Popper, Stack } from "@mui/material";
 import DropDownMenu from "./categories/DropDownMenu";
 
-const ResponsiveAppBar = () => {
+const AppBarUnder = () => {
   const [pages, setData] = useState([]);
   const getData = async () => {
     //const { data } = await axios.get("http://localhost:8000/customMockData/1");
@@ -43,50 +43,7 @@ const ResponsiveAppBar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-  /*
-  const [myStyle, setStyle] = React.useState({ display: "none" });
-  
-  const [open, openHandler] = React.useState(false);
-  const handleDropDownMenuOpen = () => {
-    if (open) {
-      setStyle({ display: "none" });
-      openHandler(false);
-    } else {
-      setStyle({ display: "block" });
-      openHandler(true);
-    }
-  };
 
-
-  const handleDropDownMenuClose = () => {
-    console.log("handleDropDownMenuClose")
-    setStyle({ display: "none" });
-  };
-
-  
-
-  const handleClickAwayDropDown = () => {
-    openHandler(false);
-    setStyle({ display: "none" });
-  };
-
-  */
-
-  /*
-  //Drop down menu button handlers (Popover)
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(document.getElementById("myStack"));
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-  */
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [img, setImg] = React.useState();
   const [subs, setSubs] = React.useState();
@@ -185,22 +142,4 @@ const ResponsiveAppBar = () => {
     </div>
   );
 };
-export default ResponsiveAppBar;
-
-/*
-      <Popover
-        gutterBottom="False"
-        sx={{ padding: 0 }}
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <DropDownMenu></DropDownMenu>
-      </Popover>
-
-      */
+export default AppBarUnder;

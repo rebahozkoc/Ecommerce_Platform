@@ -34,14 +34,14 @@ const Description = (props) => {
   const decreaser = () => {
     props.dec();
     setoutStock(false);
-    if (props.count == 0) {
+    if (props.count === 0) {
       setnotzero(true);
     }
   };
   const increaser = () => {
     props.inc();
     setnotzero(false);
-    if (props.count == props.stock) {
+    if (props.count === props.stock) {
       setoutStock(true);
     }
   };
@@ -85,9 +85,14 @@ const Description = (props) => {
             <Stack
               direction="row"
               maxWidth="170px"
+              alignItems="center"
+              justifyContent="space-between"
               sx={{
                 border: 2,
                 borderColor: "black",
+                borderRadius: 6,
+                p:0,
+                m:0
               }}
             >
               <CardActions>
@@ -95,20 +100,22 @@ const Description = (props) => {
                   <RemoveIcon />
                 </IconButton>
               </CardActions>
-              <Box sx={{ borderLeft: 2 }}></Box>
-              <Box sx={{ m: 1 }} />
+              <Divider orientation="vertical" flexItem sx={{width:2, bgcolor:themeOptions.palette.black.main}} />
+
               <Stack direction="column">
-                <Box sx={{ m: 1 }} />
+                
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   fontWeight="bold"
+                  sx={{
+                    p:2,
+                  }}
                 >
                   {props.count}
                 </Typography>
               </Stack>
-              <Box sx={{ m: 1 }} />
-              <Box sx={{ borderRight: 2 }}></Box>
+              <Divider orientation="vertical" flexItem sx={{width:2, bgcolor:themeOptions.palette.black.main}} />
               <CardActions>
                 <IconButton aria-label="share" onClick={increaser}>
                   <AddIcon />
@@ -116,22 +123,12 @@ const Description = (props) => {
               </CardActions>
             </Stack>
             {notZero && (
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                fontWeight="bold"
-                color="red"
-              >
+              <Typography variant="body2" fontWeight="bold" color="red">
                 *You can not go below 0!
               </Typography>
             )}
             {outStock && (
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                fontWeight="bold"
-                color="red"
-              >
+              <Typography variant="body2" fontWeight="bold" color="red">
                 *Stock Limit
               </Typography>
             )}

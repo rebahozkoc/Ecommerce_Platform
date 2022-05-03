@@ -34,14 +34,14 @@ const ShoppingCard = (props) => {
   const decreaser = () => {
     props.dec(props.id);
     setoutStock(false);
-    if (props.count == 0) {
+    if (props.count === 0) {
       setnotzero(true);
     }
   };
   const increaser = () => {
     props.inc(props.id);
     setnotzero(false);
-    if (props.count == props.stock) {
+    if (props.count === props.stock) {
       setoutStock(true);
     }
   };
@@ -105,10 +105,15 @@ const ShoppingCard = (props) => {
             </Typography>
             <Stack
               direction="row"
-              maxHeight="30px"
+              maxHeight={30}
+              alignItems="center"
+              divider={<Divider orientation="vertical" sx={{ width: 2, bgcolor: themeOptions.palette.black.main, m:0, p:0  }} />}
               sx={{
                 border: 2,
                 borderColor: "black",
+                borderRadius: 4,
+                p:0,
+                m:0
               }}
             >
               <CardActions>
@@ -116,17 +121,16 @@ const ShoppingCard = (props) => {
                   <RemoveIcon />
                 </IconButton>
               </CardActions>
-              <Box sx={{ borderLeft: 2 }}></Box>
-              <Box sx={{ m: 1 }} />
+              
               <Typography
                 variant="body2"
                 color="text.secondary"
                 fontWeight="bold"
+                sx={{ml: 3, mr: 3}}
               >
                 {props.count}
               </Typography>
-              <Box sx={{ m: 1 }} />
-              <Box sx={{ borderRight: 2 }}></Box>
+              
               <CardActions>
                 <IconButton aria-label="share" onClick={increaser}>
                   <AddIcon />
@@ -136,7 +140,7 @@ const ShoppingCard = (props) => {
             {notZero && (
               <Typography
                 variant="body2"
-                color="text.secondary"
+                
                 fontWeight="bold"
                 color="red"
               >
@@ -146,7 +150,7 @@ const ShoppingCard = (props) => {
             {outStock && (
               <Typography
                 variant="body2"
-                color="text.secondary"
+                
                 fontWeight="bold"
                 color="red"
               >
