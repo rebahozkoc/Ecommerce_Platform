@@ -8,20 +8,32 @@ import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Popper, Stack } from "@mui/material";
 import DropDownMenu from "./categories/DropDownMenu";
 
-const pages = [
-  "Living Room",
-  "Bedroom",
-  "Dining Room",
-  "Kitchen",
-  "Study Room",
-  "Decoration",
-];
-
 const ResponsiveAppBar = () => {
+  const [pages, setData] = useState([]);
+  const getData = async () => {
+    //const { data } = await axios.get("http://localhost:8000/customMockData/1");
+
+    const { data } = await axios.get(
+      "http://164.92.208.145/api/v1/categories/?skip=0&limit=100",
+      {
+        headers: {
+          "Access-Control-Allow-Origin":
+            "http://164.92.208.145/api/v1/categories/?skip=0&limit=100",
+        },
+      }
+    );
+
+    setData(data.data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -76,9 +88,17 @@ const ResponsiveAppBar = () => {
   const id = open ? "simple-popover" : undefined;
   */
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [img, setImg] = React.useState();
+  const [subs, setSubs] = React.useState();
+  const HandleClick = (props) => {
+    console.log(props.imga);
+    setImg(props.imga);
+  };
 
-  const handleClick = (event) => {
+  const handleClick = (imga, sub) => {
     setAnchorEl(anchorEl ? null : document.getElementById("myStack"));
+    setImg(imga);
+    setSubs(sub);
   };
 
   const open = Boolean(anchorEl);
@@ -117,8 +137,8 @@ const ResponsiveAppBar = () => {
               >
                 {pages.map((page) => (
                   // todo : handleCloseNavMenu
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.title}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -139,11 +159,13 @@ const ResponsiveAppBar = () => {
                 {pages.map((page, i) => (
                   <Button
                     aria-describedby={id}
-                    onClick={handleClick}
+                    onClick={() => {
+                      handleClick(page.image_url, page.subcategories);
+                    }}
                     key={i}
                     sx={{ my: 2, color: "white", display: "block" }}
                   >
-                    {page}
+                    {page.title}
                   </Button>
                 ))}
               </Stack>
@@ -156,9 +178,9 @@ const ResponsiveAppBar = () => {
         open={open}
         anchorEl={anchorEl}
         placement="bottom-start"
-        sx={{display: "block",  width: '100%' }}
+        sx={{ display: "block", width: "100%" }}
       >
-        <DropDownMenu />
+        <DropDownMenu img={img} sub={subs} />
       </Popper>
     </div>
   );

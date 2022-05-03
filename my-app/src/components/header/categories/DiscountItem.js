@@ -10,14 +10,15 @@ import { ThemeProvider } from "@emotion/react";
 import { Link } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 
-const DiscountItem = () => {
+const DiscountItem = (props) => {
+  console.log(props.img);
   return (
     <ThemeProvider theme={themeOptions}>
       <Card sx={{ maxWidth: 400 }} key={123131241}>
         <Link to="/Dummy" underline="none">
           <CardMedia
             component="img"
-            image={`furn3.jpg`}
+            image={props.img}
             alt="Voidture not Found"
           />
         </Link>

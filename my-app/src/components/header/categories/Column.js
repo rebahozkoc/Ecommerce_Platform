@@ -18,9 +18,9 @@ const Column = (props) => {
       <nav aria-label="category-items">
         <List dense>
           {columnItems.map((item) => (
-            <ListItem key={item}>
+            <ListItem key={item.id}>
               <ListItemButton>
-                <ListItemText primary={item} />
+                <ListItemText primary={item.title} />
               </ListItemButton>
             </ListItem>
           ))}
