@@ -5,8 +5,6 @@ from pydantic import Extra
 
 
 class AddressBase(BaseModel):
-    id:int
-    user_id: Optional[int]
     payment_method: str
     card_name: str
     card_number: str
@@ -15,26 +13,18 @@ class AddressBase(BaseModel):
     
 
     class Config:
+        extra = Extra.allow
         orm_mode = True
 
 
-class AddressCreate(BaseModel):
+class AddressCreate(AddressBase):
     pass
 
 
-class AddressUpdate(AddressCreate):
+class AddressUpdate(AddressBase):
     pass
 
 
 class AddressInDBBase(AddressBase):
-    id: Optional[int] = None
-
-    class Config:
-        orm_mode = True
-
-
-class AddressList(BaseModel):
-    addresses: List[AddressBase]
-
-    class Config:
-        orm_mode = True
+    id: int
+    user_id: int

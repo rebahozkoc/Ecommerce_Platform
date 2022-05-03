@@ -13,3 +13,4 @@ class User(Base):
     is_active = Column(Boolean(), default=True)
 
     comments = relationship("Comment", back_populates="user")
+    addresses = relationship("Address", back_populates="user")
