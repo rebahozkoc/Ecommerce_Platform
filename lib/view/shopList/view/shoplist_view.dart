@@ -43,7 +43,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
           onPressed: (){
             debugPrint("Edit button pressed");
           },
-          icon: const Icon(Icons.edit),
+          icon: const Icon(Icons.payment),
         )
       ],
     );

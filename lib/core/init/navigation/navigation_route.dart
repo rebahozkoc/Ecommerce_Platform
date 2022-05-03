@@ -7,6 +7,7 @@ import 'package:mobile/view/address/view/change_address_view.dart';
 import 'package:mobile/view/auth/login/view/login_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
+import 'package:mobile/view/payment/view/payment_view.dart';
 import 'package:mobile/view/search/view/search_view.dart';
 
 class NavigationRoute {
@@ -32,6 +33,9 @@ class NavigationRoute {
       case NavigationConstants.ADRESS:
         return cupertinoNavigate(
             const AddressView(), NavigationConstants.ADRESS);
+      case NavigationConstants.PAYMENT:
+        return cupertinoNavigate(
+            const PaymentView(), NavigationConstants.PAYMENT);
       case NavigationConstants.CHANGE_ADRESS:
         return bottomToTopNavigate(
             const ChangeAddressView(), NavigationConstants.CHANGE_ADRESS);

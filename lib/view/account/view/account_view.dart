@@ -67,7 +67,7 @@ class _AccountViewState extends BaseState<AccountView> {
             ProfileButtons(
                 icon: Entypo.credit_card,
                 titles: "Payment Method",
-                action: () => viewModel.navigateToPaymentView(context)),
+                action: () => viewModel.navigateToCardsView(context)),
             ProfileButtons(
                 icon: Icons.settings_outlined,
                 titles: "Settings",
