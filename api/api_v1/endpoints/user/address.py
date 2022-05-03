@@ -10,7 +10,7 @@ from typing import Any, List
 router = APIRouter()
 
 
-@router.get("/addresses", response_model=Response[List[schemas.AddressBase]])
+@router.get("/addresses", response_model=Response[List[schemas.AddressInDBBase]])
 def get_addresses_of_user(
     skip: int = 0,
     limit: int = 100,
