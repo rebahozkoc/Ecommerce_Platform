@@ -24,7 +24,6 @@ class CartProduct extends StatelessWidget {
           children: [
             imageClip(),
             Column(
-
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -91,17 +90,15 @@ ClipRRect imageClip(){
   );
 }
 
-Expanded _image() {
-  return Expanded(
-    child: AspectRatio(
-      aspectRatio: 1,
-      child: CachedNetworkImage(
-        imageUrl:
-        "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
-        width: double.infinity,
-        fit: BoxFit.fill,
+AspectRatio _image() {
+  return AspectRatio(
+    aspectRatio: 1,
+    child: CachedNetworkImage(
+      imageUrl:
+      "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
+      width: double.infinity,
+      fit: BoxFit.fill,
 
-      ),
     ),
   );
 }

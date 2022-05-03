@@ -36,7 +36,6 @@ class _ShopListViewState extends BaseState<ShopListView> {
 
   AppBar _appBar() {
     return AppBar(
-
       title: Text(LocaleKeys.shopList.locale),
       actions: [
         IconButton(
