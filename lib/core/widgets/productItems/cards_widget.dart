@@ -4,8 +4,8 @@ import 'package:mobile/core/init/icon/entypo.dart';
 import 'package:mobile/core/init/icon/font_awesome5.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
-class CardWidget extends StatelessWidget {
-  const CardWidget({Key? key}) : super(key: key);
+class CardsWidget extends StatelessWidget {
+  const CardsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
