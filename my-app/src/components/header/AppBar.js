@@ -312,14 +312,15 @@ export default function PrimarySearchAppBar() {
         </Search>
         <Box sx={{ flexGrow: 1 }}> </Box>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-          <Typography
-            variant="h3"
-            noWrap
-            component="div"
-            sx={{ m: 2, display: { xs: "none", sm: "block" } }}
-          >
-            Voidture
-          </Typography>
+
+          <Box
+            component="img"
+            sx={{
+            height: 74, pt:2, pb:1
+            }}
+            alt="Your logo."
+            src={"voidtureLogo.png"}
+        />
         </Link>
 
         <Box sx={{ flexGrow: 1 }} />
