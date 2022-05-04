@@ -56,5 +56,12 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
                     detail={"message": f"User does not exists"})
         return user_info.address.offset(skip).limit(limit).all()
 
+    def get_credits(self, db: Session, id: int, skip: int, limit: int) -> List[schemas.CreditBase]:
+        user_info = db.query(User).filter(User.id == id).first()
+        if not user_info:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                    detail={"message": f"User does not exists"})
+        return user_info.credit.offset(skip).limit(limit).all()
+
 
 user = CRUDUser(User)

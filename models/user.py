@@ -14,3 +14,4 @@ class User(Base):
 
     comments = relationship("Comment", back_populates="user")
     addresses = relationship("Address", back_populates="user")
+    credits = relationship("Credit", back_populates="user")
