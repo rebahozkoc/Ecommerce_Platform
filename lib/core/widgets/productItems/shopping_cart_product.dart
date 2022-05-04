@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
@@ -110,7 +111,28 @@ Container _buttons(){
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
       color: AppColors.primary,
-
     ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                text: "- ",
+                recognizer: TapGestureRecognizer()..onTap = (){debugPrint("- pressed");}
+              ),
+              TextSpan(
+                text: "2",
+              ),
+              TextSpan(
+                  text: " +",
+                  recognizer: TapGestureRecognizer()..onTap = (){debugPrint("+ pressed");}
+              ),
+            ],
+          ),
+        ),
+      ],
+    )
   );
 }
