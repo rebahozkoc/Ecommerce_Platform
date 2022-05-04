@@ -24,21 +24,30 @@ const SignIn = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     axios
-      .post("http://164.92.208.145/api/v1/auth/login", {
-        username: data.get("email"),
-        password: data.get("password"),
-      })
+      .post(
+        "http://164.92.208.145/api/v1/auth/login",
+        new URLSearchParams({
+          username: data.get("email"),
+          password: data.get("password"),
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
       .then(function (response) {
         alert("Success");
-        setIslogged(true);
-        //window.location.href = "http://localhost:3000";
+        <RecoilRoot>setIslogged(true);</RecoilRoot>;
+        window.location.href = "http://localhost:3000";
       })
       .catch(function (error) {
         console.log(error);
         alert("Wrong Registration");
-        <RecoilRoot>setIslogged(true);</RecoilRoot>;
-        window.location.href = "http://localhost:3000";
+
+        window.location.href = "http://localhost:3000/SignIn";
       });
   };
 
