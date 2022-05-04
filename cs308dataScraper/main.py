@@ -2,6 +2,7 @@ from time import sleep
 
 import requests
 
+import getImg
 from getProduct import getProduct
 
 categoryURL = "https://www.vivense.com/koltuk-takimlari-mobilyalari.html?ref=menu_text"
@@ -17,12 +18,16 @@ soup = BeautifulSoup(result, "lxml")
 product_list = soup.find_all(class_="product-card product-content parent")
 data_file = open(cateforyFileName, "a", encoding="UTF-8")
 
+productId = 0
 for i in product_list:
     product_name = i.find(class_="product-name").get_text()
     productUrl = "https://www.vivense.com/" + i.find(class_="product-link").findChild(class_="product-link").attrs["href"]
     getProduct(productUrl, cateforyFileName, categoryName, subcategoryName)
+
     sleep(1)
+    getImg.getImg(productUrl, productId)
     print(product_name)
+    productId+= 1
     """
     product_name = i.attrs["data-product-name"]
     price = i.attrs["data-product-price"]

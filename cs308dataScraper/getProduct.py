@@ -1,7 +1,5 @@
 import requests
 import random
-productURL = "https://www.vivense.com/terre-koltuk-takimi-krem-modeli.html"
-productsFileName = "koltuklar.json"
 
 import json
 from bs4 import BeautifulSoup
