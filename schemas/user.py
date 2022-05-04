@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, EmailStr
+
+from schemas.address import AddressBase
 
 
 # Shared properties
@@ -21,6 +23,8 @@ class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
+
+
 class UserInDBBase(UserBase):
     id: Optional[int] = None
 
@@ -36,3 +40,7 @@ class User(UserInDBBase):
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):
     hashed_password: str
+
+class UserAddresses(UserBase):
+    id: int
+    addresses: List[AddressBase]
