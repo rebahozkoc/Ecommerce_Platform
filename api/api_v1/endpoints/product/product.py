@@ -10,6 +10,19 @@ from utilities.image import ImageUtilities
 router = APIRouter()
 
 
+@router.post("/", response_model=Response[schemas.ProductCreate])
+async def create_product(
+    product_in: schemas.ProductCreate,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+) -> Any:
+    """
+    Create product
+    """
+    product = crud.product.create(db=db, obj_in=product_in)
+    return Response(data=product)
+
+
 @router.get("/{id}", response_model=Response[schemas.ProductBase])
 async def get_product(
     id: int,
@@ -25,8 +38,8 @@ async def get_product(
             detail={"message": f"Product does not exists"},
         )
 
-    #base_product = schemas.ProductShow(**product.__dict__)
-    #base_product.average_rate = crud.product.get_avg_rate(db=db, id=product.id)
+    # base_product = schemas.ProductShow(**product.__dict__)
+    # base_product.average_rate = crud.product.get_avg_rate(db=db, id=product.id)
 
     return Response(data=product)
 

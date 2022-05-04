@@ -28,12 +28,21 @@ class ProductBase(BaseModel):
 
 
 # Properties to receive via API on creation
-class ProductCreate(ProductBase):
-    pass
+class ProductCreate(BaseModel):
+    title: str
+    description: str
+    stock: int
+    price: float
+    model: str
+    number: str
+
+    class Config:
+        orm_mode = True
+
 
 
 # Properties to receive via API on update
-class ProductUpdate(ProductBase):
+class ProductUpdate(ProductCreate):
     pass
 
 
