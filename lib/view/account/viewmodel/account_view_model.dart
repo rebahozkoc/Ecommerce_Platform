@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/model/base_view_model.dart';
+import 'package:mobile/core/constants/enums/locale_keys_enum.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/cache/locale_manager.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
+import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
 import 'package:mobile/view/cards/view/cards_view.dart';
@@ -46,6 +49,18 @@ abstract class _AccountViewModelBase with Store, BaseViewModel {
         pageTransitionAnimation: PageTransitionAnimation.cupertino,
       );
 
-  void logout() => NavigationService.instance
-      .navigateToPageClear(path: NavigationConstants.LOGIN);
+  void logout() async {
+    await LocaleManager.instance
+        .setBoolValue(PreferencesKeys.IS_LOGINED, false);
+
+    await LocaleManager.instance
+        .setBoolValue(PreferencesKeys.IS_REGISTERED, false);
+
+    await LocaleManager.instance.setStringValue(PreferencesKeys.TOKEN, "");
+
+    await resetLocator();
+
+    NavigationService.instance
+        .navigateToPageClear(path: NavigationConstants.LOGIN);
+  }
 }

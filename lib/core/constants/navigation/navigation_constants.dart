@@ -15,4 +15,5 @@ class NavigationConstants {
   static const ORDERS = '/orders';
   static const LOGIN = '/login';
   static const BOTTOM_BAR = '/bottomBar';
+  static const LOGIN_REQUIRED = '/loginReq';
 }

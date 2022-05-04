@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_animation.dart';
 import 'package:mobile/core/widgets/bottombar_view.dart';
+import 'package:mobile/core/widgets/login_requreid_widget.dart';
 import 'package:mobile/view/address/view/change_address_view.dart';
 import 'package:mobile/view/auth/login/view/login_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
@@ -34,11 +35,15 @@ class NavigationRoute {
         return cupertinoNavigate(
             const AddressView(), NavigationConstants.ADRESS);
       case NavigationConstants.PAYMENT:
-        return cupertinoNavigate(
+        return bottomToTopNavigate(
             const PaymentView(), NavigationConstants.PAYMENT);
       case NavigationConstants.CHANGE_ADRESS:
         return bottomToTopNavigate(
             const ChangeAddressView(), NavigationConstants.CHANGE_ADRESS);
+      case NavigationConstants.LOGIN_REQUIRED:
+        return bottomToTopNavigate(
+            LoginRequired(message: args.arguments as String),
+            NavigationConstants.LOGIN_REQUIRED);
       default:
         return defaultNavigate(
             const BottomBarView(), NavigationConstants.DEFAULT);

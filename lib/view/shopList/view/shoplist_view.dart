@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
-import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
-import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 import 'package:mobile/core/widgets/productItems/shopping_cart_product.dart';
@@ -41,10 +39,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
       title: Text(LocaleKeys.shopList.locale),
       actions: [
         IconButton(
-          onPressed: () {
-            NavigationService.instance
-                .navigateToPage(path: NavigationConstants.PAYMENT);
-          },
+          onPressed: () => viewModel.navigateToPayment(),
           icon: const Icon(Icons.payment),
         )
       ],

@@ -41,9 +41,9 @@ class _LoginViewState extends BaseState<LoginView> {
           children: <Widget>[
             title,
             const SizedBox(height: 12.0),
-            email,
+            email(),
             const SizedBox(height: 16.0),
-            password,
+            password(),
             const SizedBox(height: 24.0),
             loginButton(),
             forgotLabel,
@@ -62,8 +62,10 @@ class _LoginViewState extends BaseState<LoginView> {
     ),
   );
 
-  final email = TextFormField(
+  TextFormField email() => TextFormField(
     keyboardType: TextInputType.emailAddress,
+    controller: viewModel.emailController,
+    autocorrect: false,
     autofocus: false,
     decoration: const InputDecoration(
       labelText: "Email",
@@ -76,9 +78,10 @@ class _LoginViewState extends BaseState<LoginView> {
     ),
   );
 
-  final password = TextFormField(
+  TextFormField password() => TextFormField(
     autofocus: false,
     obscureText: true,
+    controller: viewModel.passwordController,
     decoration: const InputDecoration(
       labelText: "Password",
       labelStyle: TextStyle(color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),

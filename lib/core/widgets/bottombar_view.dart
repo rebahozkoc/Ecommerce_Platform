@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/constants/enums/locale_keys_enum.dart';
+import 'package:mobile/core/init/cache/locale_manager.dart';
+import 'package:mobile/core/widgets/login_requreid_widget.dart';
 import 'package:mobile/view/account/view/account_view.dart';
 import 'package:mobile/view/categories/view/categories_view.dart';
 import 'package:mobile/view/favorites/view/favorites_view.dart';
@@ -15,7 +18,10 @@ class BottomBarView extends StatelessWidget {
       const CategoriesView(),
       const ShopListView(),
       const FavoritesView(),
-      const AccountView(),
+      (LocaleManager.instance.getBoolValue(PreferencesKeys.IS_LOGINED) ?? false) ||
+      (LocaleManager.instance.getBoolValue(PreferencesKeys.IS_REGISTERED) ?? false)
+          ? const AccountView()
+          : const LoginRequired(message: "Please login to access profile features"),
     ];
   }
 

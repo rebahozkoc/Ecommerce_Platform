@@ -10,8 +10,6 @@ class AppThemeLight extends AppTheme {
     return _instance ??= AppThemeLight._init();
   }
 
-  static const _FONT_FAMILY = 'POPPINS';
-
   AppThemeLight._init();
 
   @override

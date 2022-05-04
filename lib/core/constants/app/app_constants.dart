@@ -3,7 +3,7 @@
 class ApplicationConstants {
   static const COMPANY_NAME = 'CS308 Project';
 
-  static const BASE_URL = 'https://';
+  static const BASE_URL = 'http://164.92.208.145/';
 
   static const TEST_MODE = true;
 

@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
+import 'package:mobile/core/constants/enums/locale_keys_enum.dart';
 import 'package:mobile/core/init/cache/locale_manager.dart';
 import 'package:mobile/core/init/lang/language_manager.dart';
 import 'package:mobile/core/init/navigation/navigation_route.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
+import 'package:mobile/core/init/network/log_inceptor.dart';
 import 'package:mobile/core/init/theme/app_theme.dart';
 import 'package:mobile/core/init/theme/light_theme.dart';
 import 'package:mobile/locator.dart';
@@ -25,6 +27,17 @@ Future<void> _init() async {
   await LocaleManager.preferencesInit();
   await EasyLocalization.ensureInitialized();
   await setupLocator();
+  await setUserToken();
+}
+
+Future<void> setUserToken() async {
+  LocaleManager.instance.setBoolValue(PreferencesKeys.IS_REGISTERED, false);
+  if (LocaleManager.instance.getBoolValue(PreferencesKeys.IS_LOGINED) ??
+      false) {
+    await getUserToken();
+  }
+
+  debugPrint(LocaleManager.instance.getStringValue(PreferencesKeys.TOKEN));
 }
 
 class MyApp extends StatelessWidget {

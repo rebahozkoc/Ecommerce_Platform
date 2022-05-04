@@ -2,4 +2,13 @@
 
 enum PreferencesKeys {
   DEFAULT,
+  TOKEN,
+  UT_EXP_DATE,
+  NAME,
+  EMAIL,
+  PHONE,
+  PASSWORD,
+  IS_LOGINED,
+  IS_REGISTERED,
+  PROFILE_PHOTO_URL,
 }
