@@ -54,16 +54,14 @@ class PageProduct extends StatelessWidget {
     );
   }
 
-  Expanded _image() {
-    return Expanded(
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: CachedNetworkImage(
-          imageUrl:
-          "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
-          width: double.infinity,
-          fit: BoxFit.fill,
-        ),
+  AspectRatio _image() {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: CachedNetworkImage(
+        imageUrl:
+        "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
+        width: double.infinity,
+        fit: BoxFit.fill,
       ),
     );
   }
@@ -312,7 +310,7 @@ class PageProduct extends StatelessWidget {
   );
 
   RichText _stock() =>  RichText(
-    text: TextSpan(
+    text: const TextSpan(
         children: [
           TextSpan(
             text: "44 ",

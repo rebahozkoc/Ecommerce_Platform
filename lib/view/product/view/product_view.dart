@@ -30,7 +30,7 @@ class _ProductViewState extends BaseState<ProductView> {
           body: _body(),
           bottomNavigationBar: Container(
             height: 100,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.primary,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(12.0),
@@ -52,12 +52,7 @@ class _ProductViewState extends BaseState<ProductView> {
   
   AppBar _appBar(){
     return AppBar(
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: AppColors.black),
-        onPressed: () {
-          debugPrint("Back button pressed");
-        },
-      ),
+      leading: const BackButton( color: AppColors.black,),
       title: const Text("Product Details"),
       actions: [
         IconButton(

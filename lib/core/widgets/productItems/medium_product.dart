@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
 class MediumProduct extends StatelessWidget {
@@ -7,15 +9,19 @@ class MediumProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(8)),
+    return InkWell(
+      onTap: () => NavigationService.instance
+          .navigateToPage(path: NavigationConstants.PRODUCT),
       child: Container(
         width: 120,
         height: 185,
         decoration: const BoxDecoration(
           color: AppColors.white,
         ),
-        child: Column(children: [_content(), _infos()]),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          child: Column(children: [_content(), _infos()]),
+        ),
       ),
     );
   }
