@@ -7,11 +7,13 @@ class Address(Base):
     __tablename__ = "address"
 
     id = Column(Integer, primary_key=True)
-    payment_method = Column(String(100), nullable=False)
-    card_name = Column(String(100), nullable=False)
-    card_number = Column(String(100), nullable=False)
-    CW = Column(String(100), nullable=False)
-    expiry_date = Column(String(100), nullable=False)
+
+    name = Column(String(100), nullable=False)
+    full_address = Column(String(100), nullable=False)
+    postal_code = Column(String(100), nullable=False)
+    city = Column(String(100), nullable=False)
+    province = Column(String(100), nullable=False)
+    country = Column(String(100), nullable=False)
 
     user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="addresses")

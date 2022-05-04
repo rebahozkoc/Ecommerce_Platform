@@ -5,11 +5,12 @@ from pydantic import Extra
 
 
 class AddressBase(BaseModel):
-    payment_method: str
-    card_name: str
-    card_number: str
-    CW: str
-    expiry_date: str
+    name: str
+    full_address: str
+    postal_code: str
+    city: str
+    province: str
+    country: str
     
 
     class Config:

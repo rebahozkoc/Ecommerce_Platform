@@ -7,9 +7,22 @@ from schemas.address import AddressCreate, AddressInDBBase, AddressUpdate
 
 class CRUDAddress(CRUDBase[Address, AddressCreate, AddressUpdate]):
     def get_multi(
-        self, db: Session, *, id: int, skip: int = 0, limit: int = 100
+        self, db: Session, *, user_id: int, skip: int = 0, limit: int = 100
     ) -> List[AddressInDBBase]:
-        return db.query(self.model).offset(skip).limit(limit).all()
+        return (
+            db.query(Address)
+            .filter(Address.user_id == user_id)
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+
+    def exists(self, db: Session, *, user_id: int, id: int):
+        return (
+            db.query(Address)
+            .filter(Address.user_id == user_id, Address.id == id)
+            .first()
+        )
 
 
 address = CRUDAddress(Address)

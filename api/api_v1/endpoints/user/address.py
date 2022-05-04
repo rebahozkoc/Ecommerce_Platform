@@ -21,7 +21,7 @@ def get_addresses_of_user(
     Retrieve address of current user.
     """
     addresses = crud.address.get_multi(
-        db=db, id=current_user.id, skip=skip, limit=limit
+        db=db, user_id=current_user.id, skip=skip, limit=limit
     )
     return Response(data=addresses)
 
@@ -51,7 +51,7 @@ def delete_address(
     """
     Delete a address.
     """
-    address = crud.address.get(db=db, field="id", value=address_id)
+    address = crud.address.exists(db=db, user_id=current_user.id, id=address_id)
     if not address:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
