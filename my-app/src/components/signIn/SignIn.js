@@ -36,8 +36,9 @@ const SignIn = () => {
       })
       .catch(function (error) {
         console.log(error);
-        setIslogged(true);
         alert("Wrong Registration");
+        <RecoilRoot>setIslogged(true);</RecoilRoot>;
+        window.location.href = "http://localhost:3000";
       });
   };
 

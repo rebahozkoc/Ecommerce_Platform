@@ -2,6 +2,8 @@ import { Button, Stack, ThemeProvider, Typography } from "@mui/material";
 import { CssBaseline, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import themeOptions from "../../theme";
+import Export from "../../invoicePdf/Invoice";
+import ReactDOM from "react-dom";
 const PaymentSuccessPage = () => {
   return (
     <ThemeProvider theme={themeOptions}>
@@ -43,26 +45,22 @@ const PaymentSuccessPage = () => {
             You will be receiving a confirmation email with order details. You
             can download your invoice to see the order details.
           </Typography>
-          <Link
-            to="/"
-            style={{
-              textDecoration: "none",
-              color: "black",
+
+          <Button
+            variant="contained"
+            onClick={() => {
+              ReactDOM.render(<Export />, document.getElementById("root"));
+            }}
+            sx={{
+              backgroundColor: themeOptions.palette.primary.light,
+              display: "block",
+              padding: (8, 1, 8, 1),
+              mb: 2,
+              justify: "center",
             }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: themeOptions.palette.primary.light,
-                display: "block",
-                padding: (8, 1, 8, 1),
-                mb: 2,
-                justify: "center",
-              }}
-            >
-              <Typography sx={{ color: "white" }}>Get Invoice</Typography>
-            </Button>
-          </Link>
+            <Typography sx={{ color: "white" }}>Get Invoice</Typography>
+          </Button>
 
           <Link
             to="/"
@@ -81,7 +79,9 @@ const PaymentSuccessPage = () => {
                 justify: "center",
               }}
             >
-              <Typography sx={{ color: "white" }}>Explore New Furnitures</Typography>
+              <Typography sx={{ color: "white" }}>
+                Explore New Furnitures
+              </Typography>
             </Button>
           </Link>
         </Stack>
