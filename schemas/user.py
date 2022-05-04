@@ -3,6 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel, EmailStr
 
 from schemas.address import AddressBase
+from schemas.credit import CreditBase
 
 
 # Shared properties
@@ -44,3 +45,7 @@ class UserInDB(UserInDBBase):
 class UserAddresses(UserBase):
     id: int
     addresses: List[AddressBase]
+
+class UserCredits(UserBase):
+    id: int
+    credits: List[CreditBase]

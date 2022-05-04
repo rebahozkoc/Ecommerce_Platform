@@ -7,3 +7,4 @@ from .product import ProductBase, ProductCreate, ProductUpdate
 from .category import CategoryBase, CategoryCreate, CategoryUpdate, CategoryShow
 from .category import SubCategoryBase, SubCategoryCreate, SubCategoryUpdate, SubCategoryList, SubCategoryShow
 from .address import AddressBase, AddressCreate, AddressInDBBase, AddressUpdate
+from .credit import CreditBase, CreditCreate, CreditInDBBase, CreditUpdate

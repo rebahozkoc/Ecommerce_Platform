@@ -5,12 +5,14 @@ from api.api_v1.endpoints.product import comment, product, rate_product
 from api.api_v1.endpoints.category import category
 from api.api_v1.endpoints.category import subcategory
 from api.api_v1.endpoints.user import address
+from api.api_v1.endpoints.user import credit
 
 
 api_router = APIRouter()
 
 api_router.include_router(users.router, prefix="/users", tags=["User"])
 api_router.include_router(address.router, prefix="/user", tags=["User"])
+api_router.include_router(credit.router, prefix="/user", tags=["User"])
 
 api_router.include_router(login.router, prefix="/auth", tags=["Authentication"])
 api_router.include_router(registration.router, prefix="/auth", tags=["Authentication"])
