@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/{id}", response_model=Response[schemas.ProductBase])
-def get_product(
+async def get_product(
     id: int,
     db: Session = Depends(deps.get_db),
 ) -> Any:
@@ -24,6 +24,10 @@ def get_product(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Product does not exists"},
         )
+
+    #base_product = schemas.ProductShow(**product.__dict__)
+    #base_product.average_rate = crud.product.get_avg_rate(db=db, id=product.id)
+
     return Response(data=product)
 
 

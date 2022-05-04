@@ -11,6 +11,7 @@ class Product(Base):
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))
     comments = relationship("Comment", back_populates="product", lazy="dynamic")
     photos = relationship("ProductPhoto", back_populates="product")
+    rates = relationship("ProductRate", back_populates="product")
 
 
 class ProductPhoto(Base):
@@ -23,3 +24,17 @@ class ProductPhoto(Base):
 
     product_id = Column(Integer, ForeignKey("product.id"))
     product = relationship("Product", back_populates="photos")
+
+
+class ProductRate(Base):
+    __tablename__ = "productrate"
+
+    id = Column(Integer, primary_key=True)
+
+    rate = Column(Integer)
+
+    user_id = Column(Integer, ForeignKey("user.id"))
+    user = relationship("User")
+
+    product_id = Column(Integer, ForeignKey("product.id"))
+    product = relationship("Product", back_populates="rates")
