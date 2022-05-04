@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import themeOptions from "../../theme";
 import Export from "../../invoicePdf/Invoice";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 const PaymentSuccessPage = () => {
   return (
     <ThemeProvider theme={themeOptions}>
@@ -49,7 +50,12 @@ const PaymentSuccessPage = () => {
           <Button
             variant="contained"
             onClick={() => {
-              ReactDOM.render(<Export />, document.getElementById("root"));
+              ReactDOM.render(
+                <BrowserRouter>
+                  <Export />
+                </BrowserRouter>,
+                document.getElementById("root")
+              );
             }}
             sx={{
               backgroundColor: themeOptions.palette.primary.light,
