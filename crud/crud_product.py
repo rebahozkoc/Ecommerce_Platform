@@ -1,10 +1,11 @@
 from crud.base import CRUDBase
 from sqlalchemy.orm import Session
 from typing import List
-from models.product import Product, ProductPhoto
+from models.product import Product, ProductPhoto, ProductRate
 import schemas
 from fastapi import status, HTTPException, UploadFile
 from utilities.image import ImageUtilities
+from sqlalchemy.sql import func
 
 
 class CRUDProduct(
@@ -38,6 +39,17 @@ class CRUDProduct(
         db.delete(db_obj)
         db.commit()
         return db_obj
+    
+    def add_rate(self, db: Session, user_id: int, product_id: int, rate: int):
+        product_rate = ProductRate(user_id=user_id, product_id=product_id, rate=rate)
+        db.add(product_rate)
+        db.commit()
+        db.refresh(product_rate)
+        return product_rate
+    
+    def get_avg_rate(self, db: Session, id: int):
+        return db.query(func.avg(ProductRate.rate).label('average')).filter(ProductRate.id==id)
+
 
 
 product = CRUDProduct(Product)

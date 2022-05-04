@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, Boolean, String
+from sqlalchemy import Column, Integer, ForeignKey, Boolean, String, Float
 from sqlalchemy.orm import relationship
 from db.base_class import Base
 
@@ -7,10 +7,17 @@ class Product(Base):
     __tablename__ = "product"
 
     id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(125), nullable=False)
+    description = Column(String, nullable=False)
+    stock = Column(Integer)
+    price = Column(Float)
+    model = Column(String)
+    number = Column(String)
 
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))
     comments = relationship("Comment", back_populates="product", lazy="dynamic")
     photos = relationship("ProductPhoto", back_populates="product")
+    rates = relationship("ProductRate", back_populates="product")
 
 
 class ProductPhoto(Base):
@@ -23,3 +30,17 @@ class ProductPhoto(Base):
 
     product_id = Column(Integer, ForeignKey("product.id"))
     product = relationship("Product", back_populates="photos")
+
+
+class ProductRate(Base):
+    __tablename__ = "productrate"
+
+    id = Column(Integer, primary_key=True)
+
+    rate = Column(Integer)
+
+    user_id = Column(Integer, ForeignKey("user.id"))
+    user = relationship("User")
+
+    product_id = Column(Integer, ForeignKey("product.id"))
+    product = relationship("Product", back_populates="rates")
