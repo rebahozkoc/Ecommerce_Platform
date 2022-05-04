@@ -16,11 +16,16 @@ import axios from "axios";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ThemeProvider } from "@mui/material";
 import themeOptions from "../theme";
-import { loggedState } from "../../App";
-import { RecoilRoot, useSetRecoilState } from "recoil";
+import { loggedState } from "../recoils/atoms";
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
 
 const SignIn = () => {
+  function addHoursToDate(date, hours) {
+    return new Date(new Date(date).setHours(date.getHours() + hours));
+  }
+
   const setIslogged = useSetRecoilState(loggedState);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -39,8 +44,15 @@ const SignIn = () => {
         }
       )
       .then(function (response) {
-        alert("Success");
+        //alert("Success");
         <RecoilRoot>setIslogged(true);</RecoilRoot>;
+        //console.log(response.data);
+        let myDate = new Date();
+        let expiration = addHoursToDate(myDate, 60);
+        //console.log(document.cookie);
+        document.cookie = `isLogged= ${true}; expires=${expiration}`;
+        document.cookie = `access_token=${response.data.access_token}; expires=${expiration}`;
+
         window.location.href = "http://localhost:3000";
       })
       .catch(function (error) {

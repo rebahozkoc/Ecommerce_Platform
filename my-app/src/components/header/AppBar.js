@@ -17,7 +17,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { loggedState, userId } from "../../App";
+import { loggedState } from "../recoils/atoms";
 import {
   RecoilRoot,
   atom,
@@ -219,7 +219,10 @@ export default function PrimarySearchAppBar() {
             <Typography sx={{ color: "black" }}>Coupons</Typography>
           </Button>
         </Link>
-        <Link to="/update-payment" style={{ textDecoration: "none", color: "black" }}>
+        <Link
+          to="/update-payment"
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <Button
             fullWidth
             sx={{
@@ -255,7 +258,10 @@ export default function PrimarySearchAppBar() {
             justify: "center",
           }}
           onClick={() => {
-            setIsLogged(false);
+            let tm = false;
+            document.cookie = `isLogged=${tm}`;
+            console.log(document.cookie);
+            setIsLogged(tm);
           }}
         >
           <Typography sx={{ color: "black" }}>Sign Out</Typography>

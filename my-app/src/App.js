@@ -22,14 +22,7 @@ import {
 // Or Create your Own theme:
 const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 const cards2 = [9, 10, 11, 12, 13, 14, 15, 16];
-export const loggedState = atom({
-  key: "logged", // unique ID (with respect to other atoms/selectors)
-  default: true, // default value (aka initial value)
-});
-export const userId = atom({
-  key: "userId", // unique ID (with respect to other atoms/selectors)
-  default: -1, // default value (aka initial value)
-});
+
 export default function App() {
   //const [isLogged, setIsLogged] = React.useState(true);
 
