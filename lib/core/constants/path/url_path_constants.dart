@@ -7,4 +7,7 @@ class PathConstants {
 
   // AUTH
   static const LOGIN = _URL + 'api/v1/auth/login';
+
+  // CATEGORY
+  static const CATEGORY = _URL + 'api/v1/categories';
 }

@@ -25,5 +25,6 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
                       .getBoolValue(PreferencesKeys.IS_REGISTERED) ??
                   false)
           ? NavigationConstants.PAYMENT
-          : NavigationConstants.LOGIN_REQUIRED,data: "Please login to complete the purchase");
+          : NavigationConstants.LOGIN_REQUIRED,
+      data: "Please login to complete the purchase");
 }

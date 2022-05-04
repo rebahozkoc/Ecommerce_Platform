@@ -6,6 +6,9 @@ import 'package:mobile/view/auth/login/model/login_model.dart';
 import 'package:mobile/view/auth/login/repository/login_repository.dart';
 import 'package:mobile/view/auth/login/service/login_service.dart';
 import 'package:mobile/view/auth/login/viewmodel/login_view_model.dart';
+import 'package:mobile/view/categories/model/category_model.dart';
+import 'package:mobile/view/categories/repository/category_repository.dart';
+import 'package:mobile/view/categories/service/category_service.dart';
 import 'package:mobile/view/categories/viewmodel/categories_view_model.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
@@ -38,12 +41,15 @@ Future<void> setupLocator() async {
 
   // Model
   locator.registerLazySingleton(() => UserTokenModel());
+  locator.registerLazySingleton(() => CategoryModel());
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
+  locator.registerLazySingleton(() => CategoryRepository());
 
   // Service
   locator.registerLazySingleton(() => LoginService());
+  locator.registerLazySingleton(() => CategoryService());
 }
 
 Future<void> resetLocator() async {

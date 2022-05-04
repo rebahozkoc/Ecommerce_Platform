@@ -10,9 +10,7 @@ class ImageConstants {
   // String toPNGIcon(String name) => 'assets/icons/$name.png';
 
   String get logo => toPng('logo');
-  String get logoWhite => toPng('logo_white');
-  String get logoSvg => toSVG('logo');
-  String get logoWhiteSvg => toSVG('logo_white');
+  String get logoText => toPng('logoText');
 
   String get cardChip => toPng('card_chip');
 }
