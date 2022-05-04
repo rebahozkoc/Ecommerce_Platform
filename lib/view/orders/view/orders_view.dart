@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
+import 'package:mobile/core/widgets/productItems/track_product_big.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
+import 'package:mobile/core/widgets/customScrollPhysics.dart';
+
 
 class OrdersView extends StatefulWidget {
   const OrdersView({Key? key}) : super(key: key);
@@ -11,8 +14,23 @@ class OrdersView extends StatefulWidget {
   State<OrdersView> createState() => _OrdersViewState();
 }
 
-class _OrdersViewState extends BaseState<OrdersView> {
+class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
   late OrdersViewModel viewModel;
+  late TabController controller;
+  int index = 0;
+
+  @override
+  void initState() {
+    controller = TabController(length: 3, vsync: this);
+    controller.addListener(_setActiveTabIndex);
+    super.initState();
+  }
+
+  void _setActiveTabIndex() {
+    setState(() {
+      index = controller.index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +51,33 @@ class _OrdersViewState extends BaseState<OrdersView> {
   }
 
   AppBar _appBar() => AppBar(
-        title: const Text("Orders"),
+        title: const Text("Order Tracking"),
       );
 
-  Center _body() => const Center(
-    child: Text("Orders"),
+  Center _body() =>  Center(
+    child: Expanded(
+      child: ListView(
+        children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+
+          children: [
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+
+          ],
+        ),
+
+        ],
+      )
+    ),
+
   );
+
 }
+
+

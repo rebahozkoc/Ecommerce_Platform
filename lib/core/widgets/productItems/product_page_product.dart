@@ -128,8 +128,16 @@ class PageProduct extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [_title(), _price()],
           ),
-          _itemNo(),
-          _producer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [_itemNo(), _rating()],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [_producer(), _stock()],
+          ),
           _descriptionTitle(),
           _description(),
           const SizedBox(
@@ -144,6 +152,12 @@ class PageProduct extends StatelessWidget {
             ),
           ),
           _similar(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [_commentTitle(), _commentButton()],
+          ),
+          _comments(),
         ],
       ),
     ),
@@ -187,6 +201,22 @@ class PageProduct extends StatelessWidget {
       fontWeight: FontWeight.w900,
       fontSize: 22,
     ),
+  );
+
+  RichText _rating() => RichText(
+      text: const TextSpan(
+        children: [
+          WidgetSpan(child: Icon(Icons.star, size: 16)),
+          TextSpan(
+            text: "3,4",
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ]
+      ),
   );
 
   InkWell _decrementButton(){
@@ -272,6 +302,52 @@ class PageProduct extends StatelessWidget {
     ],
   );
 
+  Text _commentTitle() => const Text(
+    "Best comments",
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: AppColors.tertiary,
+        fontSize: 18,
+      )
+  );
+
+  RichText _stock() =>  RichText(
+    text: TextSpan(
+        children: [
+          TextSpan(
+            text: "44 ",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+              fontSize: 14,
+            ),
+          ),
+          TextSpan(
+            text: "left in stock",
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: AppColors.tertiary,
+              fontSize: 14,
+            ),
+          )
+        ]
+    ),
+  );
+
+  TextButton _commentButton() => TextButton(
+      onPressed: (){
+        debugPrint("Show comments button pressed...");
+      },
+      child: const Text(
+        "Show all",
+        style: TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+      )
+  );
+
   // SizedBox _similarItem() {
   //   return SizedBox(
   //     width: 1000,
@@ -293,6 +369,61 @@ class PageProduct extends StatelessWidget {
       child: Stack(children: [
         _smallImage(),
       ]),
+    ),
+  );
+
+
+  Container _comments() => Container(
+    padding: const EdgeInsets.all(8.0),
+    width: double.infinity,
+    decoration: const BoxDecoration(
+        color: AppColors.lightGray,
+        borderRadius: BorderRadius.all(Radius.circular(6.0))
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("A**** B**** (22) - İstanbul",
+              style: TextStyle(
+                color: AppColors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            RichText(
+              text: const TextSpan(
+                  children: [
+                    WidgetSpan(child: Icon(Icons.star, size: 16)),
+                    TextSpan(
+                      text: "5.0",
+                      style: TextStyle(
+                        color: AppColors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ]
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: const [
+            Flexible(
+                child: Text(
+                  "This chair seems pretty sturdy. It’s also very soft, and the cushion is nice and thick. It took maybe 5 minutes to put together, and has no problem holding everyone in the family",
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                ))
+          ],
+        )
+      ],
     ),
   );
 
@@ -336,3 +467,6 @@ OutlinedButton buyNow() => OutlinedButton(
       side: const BorderSide(width: 1.0, color: AppColors.white)
   ),
 );
+
+
+
