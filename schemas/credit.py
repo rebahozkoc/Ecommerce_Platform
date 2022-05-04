@@ -4,11 +4,11 @@ from pydantic import Extra
 
 class CreditBase(BaseModel):
     
-    payment_method = str
-    card_name = str
-    card_number = str
-    CW = str
-    expiry_date = str
+    payment_method : str
+    card_name : str
+    card_number : str
+    CW : str
+    expiry_date : str
 
     class Config:
         extra = Extra.allow

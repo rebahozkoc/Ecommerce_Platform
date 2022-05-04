@@ -18,7 +18,7 @@ def get_credit_of_user(
     current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     """
-    Retrieve credit of current user.
+    Retrieve credit cards of current user.
     """
     credit = crud.credit.get_multi(
         db=db, user_id=current_user.id, skip=skip, limit=limit
