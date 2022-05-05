@@ -135,7 +135,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
           ),
           Row(
             children: const [
-               SizedBox(width: 30),
+              SizedBox(width: 30),
               Text(
                 "-₺ 310",
                 style: TextStyle(
