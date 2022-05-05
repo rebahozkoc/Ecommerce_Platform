@@ -265,7 +265,8 @@ export default function PrimarySearchAppBar() {
             console.log(document.cookie);
             setIsLogged(tm);
             setIsAdmin(tm);
-            document.cookie = "name=empty";
+            document.cookie = "name= empty";
+            document.cookie = "access_token= empty";
           }}
         >
           <Typography sx={{ color: "black" }}>Sign Out</Typography>
