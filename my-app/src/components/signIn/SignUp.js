@@ -14,23 +14,40 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import themeOptions from "../theme";
 import axios from "axios";
+import { Alert } from "@mui/material";
+
 export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const full_name =  `${data.get("firstName")} ${data.get("lastName")}`;
+    if (full_name === " ") {
+      alert("Please enter your full name");
+    }else{
     axios
       .post("http://164.92.208.145/api/v1/auth/registration", {
         email: data.get("email"),
         is_active: true,
-        full_name: `${data.get("firstName")} ${data.get("lastName")}`,
+        full_name: full_name,
         password: data.get("password"),
       })
       .then(function (response) {
+        //<Alert severity="success">Registration is successful! Redirecting to the home page.</Alert>
         window.location.href = "http://localhost:3000/SignIn";
+
       })
       .catch(function (error) {
-        alert("Wrong Registration");
+        if (error.response.status === 400) {
+          alert("This user already exists");
+        } else{
+          if (error.response.status === 422) {
+        alert("Wrong or missing email or password");
+          } else {
+            alert("Something went wrong");
+          } 
+        }
       });
+    }
   };
 
   return (
