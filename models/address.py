@@ -15,5 +15,8 @@ class Address(Base):
     province = Column(String(100), nullable=False)
     country = Column(String(100), nullable=False)
 
+    personal_name = Column(String(100), nullable=False)
+    phone_number = Column(String(100), nullable=False)
+
     user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="addresses")

@@ -11,6 +11,8 @@ class AddressBase(BaseModel):
     city: str
     province: str
     country: str
+    personal_name: str
+    phone_number: str
     
 
     class Config:
