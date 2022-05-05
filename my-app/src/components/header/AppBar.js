@@ -18,6 +18,7 @@ import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { loggedState } from "../recoils/atoms";
+import { nameState } from "../recoils/atoms";
 import {
   RecoilRoot,
   atom,
@@ -132,6 +133,7 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [isLogged, setIsLogged] = useRecoilState(loggedState);
+  const [isAdmin, setIsAdmin] = useRecoilState(nameState);
 
   const [open, setOpen] = React.useState(false);
 
@@ -262,6 +264,8 @@ export default function PrimarySearchAppBar() {
             document.cookie = `isLogged=${tm}`;
             console.log(document.cookie);
             setIsLogged(tm);
+            setIsAdmin(tm);
+            document.cookie = "name=empty";
           }}
         >
           <Typography sx={{ color: "black" }}>Sign Out</Typography>

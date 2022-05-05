@@ -34,6 +34,7 @@ import {
   useRecoilValue,
 } from "recoil";
 
+let productId = 1;
 let points = [0, 0, 0, 0, 0, 0, 0];
 let comments = [
   {
@@ -115,6 +116,9 @@ const Product = () => {
     setMakeComment(false);
   };
 
+  const commentDeleter = (deleteId) => {
+    console.log("comment to delete is", deleteId);
+  };
   const comment = () => {
     points[0] = 0;
     points[1] = 0;
@@ -206,8 +210,8 @@ const Product = () => {
                         topic={card.topic}
                         date={card.date}
                         id={card.id}
-                        stock={card.stock}
-                        count={card.count}
+                        productId={productId}
+                        deleteComment={commentDeleter}
                       ></CommentCard>
                     </ListItem>
                   ))}

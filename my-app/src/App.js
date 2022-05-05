@@ -25,7 +25,7 @@ const cards2 = [9, 10, 11, 12, 13, 14, 15, 16];
 
 export default function App() {
   //const [isLogged, setIsLogged] = React.useState(true);
-
+  //console.log(document.cookie);
   return (
     <RecoilRoot>
       <ThemeProvider theme={themeOptions}>

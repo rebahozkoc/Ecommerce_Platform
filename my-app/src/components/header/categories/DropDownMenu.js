@@ -6,7 +6,6 @@ import Column from "./Column";
 import DiscountItem from "./DiscountItem";
 
 export default function DropDownMenu(props) {
-  console.log(props.sub);
   return (
     <Box
       bgcolor="#EBEBEB"

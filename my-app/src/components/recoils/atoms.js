@@ -7,7 +7,7 @@ import {
 } from "recoil";
 import * as React from "react";
 import { useState } from "react";
-
+import axios from "axios";
 export function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
@@ -32,7 +32,20 @@ export const loggedState = atom(
   [document.cookie]
 );
 
+export const nameState = atom(
+  {
+    key: "name",
+    default: getCookie("name") === "gorkemyar@sabanciuniv.edu",
+  },
+  [document.cookie]
+);
+
 export const access_token = atom({
   key: "access_token",
   default: getCookie("access_token"),
+});
+
+export const categories = atom({
+  key: "categories",
+  default: [],
 });

@@ -1,28 +1,15 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import themeOptions from "../../theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, Stack, Divider, Button } from "@mui/material";
 import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { nameState } from "../../recoils/atoms";
+import { useRecoilValue } from "recoil";
+
 /*
 <Rating
                     name="simple-controlled"
@@ -163,21 +150,8 @@ const CommentCard = (props) => {
     props.delete(props.id);
   };
 
-  const decreaser = () => {
-    props.dec(props.id);
-    setoutStock(false);
-    if (props.count == 0) {
-      setnotzero(true);
-    }
-  };
-  const increaser = () => {
-    props.inc(props.id);
-    setnotzero(false);
-    if (props.count == props.stock) {
-      setoutStock(true);
-    }
-  };
-
+  const adminState = useRecoilValue(nameState);
+  console.log(document.cookie);
   const openAllComment = () => {
     setOpenComment(true);
   };
@@ -196,46 +170,58 @@ const CommentCard = (props) => {
   React.useEffect(() => {}, [openComment]);
   return (
     <ThemeProvider theme={themeOptions}>
-      <Box disableRipple sx={{ width: 800 }}>
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="right"
-          display="flex"
-        >
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            fontWeight="bold"
-            fontSize={15}
+      <Stack direction="row">
+        <Box disableRipple sx={{ width: 800 }}>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="right"
+            display="flex"
           >
-            {props.name}
-          </Typography>
-          <Stack display="flex" direction="row" sx={{}}>
-            <Rating
-              name="read-only"
-              value={props.rating}
-              readOnly
-              fontSize="12"
-            />
             <Typography
-              component="legend"
-              align="right"
+              variant="body1"
+              color="text.secondary"
               fontWeight="bold"
               fontSize={15}
             >
-              {props.topic}
+              {props.name}
+            </Typography>
+            <Stack display="flex" direction="row" sx={{}}>
+              <Rating
+                name="read-only"
+                value={props.rating}
+                readOnly
+                fontSize="12"
+              />
+              <Typography
+                component="legend"
+                align="right"
+                fontWeight="bold"
+                fontSize={15}
+              >
+                {props.topic}
+              </Typography>
+            </Stack>
+            <Typography component="legend" align="left" fontSize={12}>
+              {!openComment && myComment}
+              {openComment && props.comment}
+              {!openComment && <Button onClick={openAllComment}>...</Button>}
+              {openComment && <Button onClick={closeAllComment}>...</Button>}
             </Typography>
           </Stack>
-          <Typography component="legend" align="left" fontSize={12}>
-            {!openComment && myComment}
-            {openComment && props.comment}
-            {!openComment && <Button onClick={openAllComment}>...</Button>}
-            {openComment && <Button onClick={closeAllComment}>...</Button>}
-          </Typography>
-        </Stack>
-        <Divider />
-      </Box>
+
+          <Divider />
+        </Box>
+        {adminState && (
+          <Button
+            onClick={() => {
+              props.deleteComment(props.id);
+            }}
+          >
+            <DeleteIcon></DeleteIcon>
+          </Button>
+        )}
+      </Stack>
     </ThemeProvider>
   );
 };

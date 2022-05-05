@@ -51,6 +51,7 @@ const SignIn = () => {
         let expiration = addHoursToDate(myDate, 60);
         //console.log(document.cookie);
         document.cookie = `isLogged= ${true}; expires=${expiration}`;
+        document.cookie = `name= ${data.get("email")}; expires=${expiration}`;
         document.cookie = `access_token=${response.data.access_token}; expires=${expiration}`;
 
         window.location.href = "http://localhost:3000";
