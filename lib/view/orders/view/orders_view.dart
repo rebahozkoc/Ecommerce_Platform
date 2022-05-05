@@ -60,12 +60,11 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
           mainAxisAlignment: MainAxisAlignment.start,
 
           children: [
-            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
-            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
-            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
-            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
-            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
-            TrackProductBig(action: () => viewModel.navigateToDetails(context)),
+            TrackProductBig(),
+            TrackProductBig(),
+            TrackProductBig(),
+            TrackProductBig(),
+            TrackProductBig(),
 
           ],
         ),
