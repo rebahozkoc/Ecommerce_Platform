@@ -6,6 +6,11 @@ import Column from "./Column";
 import DiscountItem from "./DiscountItem";
 
 export default function DropDownMenu(props) {
+  const subItems = props.sub;
+  console.log("subItems");
+  console.log(subItems);
+  const subItems1 = subItems.slice(0, Math.ceil(subItems.length / 2));
+  const subItems2 = subItems.slice(Math.ceil(subItems.length / 2), subItems.length);
   return (
     <Box
       bgcolor="#EBEBEB"
@@ -21,7 +26,8 @@ export default function DropDownMenu(props) {
           justifyContent="flex-start"
           divider={<Divider orientation="vertical" />}
         >
-          <Column columnItems={props.sub}></Column>
+          <Column columnItems={subItems1}></Column>
+          <Column columnItems={subItems2}></Column>
         </Stack>
         <Box sx={{ width: 40 }}></Box>
         <Stack direction="row" justifyContent="flex-end">
