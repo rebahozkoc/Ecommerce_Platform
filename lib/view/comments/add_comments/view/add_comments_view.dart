@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/locator.dart';
-import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
+import 'package:mobile/view/comments/add_comments/viewmodel/add_comments_view_model.dart';
 
-class CommentsView extends StatefulWidget {
-  const CommentsView({Key? key}) : super(key: key);
+class AddCommentsView extends StatefulWidget {
+  const AddCommentsView({ Key? key }) : super(key: key);
 
   @override
-  State<CommentsView> createState() => _CommentsViewState();
+  State<AddCommentsView> createState() => _AddCommentsViewState();
 }
 
-class _CommentsViewState extends State<CommentsView> {
+class _AddCommentsViewState extends BaseState<AddCommentsView> {
+  late AddCommentsViewModel viewModel;
+  
   @override
   Widget build(BuildContext context) {
-    late CommentsViewModel viewModel;
     return BaseView(
-      viewModel: locator<CommentsViewModel>(),
+      viewModel: locator<AddCommentsViewModel>(),
       onModelReady: (dynamic model) async {
         model.setContext(context);
         model.init();
@@ -37,4 +39,8 @@ class _CommentsViewState extends State<CommentsView> {
   Center _body() => const Center(
         child: Text("Comments"),
       );
+
+
+
+
 }

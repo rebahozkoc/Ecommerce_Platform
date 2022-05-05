@@ -76,7 +76,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
       padding: EdgeInsets.all(12.0),
       child: Row(
         children: [
-          Text("Order-ID: 123-456-789",
+          const Text("Order-ID: 123-456-789",
           style: TextStyle(
             color: AppColors.black,
             fontWeight: FontWeight.w700,
@@ -137,7 +137,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
           ),
           Row(
             children: const [
-              const SizedBox(width: 30),
+              SizedBox(width: 30),
               Text(
                 "-₺ 310",
                 style: TextStyle(
