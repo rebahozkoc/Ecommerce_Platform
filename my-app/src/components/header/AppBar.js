@@ -251,6 +251,21 @@ export default function PrimarySearchAppBar() {
             <Typography sx={{ color: "black" }}>Address</Typography>
           </Button>
         </Link>
+        <Link
+          to="/update-favorites"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Button
+            fullWidth
+            sx={{
+              display: "block",
+              padding: (1, 1, 1, 1),
+              mb: 0,
+            }}
+          >
+            <Typography sx={{ color: "black" }}>Favorites</Typography>
+          </Button>
+        </Link>
         <Button
           fullWidth
           sx={{
@@ -441,7 +456,7 @@ export default function PrimarySearchAppBar() {
             }}
           >
             <Link
-              to="/Dummy"
+              to="/update-favorites"
               style={{ textDecoration: "none", color: "black" }}
             >
               <Button
