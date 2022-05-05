@@ -13,6 +13,7 @@ import 'package:mobile/view/categories/model/category_model.dart';
 import 'package:mobile/view/categories/repository/category_repository.dart';
 import 'package:mobile/view/categories/service/category_service.dart';
 import 'package:mobile/view/categories/viewmodel/categories_view_model.dart';
+import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
@@ -41,6 +42,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ChangeAddressViewModel());
   locator.registerLazySingleton(() => CardsViewModel());
   locator.registerLazySingleton(() => PaymentViewModel());
+  locator.registerLazySingleton(() => CommentsViewModel());
 
   // Model
   locator.registerLazySingleton(() => UserTokenModel());

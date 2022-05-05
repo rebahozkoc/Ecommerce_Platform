@@ -122,7 +122,7 @@ Container _buttons(){
                 text: "- ",
                 recognizer: TapGestureRecognizer()..onTap = (){debugPrint("- pressed");}
               ),
-              TextSpan(
+              const TextSpan(
                 text: "2",
               ),
               TextSpan(
