@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
@@ -54,17 +55,19 @@ class _AddressViewState extends BaseState<AddressView> {
 
   Padding _title() => Padding(
         padding: const EdgeInsets.all(15),
-        child: Text(
-          "You have ${viewModel.addressesResponseModel.data!.length} delivery "
-          "addresses. From this page, you can create a new address, edit or "
-          "delete your existing addresses.\nAddress changes "
-          "you make on this page will not affect your previous orders.",
-          style: const TextStyle(
-            color: AppColors.textColorGray,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        child: Observer(builder: (_) {
+          return Text(
+            "You have ${viewModel.addresses.length} delivery "
+            "addresses. From this page, you can create a new address, edit or "
+            "delete your existing addresses.\nAddress changes "
+            "you make on this page will not affect your previous orders.",
+            style: const TextStyle(
+              color: AppColors.textColorGray,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          );
+        }),
       );
 
   Container _newAdress() => Container(
@@ -105,16 +108,20 @@ class _AddressViewState extends BaseState<AddressView> {
         ),
       );
 
-  ListView _adresses() => ListView.separated(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      primary: true,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => viewModel.addressesResponseModel.data!
-          .map((e) => AddressWidget(
-                address: e,
-              ))
-          .toList()[index],
-      separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemCount: viewModel.addressesResponseModel.data!.length);
+  Observer _adresses() => Observer(builder: (_) {
+        return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            primary: true,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => viewModel.addresses
+                .map((e) => AddressWidget(
+                      address: e,
+                      onTap: () => viewModel.deleteAddress(
+                          id: e.id!.toInt(), index: index),
+                    ))
+                .toList()[index],
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
+            itemCount: viewModel.addresses.length);
+      });
 }

@@ -139,6 +139,13 @@ mixin _$ChangeAddressViewModel on _ChangeAddressViewModelBase, Store {
     });
   }
 
+  final _$submitAsyncAction = AsyncAction('_ChangeAddressViewModelBase.submit');
+
+  @override
+  Future submit() {
+    return _$submitAsyncAction.run(() => super.submit());
+  }
+
   final _$_ChangeAddressViewModelBaseActionController =
       ActionController(name: '_ChangeAddressViewModelBase');
 

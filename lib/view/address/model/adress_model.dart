@@ -5,6 +5,8 @@ class AddressModel {
   String? city;
   String? province;
   String? country;
+  String? personalName;
+  String? phoneNumber;
   int? id;
   int? userId;
 
@@ -15,6 +17,8 @@ class AddressModel {
       this.city,
       this.province,
       this.country,
+      this.personalName,
+      this.phoneNumber,
       this.id,
       this.userId});
 
@@ -25,6 +29,8 @@ class AddressModel {
     city = json['city'];
     province = json['province'];
     country = json['country'];
+    personalName = json['personal_name'];
+    phoneNumber = json['phone_number'];
     id = json['id'];
     userId = json['user_id'];
   }
@@ -37,6 +43,8 @@ class AddressModel {
     data['city'] = city;
     data['province'] = province;
     data['country'] = country;
+    data['personal_name'] = personalName;
+    data['phone_number'] = phoneNumber;
     data['id'] = id;
     data['user_id'] = userId;
     return data;

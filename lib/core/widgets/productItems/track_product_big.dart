@@ -61,7 +61,7 @@ class TrackProductBig extends StatelessWidget {
             ),
             Row(
               children: const [
-                const SizedBox(width: 30),
+                 SizedBox(width: 30),
                 Text(
                   "-₺ 310",
                   style: TextStyle(
@@ -103,14 +103,14 @@ Expanded _image() {
   );
 }
 
-Container _buttons(){
-  return Container(
-    width: 50,
-    height: 30,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12),
-      color: AppColors.primary,
+// Container _buttons(){
+//   return Container(
+//     width: 50,
+//     height: 30,
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(12),
+//       color: AppColors.primary,
 
-    ),
-  );
-}
+//     ),
+//   );
+// }

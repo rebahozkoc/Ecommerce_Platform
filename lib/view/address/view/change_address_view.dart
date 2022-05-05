@@ -324,9 +324,8 @@ class _ChangeAddressViewState extends BaseState<ChangeAddressView> {
                 shadowColor: AppColors.transparent,
                 elevation: 0,
               ),
-              onPressed: () {
-                debugPrint("Save Adress clicked");
-                Navigator.pop(context);
+              onPressed: () async{
+                await viewModel.submit();
               },
               child: const Text(
                 "Save Adress",

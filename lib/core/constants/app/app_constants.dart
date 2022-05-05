@@ -16,6 +16,8 @@ class ApplicationConstants {
   static const PROFILE_IMG =
       'https://pbs.twimg.com/profile_images/1276567411240681472/8KdXHFdK_400x400.jpg';
 
+  static const ERROR_MESSAGE = 'There is a problem. Please try again later.';
+
   static const CATEGORY_LIMIT = 6;
   static const CATEGORY_SKIP = 0;
 

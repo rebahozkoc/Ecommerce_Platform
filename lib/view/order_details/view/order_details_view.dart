@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
-import 'package:mobile/core/widgets/address_widget.dart';
 import 'package:mobile/core/widgets/productItems/track_product_big.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
-import 'package:mobile/core/widgets/customScrollPhysics.dart';
 
 
 class OrderDetailsView extends StatefulWidget {
@@ -70,12 +68,12 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
     ),
   );
 
-  Container _orderID() => Container(
+  SizedBox _orderID() => SizedBox(
     width: double.infinity,
     child: Padding(
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       child: Row(
-        children: [
+        children: const [
           Text("Order-ID: 123-456-789",
           style: TextStyle(
             color: AppColors.black,
@@ -137,7 +135,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
           ),
           Row(
             children: const [
-              const SizedBox(width: 30),
+               SizedBox(width: 30),
               Text(
                 "-₺ 310",
                 style: TextStyle(
@@ -154,10 +152,10 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
   );
 
 
-  Container _address() => Container(
+  SizedBox _address() => SizedBox(
     width: double.infinity,
     child: Padding(
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
           Row(
@@ -234,40 +232,38 @@ class _OrderDetailsViewState extends State<OrderDetailsView> with TickerProvider
     ),
   );
 
-  Container _payment() => Container(
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        children: [
-          Row(
-            children: const[
-              Text("Payment Information",
-              style: TextStyle(
-                color: AppColors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const[
-              Text("Shipment", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w400),),
-              Text("Free", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w700),)
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Sum", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w400),),
-              Text("₺380", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w700),)
-            ],
-          ),
-        ],
-      ),
+  Padding _payment() => Padding(
+    padding: const EdgeInsets.all(12.0),
+    child: Column(
+      children: [
+        Row(
+          children: const[
+            Text("Payment Information",
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const[
+            Text("Shipment", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w400),),
+            Text("Free", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w700),)
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text("Sum", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w400),),
+            Text("₺380", style: TextStyle(color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w700),)
+          ],
+        ),
+      ],
     ),
   );
 
