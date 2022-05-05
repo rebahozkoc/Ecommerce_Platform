@@ -3,10 +3,15 @@ import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 
-class CommentsView extends StatelessWidget {
+class CommentsView extends StatefulWidget {
   const CommentsView({Key? key}) : super(key: key);
 
   @override
+  State<CommentsView> createState() => _CommentsViewState();
+}
+
+class _CommentsViewState extends State<CommentsView> {
+@override
   Widget build(BuildContext context) {
     late CommentsViewModel viewModel;
     return BaseView(
