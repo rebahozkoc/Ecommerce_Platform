@@ -1,5 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobile/view/account/viewmodel/account_view_model.dart';
+import 'package:mobile/view/address/model/adress_model.dart';
+import 'package:mobile/view/address/repository/address_repository.dart';
+import 'package:mobile/view/address/service/address_service.dart';
 import 'package:mobile/view/address/viewmodel/address_view_model.dart';
 import 'package:mobile/view/address/viewmodel/change_address_view_model.dart';
 import 'package:mobile/view/auth/login/model/login_model.dart';
@@ -42,14 +45,20 @@ Future<void> setupLocator() async {
   // Model
   locator.registerLazySingleton(() => UserTokenModel());
   locator.registerLazySingleton(() => CategoryModel());
+  locator.registerLazySingleton(() => AddressModel());
+  locator.registerLazySingleton(() => AddressResponseModel());
+  locator.registerLazySingleton(() => AddressesResponseModel());
+
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
   locator.registerLazySingleton(() => CategoryRepository());
+  locator.registerLazySingleton(() => AddressRepository());
 
   // Service
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => CategoryService());
+  locator.registerLazySingleton(() => AddressService());
 }
 
 Future<void> resetLocator() async {

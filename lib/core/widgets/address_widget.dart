@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/view/address/model/adress_model.dart';
 
 class AddressWidget extends StatelessWidget {
-  final double latitude;
-  final double longitude;
+  final AddressModel address;
   const AddressWidget({
     Key? key,
-    required this.latitude,
-    required this.longitude,
+    required this.address
   }) : super(key: key);
 
   @override

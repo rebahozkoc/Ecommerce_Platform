@@ -18,4 +18,7 @@ class ApplicationConstants {
 
   static const CATEGORY_LIMIT = 6;
   static const CATEGORY_SKIP = 0;
+
+  static const ADDRESS_LIMIT = 100;
+  static const ADDRESS_SKIP = 0;
 }

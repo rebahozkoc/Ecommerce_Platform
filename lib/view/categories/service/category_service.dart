@@ -9,7 +9,6 @@ class CategoryService with CategoryServiceBase {
   @override
   Future<CategoryModel> getCategories({
     BuildContext? context,
-    String? language,
     int? skip,
     int? limit,
   }) async {

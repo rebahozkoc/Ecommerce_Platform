@@ -11,13 +11,11 @@ class CategoryRepository with CategoryServiceBase {
   @override
   Future<CategoryModel> getCategories({
     BuildContext? context,
-    String? language,
     int? skip,
     int? limit,
   }) async {
     CategoryModel _responseModel = await _service.getCategories(
       context: context,
-      language: language,
       skip: skip ?? ApplicationConstants.CATEGORY_SKIP,
       limit: limit ?? ApplicationConstants.CATEGORY_LIMIT,
     );

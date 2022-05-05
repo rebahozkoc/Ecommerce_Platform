@@ -10,4 +10,7 @@ class PathConstants {
 
   // CATEGORY
   static const CATEGORY = _URL + 'api/v1/categories';
+
+  // ADDRESS  
+  static const ADDRESS = _URL + 'api/v1/user/addresses';
 }

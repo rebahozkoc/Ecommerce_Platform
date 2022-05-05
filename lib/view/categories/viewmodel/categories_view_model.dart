@@ -24,7 +24,10 @@ abstract class _CategoriesViewModelBase with Store, BaseViewModel {
   late CategoryModel categoryModel;
 
   Future<bool> getData() async {
-    categoryModel = await _repository.getCategories();
+    categoryModel = await _repository.getCategories(
+      context: context,
+    );
+
     return categoryModel.isSuccess!;
   }
 }

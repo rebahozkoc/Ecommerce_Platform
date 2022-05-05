@@ -16,7 +16,6 @@ class AddressView extends StatefulWidget {
 }
 
 class _AddressViewState extends BaseState<AddressView> {
-  int count = 3;
   late AddressViewModel viewModel;
   @override
   Widget build(BuildContext context) {
@@ -28,10 +27,14 @@ class _AddressViewState extends BaseState<AddressView> {
         viewModel = model;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-        );
+        return FutureBuilder(
+            future: viewModel.getData(),
+            builder: ((context, snapshot) => snapshot.hasData
+                ? Scaffold(
+                    appBar: _appBar(),
+                    body: _body(),
+                  )
+                : const Scaffold()));
       },
     );
   }
@@ -52,8 +55,9 @@ class _AddressViewState extends BaseState<AddressView> {
   Padding _title() => Padding(
         padding: const EdgeInsets.all(15),
         child: Text(
-          "You have $count delivery addresses. From this page, you can create a "
-          "new address, edit or delete your existing addresses.\nAddress changes "
+          "You have ${viewModel.addressesResponseModel.data!.length} delivery "
+          "addresses. From this page, you can create a new address, edit or "
+          "delete your existing addresses.\nAddress changes "
           "you make on this page will not affect your previous orders.",
           style: const TextStyle(
             color: AppColors.textColorGray,
@@ -106,8 +110,11 @@ class _AddressViewState extends BaseState<AddressView> {
       primary: true,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => const AddressWidget(
-          latitude: 37.42796133580664, longitude: -122.085749655962),
+      itemBuilder: (context, index) => viewModel.addressesResponseModel.data!
+          .map((e) => AddressWidget(
+                address: e,
+              ))
+          .toList()[index],
       separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemCount: count);
+      itemCount: viewModel.addressesResponseModel.data!.length);
 }
