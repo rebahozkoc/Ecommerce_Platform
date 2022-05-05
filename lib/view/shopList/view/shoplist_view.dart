@@ -51,7 +51,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
   Center _body() => Center(
         child: Stack(
           children: <Widget>[
-            ListView.builder(itemCount: 5, itemBuilder: (context, index){
+            ListView.builder(itemCount: 8, itemBuilder: (context, index){
               return CartProduct();
             }),
             Align(
@@ -110,20 +110,6 @@ class _ShopListViewState extends BaseState<ShopListView> {
             )
           ],
         ),
-      /*child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            CartProduct(),
-            CartProduct(),
-            CartProduct(),
-            CartProduct(),
-            CartProduct(),
-          ],
-        ),
-      )*/
   );
 
   OutlinedButton _completeShopping() => OutlinedButton(
