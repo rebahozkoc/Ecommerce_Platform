@@ -31,6 +31,7 @@ class Product(BaseModel):
     id: int
     title: str
     description: str
+    distributor: str
     stock: int
     price: float
     model: str
