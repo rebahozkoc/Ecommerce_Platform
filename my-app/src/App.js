@@ -25,7 +25,7 @@ const cards2 = [9, 10, 11, 12, 13, 14, 15, 16];
 
 export default function App() {
   //const [isLogged, setIsLogged] = React.useState(true);
-  //console.log(document.cookie);
+  console.log(document.cookie);
   return (
     <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
@@ -46,7 +46,10 @@ export default function App() {
         >
           <MediaCard myId={4}></MediaCard>
         </Card>
-        <CardItemHandler item={cards2}></CardItemHandler>
+        {
+          //<CardItemHandler item={cards2}></CardItemHandler>
+          // Get it back with mainPage EndPoints
+        }
         <CardHalfTogether></CardHalfTogether>
         <Footer />
       </ThemeProvider>

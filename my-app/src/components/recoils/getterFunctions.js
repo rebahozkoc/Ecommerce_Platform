@@ -44,3 +44,49 @@ export const getDataWithoutAccess = async (link) => {
     console.log(err);
   }
 };
+
+export const createShoppingDict = () => {
+  let orderList = getCookie("orderList");
+  let cartDict = {};
+
+  while (orderList != "") {
+    let num = Number(orderList[0]);
+    //console.log(cartDict);
+    if (orderList.length > 2) {
+      orderList = orderList.substring(2);
+    } else {
+      orderList = "";
+    }
+    if (num in cartDict) {
+      cartDict[num] += 1;
+    } else {
+      cartDict[num] = 1;
+    }
+  }
+
+  return cartDict;
+};
+
+export const addCardtoCookie = (proId) => {
+  let orderList = getCookie("orderList");
+  orderList = `${orderList} ${proId}`;
+  document.cookie = `orderList=${orderList}`;
+};
+
+export const createOrderCookie = (cartDict) => {
+  document.cookie = "orderList=";
+
+  for (let item in cartDict) {
+    console.log(item);
+    for (let i = 0; i < cartDict[item]; i++) {
+      console.log(i);
+      addCardtoCookie(item);
+    }
+  }
+};
+
+export const decreaseCardCookie = (proId) => {
+  let cartDict = createShoppingDict();
+  cartDict[proId] -= 1;
+  createOrderCookie(cartDict);
+};

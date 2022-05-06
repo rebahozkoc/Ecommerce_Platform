@@ -9,25 +9,25 @@ import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlin
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import CommentIcon from "@mui/icons-material/Comment";
+
 import themeOptions from "../../../theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
+import { loggedState } from "../../../recoils/atoms";
+import { useRecoilValue } from "recoil";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
+import { addCardtoCookie } from "../../../recoils/getterFunctions";
 const CardItem = (props) => {
   const [expanded, setExpanded] = React.useState(false);
+  const isLogged = useRecoilValue(loggedState);
+  const addBasket = (proId) => {
+    if (isLogged) {
+      console.log("Post proId to shopping cart endpoint");
+    } else {
+      addCardtoCookie(proId);
+    }
+  };
   const addFavourite = () => {
     console.log("added to favourite");
   };
@@ -79,7 +79,12 @@ const CardItem = (props) => {
               {props.cost}
             </Typography>
             <CardActions>
-              <IconButton aria-label="share">
+              <IconButton
+                aria-label="share"
+                onClick={() => {
+                  addBasket(props.productId);
+                }}
+              >
                 <ShoppingBasketOutlinedIcon />
               </IconButton>
             </CardActions>
