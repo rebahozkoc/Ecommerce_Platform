@@ -96,6 +96,65 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
   int cardButtonIndex = 0;
 
   @action
+  submit() async {
+    if (cardMethodController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid method",
+          isSuccess: false);
+    } else if (cardNumberController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid Card Number",
+          isSuccess: false);
+    } else if (cardHolderController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid Name on Card",
+          isSuccess: false);
+    } else if (cardSecurtiyController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid CVV/CVC",
+          isSuccess: false);
+    } else if (cardDateController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid postal card expiry date",
+          isSuccess: false);
+    } else {
+      await addCards();
+    }
+  }
+
+  Future<void> addCards() async {
+    PaymentModel _payment = PaymentModel(
+      paymentMethod: cardMethodController.text,
+      cardNumber: cardNumberController.text,
+      cardName: cardHolderController.text,
+      cW: cardSecurtiyController.text,
+      expiryDate: cardDateController.text,
+    );
+
+    PaymentResponseModel _paymentResponse = await _repository.setPayment(
+      context: context,
+      payment: _payment,
+    );
+
+    if (_paymentResponse.isSuccess ?? false) {
+      showToast(
+          message: "Card has been added", isSuccess: true, context: context!);
+      locator<PaymentViewModel>().addNewPayment(_payment);
+      Navigator.pop(context!);
+    } else {
+      showToast(
+          message: "Card has not been added",
+          isSuccess: false,
+          context: context!);
+    }
+  }
+
+  @action
   void setSelectedCard(int index) => selectedCard = index;
 
   @action

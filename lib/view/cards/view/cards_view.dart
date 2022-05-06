@@ -80,7 +80,7 @@ class _CardsViewState extends BaseState<CardsView> {
               itemCount: viewModel.payments.length,
               itemBuilder: (context, index) => viewModel.payments
                   .map((e) => CardsWidget(
-                        address: e,
+                        payment: e,
                         onTap: () => viewModel.deletePayment(
                             id: e.id!.toInt(), index: index),
                       ))

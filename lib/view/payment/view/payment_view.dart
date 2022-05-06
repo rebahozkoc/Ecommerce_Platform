@@ -374,32 +374,46 @@ class _PaymentViewState extends BaseState<PaymentView> {
   InkWell _savedCardContainer(BuildContext context, int index) => InkWell(
         onTap: (() => viewModel.setSelectedCard(index)),
         child: Observer(builder: (_) {
-          return Container(
-            width: 200,
-            decoration: viewModel.selectedCard == index
-                ? _selectedDecoration
-                : _unselectedDecoration,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    viewModel.selectedCard == index
-                        ? _selectedAddressIcon
-                        : const SizedBox(
-                            height: 32,
-                          ),
-                  ],
-                ),
-                _chipImage(),
-                _cardNumber(),
-                _cardName()
-              ],
-            ),
+          return ListView.separated(
+            primary: true,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: viewModel.payments.length,
+            itemBuilder: (context, index) => viewModel.payments
+                .map((e) => CardsWidget(
+                      payment: e,
+                      onTap: () => viewModel.deletePayment(
+                          id: e.id!.toInt(), index: index),
+                    ))
+                .toList()[index],
+            separatorBuilder: (context, index) => const SizedBox(width: 16),
+            /*child: Container(
+              width: 200,
+              decoration: viewModel.selectedCard == index
+                  ? _selectedDecoration
+                  : _unselectedDecoration,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      viewModel.selectedCard == index
+                          ? _selectedAddressIcon
+                          : const SizedBox(
+                              height: 32,
+                            ),
+                    ],
+                  ),
+                  _chipImage(),
+                  _cardNumber(),
+                  _cardName()
+                ],
+              ),
+            ),*/
           );
         }),
       );
@@ -445,7 +459,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _cardForm(
-            title: "Method Name",
+            title: "Card Name",
             hintText: "Payment Method Name",
             keyboardType: TextInputType.text,
             controller: viewModel.cardMethodController,
@@ -485,7 +499,26 @@ class _PaymentViewState extends BaseState<PaymentView> {
               ),
             ],
           ),
-          const SizedBox(height: 16)
+          const SizedBox(height: 16),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(160, 48),
+                padding: EdgeInsets.zero,
+                maximumSize: const Size(160, 48),
+                primary: AppColors.primary,
+                shadowColor: AppColors.transparent,
+                elevation: 0,
+              ),
+              onPressed: () async {
+                await viewModel.submit();
+              },
+              child: const Text(
+                "Save Card",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              )),
         ],
       ));
 
@@ -545,7 +578,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => viewModel.payments
                 .map((e) => CardsWidget(
-                      address: e,
+                      payment: e,
                       onTap: () => viewModel.deletePayment(
                           id: e.id!.toInt(), index: index),
                     ))

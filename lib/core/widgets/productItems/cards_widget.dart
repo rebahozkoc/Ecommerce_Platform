@@ -6,12 +6,10 @@ import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
 
 class CardsWidget extends StatelessWidget {
-  final PaymentModel address;
+  final PaymentModel payment;
   final VoidCallback onTap;
-  const CardsWidget({
-    Key? key,
-    required this.address,
-    required this.onTap }) : super(key: key);
+  const CardsWidget({Key? key, required this.payment, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,11 +78,11 @@ class CardsWidget extends StatelessWidget {
   Container _cardNumber() => Container(
         width: double.infinity,
         margin: const EdgeInsets.only(left: 8, bottom: 3),
-        child: const Text(
-          "1234 56•• •••• 7890",
-          style: TextStyle(
+        child: Text(
+          payment.cardNumber!,
+          style: const TextStyle(
             color: AppColors.textColorGray,
-            fontSize: 17,
+            fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -93,9 +91,9 @@ class CardsWidget extends StatelessWidget {
   Container _cardName() => Container(
         width: double.infinity,
         margin: const EdgeInsets.only(left: 8),
-        child: const Text(
-          "Charles Leclerc",
-          style: TextStyle(
+        child: Text(
+          payment.cardName!,
+          style: const TextStyle(
             color: AppColors.darkGray,
             fontSize: 14,
             fontWeight: FontWeight.w400,
@@ -106,8 +104,6 @@ class CardsWidget extends StatelessWidget {
 
 class ConfirmDeleteCard extends StatelessWidget {
   const ConfirmDeleteCard({Key? key}) : super(key: key);
-  static const String number = "1234 56•• •••• 7890";
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -142,7 +138,7 @@ class ConfirmDeleteCard extends StatelessWidget {
   Padding _message() => const Padding(
         padding: EdgeInsets.symmetric(vertical: 24),
         child: Text(
-          "Are you sure you want to delete your card number $number?",
+          "Are you sure you want to delete your card?",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: AppColors.darkGray,

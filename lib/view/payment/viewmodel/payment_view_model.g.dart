@@ -164,6 +164,13 @@ mixin _$PaymentViewModel on _PaymentViewModelBase, Store {
         .run(() => super.deletePayment(index: index, id: id));
   }
 
+  final _$submitAsyncAction = AsyncAction('_PaymentViewModelBase.submit');
+
+  @override
+  Future submit() {
+    return _$submitAsyncAction.run(() => super.submit());
+  }
+
   final _$_PaymentViewModelBaseActionController =
       ActionController(name: '_PaymentViewModelBase');
 
