@@ -22,31 +22,33 @@ import UpdateAddressPage from "./components/account/updateAddressPage";
 import UpdateFavoritesPage from "./components/account/updateFavoritesPage";
 import UpdatePaymentPage from "./components/account/updatePaymentPage";
 import PaymentSuccessPage from "./components/payment/paymentSuccess/paymentSuccessPage";
+import { RecoilRoot } from "recoil";
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/Basket" element={<ShoppingBasket />} />
-      <Route path="/Categories" element={<CategoryProduct />} />
-      <Route path="/Dummy" element={<Dummy />} />
-      <Route path="/forgetPassword" element={<ForgetPassword />}></Route>
-      <Route path="resetPass" element={<ResetPassword />} />
-      <Route path="/product" element={<Product />} />
-      <Route path="/SignIn/" element={<SignIn />}></Route>
-      <Route path="/SignUp" element={<SignUp />} />
-      <Route path="/address-list" element={<AddressListPage />} />
-      <Route path="/payment" element={<PaymentPage />} />
-      <Route path="/orders" element={<OrderPage />} />
-      <Route path="/coupons" element={<CouponPage />} />
-      <Route path="/update-information" element={<UpdateInformationPage />} />
-      <Route path="/update-address" element={<UpdateAddressPage />} />
-      <Route path="/update-favorites" element={<UpdateFavoritesPage />} />
-      <Route path="/update-payment" element={<UpdatePaymentPage/>} />
-      <Route path="/payment-success" element={<PaymentSuccessPage/>} />
-      
-      
-      <Route path="/" element={<App />}></Route>
-    </Routes>
-  </BrowserRouter>,
+  <RecoilRoot>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/Basket" element={<ShoppingBasket />} />
+        <Route path="/Categories/:type" element={<CategoryProduct />} />
+        <Route path="/Dummy" element={<Dummy />} />
+        <Route path="/forgetPassword" element={<ForgetPassword />}></Route>
+        <Route path="resetPass" element={<ResetPassword />} />
+        <Route path="/product/:type" element={<Product />} />
+        <Route path="/SignIn/" element={<SignIn />}></Route>
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/address-list" element={<AddressListPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/orders" element={<OrderPage />} />
+        <Route path="/coupons" element={<CouponPage />} />
+        <Route path="/update-information" element={<UpdateInformationPage />} />
+        <Route path="/update-address" element={<UpdateAddressPage />} />
+        <Route path="/update-favorites" element={<UpdateFavoritesPage />} />
+        <Route path="/update-payment" element={<UpdatePaymentPage />} />
+        <Route path="/payment-success" element={<PaymentSuccessPage />} />
+
+        <Route path="/" element={<App />}></Route>
+      </Routes>
+    </BrowserRouter>
+  </RecoilRoot>,
 
   document.getElementById("root")
 );

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 
 const DiscountItem = (props) => {
-  console.log(props.img);
+  //console.log(props.img);
   return (
     <ThemeProvider theme={themeOptions}>
       <Card sx={{ maxWidth: 400 }} key={123131241}>

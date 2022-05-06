@@ -12,7 +12,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import themeOptions from "../../../theme";
 import { ThemeProvider } from "@emotion/react";
-import { Box, Stack } from "@mui/material";
+import { Box, CssBaseline, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
@@ -40,12 +40,22 @@ const CardItem = (props) => {
 
   return (
     <ThemeProvider theme={themeOptions}>
+      <CssBaseline></CssBaseline>
       <Card sx={{ maxWidth: 400 }}>
-        <CardHeader
-          title="item title not necessary deletable"
-          subheader="Until when promotion continues"
-        />
-        <Link to="/product" underline="none">
+        <Link
+          to={`/product/${props.title}`}
+          underline="none"
+          state={{ id: props.productId }}
+          style={{
+            textDecoration: "none",
+            color: "black",
+          }}
+        >
+          <CardHeader
+            title={props.title}
+            //subheader="Until when promotion continues"
+          />
+
           <CardMedia
             component="img"
             height="194"
@@ -53,21 +63,8 @@ const CardItem = (props) => {
             alt="Voidture not Found"
           />
         </Link>
-        <Stack spacing={{ xs: 0, sm: 0, md: 0 }} sx={{ paddingBottom: 0 }}>
-          <Stack
-            direction="row"
-            justifyContent="space-evenly"
-            spacing={2}
-            sx={{ height: "30px" }}
-          >
-            <Typography variant="body2" color="text.secondary">
-              Item title
-            </Typography>
-            <IconButton aria-label="add to favorites" onClick={addFavourite}>
-              <FavoriteIcon />
-            </IconButton>
-          </Stack>
 
+        <Stack spacing={{ xs: 0, sm: 0, md: 0 }} sx={{ paddingBottom: 0 }}>
           <Stack
             direction="row"
             justifyContent="space-evenly"
@@ -86,19 +83,9 @@ const CardItem = (props) => {
                 <ShoppingBasketOutlinedIcon />
               </IconButton>
             </CardActions>
-          </Stack>
-
-          <Stack
-            direction="row"
-            justifyContent="space-evenly"
-            spacing={2}
-            sx={{ height: "30px" }}
-          >
             <CardActions>
-              <Rating name="read-only" value={3} readOnly />
-
-              <IconButton aria-label="share">
-                <CommentIcon />
+              <IconButton aria-label="add to favorites" onClick={addFavourite}>
+                <FavoriteIcon />
               </IconButton>
             </CardActions>
           </Stack>

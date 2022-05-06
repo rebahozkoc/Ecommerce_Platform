@@ -12,12 +12,18 @@ import {
   useRecoilState,
   useRecoilValue,
 } from "recoil";
-
+import { useParams, useLocation } from "react-router-dom";
 const cards = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
   23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
 ];
 const CategoryProduct = () => {
+  const { type } = useParams();
+  const stateParamValue = useLocation();
+  const title =
+    stateParamValue.state != null ? stateParamValue.state.name : "deneme";
+  console.log();
+  console.log(stateParamValue);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -32,7 +38,7 @@ const CategoryProduct = () => {
       <ThemeProvider theme={themeOptions}>
         <PrimarySearchAppBar></PrimarySearchAppBar>
         <ResponsiveAppBar></ResponsiveAppBar>
-        <CardItemHandler item={cards}></CardItemHandler>
+        <CardItemHandler item={cards} title={title}></CardItemHandler>
       </ThemeProvider>
       <Box sx={{ m: 2 }} />
       <Footer />

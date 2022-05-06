@@ -420,7 +420,7 @@ export default function PrimarySearchAppBar() {
               pb: 1,
             }}
             alt="Your logo."
-            src={"voidtureLogo.png"}
+            src={"/voidtureLogo.png"}
           />
         </Link>
 
@@ -477,7 +477,6 @@ export default function PrimarySearchAppBar() {
             id="basket-button"
             size="large"
             value="basket-button-value"
-            aria-label="show 17 new notifications"
             color="inherit"
             onClick={handleClickBasket}
           >

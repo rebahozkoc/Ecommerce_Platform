@@ -8,10 +8,12 @@ import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Popper, Stack } from "@mui/material";
 import DropDownMenu from "./categories/DropDownMenu";
+import { ClickAwayListener } from "@mui/material";
 
 const AppBarUnder = () => {
   const [pages, setData] = useState([]);
@@ -31,7 +33,7 @@ const AppBarUnder = () => {
     getData();
   }, []);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+  const [openPopper, setOpenPopper] = React.useState(false);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -43,19 +45,35 @@ const AppBarUnder = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [img, setImg] = React.useState();
   const [subs, setSubs] = React.useState();
+  const [categoryId, setCategoryId] = React.useState();
   const HandleClick = (props) => {
     console.log(props.imga);
     setImg(props.imga);
   };
 
-  const handleClick = (imga, sub) => {
+  const navigate = useNavigate();
+  const handleOnClick = useCallback(
+    (title, id) =>
+      navigate(`/Categories/${title}`, { replace: true, title: title }),
+    [navigate]
+  );
+
+  const handleClickAway = (e) => {
+    if (e.target.type !== "button") setOpenPopper(false);
+  };
+
+  const handleClick = (imga, sub, id) => {
+    setOpenPopper(true);
+
     setAnchorEl(anchorEl ? null : document.getElementById("myStack"));
     setImg(imga);
     setSubs(sub);
+    setCategoryId(id);
   };
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
+  //console.log(pages);
   return (
     <div>
       <AppBar position="static" color="inherit" id="myStack">
@@ -112,8 +130,11 @@ const AppBarUnder = () => {
                 {pages.map((page, i) => (
                   <Button
                     aria-describedby={id}
+                    onDoubleClick={() => {
+                      handleOnClick(page.title, page.id);
+                    }}
                     onClick={() => {
-                      handleClick(page.image_url, page.subcategories);
+                      handleClick(page.image_url, page.subcategories, page.id);
                     }}
                     key={i}
                     sx={{ my: 2, color: "white", display: "block" }}
@@ -126,15 +147,24 @@ const AppBarUnder = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Popper
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        placement="bottom-start"
-        sx={{ display: "block", width: "100%" }}
-      >
-        <DropDownMenu img={img} sub={subs} />
-      </Popper>
+
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <Box>
+          (
+          {openPopper && (
+            <Popper
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              placement="bottom-start"
+              sx={{ display: "block", width: "100%" }}
+            >
+              <DropDownMenu img={img} sub={subs} catId={categoryId} />
+            </Popper>
+          )}
+          )
+        </Box>
+      </ClickAwayListener>
     </div>
   );
 };

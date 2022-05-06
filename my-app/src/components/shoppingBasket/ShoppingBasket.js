@@ -28,6 +28,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from "recoil";
+import { loggedState } from "../recoils/atoms";
 
 let c = [
   {
@@ -87,6 +88,7 @@ let c = [
 ];
 
 const ShoppingBasket = () => {
+  const [isLoggin, setIsLogged] = useRecoilState(loggedState);
   const [filter, setFilter] = React.useState(-1);
   const [change1, setChange1] = React.useState(-1);
   const [change2, setChange2] = React.useState(-1);
@@ -277,28 +279,54 @@ const ShoppingBasket = () => {
                   </Stack>
                 </Card>
                 <Stack justifyContent="center" alignItems="center">
-                  <Link
-                    to="/address-list"
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#ff6600",
-                        display: "block",
-                        padding: (8, 1, 8, 1),
-                        mb: 2,
-                        justify: "center",
+                  {isLoggin && (
+                    <Link
+                      to="/address-list"
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
                       }}
                     >
-                      <Typography sx={{ color: "black" }}>
-                        Confirm Card
-                      </Typography>
-                    </Button>
-                  </Link>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#ff6600",
+                          display: "block",
+                          padding: (8, 1, 8, 1),
+                          mb: 2,
+                          justify: "center",
+                        }}
+                      >
+                        <Typography sx={{ color: "black" }}>
+                          Confirm Cart
+                        </Typography>
+                      </Button>
+                    </Link>
+                  )}
+                  {!isLoggin && (
+                    <Link
+                      to="/SignIn"
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#ff6600",
+                          display: "block",
+                          padding: (8, 1, 8, 1),
+                          mb: 2,
+                          justify: "center",
+                        }}
+                      >
+                        <Typography sx={{ color: "black" }}>
+                          Sign In to Purchase
+                        </Typography>
+                      </Button>
+                    </Link>
+                  )}
                 </Stack>
               </Box>
             </Grid>

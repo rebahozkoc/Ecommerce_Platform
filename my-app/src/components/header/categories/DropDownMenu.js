@@ -4,13 +4,16 @@ import Divider from "@mui/material/Divider";
 import { Box, Stack } from "@mui/material";
 import Column from "./Column";
 import DiscountItem from "./DiscountItem";
-
+import { categoryId } from "../../recoils/atoms";
+import { useRecoilState } from "recoil";
 export default function DropDownMenu(props) {
   const subItems = props.sub;
-  console.log("subItems");
-  console.log(subItems);
+
   const subItems1 = subItems.slice(0, Math.ceil(subItems.length / 2));
-  const subItems2 = subItems.slice(Math.ceil(subItems.length / 2), subItems.length);
+  const subItems2 = subItems.slice(
+    Math.ceil(subItems.length / 2),
+    subItems.length
+  );
   return (
     <Box
       bgcolor="#EBEBEB"
@@ -26,8 +29,8 @@ export default function DropDownMenu(props) {
           justifyContent="flex-start"
           divider={<Divider orientation="vertical" />}
         >
-          <Column columnItems={subItems1}></Column>
-          <Column columnItems={subItems2}></Column>
+          <Column columnItems={subItems1} catId={props.catId}></Column>
+          <Column columnItems={subItems2} catId={props.catId}></Column>
         </Stack>
         <Box sx={{ width: 40 }}></Box>
         <Stack direction="row" justifyContent="flex-end">

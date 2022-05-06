@@ -33,7 +33,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from "recoil";
-
+import { useParams, useLocation } from "react-router-dom";
 let productId = 1;
 let points = [0, 0, 0, 0, 0, 0, 0];
 let comments = [
@@ -105,7 +105,9 @@ let itemTemp = {
 
 const Product = () => {
   const [makeComment, setMakeComment] = React.useState(false);
-
+  const { type } = useParams();
+  const stateParamValue = useLocation();
+  console.log(stateParamValue);
   const clickHandler = () => {
     setMakeComment(true);
   };
