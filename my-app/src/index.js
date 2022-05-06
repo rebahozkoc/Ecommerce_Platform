@@ -23,6 +23,7 @@ import UpdateFavoritesPage from "./components/account/updateFavoritesPage";
 import UpdatePaymentPage from "./components/account/updatePaymentPage";
 import PaymentSuccessPage from "./components/payment/paymentSuccess/paymentSuccessPage";
 import { RecoilRoot } from "recoil";
+import SearchPage from "./components/search/searchPage";
 ReactDOM.render(
   <RecoilRoot>
     <BrowserRouter>
@@ -44,7 +45,7 @@ ReactDOM.render(
         <Route path="/update-favorites" element={<UpdateFavoritesPage />} />
         <Route path="/update-payment" element={<UpdatePaymentPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
-
+        <Route path="/search" element={<SearchPage/>} />
         <Route path="/" element={<App />}></Route>
       </Routes>
     </BrowserRouter>

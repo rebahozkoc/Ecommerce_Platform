@@ -114,7 +114,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const [filter, setFilter] = React.useState(-1);
-
+  //const [search, setSearch] = React.useState("");
   const RemoveCardHand = (toDelete) => {
     setFilter(toDelete);
   };
@@ -127,6 +127,9 @@ export default function PrimarySearchAppBar() {
     filterCards();
     setFilter(-1);
   }, [filter]);
+
+  
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -398,6 +401,16 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
+
+  const handleKeyPress = (event)=>{
+    if(event.key === 'Enter'){
+      console.log('enter press hereff! ')
+      console.log(event.target.value);
+      window.location.href = "http://localhost:3000/search?search="+event.target.value;
+
+    }
+  }
+
   return (
     <AppBar position="sticky" elevation={0} color="inherit">
       <Toolbar>
@@ -405,9 +418,11 @@ export default function PrimarySearchAppBar() {
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
+          
           <StyledInputBase
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
+            onKeyPress={handleKeyPress} 
           />
         </Search>
         <Box sx={{ flexGrow: 1 }}> </Box>
