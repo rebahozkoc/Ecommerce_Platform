@@ -3,14 +3,39 @@ from sqlalchemy.orm import Session
 from typing import List
 from models.product import Product, ProductPhoto, ProductRate
 import schemas
+from fastapi.encoders import jsonable_encoder
 from fastapi import status, HTTPException, UploadFile
 from utilities.image import ImageUtilities
 from sqlalchemy.sql import func
+from models import CategorySubCategory
 
 
 class CRUDProduct(
     CRUDBase[schemas.ProductBase, schemas.ProductCreate, schemas.ProductUpdate]
 ):
+    def create(self, db: Session, *, obj_in: schemas.ProductCreate) -> Product:
+        obj_in_data = obj_in.dict()
+        db_obj = self.model(**obj_in_data)  # type: ignore
+
+        category_subcategory = (
+            db.query(CategorySubCategory)
+            .filter(
+                CategorySubCategory.category_id == obj_in.category_id,
+                CategorySubCategory.subcategory_id == obj_in.subcategory_id,
+            )
+            .first()
+        )
+
+        if not category_subcategory:
+            return None
+
+        db_obj.category_subcategory_id = category_subcategory.id
+
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        return db_obj
+
     def get_comments(
         self, db: Session, id: int, skip: int, limit: int
     ) -> List[schemas.CommentBase]:
@@ -39,17 +64,18 @@ class CRUDProduct(
         db.delete(db_obj)
         db.commit()
         return db_obj
-    
+
     def add_rate(self, db: Session, user_id: int, product_id: int, rate: int):
         product_rate = ProductRate(user_id=user_id, product_id=product_id, rate=rate)
         db.add(product_rate)
         db.commit()
         db.refresh(product_rate)
         return product_rate
-    
-    def get_avg_rate(self, db: Session, id: int):
-        return db.query(func.avg(ProductRate.rate).label('average')).filter(ProductRate.id==id)
 
+    def get_avg_rate(self, db: Session, id: int):
+        return db.query(func.avg(ProductRate.rate).label("average")).filter(
+            ProductRate.id == id
+        )
 
 
 product = CRUDProduct(Product)

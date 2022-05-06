@@ -10,7 +10,7 @@ from utilities.image import ImageUtilities
 router = APIRouter()
 
 
-@router.post("/", response_model=Response[schemas.ProductCreate])
+@router.post("/", response_model=Response[schemas.ProductBase])
 async def create_product(
     product_in: schemas.ProductCreate,
     db: Session = Depends(deps.get_db),
@@ -20,6 +20,11 @@ async def create_product(
     Create product
     """
     product = crud.product.create(db=db, obj_in=product_in)
+    if not product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Category and subcategory not found"},
+        )
     return Response(data=product)
 
 

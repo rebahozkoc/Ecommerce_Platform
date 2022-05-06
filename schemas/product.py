@@ -3,7 +3,7 @@ from typing import Optional, List
 from pydantic import BaseModel, validator
 from schemas.comment import CommentBase
 from utilities.image import ImageUtilities
-
+from schemas.base import CustomBase
 
 class ProductPhotoBase(BaseModel):
     id: int
@@ -28,16 +28,19 @@ class ProductBase(BaseModel):
 
 
 # Properties to receive via API on creation
-class ProductCreate(BaseModel):
+class ProductCreate(CustomBase):
     title: str
     description: str
     stock: int
     price: float
     model: str
     number: str
+    category_id: int
+    subcategory_id: int
 
     class Config:
         orm_mode = True
+        exclude = {"category_id", "subcategory_id"}
 
 
 
