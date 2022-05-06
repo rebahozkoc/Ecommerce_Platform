@@ -3,6 +3,7 @@ import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/core/widgets/productItems/cards_widget.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -26,10 +27,15 @@ class _PaymentViewState extends BaseState<PaymentView> {
         viewModel = model;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-          bottomNavigationBar: _bottomNavBar(),
+        return FutureBuilder(
+          future: viewModel.getData(),
+          builder: ((context, snapshot) => snapshot.hasData
+              ? Scaffold(
+                  appBar: _appBar(),
+                  body: _body(),
+                  bottomNavigationBar: _bottomNavBar(),
+                )
+              : const Scaffold()),
         );
       },
     );
@@ -530,4 +536,21 @@ class _PaymentViewState extends BaseState<PaymentView> {
           )
         ],
       );
+
+  Observer _payments() => Observer(builder: (_) {
+        return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            primary: true,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => viewModel.payments
+                .map((e) => CardsWidget(
+                      address: e,
+                      onTap: () => viewModel.deletePayment(
+                          id: e.id!.toInt(), index: index),
+                    ))
+                .toList()[index],
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
+            itemCount: viewModel.payments.length);
+      });
 }

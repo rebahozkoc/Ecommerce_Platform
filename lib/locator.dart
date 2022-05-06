@@ -19,6 +19,9 @@ import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
 import 'package:mobile/view/cards/viewmodel/cards_view_model.dart';
+import 'package:mobile/view/payment/model/payment_model.dart';
+import 'package:mobile/view/payment/repository/payment_repository.dart';
+import 'package:mobile/view/payment/service/payment_service.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 import 'package:mobile/view/search/viewmodel/search_view_model.dart';
@@ -46,24 +49,25 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => CommentsViewModel());
   locator.registerLazySingleton(() => AddCommentsViewModel());
 
-
   // Model
   locator.registerLazySingleton(() => UserTokenModel());
   locator.registerLazySingleton(() => CategoryModel());
   locator.registerLazySingleton(() => AddressModel());
   locator.registerLazySingleton(() => AddressResponseModel());
   locator.registerLazySingleton(() => AddressesResponseModel());
-
+  locator.registerLazySingleton(() => PaymentsResponseModel());
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
   locator.registerLazySingleton(() => CategoryRepository());
   locator.registerLazySingleton(() => AddressRepository());
+  locator.registerLazySingleton(() => PaymentRepository());
 
   // Service
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => CategoryService());
   locator.registerLazySingleton(() => AddressService());
+  locator.registerLazySingleton(() => PaymentService());
 }
 
 Future<void> resetLocator() async {

@@ -40,7 +40,7 @@ class _AddCommentsViewState extends BaseState<AddCommentsView> {
       );
 
   Center _body() => Center(
-    child: Padding(padding: EdgeInsets.all(12.08),
+    child: Padding(padding: const EdgeInsets.all(12.08),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -49,7 +49,7 @@ class _AddCommentsViewState extends BaseState<AddCommentsView> {
             glow: true,
             glowColor: AppColors.primaryLight,
             allowHalfRating: false,
-            itemBuilder: (context, _) => Icon(
+            itemBuilder: (context, _) => const Icon(
               Icons.star,
               color: AppColors.primary,
             ),
@@ -82,12 +82,12 @@ class _AddCommentsViewState extends BaseState<AddCommentsView> {
                   maxLines: 10,
                   decoration: InputDecoration(
                     counterText: "${_inputText.length.toString()} character(s)",
-                    counterStyle: TextStyle(
+                    counterStyle: const TextStyle(
                       color: AppColors.tertiary,
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
                     ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     fillColor: AppColors.gray,
                     focusColor: AppColors.white,
                     enabledBorder: OutlineInputBorder(
@@ -95,7 +95,7 @@ class _AddCommentsViewState extends BaseState<AddCommentsView> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: AppColors.primary,
                       )
                     )

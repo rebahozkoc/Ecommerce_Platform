@@ -40,12 +40,12 @@ class _CommentsViewState extends State<CommentsView> {
   ListView _body() => ListView(
       children: [
         Padding(
-            padding: EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "There are 3 comments about this product",
                     style: TextStyle(
                       color: AppColors.black,
@@ -55,9 +55,9 @@ class _CommentsViewState extends State<CommentsView> {
                   )
                 ],
               ),
-              CommentWidget(),
-              CommentWidget(),
-              CommentWidget(),
+              const CommentWidget(),
+              const CommentWidget(),
+              const CommentWidget(),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

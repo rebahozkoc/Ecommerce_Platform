@@ -3,9 +3,15 @@ import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/init/icon/entypo.dart';
 import 'package:mobile/core/init/icon/font_awesome5.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/view/payment/model/payment_model.dart';
 
 class CardsWidget extends StatelessWidget {
-  const CardsWidget({Key? key}) : super(key: key);
+  final PaymentModel address;
+  final VoidCallback onTap;
+  const CardsWidget({
+    Key? key,
+    required this.address,
+    required this.onTap }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

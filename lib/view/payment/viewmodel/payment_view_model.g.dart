@@ -9,6 +9,21 @@ part of 'payment_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PaymentViewModel on _PaymentViewModelBase, Store {
+  final _$paymentsAtom = Atom(name: '_PaymentViewModelBase.payments');
+
+  @override
+  ObservableList<PaymentModel> get payments {
+    _$paymentsAtom.reportRead();
+    return super.payments;
+  }
+
+  @override
+  set payments(ObservableList<PaymentModel> value) {
+    _$paymentsAtom.reportWrite(value, super.payments, () {
+      super.payments = value;
+    });
+  }
+
   final _$cardMethodControllerAtom =
       Atom(name: '_PaymentViewModelBase.cardMethodController');
 
@@ -140,8 +155,28 @@ mixin _$PaymentViewModel on _PaymentViewModelBase, Store {
     });
   }
 
+  final _$deletePaymentAsyncAction =
+      AsyncAction('_PaymentViewModelBase.deletePayment');
+
+  @override
+  Future<void> deletePayment({required int index, required int id}) {
+    return _$deletePaymentAsyncAction
+        .run(() => super.deletePayment(index: index, id: id));
+  }
+
   final _$_PaymentViewModelBaseActionController =
       ActionController(name: '_PaymentViewModelBase');
+
+  @override
+  void addNewPayment(PaymentModel payment) {
+    final _$actionInfo = _$_PaymentViewModelBaseActionController.startAction(
+        name: '_PaymentViewModelBase.addNewPayment');
+    try {
+      return super.addNewPayment(payment);
+    } finally {
+      _$_PaymentViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setSelectedCard(int index) {
@@ -179,6 +214,7 @@ mixin _$PaymentViewModel on _PaymentViewModelBase, Store {
   @override
   String toString() {
     return '''
+payments: ${payments},
 cardMethodController: ${cardMethodController},
 cardNumberController: ${cardNumberController},
 cardHolderController: ${cardHolderController},

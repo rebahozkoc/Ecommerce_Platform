@@ -14,7 +14,7 @@ class CardsView extends StatefulWidget {
 }
 
 class _CardsViewState extends BaseState<CardsView> {
-  int count = 2;
+  late int count = 1;
   late CardsViewModel viewModel;
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,13 @@ class _CardsViewState extends BaseState<CardsView> {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: count,
-            itemBuilder: (context, index) => const CardsWidget(),
+            itemBuilder: (context, index) => viewModel.payments
+                .map((e) => CardsWidget(
+                      address: e,
+                      onTap: () => viewModel.deletePayment(
+                          id: e.id!.toInt(), index: index),
+                    ))
+                .toList()[index],
             separatorBuilder: (context, index) => const SizedBox(width: 16),
           ),
         ),

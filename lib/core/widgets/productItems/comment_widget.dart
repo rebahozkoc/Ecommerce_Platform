@@ -7,7 +7,7 @@ class CommentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 12.0),
+      margin: const EdgeInsets.only(top: 12.0),
       padding: const EdgeInsets.all(8.0),
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -57,15 +57,15 @@ class CommentWidget extends StatelessWidget {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.all(8.0),
+            margin: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.all(8.0),
             decoration: const BoxDecoration(
                 color: AppColors.lightGray,
                 borderRadius: BorderRadius.all(Radius.circular(6.0))
             ),
             child: Row(
               children: [
-                Flexible(
+                const Flexible(
                     child: Text(
                       "This chair seems pretty sturdy. It’s also very soft, and the cushion is nice and thick. It took maybe 5 minutes to put together, and has no problem holding everyone in the family",
                     style: TextStyle(
