@@ -9,12 +9,12 @@ class CategoryRepository with CategoryServiceBase {
   final _service = locator<CategoryService>();
 
   @override
-  Future<CategoryModel> getCategories({
+  Future<CategoriesResponseModel> getCategories({
     BuildContext? context,
     int? skip,
     int? limit,
   }) async {
-    CategoryModel _responseModel = await _service.getCategories(
+    CategoriesResponseModel _responseModel = await _service.getCategories(
       context: context,
       skip: skip ?? ApplicationConstants.CATEGORY_SKIP,
       limit: limit ?? ApplicationConstants.CATEGORY_LIMIT,

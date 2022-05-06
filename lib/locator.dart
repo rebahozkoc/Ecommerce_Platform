@@ -49,7 +49,7 @@ Future<void> setupLocator() async {
 
   // Model
   locator.registerLazySingleton(() => UserTokenModel());
-  locator.registerLazySingleton(() => CategoryModel());
+  locator.registerLazySingleton(() => CategoriesResponseModel());
   locator.registerLazySingleton(() => AddressModel());
   locator.registerLazySingleton(() => AddressResponseModel());
   locator.registerLazySingleton(() => AddressesResponseModel());

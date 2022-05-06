@@ -7,12 +7,12 @@ import 'package:mobile/view/categories/service/category_service_base.dart';
 
 class CategoryService with CategoryServiceBase {
   @override
-  Future<CategoryModel> getCategories({
+  Future<CategoriesResponseModel> getCategories({
     BuildContext? context,
     int? skip,
     int? limit,
   }) async {
-    CategoryModel _responseModel = locator<CategoryModel>();
+    CategoriesResponseModel _responseModel = locator<CategoriesResponseModel>();
     try {
       Response response;
       Dio dio = Dio();
@@ -31,12 +31,12 @@ class CategoryService with CategoryServiceBase {
         options: Options(headers: header),
       );
 
-      _responseModel = CategoryModel.fromJson(response.data);
+      _responseModel = CategoriesResponseModel.fromJson(response.data);
       return _responseModel;
     } on DioError catch (exception) {
       debugPrint("Error");
       debugPrint(exception.response!.data);
-      _responseModel = locator<CategoryModel>();
+      _responseModel = locator<CategoriesResponseModel>();
       _responseModel.isSuccess = false;
       _responseModel.message = "Error!!!";
       return _responseModel;

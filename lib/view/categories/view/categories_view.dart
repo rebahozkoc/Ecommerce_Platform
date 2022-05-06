@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/image/image_constants.dart';
@@ -61,19 +62,21 @@ class _CategoriesViewState extends BaseState<CategoriesView> {
         ),
       );
 
-  GridView _gridView() => GridView.count(
-      crossAxisCount: 2,
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      childAspectRatio: 4 / 5,
-      crossAxisSpacing: 28,
-      mainAxisSpacing: 24,
-      children: viewModel.categoryModel.data!
-          .map((e) => _categoryContainer(e))
-          .toList());
+  Observer _gridView() => Observer(builder: (_) {
+        return GridView.count(
+            crossAxisCount: 2,
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            childAspectRatio: 4 / 5,
+            crossAxisSpacing: 28,
+            mainAxisSpacing: 24,
+            children: viewModel.categories
+                .map((e) => _categoryContainer(e))
+                .toList());
+      });
 
-  Container _categoryContainer(Data category) => Container(
+  Container _categoryContainer(CategoryModel category) => Container(
         //padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),

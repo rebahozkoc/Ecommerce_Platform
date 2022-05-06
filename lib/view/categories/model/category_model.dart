@@ -1,17 +1,17 @@
-class CategoryModel {
+class CategoriesResponseModel {
   String? message;
   bool? isSuccess;
-  List<Data>? data;
+  List<CategoryModel>? data;
 
-  CategoryModel({this.message, this.isSuccess, this.data});
+  CategoriesResponseModel({this.message, this.isSuccess, this.data});
 
-  CategoryModel.fromJson(Map<String, dynamic> json) {
+  CategoriesResponseModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     isSuccess = json['isSuccess'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <CategoryModel>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(CategoryModel.fromJson(v));
       });
     }
   }
@@ -27,22 +27,22 @@ class CategoryModel {
   }
 }
 
-class Data {
+class CategoryModel {
   String? title;
   int? id;
   String? imageUrl;
-  List<Subcategories>? subcategories;
+  List<SubcategoryModel>? subcategories;
 
-  Data({this.title, this.id, this.imageUrl, this.subcategories});
+  CategoryModel({this.title, this.id, this.imageUrl, this.subcategories});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CategoryModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     id = json['id'];
     imageUrl = json['image_url'];
     if (json['subcategories'] != null) {
-      subcategories = <Subcategories>[];
+      subcategories = <SubcategoryModel>[];
       json['subcategories'].forEach((v) {
-        subcategories!.add(Subcategories.fromJson(v));
+        subcategories!.add(SubcategoryModel.fromJson(v));
       });
     }
   }
@@ -60,13 +60,13 @@ class Data {
   }
 }
 
-class Subcategories {
+class SubcategoryModel {
   int? id;
   String? title;
 
-  Subcategories({this.id, this.title});
+  SubcategoryModel({this.id, this.title});
 
-  Subcategories.fromJson(Map<String, dynamic> json) {
+  SubcategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
   }
