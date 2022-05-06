@@ -13,6 +13,7 @@ class Product(Base):
     price = Column(Float)
     model = Column(String)
     number = Column(String)
+    distributor = Column(String)
 
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))
     comments = relationship("Comment", back_populates="product", lazy="dynamic")
