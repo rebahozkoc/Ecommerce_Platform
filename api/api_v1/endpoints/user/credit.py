@@ -60,3 +60,26 @@ def delete_credit(
 
     credit = crud.credit.remove(db=db, id=credit_id)
     return Response(data=credit, isSuccess=True)
+
+@router.patch("/credit/{credit_id}", response_model=Response[schemas.CreditBase])
+async def update_credit(
+    *,
+    credit_id: int,
+    credit_in: schemas.CreditUpdate,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    Updates address with id
+    """
+    credit = crud.credit.exists(db=db, user_id=current_user.id, id=credit_id)
+    if not credit:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Credit does not exist"},
+        )
+    credit = crud.credit.update(
+        db, db_obj=credit, obj_in=credit_in
+    )
+
+    return Response(data=credit, message="Updated successfully")

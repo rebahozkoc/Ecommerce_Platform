@@ -60,3 +60,26 @@ def delete_address(
 
     address = crud.address.remove(db=db, id=address_id)
     return Response(data=address, isSuccess=True)
+
+@router.patch("/addresses/{address_id}", response_model=Response[schemas.AddressBase])
+async def update_address(
+    *,
+    address_id: int,
+    address_in: schemas.AddressUpdate,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    Updates address with id
+    """
+    address = crud.address.exists(db=db, user_id=current_user.id, id=address_id)
+    if not address:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Address does not exist"},
+        )
+    address = crud.address.update(
+        db, db_obj=address, obj_in=address_in
+    )
+
+    return Response(data=address, message="Updated successfully")
