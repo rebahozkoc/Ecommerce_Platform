@@ -50,8 +50,8 @@ const Product = () => {
   const { type } = useParams();
   const stateParamValue = useLocation();
 
-  //const productId = stateParamValue.state.id;
-  const productId = 4;
+  const productId = stateParamValue.state.id;
+  //const productId = 4;
 
   const [isLoaded, setLoaded] = useState(false);
   const [itemTemp, setProduct] = useState([]);

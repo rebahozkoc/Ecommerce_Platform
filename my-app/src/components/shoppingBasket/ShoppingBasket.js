@@ -29,69 +29,42 @@ import {
   useRecoilValue,
 } from "recoil";
 import { loggedState } from "../recoils/atoms";
+import { useState, useEffect } from "react";
+import {
+  createShoppingDict,
+  getDataWithoutAccess,
+  getData,
+  createOrderCookie,
+} from "../recoils/getterFunctions";
 
-let c = [
-  {
-    key: 61,
-    imageId: "furn1.jpg",
-    cost: 1200,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 2,
-    stock: 40,
-  },
-  {
-    key: 62,
-    imageId: "furn2.jpg",
-    cost: 120,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 2,
-  },
-  {
-    key: 63,
-    imageId: "furn3.jpg",
-    cost: 1300,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 3,
-  },
-  {
-    key: 64,
-    imageId: "furn4.jpg",
-    cost: 1515,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 4,
-  },
-  {
-    key: 65,
-    imageId: "furn5.jpg",
-    cost: 121.22,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 6,
-    stock: 6,
-  },
-  {
-    key: 66,
-    imageId: "furn6.jpg",
-    cost: 123.67,
-    title: "Sofa",
-    description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-    count: 1,
-    stock: 4123,
-  },
-];
-
+let mydict = createShoppingDict();
 const ShoppingBasket = () => {
   const [isLoggin, setIsLogged] = useRecoilState(loggedState);
   const [filter, setFilter] = React.useState(-1);
   const [change1, setChange1] = React.useState(-1);
   const [change2, setChange2] = React.useState(-1);
+
+  const [isLoaded, setLoaded] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  //console.log(mydict);
+  //createOrderCookie(mydict);
+  useEffect(() => {
+    for (let proId in mydict) {
+      getDataWithoutAccess(
+        `http://164.92.208.145/api/v1/products/${proId}`
+      ).then((res) => {
+        console.log(res.data);
+        if (res.data.stock < mydict[proId]) {
+          mydict[proId] = res.data.stock;
+        }
+        setProducts((prev) => {
+          return [...prev, res.data];
+        });
+      });
+    }
+    setLoaded(true);
+  }, []);
 
   const removeCardHandler = (toDelete) => {
     setFilter(toDelete);
@@ -99,28 +72,39 @@ const ShoppingBasket = () => {
   };
 
   const filterCards = () => {
-    c = c.filter(function (card) {
-      return card.key !== filter;
-    });
+    delete mydict[filter];
+    console.log(mydict);
   };
 
   const incCard = () => {
-    for (let i = 0; i < c.length; i++) {
-      if (c[i].key === change2) {
-        if (c[i].count < c[i].stock) {
-          c[i].count++;
+    //need post request you can make it in useeffect
+    for (let i = 0; i < products.length; i++) {
+      if (products[i].id === change2) {
+        if (mydict[change2] < products[i].id.stock) {
+          mydict[change2]++;
         }
+        /*
+        if (!isLoggin) {
+          createOrderCookie(mydict);
+        }
+        */
         return;
       }
     }
   };
 
   const decCard = () => {
-    for (let i = 0; i < c.length; i++) {
-      if (c[i].key === change1) {
-        if (c[i].count > 0) {
-          c[i].count--;
+    //need post request you can make it in useeffect
+    for (let i = 0; i < products.length; i++) {
+      if (products[i].id === change2) {
+        if (mydict[change2] > 0) {
+          mydict[change2]--;
         }
+        /*
+        if (!isLoggin) {
+          createOrderCookie(mydict);
+        }
+        */
         return;
       }
     }
@@ -132,7 +116,6 @@ const ShoppingBasket = () => {
     setChange2(toChange);
   };
   React.useEffect(() => {
-    console.log(filter);
     filterCards();
     setFilter(-1);
   }, [filter]);
@@ -162,26 +145,40 @@ const ShoppingBasket = () => {
                   backgroundColor: "white",
                 }}
               >
-                <List>
-                  {c.map((card) => (
-                    <ListItem key={card.key}>
-                      <ShoppingCard
-                        imageId={card.imageId}
-                        cost={card.cost}
-                        description={card.description}
-                        title={card.title}
-                        id={card.key}
-                        delete={removeCardHandler}
-                        stock={card.stock}
-                        count={card.count}
-                        dec={decreaserHandler}
-                        inc={increaserHandler}
-                      >
-                        {(totalCost += card.cost * card.count)}
-                      </ShoppingCard>
-                    </ListItem>
-                  ))}
-                </List>
+                {isLoaded ? (
+                  <List>
+                    {products.map((card) => (
+                      <ListItem key={card.id}>
+                        <ShoppingCard
+                          imageId={
+                            card.photos[0] != null
+                              ? card.photos[0].photo_url
+                              : ""
+                          }
+                          model={card.model}
+                          number={card.number}
+                          cost={card.price}
+                          description={card.description}
+                          title={card.title}
+                          id={card.id}
+                          delete={removeCardHandler}
+                          stock={card.stock}
+                          count={mydict[card.id]}
+                          dec={() => {
+                            decreaserHandler(card.id);
+                          }}
+                          inc={() => {
+                            increaserHandler(card.id);
+                          }}
+                        >
+                          {(totalCost += card.price * mydict[card.id])}
+                        </ShoppingCard>
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <div>Loading...</div>
+                )}
                 <Divider sx={{ size: 100 }} />
                 <Link to="/" style={{ color: "black" }}>
                   <Typography sx={{ color: "black" }}>

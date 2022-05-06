@@ -46,9 +46,7 @@ const ShoppingCard = (props) => {
     }
   };
 
-  React.useEffect(() => {
-    console.log("");
-  }, [outStock, notZero]);
+  React.useEffect(() => {}, [outStock, notZero]);
   return (
     <ThemeProvider theme={themeOptions}>
       <Box disableRipple sx={{ width: 800 }}>
@@ -81,7 +79,7 @@ const ShoppingCard = (props) => {
               color="text.secondary"
               fontWeight="bold"
             >
-              Delivery Time
+              Model
             </Typography>
 
             <Typography
@@ -89,7 +87,7 @@ const ShoppingCard = (props) => {
               color="text.secondary"
               fontWeight="bold"
             >
-              some date time
+              {props.model}
             </Typography>
           </Stack>
           <Box sx={{ m: 2 }} />
@@ -107,13 +105,23 @@ const ShoppingCard = (props) => {
               direction="row"
               maxHeight={30}
               alignItems="center"
-              divider={<Divider orientation="vertical" sx={{ width: 2, bgcolor: themeOptions.palette.black.main, m:0, p:0  }} />}
+              divider={
+                <Divider
+                  orientation="vertical"
+                  sx={{
+                    width: 2,
+                    bgcolor: themeOptions.palette.black.main,
+                    m: 0,
+                    p: 0,
+                  }}
+                />
+              }
               sx={{
                 border: 2,
                 borderColor: "black",
                 borderRadius: 4,
-                p:0,
-                m:0
+                p: 0,
+                m: 0,
               }}
             >
               <CardActions>
@@ -121,16 +129,16 @@ const ShoppingCard = (props) => {
                   <RemoveIcon />
                 </IconButton>
               </CardActions>
-              
+
               <Typography
                 variant="body2"
                 color="text.secondary"
                 fontWeight="bold"
-                sx={{ml: 3, mr: 3}}
+                sx={{ ml: 3, mr: 3 }}
               >
                 {props.count}
               </Typography>
-              
+
               <CardActions>
                 <IconButton aria-label="share" onClick={increaser}>
                   <AddIcon />
@@ -138,22 +146,12 @@ const ShoppingCard = (props) => {
               </CardActions>
             </Stack>
             {notZero && (
-              <Typography
-                variant="body2"
-                
-                fontWeight="bold"
-                color="red"
-              >
+              <Typography variant="body2" fontWeight="bold" color="red">
                 *You can not go below 0!
               </Typography>
             )}
             {outStock && (
-              <Typography
-                variant="body2"
-                
-                fontWeight="bold"
-                color="red"
-              >
+              <Typography variant="body2" fontWeight="bold" color="red">
                 *Stock Limit
               </Typography>
             )}

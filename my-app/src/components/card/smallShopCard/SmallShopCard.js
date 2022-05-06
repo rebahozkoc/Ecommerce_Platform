@@ -28,6 +28,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const SmallShopCard = (props) => {
   const removeCardHandler = (id) => {
     props.removeCard(id);
+    //Remove Card
   };
   const theme = useTheme();
   const open = true;
