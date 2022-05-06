@@ -48,7 +48,7 @@ class PaymentsResponseModel {
 
   PaymentsResponseModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    isSuccess = json['is_success'];
+    isSuccess = json['isSuccess'];
     if (json['data'] != null) {
       data = <PaymentModel>[];
       json['data'].forEach((v) {
@@ -60,7 +60,7 @@ class PaymentsResponseModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
-    data['is_success'] = isSuccess;
+    data['isSuccess'] = isSuccess;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -77,14 +77,14 @@ class PaymentResponseModel {
 
   PaymentResponseModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    isSuccess = json['is_success'];
+    isSuccess = json['isSuccess'];
     data = json['data'] != null ? PaymentModel.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
-    data['is_success'] = isSuccess;
+    data['isSuccess'] = isSuccess;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
