@@ -15,7 +15,6 @@ import { getCookie } from "../recoils/atoms";
 import axios from "axios";
 import { getData } from "../recoils/getterFunctions";
 
-
 const access = getCookie("access_token");
 let headersList = {
   Accept: "*/*",
@@ -28,16 +27,13 @@ let reqOptions = {
   headers: headersList,
 };
 
-const UpdateAddressPage = ()  => {
+const UpdateAddressPage = () => {
   const [isLoaded, setLoaded] = useState(false);
 
   const [addressList, setAddressList] = useState([]);
 
-
   useEffect(() => {
-
-    getData(reqOptions).then((res) => {
-      
+    getData("http://164.92.208.145/api/v1/user/addresses").then((res) => {
       res.data.push({
         name: "Add New Address",
       });
@@ -58,7 +54,6 @@ const UpdateAddressPage = ()  => {
   }() //await axios(reqOptions);
   
   */
-  
 
   //console.log("hello");
 
@@ -87,8 +82,10 @@ const UpdateAddressPage = ()  => {
     <div>
       {addressList.map((address, index) => {
         return (
-          <div key={`addressFullDiv ${index}`} style={{ display: "inline-flex" }}>
-          
+          <div
+            key={`addressFullDiv ${index}`}
+            style={{ display: "inline-flex" }}
+          >
             <AddressListGetOld
               key={address.id}
               isProfile={true}
@@ -105,7 +102,8 @@ const UpdateAddressPage = ()  => {
                 " " +
                 address["country"]
               }
-              id={index}
+              id={address["id"]}
+              link={"http://164.92.208.145/api/v1/user/addresses/"}
               onClick={handleClickOpen}
             />
           </div>
@@ -124,7 +122,7 @@ const UpdateAddressPage = ()  => {
   return (
     <ProfilePageContainer
       pageIndex={3}
-      widget={isLoaded ? addressWidget: <div>Loading...</div>}
+      widget={isLoaded ? addressWidget : <div>Loading...</div>}
     ></ProfilePageContainer>
   );
 };
