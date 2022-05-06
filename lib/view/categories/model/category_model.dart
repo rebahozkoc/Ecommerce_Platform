@@ -1,3 +1,5 @@
+import 'package:mobile/view/product/model/product_model.dart';
+
 class CategoriesResponseModel {
   String? message;
   bool? isSuccess;
@@ -27,22 +29,54 @@ class CategoriesResponseModel {
   }
 }
 
+class CategoryResponseModel {
+  String? message;
+  bool? isSuccess;
+  CategoryModel? data;
+
+  CategoryResponseModel({this.message, this.isSuccess, this.data});
+
+  CategoryResponseModel.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    isSuccess = json['isSuccess'];
+    data = json['data'] != null ? CategoryModel.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['isSuccess'] = isSuccess;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
 class CategoryModel {
   String? title;
   int? id;
   String? imageUrl;
-  List<SubcategoryModel>? subcategories;
+  List<Subcategories>? subcategories;
+  List<ProductModel>? products;
 
-  CategoryModel({this.title, this.id, this.imageUrl, this.subcategories});
+  CategoryModel(
+      {this.title, this.id, this.imageUrl, this.subcategories, this.products});
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     id = json['id'];
     imageUrl = json['image_url'];
     if (json['subcategories'] != null) {
-      subcategories = <SubcategoryModel>[];
+      subcategories = <Subcategories>[];
       json['subcategories'].forEach((v) {
-        subcategories!.add(SubcategoryModel.fromJson(v));
+        subcategories!.add(Subcategories.fromJson(v));
+      });
+    }
+    if (json['products'] != null) {
+      products = <ProductModel>[];
+      json['products'].forEach((v) {
+        products!.add(ProductModel.fromJson(v));
       });
     }
   }
@@ -53,20 +87,22 @@ class CategoryModel {
     data['id'] = id;
     data['image_url'] = imageUrl;
     if (subcategories != null) {
-      data['subcategories'] =
-          subcategories!.map((v) => v.toJson()).toList();
+      data['subcategories'] = subcategories!.map((v) => v.toJson()).toList();
+    }
+    if (products != null) {
+      data['products'] = products!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class SubcategoryModel {
+class Subcategories {
   int? id;
   String? title;
 
-  SubcategoryModel({this.id, this.title});
+  Subcategories({this.id, this.title});
 
-  SubcategoryModel.fromJson(Map<String, dynamic> json) {
+  Subcategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
   }

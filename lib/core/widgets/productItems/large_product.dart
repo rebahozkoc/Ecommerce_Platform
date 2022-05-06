@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/core/constants/app/app_constants.dart';
+import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/view/product/model/product_model.dart';
 
 class LargeProduct extends StatelessWidget {
-  const LargeProduct({Key? key}) : super(key: key);
+  final ProductModel? product;
+  const LargeProduct({Key? key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +46,17 @@ class LargeProduct extends StatelessWidget {
   }
 
   AspectRatio _image() {
+    bool isExist = product?.photos?.isNotEmpty ?? false;
     return AspectRatio(
       aspectRatio: 1,
       child: CachedNetworkImage(
-        imageUrl:
-            "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
-        width: double.infinity,
-        fit: BoxFit.fill,
-      ),
+          imageUrl: isExist
+              ? product!.photos!.first.photoUrl!
+              : ApplicationConstants.PRODUCT_IMG,
+          width: double.infinity,
+          fit: BoxFit.fill,
+          placeholder: (BuildContext context, String string) =>
+              Image(image: AssetImage(ImageConstants.instance.logo))),
     );
   }
 
@@ -109,33 +116,42 @@ class LargeProduct extends StatelessWidget {
         ),
       );
 
-  Text _title() => const Text(
-        "Wing Chair",
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          color: AppColors.tertiary,
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-        ),
-      );
+  Text _title() {
+    bool isExist = product?.title?.isNotEmpty ?? false;
+    return Text(
+      isExist ? product!.title! : "Wing Chair",
+      textAlign: TextAlign.start,
+      style: const TextStyle(
+        color: AppColors.tertiary,
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+    );
+  }
 
-  Text _producer() => const Text(
-        "Goal Design",
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          color: AppColors.darkGray,
-          fontWeight: FontWeight.w500,
-          fontSize: 12,
-        ),
-      );
+  Text _producer() {
+    bool isExist = product?.distributor?.isNotEmpty ?? false;
+    return Text(
+      isExist ? product!.distributor! : "Goal Design",
+      textAlign: TextAlign.start,
+      style: const TextStyle(
+        color: AppColors.darkGray,
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
+      ),
+    );
+  }
 
-  Text _price() => const Text(
-        "380₺",
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          color: AppColors.primary,
-          fontWeight: FontWeight.w500,
-          fontSize: 12,
-        ),
-      );
+  Text _price() {
+    bool isExist = product?.price?.isFinite ?? false;
+    return Text(
+     (isExist ? product!.price!.toString() : "380")+"₺",
+      textAlign: TextAlign.start,
+      style: const TextStyle(
+        color: AppColors.primary,
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
+      ),
+    );
+  }
 }

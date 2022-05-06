@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
 class AdvertProduct extends StatelessWidget {
@@ -22,8 +23,7 @@ class AdvertProduct extends StatelessWidget {
   ClipRRect _image() => ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: CachedNetworkImage(
-          imageUrl:
-              "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
+          imageUrl: ApplicationConstants.PRODUCT_IMG,
           width: double.infinity,
           height: 240,
           fit: BoxFit.fill,

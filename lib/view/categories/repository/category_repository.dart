@@ -21,4 +21,16 @@ class CategoryRepository with CategoryServiceBase {
     );
     return _responseModel;
   }
+
+  @override
+  Future<CategoryResponseModel> getCategory({
+    BuildContext? context,
+    int? id,
+  }) async {
+    CategoryResponseModel _responseModel = await _service.getCategory(
+      context: context,
+      id: id ?? ApplicationConstants.CATEGORY_ID,
+    );
+    return _responseModel;
+  }
 }

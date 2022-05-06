@@ -11,6 +11,7 @@ class NavigationConstants {
   static const CHANGE_ADRESS = '/changeAddress';
   static const PAYMENT = '/payment';
   static const CARDS = '/cards';
+  static const CATEGORY = '/category';
   static const CATEGORIES = '/categories';
   static const ORDERS = '/orders';
   static const LOGIN = '/login';

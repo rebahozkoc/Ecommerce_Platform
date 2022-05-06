@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/model/base_view_model.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/categories/model/category_model.dart';
@@ -44,7 +46,7 @@ abstract class _CategoriesViewModelBase with Store, BaseViewModel {
     _categoriesResponseModel = await _repository.getCategories(
       context: context,
     );
-    
+
     if (_categoriesResponseModel.isSuccess ?? false) {
       setCategories(_categoriesResponseModel.data!);
     } else {
@@ -56,5 +58,12 @@ abstract class _CategoriesViewModelBase with Store, BaseViewModel {
     }
 
     return _categoriesResponseModel.isSuccess!;
+  }
+
+  void navigateToCategory(CategoryModel category) {
+    NavigationService.instance.navigateToPage(
+      path: NavigationConstants.CATEGORY,
+      data: category,
+    );
   }
 }

@@ -42,4 +42,34 @@ class CategoryService with CategoryServiceBase {
       return _responseModel;
     }
   }
+
+  @override
+  Future<CategoryResponseModel> getCategory({
+    BuildContext? context,
+    int? id,
+  }) async {
+    CategoryResponseModel _responseModel = locator<CategoryResponseModel>();
+    try {
+      Response response;
+      Dio dio = Dio();
+
+      var header = {
+        'Content-Type': 'application/json',
+      };
+
+      response = await dio.get(
+        PathConstants.CATEGORY + "/$id",
+        options: Options(headers: header),
+      );
+      _responseModel = CategoryResponseModel.fromJson(response.data);
+      return _responseModel;
+    } on DioError catch (exception) {
+      debugPrint("Error");
+      debugPrint(exception.response!.data);
+      _responseModel = locator<CategoryResponseModel>();
+      _responseModel.isSuccess = false;
+      _responseModel.message = "Error!!!";
+      return _responseModel;
+    }
+  }
 }

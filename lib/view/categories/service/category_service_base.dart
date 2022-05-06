@@ -7,4 +7,9 @@ abstract class CategoryServiceBase {
     int skip,
     int limit,
   });
+
+  Future<CategoryResponseModel> getCategory({
+    BuildContext context,
+    int id,
+  });
 }

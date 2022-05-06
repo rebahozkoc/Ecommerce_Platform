@@ -13,8 +13,11 @@ class ApplicationConstants {
   static const EMAIL_REGEX =
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
   static const ISOLATE_NAME = 'LocatorIsolate';
+
   static const PROFILE_IMG =
       'https://pbs.twimg.com/profile_images/1276567411240681472/8KdXHFdK_400x400.jpg';
+  static const PRODUCT_IMG =
+      'http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png';
 
   static const ERROR_MESSAGE = 'There is a problem. Please try again later.';
 
@@ -23,4 +26,6 @@ class ApplicationConstants {
 
   static const ADDRESS_LIMIT = 100;
   static const ADDRESS_SKIP = 0;
+
+  static const CATEGORY_ID = 0;
 }
