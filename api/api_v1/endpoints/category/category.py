@@ -13,7 +13,7 @@ router = APIRouter()
 
 @router.get(
     "/",
-    response_model=Response[List[schemas.CategoryShow]],
+    response_model=Response[List[schemas.CategoryWithSubCategories]],
     response_model_by_alias=False,
 )
 async def get_categories(
@@ -28,7 +28,7 @@ async def get_categories(
 
 @router.get(
     "/{id}",
-    response_model=Response[schemas.CategoryShow],
+    response_model=Response[schemas.Category],
     response_model_by_alias=False,
 )
 async def get_category_by_id(id: int, db: Session = Depends(deps.get_db)):
@@ -55,7 +55,7 @@ async def get_category_image(id: int, db: Session = Depends(deps.get_db)):
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Category does not exists."},
         )
-    return ImageUtilities.get_image_url(category.image_url)
+    return FileResponse(ImageUtilities.get_image_dir(category.image_url))
 
 
 @router.post("/")

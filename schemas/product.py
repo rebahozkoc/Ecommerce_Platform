@@ -1,8 +1,6 @@
 from typing import Optional, List
 
 from pydantic import BaseModel, validator
-from schemas.category import CategoryBase, SubCategoryBase
-from schemas.comment import CommentBase
 from utilities.image import ImageUtilities
 from schemas.base import CustomBase
 
@@ -21,14 +19,6 @@ class ProductPhotoBase(BaseModel):
 
 # Shared properties
 class ProductBase(BaseModel):
-    id: int
-    photos: List[ProductPhotoBase] = []
-
-    class Config:
-        orm_mode = True
-
-class Product(BaseModel):
-    id: int
     title: str
     description: str
     distributor: str
@@ -36,32 +26,15 @@ class Product(BaseModel):
     price: float
     model: str
     number: str
-    category_title: str
-    subcategory_title: str
-
-    photos: List[ProductPhotoBase] = []
-
-    class Config:
-        orm_mode = True
 
 
 # Properties to receive via API on creation
-class ProductCreate(CustomBase):
-    title: str
-    description: str
-    stock: int
-    price: float
-    model: str
-    number: str
-    distributor: str
+class ProductCreate(ProductBase, CustomBase):
     category_id: int
     subcategory_id: int
-    
 
     class Config:
-        orm_mode = True
         exclude = {"category_id", "subcategory_id"}
-
 
 
 # Properties to receive via API on update
@@ -70,7 +43,14 @@ class ProductUpdate(ProductCreate):
 
 
 class ProductInDBBase(ProductBase):
-    pass
+    id: int
 
     class Config:
         orm_mode = True
+
+
+class Product(ProductInDBBase):
+    category_title: str
+    subcategory_title: str
+    
+    photos: List[ProductPhotoBase] = []

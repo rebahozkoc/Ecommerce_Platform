@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.post(
     "/{id}/subcategory",
-    response_model=Response[schemas.SubCategoryShow],
+    response_model=Response[schemas.SubCategoryBase],
     response_model_by_alias=False,
 )
 async def create_subcategory(

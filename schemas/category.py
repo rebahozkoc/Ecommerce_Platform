@@ -2,6 +2,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel, Field, validator, Extra
 from utilities.image import ImageUtilities
+import schemas.product
 
 """
 SubCategory
@@ -46,12 +47,7 @@ class CategoryBase(BaseModel):
     title: str = Field(alias="category_title")
 
     class Config:
-        orm_mode = True
         allow_population_by_field_name = True
-
-
-class CategoryORM(CategoryBase):
-    id: int = Field(alias="category_id")
 
 
 class CategoryCreate(CategoryBase):
@@ -61,16 +57,30 @@ class CategoryCreate(CategoryBase):
 class CategoryUpdate(CategoryCreate):
     pass
 
-class CategoryShow(CategoryBase):
-    id: int
+
+class CategoryInDBBase(CategoryBase):
+    id: int = Field(alias="category_id")
     image_url: str
-    subcategories: List[SubCategoryBase]
 
     @validator("image_url")
     def static_image(cls, image_url):
         return ImageUtilities.get_image_url(image_url)
 
+    class Config:
+        orm_mode = True
 
-class SubCategoryShow(SubCategoryBase):
+
+class CategoryWithSubCategories(CategoryInDBBase):
+    subcategories: List[SubCategoryBase]
+
+    class Config:
+        orm_mode = True
+
+
+class Category(CategoryWithSubCategories):
+    products: List[schemas.product.Product]
+
+
+class SubCategory(SubCategoryBase):
     id: int
-    categories: List[CategoryORM]
+    categories: List[CategoryInDBBase]

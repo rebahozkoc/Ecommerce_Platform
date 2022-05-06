@@ -40,4 +40,3 @@ class ImageUtilities:
         image_dir = ImageUtilities.get_image_dir(path)
         if os.path.exists(image_dir):
             os.remove(image_dir)
-        
