@@ -19,8 +19,13 @@ class CRUDProduct(
         data = (
             db.query(Product)
             .filter(model_filter)
+            .options(joinedload(Product.category_subcategory))
             .first()
         )
+
+        # TODO: Not useful way to do it! Change it!
+        data.category_title = data.category_subcategory.category.title
+        data.subcategory_title = data.category_subcategory.subcategory.title
 
         if not data:
             return None

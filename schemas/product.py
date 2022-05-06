@@ -35,8 +35,9 @@ class Product(BaseModel):
     price: float
     model: str
     number: str
-    category: CategoryBase
-    subcategory: SubCategoryBase
+    category_title: str
+    subcategory_title: str
+
     photos: List[ProductPhotoBase] = []
 
     class Config:
@@ -53,6 +54,7 @@ class ProductCreate(CustomBase):
     number: str
     category_id: int
     subcategory_id: int
+    
 
     class Config:
         orm_mode = True
