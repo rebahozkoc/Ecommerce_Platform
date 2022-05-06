@@ -18,46 +18,43 @@ const NewReview = (props) => {
     <div>
       <div className={classes.backdrop} />
       <Card className={classes.modal}>
-        <header className={classes.header}>
-          <h2>Comment Section</h2>
-        </header>
-        <Box sx={{ m: 1 }}></Box>
-        <Grid container justifyContent="center">
-          <Typography component="legend">Rating</Typography>
-          <Rating
-            name="simple-controlled"
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          />
-
-          <TextField
-            id="outlined-uncontrolled"
-            label="Comment"
-            multiline
-            minRows={5}
-            fullWidth
-            sx={{ padding: (1, 1, 1, 1) }}
-          />
-        </Grid>
-        <Stack direction="row">
-          <Button
-            onClick={props.onCancel}
-            variant="contained"
-            sx={{
-              backgroundColor: "#ff6600",
-              display: "block",
-              padding: (8, 1, 8, 1),
-              justify: "right",
-              align: "right",
-            }}
-          >
-            <Typography sx={{ color: "black" }}>Cancel</Typography>
-          </Button>
-          <Grid container justifyContent="flex-end">
+        <Box sx={{ m: 1 }} />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          component="form"
+          onSubmit={props.onConfirm}
+          noValidate
+        >
+          <Grid container justifyContent="center">
+            <TextField
+              id="comment"
+              label="Comment"
+              name="comment"
+              multiline
+              minRows={5}
+              fullWidth
+              sx={{ padding: (1, 1, 1, 1) }}
+            />
+          </Grid>
+          <Stack direction="row">
             <Button
-              onClick={props.onConfirm}
+              onClick={props.onCancel}
+              variant="contained"
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (8, 1, 8, 1),
+              }}
+            >
+              <Typography sx={{ color: "black" }}>Cancel</Typography>
+            </Button>
+            <Box sx={{ m: 1 }} />
+            <Button
+              type="submit"
               variant="contained"
               sx={{
                 backgroundColor: "#ff6600",
@@ -69,8 +66,8 @@ const NewReview = (props) => {
             >
               <Typography sx={{ color: "black" }}>Confirm Comment</Typography>
             </Button>
-          </Grid>
-        </Stack>
+          </Stack>
+        </Box>
       </Card>
     </div>
   );

@@ -77,12 +77,12 @@ export default function addressListGetOld(props) {
           <Grid container spacing={0}>
             <Grid item xs={12} sm={3}>
               <Typography variant="body2" color="text.secondary">
-                {props.postal_code}/
+                {props.postal_code}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={3}>
               <Typography variant="body2" color="text.secondary">
-                {props.province}/
+                {props.province}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={3}>

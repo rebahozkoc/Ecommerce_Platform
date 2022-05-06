@@ -46,9 +46,7 @@ const Description = (props) => {
     }
   };
 
-  React.useEffect(() => {
-    console.log("");
-  }, [outStock, notZero]);
+  React.useEffect(() => {}, [outStock, notZero]);
   return (
     <ThemeProvider theme={themeOptions}>
       <Box
@@ -71,7 +69,7 @@ const Description = (props) => {
           </Stack>
 
           <Typography variant="body1" color="text.secondary" fontWeight="bold">
-            Delivery Time: {props.time}
+            Model: {props.model}
           </Typography>
 
           <Stack direction="column" spacing={1}>
@@ -91,8 +89,8 @@ const Description = (props) => {
                 border: 2,
                 borderColor: "black",
                 borderRadius: 6,
-                p:0,
-                m:0
+                p: 0,
+                m: 0,
               }}
             >
               <CardActions>
@@ -100,22 +98,29 @@ const Description = (props) => {
                   <RemoveIcon />
                 </IconButton>
               </CardActions>
-              <Divider orientation="vertical" flexItem sx={{width:2, bgcolor:themeOptions.palette.black.main}} />
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ width: 2, bgcolor: themeOptions.palette.black.main }}
+              />
 
               <Stack direction="column">
-                
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   fontWeight="bold"
                   sx={{
-                    p:2,
+                    p: 2,
                   }}
                 >
                   {props.count}
                 </Typography>
               </Stack>
-              <Divider orientation="vertical" flexItem sx={{width:2, bgcolor:themeOptions.palette.black.main}} />
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ width: 2, bgcolor: themeOptions.palette.black.main }}
+              />
               <CardActions>
                 <IconButton aria-label="share" onClick={increaser}>
                   <AddIcon />
