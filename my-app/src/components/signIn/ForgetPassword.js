@@ -1,3 +1,4 @@
+import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import themeOptions from "../theme";
 import PrimarySearchAppBar from "../header/AppBar";
@@ -14,6 +15,7 @@ import {
   Container,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 const ForgetPassword = () => {
   let navigate = useNavigate();
   const handleSubmit = (event) => {
@@ -26,6 +28,7 @@ const ForgetPassword = () => {
     navigate(path);
   };
   return (
+    <RecoilRoot>
     <ThemeProvider theme={themeOptions}>
       <PrimarySearchAppBar></PrimarySearchAppBar>
       <Container component="main" maxWidth="xs">
@@ -87,6 +90,7 @@ const ForgetPassword = () => {
       </Container>
       <Box sx={{ m: 2 }} />
     </ThemeProvider>
+    </RecoilRoot>
   );
 };
 export default ForgetPassword;
