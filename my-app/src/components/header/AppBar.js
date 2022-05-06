@@ -404,10 +404,9 @@ export default function PrimarySearchAppBar() {
 
   const handleKeyPress = (event)=>{
     if(event.key === 'Enter'){
-      console.log('enter press hereff! ')
+      console.log('enter pressed');
       console.log(event.target.value);
       window.location.href = "http://localhost:3000/search?search="+event.target.value;
-
     }
   }
 

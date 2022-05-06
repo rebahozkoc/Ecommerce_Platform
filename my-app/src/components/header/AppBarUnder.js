@@ -149,8 +149,8 @@ const AppBarUnder = () => {
 
       <ClickAwayListener onClickAway={handleClickAway}>
         <Box>
-          (
-          {openPopper && (
+          
+          {openPopper && 
             <Popper
               id={id}
               open={open}
@@ -160,8 +160,8 @@ const AppBarUnder = () => {
             >
               <DropDownMenu img={img} sub={subs} catId={categoryId} />
             </Popper>
-          )}
-          )
+          }
+          
         </Box>
       </ClickAwayListener>
     </div>
