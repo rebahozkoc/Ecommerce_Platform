@@ -44,8 +44,8 @@ class _CommentsViewState extends State<CommentsView> {
           child: Column(
             children: [
               Row(
-                children: [
-                  const Text(
+                children: const [
+                  Text(
                     "There are 3 comments about this product",
                     style: TextStyle(
                       color: AppColors.black,

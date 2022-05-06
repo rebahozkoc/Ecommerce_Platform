@@ -59,12 +59,12 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
 
-          children: [
-            const TrackProductBig(),
-            const TrackProductBig(),
-            const TrackProductBig(),
-            const TrackProductBig(),
-            const TrackProductBig(),
+          children: const [
+            TrackProductBig(),
+            TrackProductBig(),
+            TrackProductBig(),
+            TrackProductBig(),
+            TrackProductBig(),
 
           ],
         ),

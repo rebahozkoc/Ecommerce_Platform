@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
-import 'package:mobx/mobx.dart';
 
 class TrackProductBig extends StatelessWidget {
   const TrackProductBig({Key? key}) : super(key: key);
@@ -62,7 +61,7 @@ class TrackProductBig extends StatelessWidget {
               ),
               Row(
                 children: const [
-                  const SizedBox(width: 30),
+                   SizedBox(width: 30),
                   Text(
                     "-₺ 310",
                     style: TextStyle(
@@ -78,7 +77,7 @@ class TrackProductBig extends StatelessWidget {
           ),
         ),
       ),
-      collapsed: Text(""),
+      collapsed: const Text(""),
       expanded: _status(),
     );
   }
@@ -132,7 +131,7 @@ InkWell _status(){
                   ))
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   if(status == 0)
@@ -176,7 +175,7 @@ InkWell _status(){
                     ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: const [
                   Text("Delivery Address",
@@ -211,7 +210,7 @@ InkWell _status(){
                   )
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 children: const[
                   Text("Payment Information",

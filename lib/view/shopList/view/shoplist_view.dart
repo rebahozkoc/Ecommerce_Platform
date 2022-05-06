@@ -5,7 +5,6 @@ import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/locator.dart';
-import 'package:mobile/view/product/view/product_view.dart';
 import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 import 'package:mobile/core/widgets/productItems/shopping_cart_product.dart';
 
@@ -52,7 +51,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
         child: Stack(
           children: <Widget>[
             ListView.builder(itemCount: 8, itemBuilder: (context, index){
-              return CartProduct();
+              return const CartProduct();
             }),
             Align(
               alignment: Alignment.bottomCenter,

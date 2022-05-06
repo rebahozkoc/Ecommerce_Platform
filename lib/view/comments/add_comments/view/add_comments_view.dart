@@ -54,7 +54,7 @@ class _AddCommentsViewState extends BaseState<AddCommentsView> {
               color: AppColors.primary,
             ),
             onRatingUpdate: (rating){
-              print(rating);
+              debugPrint(rating.toString());
             },
           ),
           const SizedBox(height: 20),

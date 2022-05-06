@@ -64,8 +64,8 @@ class CommentWidget extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(6.0))
             ),
             child: Row(
-              children: [
-                const Flexible(
+              children: const [
+                Flexible(
                     child: Text(
                       "This chair seems pretty sturdy. It’s also very soft, and the cushion is nice and thick. It took maybe 5 minutes to put together, and has no problem holding everyone in the family",
                     style: TextStyle(

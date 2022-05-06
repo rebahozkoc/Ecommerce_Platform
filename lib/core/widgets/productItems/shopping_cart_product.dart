@@ -19,8 +19,9 @@ class _CartProductState extends State<CartProduct> {
 
   void remove(){
     setState(() {
-      if(_counter != 0)
+      if(_counter != 0) {
         _counter--;
+      }
     });
   }
   @override
