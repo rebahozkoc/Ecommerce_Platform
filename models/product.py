@@ -19,6 +19,10 @@ class Product(Base):
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))
     category_subcategory = relationship("CategorySubCategory", cascade="all,delete", back_populates="products")
 
+    # proxies
+    category_title = association_proxy(target_collection="category_subcategory", attr="category_title")
+    subcategory_title = association_proxy(target_collection="category_subcategory", attr="subcategory_title")
+
     comments = relationship("Comment", back_populates="product", lazy="dynamic")
     photos = relationship("ProductPhoto", back_populates="product")
     rates = relationship("ProductRate", back_populates="product")

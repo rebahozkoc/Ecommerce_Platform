@@ -10,7 +10,7 @@ from utilities.image import ImageUtilities
 router = APIRouter()
 
 
-@router.post("/", response_model=Response[schemas.ProductBase])
+@router.post("/", response_model=Response[schemas.Product])
 async def create_product(
     product_in: schemas.ProductCreate,
     db: Session = Depends(deps.get_db),

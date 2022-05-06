@@ -67,7 +67,6 @@ class CRUDCategory(
             update_data = obj_in.dict(exclude_unset=True)
         if image:
             ImageUtilities.remove_image(path=db_obj.image_url)
-            ImageUtilities.save_image(image, "categories")
             update_data["image_url"] = ImageUtilities.save_image(image, "categories")
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
@@ -106,7 +105,7 @@ class CRUDSubCategory(
 
     def add_to_category(
         self, db: Session, *, category: Category, subcategory: SubCategory
-    ) -> CategorySubCategory:
+    ) -> SubCategory:
         category_subcategory = CategorySubCategory(
             category_id=category.id, subcategory_id=subcategory.id
         )
@@ -114,7 +113,7 @@ class CRUDSubCategory(
         db.add(category_subcategory)
         db.commit()
         db.refresh(category_subcategory)
-        return category_subcategory
+        return subcategory
 
     def update(
         self,

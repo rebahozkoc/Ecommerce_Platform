@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from db.base_class import Base
 from sqlalchemy.ext.associationproxy import association_proxy
+from itertools import chain
 
 
 class CategorySubCategory(Base):
@@ -13,7 +14,7 @@ class CategorySubCategory(Base):
     subcategory_id = Column(ForeignKey("subcategory.id"))
 
     category = relationship("Category", cascade="all,delete", back_populates="subcategories")
-    subcategory = relationship("SubCategory", cascade="all,delete", back_populates="categories")
+    subcategory = relationship("SubCategory", back_populates="categories")
 
     # proxies
     category_title = association_proxy(target_collection="category", attr="title")
@@ -31,6 +32,11 @@ class Category(Base):
     subcategories = relationship(
         "CategorySubCategory", cascade="all,delete", back_populates="category"
     )
+
+    @property
+    def products(self):
+        return list(chain(*[s.products for s in self.subcategories]))
+
 
     def __init__(self, title):
         self.title = title

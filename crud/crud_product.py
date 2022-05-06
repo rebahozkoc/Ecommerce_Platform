@@ -24,8 +24,8 @@ class CRUDProduct(
         )
 
         # TODO: Not useful way to do it! Change it!
-        data.category_title = data.category_subcategory.category.title
-        data.subcategory_title = data.category_subcategory.subcategory.title
+        # data.category_title = data.category_subcategory.category.title
+        #data.subcategory_title = data.category_subcategory.subcategory.title
 
         if not data:
             return None
@@ -47,7 +47,10 @@ class CRUDProduct(
         if not category_subcategory:
             return None
 
+        # TODO: Not useful way to do it! Change it!
         db_obj.category_subcategory_id = category_subcategory.id
+        #db_obj.category_title = category_subcategory.category.title
+        #db_obj.subcategory_title = category_subcategory.subcategory.title
 
         db.add(db_obj)
         db.commit()
