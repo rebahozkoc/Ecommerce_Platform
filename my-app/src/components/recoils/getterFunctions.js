@@ -3,9 +3,9 @@ import { getCookie } from "./atoms";
 
 const access = getCookie("access_token");
 
-export const getData = () => {
+export const getData = async () => {
   try {
-    let res = axios.get("http://164.92.208.145/api/v1/user/addresses", {
+    let res = await axios.get("http://164.92.208.145/api/v1/user/addresses", {
       headers: {
         Accept: "*/*",
         Authorization: `Bearer ${access}`,
@@ -14,9 +14,11 @@ export const getData = () => {
     if (res.status >= 200 && res.status < 300) {
       // test for status you want, etc
 
-      return res.data.data;
+      return res.data;
+    }else{
+      return null;
     }
-    return res.data.data;
+    
     // Don't forget to return something
   } catch (err) {
     console.log(err);

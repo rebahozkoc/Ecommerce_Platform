@@ -41,13 +41,6 @@ export default function addressListGetOld(props) {
       </CardContent>
       <CardActions>
         <Box sx={{display: { md: "block" }}}>
-        {props.isProfile ? (
-              <Button id={props.id} size="small" color="primary" onClick={props.onClick}>
-                Edit
-              </Button>
-            ) : (
-              <></>
-            )}
         <Button size="small">Delete</Button></Box>
         
       </CardActions>
@@ -55,3 +48,15 @@ export default function addressListGetOld(props) {
   );
 };
 }
+
+
+/*
+
+        {props.isProfile ? (
+              <Button id={props.id} size="small" color="primary" onClick={props.onClick}>
+                Edit
+              </Button>
+            ) : (
+              <></>
+            )}
+*/

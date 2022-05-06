@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfilePageContainer from "./profilePageContainer";
 import AddressListForm from "../payment/addressList/addressListForm";
 import AddressListGetOld from "../payment/addressList/addressListGetOld";
@@ -14,6 +14,8 @@ import AddressListAddNew from "../payment/addressList/addressListAddNew";
 import { getCookie } from "../recoils/atoms";
 import axios from "axios";
 import { getData } from "../recoils/getterFunctions";
+
+
 const access = getCookie("access_token");
 let headersList = {
   Accept: "*/*",
@@ -26,20 +28,39 @@ let reqOptions = {
   headers: headersList,
 };
 
-const UpdateAddressPage = () => {
-  const [addressList1, setAddressList] = useState();
-  let response = [];
-  console.log("response is", response);
-  //getData().then((res) => console.log(res)); bunu açarsan gümler
+const UpdateAddressPage = ()  => {
+  const [isLoaded, setLoaded] = useState(false);
 
-  console.log(response);
+  const [addressList, setAddressList] = useState([]);
+
+
+  useEffect(() => {
+
+    getData(reqOptions).then((res) => {
+      
+      res.data.push({
+        name: "Add New Address",
+      });
+
+      console.log(res.data);
+      setAddressList(res.data);
+      setLoaded(true);
+    });
+  }, [isLoaded]);
+
+  /*
+  (rest)=>{
+      rest.data.forEach((element) => {
+        addressList.push(element);
+      });
+      setLoaded(true);
+    
+  }() //await axios(reqOptions);
+  
+  */
+  
+
   //console.log("hello");
-  const addressList = response != null ? response : [];
-  addressList.push({
-    index: -1,
-    title: "Add New Address",
-    description: "Create a new address...",
-  });
 
   //console.log(addressList);
   const [open, setOpen] = React.useState(false);
@@ -66,15 +87,17 @@ const UpdateAddressPage = () => {
     <div>
       {addressList.map((address, index) => {
         return (
-          <div key={address.uniqueId} style={{ display: "inline-flex" }}>
+          <div key={`addressFullDiv ${index}`} style={{ display: "inline-flex" }}>
+          
             <AddressListGetOld
+              key={address.id}
               isProfile={true}
               isNew={index === addressList.length - 1 ? true : false}
-              title={address["title"]}
+              title={address["name"]}
               description={
-                address["description"] +
+                address["full_address"] +
                 " " +
-                address["zip"] +
+                address["postal_code"] +
                 " " +
                 address["province"] +
                 " " +
@@ -82,7 +105,7 @@ const UpdateAddressPage = () => {
                 " " +
                 address["country"]
               }
-              id={address["index"]}
+              id={index}
               onClick={handleClickOpen}
             />
           </div>
@@ -101,7 +124,7 @@ const UpdateAddressPage = () => {
   return (
     <ProfilePageContainer
       pageIndex={3}
-      widget={addressWidget}
+      widget={isLoaded ? addressWidget: <div>Loading...</div>}
     ></ProfilePageContainer>
   );
 };
