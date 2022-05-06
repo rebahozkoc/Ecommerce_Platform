@@ -14,6 +14,7 @@ class Product(Base):
     price = Column(Float)
     model = Column(String)
     number = Column(String)
+    distributor = Column(String)
 
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))
     category_subcategory = relationship("CategorySubCategory", cascade="all,delete", back_populates="products")

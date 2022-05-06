@@ -52,6 +52,7 @@ class ProductCreate(CustomBase):
     price: float
     model: str
     number: str
+    distributor: str
     category_id: int
     subcategory_id: int
     
