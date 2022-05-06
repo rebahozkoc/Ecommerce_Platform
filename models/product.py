@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, Boolean, String, Float
 from sqlalchemy.orm import relationship
 from db.base_class import Base
+from sqlalchemy.ext.associationproxy import association_proxy
 
 
 class Product(Base):
@@ -15,6 +16,11 @@ class Product(Base):
     number = Column(String)
 
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))
+    category_subcategory = relationship("CategorySubCategory", cascade="all,delete", back_populates="products")
+
+    category_title = association_proxy(target_collection="category_subcategory", attr="category_title")
+    subcategory_title = association_proxy(target_collection="category_subcategory", attr="subcategory_title")
+
     comments = relationship("Comment", back_populates="product", lazy="dynamic")
     photos = relationship("ProductPhoto", back_populates="product")
     rates = relationship("ProductRate", back_populates="product")

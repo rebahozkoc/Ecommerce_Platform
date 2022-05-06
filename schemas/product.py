@@ -1,6 +1,7 @@
 from typing import Optional, List
 
 from pydantic import BaseModel, validator
+from schemas.category import CategoryBase, SubCategoryBase
 from schemas.comment import CommentBase
 from utilities.image import ImageUtilities
 from schemas.base import CustomBase
@@ -21,6 +22,21 @@ class ProductPhotoBase(BaseModel):
 # Shared properties
 class ProductBase(BaseModel):
     id: int
+    photos: List[ProductPhotoBase] = []
+
+    class Config:
+        orm_mode = True
+
+class Product(BaseModel):
+    id: int
+    title: str
+    description: str
+    stock: int
+    price: float
+    model: str
+    number: str
+    category: CategoryBase
+    subcategory: SubCategoryBase
     photos: List[ProductPhotoBase] = []
 
     class Config:

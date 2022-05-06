@@ -28,7 +28,7 @@ async def create_product(
     return Response(data=product)
 
 
-@router.get("/{id}", response_model=Response[schemas.ProductBase])
+@router.get("/{id}")
 async def get_product(
     id: int,
     db: Session = Depends(deps.get_db),
@@ -46,7 +46,7 @@ async def get_product(
     # base_product = schemas.ProductShow(**product.__dict__)
     # base_product.average_rate = crud.product.get_avg_rate(db=db, id=product.id)
 
-    return Response(data=product)
+    return product
 
 
 @router.post("/{id}/photo/add", response_model=Response)

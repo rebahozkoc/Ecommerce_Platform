@@ -1,6 +1,6 @@
 from crud.base import CRUDBase
-from sqlalchemy.orm import Session
-from typing import List
+from sqlalchemy.orm import Session, joinedload
+from typing import List, Any, Optional
 from models.product import Product, ProductPhoto, ProductRate
 import schemas
 from fastapi.encoders import jsonable_encoder
@@ -13,6 +13,19 @@ from models import CategorySubCategory
 class CRUDProduct(
     CRUDBase[schemas.ProductBase, schemas.ProductCreate, schemas.ProductUpdate]
 ):
+    def get(self, db: Session, field: str, value: Any) -> Optional[Product]:
+        model_attribute = getattr(self.model, field)  # get attribute
+        model_filter = model_attribute == value
+        data = (
+            db.query(Product)
+            .filter(model_filter)
+            .first()
+        )
+
+        if not data:
+            return None
+        return data
+        
     def create(self, db: Session, *, obj_in: schemas.ProductCreate) -> Product:
         obj_in_data = obj_in.dict()
         db_obj = self.model(**obj_in_data)  # type: ignore
