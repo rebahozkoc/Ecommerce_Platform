@@ -16,4 +16,6 @@ class NavigationConstants {
   static const LOGIN = '/login';
   static const BOTTOM_BAR = '/bottomBar';
   static const LOGIN_REQUIRED = '/loginReq';
+  static const COMMENTS = '/comments';
+  static const ADD_COMMENT = '/addComments';
 }

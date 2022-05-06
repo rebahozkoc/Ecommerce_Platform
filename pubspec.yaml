@@ -49,6 +49,7 @@ dependencies:
   flutter_mobx: ^2.0.4
   flutter_styled_toast: ^2.0.0
   expandable: ^5.0.1
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
