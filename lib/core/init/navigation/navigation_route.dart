@@ -6,6 +6,8 @@ import 'package:mobile/core/widgets/bottombar_view.dart';
 import 'package:mobile/core/widgets/login_requreid_widget.dart';
 import 'package:mobile/view/address/view/change_address_view.dart';
 import 'package:mobile/view/auth/login/view/login_view.dart';
+import 'package:mobile/view/comments/add_comments/view/add_comments_view.dart';
+import 'package:mobile/view/comments/view/comments_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
 import 'package:mobile/view/payment/view/payment_view.dart';
@@ -44,6 +46,12 @@ class NavigationRoute {
       case NavigationConstants.CHANGE_ADRESS:
         return bottomToTopNavigate(
             const ChangeAddressView(), NavigationConstants.CHANGE_ADRESS);
+      case NavigationConstants.COMMENTS:
+        return cupertinoNavigate(
+          const CommentsView(), NavigationConstants.COMMENTS);
+      case NavigationConstants.ADD_COMMENT:
+        return cupertinoNavigate(
+          const AddCommentsView(), NavigationConstants.ADD_COMMENT);
       case NavigationConstants.LOGIN_REQUIRED:
         return bottomToTopNavigate(
             LoginRequired(message: args.arguments as String),

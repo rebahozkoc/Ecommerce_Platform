@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
+import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/core/widgets/productItems/comment_widget.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 
@@ -11,9 +13,9 @@ class CommentsView extends StatefulWidget {
 }
 
 class _CommentsViewState extends State<CommentsView> {
+  late CommentsViewModel viewModel;
   @override
   Widget build(BuildContext context) {
-    late CommentsViewModel viewModel;
     return BaseView(
       viewModel: locator<CommentsViewModel>(),
       onModelReady: (dynamic model) async {
@@ -28,13 +30,74 @@ class _CommentsViewState extends State<CommentsView> {
         );
       },
     );
+
   }
 
   AppBar _appBar() => AppBar(
         title: const Text("All Comments"),
       );
 
-  Center _body() => const Center(
-        child: Text("Comments"),
-      );
+  ListView _body() => ListView(
+      children: [
+        Padding(
+            padding: EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "There are 3 comments about this product",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
+                  )
+                ],
+              ),
+              CommentWidget(),
+              CommentWidget(),
+              CommentWidget(),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  addComment(),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+  );
+
+  OutlinedButton addComment() => OutlinedButton(
+    onPressed: (){
+      viewModel.navigateToAddCommentsView(context);
+    },
+    child: RichText(
+        text: const TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.chat_bubble, size: 18, color: AppColors.white,),
+              ),
+              TextSpan(
+                text: " Add Review",
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              )
+            ]
+        )
+    ),
+    style: OutlinedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        primary: AppColors.primary,
+        fixedSize: const Size(360, 60),
+        side: const BorderSide(width: 1.0, color: AppColors.primary)
+    ),
+  );
 }
+

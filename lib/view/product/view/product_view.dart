@@ -78,6 +78,45 @@ class _ProductViewState extends BaseState<ProductView> {
     ],
   );
 
+
+  OutlinedButton addToCart() => OutlinedButton(
+    onPressed: (){
+      debugPrint("Add to cart button pressed...");
+    },
+    child: const Text(
+      "Add To Cart",
+      style: TextStyle(
+        color: AppColors.white,
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+    style: OutlinedButton.styleFrom(
+        primary: AppColors.primary,
+        fixedSize: const Size(150, 50),
+        side: const BorderSide(width: 1.0, color: AppColors.white)
+    ),
+  );
+
+  OutlinedButton buyNow() => OutlinedButton(
+    onPressed: (){
+    },
+    child: const Text(
+      "Buy Now",
+      style: TextStyle(
+        color: AppColors.black,
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+    style: OutlinedButton.styleFrom(
+        backgroundColor: AppColors.white,
+        primary: AppColors.white,
+        fixedSize: const Size(150, 50),
+        side: const BorderSide(width: 1.0, color: AppColors.white)
+    ),
+  );
+
 }
 
 

@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 //import 'package:mobile/core/widgets/customScrollPhysics.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 
 class PageProduct extends StatelessWidget {
   const PageProduct({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class PageProduct extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [_content(), _infos(), Container()],
-          
+
         ),
       )
     );
@@ -334,8 +336,8 @@ class PageProduct extends StatelessWidget {
 
   TextButton _commentButton() => TextButton(
       onPressed: (){
-        debugPrint("Show comments button pressed...");
-      },
+          NavigationService.instance.navigateToPage(path: NavigationConstants.COMMENTS);
+        },
       child: const Text(
         "Show all",
         style: TextStyle(
@@ -427,44 +429,6 @@ class PageProduct extends StatelessWidget {
 
 }
 
-OutlinedButton addToCart() => OutlinedButton(
-  onPressed: (){
-    debugPrint("Add to cart button pressed...");
-  },
-  child: const Text(
-    "Add To Cart",
-    style: TextStyle(
-      color: AppColors.white,
-      fontSize: 14,
-      fontWeight: FontWeight.w700,
-    ),
-  ),
-  style: OutlinedButton.styleFrom(
-    primary: AppColors.primary,
-    fixedSize: const Size(150, 50),
-    side: const BorderSide(width: 1.0, color: AppColors.white)
-  ),
-);
-
-OutlinedButton buyNow() => OutlinedButton(
-  onPressed: (){
-    debugPrint("Buy now button pressed...");
-  },
-  child: const Text(
-    "Buy Now",
-    style: TextStyle(
-      color: AppColors.black,
-      fontSize: 14,
-      fontWeight: FontWeight.w700,
-    ),
-  ),
-  style: OutlinedButton.styleFrom(
-    backgroundColor: AppColors.white,
-      primary: AppColors.white,
-      fixedSize: const Size(150, 50),
-      side: const BorderSide(width: 1.0, color: AppColors.white)
-  ),
-);
 
 
 
