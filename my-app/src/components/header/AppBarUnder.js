@@ -53,8 +53,7 @@ const AppBarUnder = () => {
 
   const navigate = useNavigate();
   const handleOnClick = useCallback(
-    (title, id) =>
-      navigate(`/Categories/${title}`, { replace: true, title: title }),
+    (title, id) => navigate(`/Categories/${title}${id}`),
     [navigate]
   );
 

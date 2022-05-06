@@ -19,11 +19,22 @@ const cards = [
 ];
 const CategoryProduct = () => {
   const { type } = useParams();
+  console.log(type);
   const stateParamValue = useLocation();
   const title =
-    stateParamValue.state != null ? stateParamValue.state.name : "deneme";
-  console.log();
-  console.log(stateParamValue);
+    stateParamValue.state != null
+      ? stateParamValue.state.name
+      : type.substring(0, type.length - 1);
+
+  const catId =
+    stateParamValue.state != null
+      ? stateParamValue.state.catId
+      : Number(type[type.length - 1]);
+
+  const subId =
+    stateParamValue.state != null ? stateParamValue.state.subId : null;
+  console.log(subId);
+  console.log(catId);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

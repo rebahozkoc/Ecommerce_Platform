@@ -10,7 +10,7 @@ const CardItemHandler = (props) => {
           {cards2.map((card) => (
             <Grid item key={card} xs={12} sm={6} md={3}>
               <CardItem
-                imageId="furn3.jpg"
+                imageId="/furn3.jpg"
                 cost="1500$"
                 title="item title"
                 productId={card}
