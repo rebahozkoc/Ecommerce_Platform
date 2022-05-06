@@ -13,7 +13,7 @@ import {
     useRecoilState,
     useRecoilValue,
   } from "recoil";
-import PaymentSuccessPage from "../components/payment/paymentSuccess/paymentSuccessPage";
+import Column from "../components/header/categories/Column";
 
 let container = null;
 beforeEach(() => {
@@ -29,12 +29,10 @@ afterEach(() => {
   container = null;
 });
 
-it("Payment Success Page renders correctly", () => {
+it("Column component renders correctly", () => {
   act(() => {
-    render(<BrowserRouter><RecoilRoot><PaymentSuccessPage /></RecoilRoot></BrowserRouter>, container);
+    render(<BrowserRouter><RecoilRoot><Column columnItems={[{id:"1", title: "title1"}, {id:2, title:"title2"}]}/></RecoilRoot></BrowserRouter>, container);
   });
-  expect(container.textContent).toMatch(/Your order is complete/);
-  expect(container.textContent).toMatch(/email/);
-  expect(container.textContent).toMatch(/Get Invoice/);
-  expect(container.textContent).toMatch(/Explore/);
+  expect(container.textContent).toMatch(/title1/);
+  expect(container.textContent).toMatch(/title2/);
 });
