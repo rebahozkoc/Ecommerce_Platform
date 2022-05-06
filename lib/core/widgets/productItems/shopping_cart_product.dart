@@ -3,9 +3,26 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 
-class CartProduct extends StatelessWidget {
+class CartProduct extends StatefulWidget {
   const CartProduct({Key? key}) : super(key: key);
+  @override
+  State<CartProduct> createState() => _CartProductState();
+}
 
+class _CartProductState extends State<CartProduct> {
+  int _counter = 0;
+  void add(){
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void remove(){
+    setState(() {
+      if(_counter != 0)
+        _counter--;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -76,12 +93,45 @@ class CartProduct extends StatelessWidget {
                 _buttons(),
               ],
             ),
-            
+
           ],
         ),
       ),
     );
   }
+
+
+  Container _buttons(){
+    return Container(
+        width: 50,
+        height: 30,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: AppColors.primary,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text: "- ",
+                      recognizer: TapGestureRecognizer()..onTap = (){remove();}
+                  ),
+                  TextSpan(
+                    text: "$_counter",
+                  ),
+                  TextSpan(
+                      text: " +",
+                      recognizer: TapGestureRecognizer()..onTap = (){add();}
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )
+    );
 }
 
 ClipRRect imageClip(){
@@ -104,35 +154,6 @@ AspectRatio _image() {
   );
 }
 
-Container _buttons(){
-  return Container(
-    width: 50,
-    height: 30,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12),
-      color: AppColors.primary,
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                text: "- ",
-                recognizer: TapGestureRecognizer()..onTap = (){debugPrint("- pressed");}
-              ),
-              const TextSpan(
-                text: "2",
-              ),
-              TextSpan(
-                  text: " +",
-                  recognizer: TapGestureRecognizer()..onTap = (){debugPrint("+ pressed");}
-              ),
-            ],
-          ),
-        ),
-      ],
-    )
-  );
 }
+
+
