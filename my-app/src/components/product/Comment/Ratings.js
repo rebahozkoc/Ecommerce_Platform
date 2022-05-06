@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Typography, Box, Stack, Button } from "@mui/material";
-
+import { loggedState } from "../../recoils/atoms";
 import Rating from "@mui/material/Rating";
-
+import { useRecoilValue } from "recoil";
+import { Link } from "react-router-dom";
 const Ratings = (props) => {
- 
-  console.log(Number(props.points[6]) / Number(props.points[5]));
+  const isLogged = useRecoilValue(loggedState);
+  //console.log(Number(props.points[6]) / Number(props.points[5]));
   return (
     <Box
       sx={{
@@ -129,22 +130,65 @@ const Ratings = (props) => {
           </Typography>
         </Stack>
       </Box>
-
-      <Stack justifyContent="center" alignItems="center">
-        <Button
-          onClick={props.clickHandler}
-          fullWidth
-          variant="contained"
-          sx={{
-            backgroundColor: "#ff6600",
-            display: "block",
-            padding: (8, 1, 8, 1),
-            justify: "center",
-          }}
-        >
-          <Typography sx={{ color: "black" }}>Make a comment</Typography>
-        </Button>
-      </Stack>
+      {isLogged && (
+        <>
+          <Stack justifyContent="center" alignItems="center">
+            <Button
+              onClick={props.ratingHandler}
+              fullWidth
+              variant="contained"
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (8, 1, 8, 1),
+                justify: "center",
+              }}
+            >
+              <Typography sx={{ color: "black" }}>Make a Rating</Typography>
+            </Button>
+          </Stack>
+          <Box sx={{ m: 1 }}></Box>
+          <Stack justifyContent="center" alignItems="center">
+            <Button
+              onClick={props.clickHandler}
+              fullWidth
+              variant="contained"
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (8, 1, 8, 1),
+                justify: "center",
+              }}
+            >
+              <Typography sx={{ color: "black" }}>Make a comment</Typography>
+            </Button>
+          </Stack>
+        </>
+      )}
+      {!isLogged && (
+        <Stack justifyContent="center" alignItems="center">
+          <Link
+            to="/SignIn"
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (8, 1, 8, 1),
+                mb: 2,
+                justify: "center",
+              }}
+            >
+              <Typography sx={{ color: "black" }}>Sign In to Rate</Typography>
+            </Button>
+          </Link>
+        </Stack>
+      )}
     </Box>
   );
 };

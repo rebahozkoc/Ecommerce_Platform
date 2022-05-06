@@ -5,14 +5,6 @@ import { useState } from "react";
 import { ThemeProvider } from "@mui/styles";
 import themeOptions from "../../theme";
 import ImagePop from "./ImagePop";
-var items = [
-  { image: "furn1.jpg", description: "furn1" },
-  { image: "furn2.jpg", description: "furn2" },
-  { image: "furn3.jpg", description: "furn3" },
-  { image: "furn4.jpg", description: "furn4" },
-  { image: "furn5.jpg", description: "furn5" },
-  { image: "furn6.jpg", description: "furn6" },
-];
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -23,11 +15,21 @@ function srcset(image, size, rows = 1, cols = 1) {
   };
 }
 
-export default function QuiltedImageList() {
+export default function QuiltedImageList(props) {
   const [isPop, setIsPop] = useState(false);
   const [idM, setId] = useState();
   const [imgM, setImg] = useState();
-
+  let items = props.images;
+  //console.log(items);
+  const itemData = [];
+  items.map((item, index) => {
+    itemData.push({
+      key: item.id,
+      img: item.photo_url,
+      cols: index % 3 == 0 || index & (3 == 2) ? 2 : null,
+      rows: index % 3 == 0 ? 2 : null,
+    });
+  });
   const clickHandler = (id, img) => {
     setId(id);
     setImg(img);
@@ -67,75 +69,3 @@ export default function QuiltedImageList() {
     </ThemeProvider>
   );
 }
-
-const itemData = [
-  {
-    img: items[0].image,
-    title: items[0].description,
-    rows: 2,
-    cols: 2,
-    key: 1,
-  },
-  {
-    img: items[1].image,
-    title: items[1].description,
-    key: 2,
-  },
-  {
-    img: items[2].image,
-    title: items[2].description,
-    key: 3,
-  },
-  {
-    img: items[3].image,
-    title: items[3].description,
-    cols: 2,
-    key: 4,
-  },
-  {
-    img: items[4].image,
-    title: items[4].description,
-    cols: 2,
-    key: 5,
-  },
-  {
-    img: items[5].image,
-    title: items[5].description,
-    rows: 2,
-    cols: 2,
-    key: 6,
-  },
-  {
-    img: items[0].image,
-    title: items[0].description,
-    key: 7,
-  },
-  {
-    img: items[1].image,
-    title: items[1].description,
-    key: 8,
-  },
-  {
-    img: items[2].image,
-    title: items[2].description,
-    rows: 2,
-    cols: 2,
-    key: 9,
-  },
-  {
-    img: items[3].image,
-    title: items[3].description,
-    key: 0,
-  },
-  {
-    img: items[4].image,
-    title: items[4].description,
-    key: 10,
-  },
-  {
-    img: items[5].image,
-    title: items[5].description,
-    cols: 2,
-    key: 11,
-  },
-];

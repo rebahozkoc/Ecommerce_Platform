@@ -34,92 +34,117 @@ import {
   useRecoilValue,
 } from "recoil";
 import { useParams, useLocation } from "react-router-dom";
-let productId = 1;
-let points = [0, 0, 0, 0, 0, 0, 0];
-let comments = [
-  {
-    id: 1,
-    name: "Gorkem",
-    date: "date",
-    comment:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    rating: 4,
-    topic: "Little Lorem İpsum",
-  },
-  {
-    id: 2,
-    name: "Rebah",
-    date: "date",
-    comment:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    rating: 4,
-    topic: "Little Lorem İpsum",
-  },
-  {
-    id: 3,
-    name: "Furkan",
-    date: "date",
-    comment:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    rating: 3,
-    topic: "Little Lorem İpsum",
-  },
-  {
-    id: 4,
-    name: "Albert",
-    date: "date",
-    comment:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    rating: 5,
-    topic: "Little Lorem İpsum",
-  },
-  {
-    id: 5,
-    name: "Selim",
-    date: "date",
-    comment:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    rating: 1,
-    topic: "Little Lorem İpsum",
-  },
-  {
-    id: 6,
-    name: "Yasin",
-    date: "date",
-    comment:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    rating: 4,
-    topic: "Little Lorem İpsum",
-  },
-];
+import { useState, useEffect } from "react";
+import { getDataWithoutAccess } from "../recoils/getterFunctions";
+import NewRating from "./Comment/NewRating";
+import axios from "axios";
+import { getCookie } from "../recoils/atoms";
 
-let itemTemp = {
-  count: 0,
-  stock: 5,
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet tellus cras adipiscing enim eu. Id eu nisl nunc mi ipsum faucibus vitae aliquet. Penatibus et magnis dis parturient. Commodo ullamcorper a lacus vestibulum sed arcu. Aliquam vestibulum morbi blandit cursus risus. Nibh praesent tristique magna sit amet purus gravida quis blandit. Varius vel pharetra vel turpis. Eu nisl nunc mi ipsum.",
-  title: "Furniture Name",
-  cost: 100,
-  time: "10/10/2022",
-};
+const access = getCookie("access_token");
+
+let points = [0, 0, 0, 0, 0, 0, 0];
 
 const Product = () => {
   const [makeComment, setMakeComment] = React.useState(false);
+  const [makeRating, setMakeRating] = React.useState(false);
   const { type } = useParams();
   const stateParamValue = useLocation();
-  console.log(stateParamValue);
+
+  //const productId = stateParamValue.state.id;
+  const productId = 4;
+
+  const [isLoaded, setLoaded] = useState(false);
+  const [itemTemp, setProduct] = useState([]);
+  useEffect(() => {
+    getDataWithoutAccess(
+      `http://164.92.208.145/api/v1/products/${productId}`
+    ).then((res) => {
+      //console.log(res.data);
+      setProduct(res.data);
+      setLoaded(true);
+    });
+  }, []);
+
+  const [isLoaded2, setLoaded2] = useState(false);
+  const [comments, setComments] = useState([]);
+  useEffect(() => {
+    getDataWithoutAccess(
+      `http://164.92.208.145/api/v1/products/${productId}/comments`
+    ).then((res) => {
+      //console.log(res.data);
+      setComments(res.data);
+      setLoaded2(true);
+    });
+  }, []);
+
+  //console.log("product id is", itemTemp);
   const clickHandler = () => {
     setMakeComment(true);
   };
-  const closeComment = () => {
+
+  const clickHandler2 = () => {
+    setMakeRating(true);
+  };
+  const closeComment = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const newComment = data.get("comment");
+    console.log(newComment);
+    axios.post(
+      `http://164.92.208.145/api/v1/products/${productId}/comment`,
+      {
+        content: newComment,
+      },
+      {
+        headers: {
+          Accept: "*/*",
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
     setMakeComment(false);
   };
   const cancelComment = () => {
     setMakeComment(false);
   };
+  const ratingCancel = () => {
+    setMakeRating(false);
+  };
+  const ratingPost = (value) => {
+    let bodyContent = JSON.stringify({
+      rate: Number(value),
+    });
+    axios
+      .post(
+        `http://164.92.208.145/api/v1/products/${productId}/rate?rate=${value}`,
+        bodyContent,
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setMakeRating(false);
+  };
 
   const commentDeleter = (deleteId) => {
     console.log("comment to delete is", deleteId);
+    axios.delete(
+      `http://164.92.208.145/api/v1/products/${productId}/comments/${deleteId}`,
+      {
+        headers: {
+          Accept: "*/*",
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
   };
   const comment = () => {
     points[0] = 0;
@@ -130,15 +155,15 @@ const Product = () => {
     points[5] = 0;
     points[6] = 0;
     comments.map((card) => {
-      points[card.rating - 1]++;
+      points[card.id - 1]++;
       points[5]++;
-      points[6] += card.rating;
+      points[6] += card.id;
     });
   };
   comment();
   React.useEffect(() => {
     comment();
-    console.log(points[5]);
+    //console.log(points[5]);
   }, [makeComment]);
 
   const [change, setChange] = React.useState(false);
@@ -160,7 +185,7 @@ const Product = () => {
     setChange(false);
   }, [change]);
 
-  return (
+  return isLoaded && isLoaded2 ? (
     <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
         <CssBaseline />
@@ -173,17 +198,17 @@ const Product = () => {
           direction="row"
           sx={{ padding: (3, 3, 3, 3), backgroundColor: "white" }}
         >
-          <Images></Images>
+          <Images images={itemTemp.photos}></Images>
           <Description
             description={itemTemp.description}
-            title={itemTemp.title}
-            cost={itemTemp.cost}
-            id={itemTemp.title}
+            title={`${itemTemp.category_title} \\ ${itemTemp.subcategory_title} \\ ${itemTemp.title}`}
+            cost={itemTemp.price}
+            id={itemTemp.id}
             stock={itemTemp.stock}
             count={itemTemp.count}
             dec={decCard}
             inc={incCard}
-            time={itemTemp.time}
+            model={itemTemp.model}
           ></Description>
         </Stack>
 
@@ -192,7 +217,11 @@ const Product = () => {
         <Container maxWidth="none" sx={{ backgroundColor: "white" }}>
           <Grid container spacing={2}>
             <Grid item key={2} xs={2}>
-              <Ratings points={points} clickHandler={clickHandler}></Ratings>
+              <Ratings
+                points={points}
+                clickHandler={clickHandler}
+                ratingHandler={clickHandler2}
+              ></Ratings>
             </Grid>
 
             <Grid item key={1} xs={9}>
@@ -206,11 +235,9 @@ const Product = () => {
                   {comments.map((card) => (
                     <ListItem key={card.id}>
                       <CommentCard
-                        name={card.name}
-                        rating={card.rating}
-                        comment={card.comment}
-                        topic={card.topic}
-                        date={card.date}
+                        name={"username"}
+                        comment={card.content}
+                        topic={"title"}
                         id={card.id}
                         productId={productId}
                         deleteComment={commentDeleter}
@@ -237,9 +264,15 @@ const Product = () => {
             onCancel={cancelComment}
           ></NewReview>
         )}
+
+        {makeRating && (
+          <NewRating onRating={ratingPost} onCancel={ratingCancel}></NewRating>
+        )}
       </ThemeProvider>
       <Footer />
     </RecoilRoot>
+  ) : (
+    <div>"Loading..."</div>
   );
 };
 export default Product;

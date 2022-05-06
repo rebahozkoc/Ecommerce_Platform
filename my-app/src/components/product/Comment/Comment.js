@@ -151,7 +151,7 @@ const CommentCard = (props) => {
   };
 
   const adminState = useRecoilValue(nameState);
-  console.log(document.cookie);
+  //console.log(document.cookie);
   const openAllComment = () => {
     setOpenComment(true);
   };
@@ -159,9 +159,10 @@ const CommentCard = (props) => {
   const closeAllComment = () => {
     setOpenComment(false);
   };
-
+  const [isButton, setIsButton] = React.useState(false);
   let myComment = props.comment;
   if (props.comment.length > 300) {
+    setIsButton(true);
     myComment = props.comment.substr(0, 300);
   }
 
@@ -178,22 +179,17 @@ const CommentCard = (props) => {
             alignItems="right"
             display="flex"
           >
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              fontWeight="bold"
-              fontSize={15}
-            >
-              {props.name}
-            </Typography>
-            <Stack display="flex" direction="row" sx={{}}>
-              <Rating
-                name="read-only"
-                value={props.rating}
-                readOnly
-                fontSize="12"
-              />
+            <Stack display="flex" direction="row" spacing={3}>
               <Typography
+                variant="body1"
+                component="legend"
+                fontWeight="bold"
+                fontSize={15}
+              >
+                {props.name}
+              </Typography>
+              <Typography
+                variant="body1"
                 component="legend"
                 align="right"
                 fontWeight="bold"
@@ -205,9 +201,14 @@ const CommentCard = (props) => {
             <Typography component="legend" align="left" fontSize={12}>
               {!openComment && myComment}
               {openComment && props.comment}
-              {!openComment && <Button onClick={openAllComment}>...</Button>}
-              {openComment && <Button onClick={closeAllComment}>...</Button>}
+              {!openComment && isButton && (
+                <Button onClick={openAllComment}>...</Button>
+              )}
+              {openComment && isButton && (
+                <Button onClick={closeAllComment}>...</Button>
+              )}
             </Typography>
+            <Box sx={{ m: 1 }}></Box>
           </Stack>
 
           <Divider />

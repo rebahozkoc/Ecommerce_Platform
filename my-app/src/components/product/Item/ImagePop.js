@@ -10,8 +10,7 @@ const ImagePop = (props) => {
       <Card className={classes.modal}>
         <Stack
           spacing={0}
-          justifyContent="right"
-          alignItems="right"
+          justifycontent="right"
           display="flex"
           direction="column"
           sx={{ padding: (1, 1, 1, 1) }}
@@ -20,12 +19,7 @@ const ImagePop = (props) => {
             <CloseIcon></CloseIcon>
           </Button>
 
-          <Card
-            justifyContent="right"
-            alignItems="right"
-            display="flex"
-            direction="column"
-          >
+          <Card justifycontent="right" display="flex" direction="column">
             <CardMedia
               component="img"
               height="300"
