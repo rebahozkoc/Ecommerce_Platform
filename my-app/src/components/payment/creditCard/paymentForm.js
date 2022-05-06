@@ -8,19 +8,32 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import AddressListGetOld from "../addressList/addressListGetOld";
 import PaymentAddNew from "./paymentAddNew";
+import { useState, useEffect } from "react";
+import { getData } from "../../recoils/getterFunctions";
+
 export default function AddressListForm(props) {
   //const addressList = props.addressList;
-  const addressList = [
-    ["Payment Method", "This is a description of the payment method"],
-    ["Akbank", "Rebah Özkoç 1111 1111 2222 2222 *** **/****"],
-    ["Garanti BBVA", "Rebah Özkoç 1111 1111 2222 2222 *** **/****"],
-  ];
+  const [isLoaded, setLoaded] = useState(false);
+
+  const [addressList, setAddressList] = useState([]);
+  useEffect(() => {
+    getData("http://164.92.208.145/api/v1/user/credit").then((res) => {
+      res.data.push({
+        name: "Add New Address",
+      });
+
+      //console.log(res.data);
+      setAddressList(res.data);
+      setLoaded(true);
+    });
+  }, []);
+  //console.log(addressList);
   const [value, setValue] = React.useState(0);
   const [newAddress, setNewAddress] = React.useState(false);
 
   const handleChange = (event) => {
-    console.log("handleChange");
-    console.log(event.target.value);
+    //console.log("handleChange");
+    //console.log(event.target.value);
     setValue(event.target.value);
     if (event.target.value === "new") {
       setNewAddress(true);
@@ -42,24 +55,30 @@ export default function AddressListForm(props) {
             defaultValue={0}
           >
             {addressList.map((address, index) => {
-              console.log(index);
-              return (
-                <FormControlLabel
-                  key={index}
-                  value={index}
-                  control={<Radio />}
-                  label={
-                    <AddressListGetOld
-                      title={address[0]}
-                      description={address[1]}
-                    />
-                  }
-                />
-              );
+              //console.log(index);
+              if (address["name"] != "Add New Address")
+                return (
+                  <FormControlLabel
+                    key={index}
+                    value={index}
+                    control={<Radio />}
+                    label={
+                      <AddressListGetOld
+                        title={address["payment_method"]}
+                        description={address["card_number"]}
+                        postal_code={address["card_name"]}
+                        province={address["CW"]}
+                        city={address["expiry_date"]}
+                        id={address["id"]}
+                        link={"http://164.92.208.145/api/v1/user/credit/"}
+                      />
+                    }
+                  />
+                );
             })}
           </RadioGroup>
         </FormControl>
-        <Box sx={{ml:4}}>
+        <Box sx={{ ml: 4 }}>
           <AddressListGetOld
             onClick={() => {
               setNewAddress(!newAddress);
@@ -72,10 +91,13 @@ export default function AddressListForm(props) {
       </Box>
       {newAddress ? <PaymentAddNew /> : <div> </div>}
 
-      <Box sx={{mt:20, ml:5, mr:5}}>
-          <Typography color="text.secondary">The payment infrastructure for Voidture Inc. is provided by MasterCard.</Typography>
-          <img src="/masterpass.png" width={300} alt="Mastercard" />
-          </Box> 
+      <Box sx={{ mt: 20, ml: 5, mr: 5 }}>
+        <Typography color="text.secondary">
+          The payment infrastructure for Voidture Inc. is provided by
+          MasterCard.
+        </Typography>
+        <img src="/masterpass.png" width={300} alt="Mastercard" />
+      </Box>
     </React.Fragment>
   );
 }

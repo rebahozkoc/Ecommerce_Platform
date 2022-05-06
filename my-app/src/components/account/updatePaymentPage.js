@@ -7,30 +7,38 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import PaymentAddNew from "../payment/creditCard/paymentAddNew";
 import { Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { getData } from "../recoils/getterFunctions";
+
 const UpdatePaymentPage = () => {
-  const addressList = [
-    {"index": 0, "title": "Payment Method", "name": "Rebah Özkoç", "cardNumber": "0000 1111 2222 33333 4444", "expireDate": "01/20", "cvv": "123"},
-    {"index": 1, "title": "Akbank", "name": "Rebah Özkoç", "cardNumber": "0000 1111 2222 33333 4444", "expireDate": "01/23", "cvv": "123"},
-    {"index": 2, "title": "Vakıfbank", "name": "Görkem Yar", "cardNumber": "0000 1111 2222 33333 4444", "expireDate": "01/24", "cvv": "123"},
-    ];
+  const [isLoaded, setLoaded] = useState(false);
 
+  const [addressList, setAddressList] = useState([]);
+  useEffect(() => {
+    getData("http://164.92.208.145/api/v1/user/credit").then((res) => {
+      res.data.push({
+        payment_method: "Add New Payment Method",
+      });
 
-  addressList.push({"index": -1, "title": "Add New Address", "description": "Create a new address..."});
-      
+      //console.log(res.data);
+      setAddressList(res.data);
+      setLoaded(true);
+    });
+  }, []);
 
   const [open, setOpen] = React.useState(false);
   const [dialogTitle, setDialogTitle] = React.useState("");
   const [dialogContent, setDialogContent] = React.useState("");
 
   const handleClickOpen = (event) => {
-      console.log(event.currentTarget.getAttribute("id"));
-      if(event.currentTarget.getAttribute("id") === "-1"){
-        setDialogTitle("Add New Address");
-        setDialogContent();
-      }else{
-        setDialogTitle("Edit Address");
-        setDialogContent(addressList[event.currentTarget.getAttribute("id")]);
-        }
+    console.log(event.currentTarget.getAttribute("id"));
+    if (event.currentTarget.getAttribute("id") === "-1") {
+      setDialogTitle("Add New Address");
+      setDialogContent();
+    } else {
+      setDialogTitle("Edit Address");
+      setDialogContent(addressList[event.currentTarget.getAttribute("id")]);
+    }
     setOpen(true);
   };
 
@@ -42,30 +50,36 @@ const UpdatePaymentPage = () => {
     <div>
       {addressList.map((address, index) => {
         return (
-          <div key={address.uniqueId} style={{ display: "inline-flex" }}>
+          <div key={`a${index}`} style={{ display: "inline-flex" }}>
             <AddressListGetOld
+              key={address["id"]}
               isProfile={true}
               isNew={index === addressList.length - 1 ? true : false}
-              title={address["title"]}
-              description={address["name"] + " " + address["cardNumber"]}
-              id={address["index"]}
+              title={address["payment_method"]}
+              description={address["card_number"]}
+              postal_code={address["card_name"]}
+              province={address["CW"]}
+              city={address["expiry_date"]}
+              id={address["id"]}
+              link={"http://164.92.208.145/api/v1/user/credit/"}
               onClick={handleClickOpen}
             />
           </div>
         );
       })}
 
-<Box sx={{mt:20, ml:5, mr:5}}>
-          <Typography color="text.secondary">The payment infrastructure for Voidture Inc. is provided by MasterCard.</Typography>
-          <img src="/masterpass.png" width={300} alt="Mastercard" />
-          </Box> 
+      <Box sx={{ mt: 20, ml: 5, mr: 5 }}>
+        <Typography color="text.secondary">
+          The payment infrastructure for Voidture Inc. is provided by
+          MasterCard.
+        </Typography>
+        <img src="/masterpass.png" width={300} alt="Mastercard" />
+      </Box>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
-          {dialogTitle}
-        </DialogTitle>
+        <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
-          <PaymentAddNew data={dialogContent}/>
+          <PaymentAddNew data={dialogContent} />
         </DialogContent>
       </Dialog>
     </div>
@@ -74,7 +88,7 @@ const UpdatePaymentPage = () => {
   return (
     <ProfilePageContainer
       pageIndex={4}
-      widget={addressWidget}
+      widget={isLoaded ? addressWidget : <div>Loading...</div>}
     ></ProfilePageContainer>
   );
 };

@@ -32,13 +32,6 @@ const addressListAddNew = (props) => {
       phone_number: data2.get("phoneNumber"),
     });
 
-    let reqOptions = {
-      url: "http://164.92.208.145/api/v1/user/addresses",
-      method: "POST",
-      headers: headersList,
-      body: bodyContent,
-    };
-
     axios
       .post("http://164.92.208.145/api/v1/user/addresses", bodyContent, {
         headers: headersList,
