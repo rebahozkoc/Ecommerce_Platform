@@ -4,7 +4,7 @@ import random
 import json
 from bs4 import BeautifulSoup
 
-def getProduct(url, fileName, category, subCategory):
+def getProduct(url, fileName, category, subCategory, model, number):
     r = requests.get(url)
     result = r.text
     soup = BeautifulSoup(result, "lxml")
@@ -15,13 +15,13 @@ def getProduct(url, fileName, category, subCategory):
     description = ""
     warrantyStatus = str(random.randint(1, 5)) + "year(s)"
     distributor = "Voidture Inc."
-
+    description += description + "Warranty Status: " + warrantyStatus
     for i in soup.find(class_="desctab").findAll(name="tr"):
         description += ": ".join([j.text for j in i])
         description += "\n"
 
     data_file = open(fileName, "a", encoding="UTF-8")
 
-    data = {'title': title, "price": price, "description": description, "warrantyStatus": warrantyStatus, "distributor": distributor, "stock": stock, "category": category, "subCategory": subCategory}
+    data = {'title': title,  "description": description, "stock": stock, "price": price, "model": model, "number": number, "distributor": distributor,  "category_id": category, "subcategory_id": subCategory}
     json.dump(data, data_file, ensure_ascii=False)
     data_file.write(",\n")
