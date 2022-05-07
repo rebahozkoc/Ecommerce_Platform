@@ -6,12 +6,12 @@ import requests
 import getImg
 from getProduct import getProduct
 
-categoryURL = "https://www.vivense.com/mutfak-dolaplari.html?ref=menu_text"
-fileName = "Kitchen Cabinet 5-10.json"
+categoryURL = "https://www.vivense.com/mutfak-tekstili.html?ref=menu_text"
+fileName = "Kitchen Textile 5-11.json"
 category_id = 5
-subcategory_id = 10
+subcategory_id = 11
 model = "Kitchen"
-number = "Kitchen Cabinet"
+number = "Kitchen Textile"
 import json
 from bs4 import BeautifulSoup
 

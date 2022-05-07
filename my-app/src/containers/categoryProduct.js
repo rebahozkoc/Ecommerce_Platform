@@ -53,6 +53,7 @@ const CategoryProduct = () => {
     ).then((res) => {
       console.log(res.data.products);
       setProducts(res.data.products);
+      console.log(products);
       setLoaded(true);
     });
   }, []);

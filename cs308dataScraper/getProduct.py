@@ -18,7 +18,7 @@ def getProduct(url, fileName, category, subCategory, model, number):
     description += description + "Warranty Status: " + warrantyStatus
     for i in soup.find(class_="desctab").findAll(name="tr"):
         description += ": ".join([j.text for j in i])
-        description += "\n"
+        description += "<br>"
 
     data_file = open(fileName, "a", encoding="UTF-8")
 
