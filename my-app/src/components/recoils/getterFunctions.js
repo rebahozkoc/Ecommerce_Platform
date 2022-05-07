@@ -50,17 +50,29 @@ export const createShoppingDict = () => {
   let cartDict = {};
 
   while (orderList != "") {
-    let num = Number(orderList[0]);
+    let num = Number(
+      orderList[0] != "-" ? orderList[0] : orderList.substring(0, 2)
+    );
     //console.log(cartDict);
     if (orderList.length > 2) {
-      orderList = orderList.substring(2);
+      orderList =
+        orderList[0] != "-" ? orderList.substring(2) : orderList.substring(3);
     } else {
       orderList = "";
     }
-    if (num in cartDict) {
-      cartDict[num] += 1;
+    orderList = orderList || "";
+
+    if (num > 0) {
+      if (num in cartDict) {
+        cartDict[num] += 1;
+      } else {
+        cartDict[num] = 1;
+      }
     } else {
-      cartDict[num] = 1;
+      console.log("here", num);
+      if (!(num in cartDict)) {
+        cartDict[-1 * num] = 0;
+      }
     }
   }
 
@@ -74,13 +86,16 @@ export const addCardtoCookie = (proId) => {
 };
 
 export const createOrderCookie = (cartDict) => {
+  console.log(getCookie("orderList"));
   document.cookie = "orderList=";
 
   for (let item in cartDict) {
-    console.log(item);
     for (let i = 0; i < cartDict[item]; i++) {
-      console.log(i);
       addCardtoCookie(item);
+    }
+    if (cartDict[item] == 0) {
+      console.log("from", item);
+      addCardtoCookie(-1 * item);
     }
   }
 };

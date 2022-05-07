@@ -35,10 +35,15 @@ import {
   getDataWithoutAccess,
   getData,
   createOrderCookie,
+  decreaseCardCookie,
 } from "../recoils/getterFunctions";
 
+//document.cookie = "orderList=1 2 2 3 3 2 2 2 2 4 3 4";
 let mydict = createShoppingDict();
+
 const ShoppingBasket = () => {
+  console.log(mydict);
+
   const [isLoggin, setIsLogged] = useRecoilState(loggedState);
   const [filter, setFilter] = React.useState(-1);
   const [change1, setChange1] = React.useState(-1);
@@ -48,15 +53,19 @@ const ShoppingBasket = () => {
   const [products, setProducts] = useState([]);
 
   //console.log(mydict);
-  //createOrderCookie(mydict);
+
   useEffect(() => {
     for (let proId in mydict) {
+      console.log(proId);
       getDataWithoutAccess(
         `http://164.92.208.145/api/v1/products/${proId}`
       ).then((res) => {
         console.log(res.data);
-        if (res.data.stock < mydict[proId]) {
-          mydict[proId] = res.data.stock;
+        if (res.data.stock < mydict[res.data.id]) {
+          mydict[res.data.id] = res.data.stock;
+          if (!isLoggin) {
+            createOrderCookie(mydict);
+          }
         }
         setProducts((prev) => {
           return [...prev, res.data];
@@ -72,8 +81,11 @@ const ShoppingBasket = () => {
   };
 
   const filterCards = () => {
+    //need post request you can make it in useeffect
     delete mydict[filter];
-    console.log(mydict);
+    if (!isLoggin) {
+      createOrderCookie(mydict);
+    }
   };
 
   const incCard = () => {
@@ -82,12 +94,10 @@ const ShoppingBasket = () => {
       if (products[i].id === change2) {
         if (mydict[change2] < products[i].id.stock) {
           mydict[change2]++;
+          if (!isLoggin) {
+            createOrderCookie(mydict);
+          }
         }
-        /*
-        if (!isLoggin) {
-          createOrderCookie(mydict);
-        }
-        */
         return;
       }
     }
@@ -96,24 +106,28 @@ const ShoppingBasket = () => {
   const decCard = () => {
     //need post request you can make it in useeffect
     for (let i = 0; i < products.length; i++) {
+      console.log(change2);
       if (products[i].id === change2) {
         if (mydict[change2] > 0) {
           mydict[change2]--;
+          console.log(mydict);
+          decreaseCardCookie();
+          if (!isLoggin) {
+            createOrderCookie(mydict);
+          }
         }
         /*
-        if (!isLoggin) {
-          createOrderCookie(mydict);
-        }
+        
         */
         return;
       }
     }
   };
   const decreaserHandler = (toChange) => {
-    setChange1(toChange);
+    setChange2(toChange);
   };
   const increaserHandler = (toChange) => {
-    setChange2(toChange);
+    setChange1(toChange);
   };
   React.useEffect(() => {
     filterCards();
@@ -121,11 +135,12 @@ const ShoppingBasket = () => {
   }, [filter]);
 
   React.useEffect(() => {
-    incCard();
+    decCard();
+
     setChange2(-1);
   }, [change2]);
   React.useEffect(() => {
-    decCard();
+    incCard();
     setChange1(-1);
   }, [change1]);
   let totalCost = 0;
