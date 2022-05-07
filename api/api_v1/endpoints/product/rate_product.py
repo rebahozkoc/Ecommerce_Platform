@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post("/{id}/rate", response_model=Response)
-async def add_photo_to_product(
+async def rate_product(
     *,
     id: int,
     rate: int,
