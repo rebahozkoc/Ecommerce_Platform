@@ -328,6 +328,8 @@ const Product = () => {
           <Grid container spacing={2}>
             <Grid item key={2} xs={2}>
               <Ratings
+                avgRating={itemTemp.rate}
+                rateCount={itemTemp.rate_count}
                 points={points}
                 clickHandler={clickHandler}
                 ratingHandler={clickHandler2}
