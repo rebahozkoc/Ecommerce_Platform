@@ -7,9 +7,29 @@ import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 
-class PageProduct extends StatelessWidget {
+class PageProduct extends StatefulWidget {
   final ProductModel? product;
   const PageProduct({Key? key, required this.product}) : super(key: key);
+
+  @override
+  State<PageProduct> createState() => _PageProductState();
+}
+
+class _PageProductState extends State<PageProduct> {
+  int _counter = 1;
+  void add() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void remove() {
+    setState(() {
+      if (_counter != 0) {
+        _counter--;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +79,12 @@ class PageProduct extends StatelessWidget {
   }
 
   AspectRatio _image() {
-    bool isExist = product?.photos?.isNotEmpty ?? false;
+    bool isExist = widget.product?.photos?.isNotEmpty ?? false;
     return AspectRatio(
       aspectRatio: 1,
       child: CachedNetworkImage(
         imageUrl: isExist
-            ? product!.photos!.first.photoUrl!
+            ? widget.product!.photos!.first.photoUrl!
             : ApplicationConstants.PRODUCT_IMG,
         width: double.infinity,
         fit: BoxFit.fill,
@@ -167,39 +187,41 @@ class PageProduct extends StatelessWidget {
         ),
       );
 
-  Text _title() {
-    bool isExist = product?.title?.isNotEmpty ?? false;
-    return Text(
-      isExist ? product!.title! : "Wing Chair",
-      textAlign: TextAlign.start,
+  Flexible _title() {
+    bool isExist = widget.product?.title?.isNotEmpty ?? false;
+    return Flexible(
+        child: Text(
+      isExist
+          ? widget.product!.title!
+          : "People have been using natural objects, such as tree stumps, rocks and moss, as furniture since the beginning of human civilisation. Archaeological research.",
       style: const TextStyle(
         color: AppColors.tertiary,
         fontWeight: FontWeight.bold,
-        fontSize: 18,
+        fontSize: 16,
       ),
-    );
+    ));
   }
 
   Text _itemNo() {
     return Text(
-      "300",
+      "Item ID: " + widget.product!.id!.toString(),
       textAlign: TextAlign.start,
       style: TextStyle(
         color: AppColors.tertiary,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
         fontSize: 14,
       ),
     );
   }
 
   Text _producer() {
-    bool isExist = product?.distributor?.isNotEmpty ?? false;
+    bool isExist = widget.product?.distributor?.isNotEmpty ?? false;
     return Text(
-      isExist ? product!.distributor! : "Goal Design",
+      isExist ? widget.product!.distributor! : "Goal Design",
       textAlign: TextAlign.start,
       style: TextStyle(
         color: AppColors.darkGray,
-        fontWeight: FontWeight.w200,
+        fontWeight: FontWeight.w400,
         fontSize: 12,
       ),
     );
@@ -207,7 +229,7 @@ class PageProduct extends StatelessWidget {
 
   Text _price() {
     return Text(
-      "380₺",
+      widget.product!.price!.toString() + "₺",
       textAlign: TextAlign.start,
       style: TextStyle(
         color: AppColors.primary,
@@ -234,7 +256,7 @@ class PageProduct extends StatelessWidget {
   InkWell _decrementButton() {
     return InkWell(
       onTap: () {
-        debugPrint("Decrement button clicked...");
+        remove();
       },
       child: Container(
         height: 32,
@@ -254,7 +276,7 @@ class PageProduct extends StatelessWidget {
   InkWell _incrementButton() {
     return InkWell(
       onTap: () {
-        debugPrint("Increment button clicked...");
+        add();
       },
       child: Container(
         height: 32,
@@ -271,9 +293,9 @@ class PageProduct extends StatelessWidget {
     );
   }
 
-  Text _cartCounter() => const Text(
-        "1",
-        style: TextStyle(
+  Text _cartCounter() => Text(
+        "$_counter",
+        style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
           color: AppColors.white,
@@ -297,23 +319,28 @@ class PageProduct extends StatelessWidget {
         ],
       );
 
-  Row _description() => Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(
-            height: 10,
+  Row _description() {
+    bool isExist = widget.product?.description?.isNotEmpty ?? false;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Flexible(
+            child: Text(
+          isExist
+              ? widget.product!.description!
+              : "People have been using natural objects, such as tree stumps, rocks and moss, as furniture since the beginning of human civilisation. Archaeological research.",
+          style: TextStyle(
+            color: AppColors.darkGray,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
           ),
-          Flexible(
-              child: Text(
-            "People have been using natural objects, such as tree stumps, rocks and moss, as furniture since the beginning of human civilisation. Archaeological research.",
-            style: TextStyle(
-              color: AppColors.darkGray,
-              fontWeight: FontWeight.w200,
-              fontSize: 14,
-            ),
-          ))
-        ],
-      );
+        ))
+      ],
+    );
+  }
 
   Text _commentTitle() => const Text("Best comments",
       style: TextStyle(
@@ -323,17 +350,17 @@ class PageProduct extends StatelessWidget {
       ));
 
   RichText _stock() => RichText(
-        text: const TextSpan(children: [
+        text: TextSpan(children: [
           TextSpan(
-            text: "44 ",
-            style: TextStyle(
+            text: widget.product!.stock!.toString(),
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
               fontSize: 14,
             ),
           ),
-          TextSpan(
-            text: "left in stock",
+          const TextSpan(
+            text: " left in stock",
             style: TextStyle(
               fontWeight: FontWeight.w700,
               color: AppColors.tertiary,
@@ -358,19 +385,6 @@ class PageProduct extends StatelessWidget {
       ));
 
   // SizedBox _similarItem() {
-  //   return SizedBox(
-  //     width: 1000,
-  //     height: 100,
-  //     child: ListView.builder(
-  //       primary: true,
-  //       scrollDirection: Axis.horizontal,
-  //       physics: const CustomScrollPhysics(itemDimension: 120),
-  //       itemCount: 5,
-  //       itemBuilder: (context, index) => _similar(),
-  //     ),
-  //   );
-  // }
-
   Padding _similar() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(

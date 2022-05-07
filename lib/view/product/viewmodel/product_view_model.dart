@@ -33,6 +33,16 @@ abstract class _ProductViewModelBase with Store, BaseViewModel {
       context: context,
       id: product.id,
     );
+    debugPrint(_productResponseModel.isSuccess.toString());
+    if (_productResponseModel.isSuccess ?? false) {
+      product = _productResponseModel.data!;
+    } else {
+      showToast(
+          context: context!,
+          message: _productResponseModel.message ??
+              ApplicationConstants.ERROR_MESSAGE,
+          isSuccess: false);
+    }
     return _productResponseModel.isSuccess ?? false;
   }
 

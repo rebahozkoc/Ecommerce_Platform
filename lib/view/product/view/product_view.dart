@@ -8,8 +8,8 @@ import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 
 class ProductView extends StatefulWidget {
-  final ProductModel? product;
-  const ProductView({Key? key, this.product}) : super(key: key);
+  final ProductModel product;
+  const ProductView({Key? key, required this.product}) : super(key: key);
 
   @override
   State<ProductView> createState() => _ProductViewState();
@@ -25,6 +25,7 @@ class _ProductViewState extends BaseState<ProductView> {
         model.setContext(context);
         model.init();
         viewModel = model;
+        viewModel.product = widget.product;
       },
       onPageBuilder: (context, value) {
         return FutureBuilder(
