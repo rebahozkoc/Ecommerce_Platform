@@ -17,6 +17,8 @@ import { ClickAwayListener } from "@mui/material";
 
 const AppBarUnder = () => {
   const [pages, setData] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded2, setIsLoaded2] = useState(false);
   const getData = async () => {
     //const { data } = await axios.get("http://localhost:8000/customMockData/1");
 
@@ -27,11 +29,27 @@ const AppBarUnder = () => {
     });
 
     setData(data.data);
+    setIsLoaded(true);
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      let tmp = pages[5];
+      pages.map((page, index) => {
+        pages[5 - index] = pages[4 - index];
+      });
+      pages[0] = tmp;
+
+      setIsLoaded2(true);
+    }
+  }, [isLoaded]);
+
+  console.log(pages);
+  console.log(isLoaded2);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [openPopper, setOpenPopper] = React.useState(false);
   const handleOpenNavMenu = (event) => {
@@ -126,21 +144,29 @@ const AppBarUnder = () => {
                 justifyContent="space-around"
                 paddingBottom="0"
               >
-                {pages.map((page, i) => (
-                  <Button
-                    aria-describedby={id}
-                    onDoubleClick={() => {
-                      handleOnClick(page.title, page.id);
-                    }}
-                    onClick={() => {
-                      handleClick(page.image_url, page.subcategories, page.id);
-                    }}
-                    key={i}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page.title}
-                  </Button>
-                ))}
+                {isLoaded2 ? (
+                  pages.map((page, i) => (
+                    <Button
+                      aria-describedby={id}
+                      onDoubleClick={() => {
+                        handleOnClick(page.title, page.id);
+                      }}
+                      onClick={() => {
+                        handleClick(
+                          page.image_url,
+                          page.subcategories,
+                          page.id
+                        );
+                      }}
+                      key={i}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page.title}
+                    </Button>
+                  ))
+                ) : (
+                  <div>Loading...</div>
+                )}
               </Stack>
             </Box>
           </Toolbar>
@@ -149,8 +175,7 @@ const AppBarUnder = () => {
 
       <ClickAwayListener onClickAway={handleClickAway}>
         <Box>
-          
-          {openPopper && 
+          {openPopper && (
             <Popper
               id={id}
               open={open}
@@ -160,8 +185,7 @@ const AppBarUnder = () => {
             >
               <DropDownMenu img={img} sub={subs} catId={categoryId} />
             </Popper>
-          }
-          
+          )}
         </Box>
       </ClickAwayListener>
     </div>
