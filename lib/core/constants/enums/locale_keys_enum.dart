@@ -8,6 +8,7 @@ enum PreferencesKeys {
   EMAIL,
   PHONE,
   PASSWORD,
+  SHOPLIST,
   IS_LOGINED,
   IS_REGISTERED,
   PROFILE_PHOTO_URL,

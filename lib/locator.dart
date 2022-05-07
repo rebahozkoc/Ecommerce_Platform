@@ -29,6 +29,9 @@ import 'package:mobile/view/product/repository/product_repository.dart';
 import 'package:mobile/view/product/service/product_service.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 import 'package:mobile/view/search/viewmodel/search_view_model.dart';
+import 'package:mobile/view/shopList/model/shoplist_model.dart';
+import 'package:mobile/view/shopList/repository/shoplist_repository.dart';
+import 'package:mobile/view/shopList/service/shoplist_service.dart';
 import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 
 GetIt locator = GetIt.instance;
@@ -64,6 +67,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => PaymentResponseModel());
   locator.registerLazySingleton(() => PaymentsResponseModel());
   locator.registerLazySingleton(() => ProductResponseModel());
+  locator.registerLazySingleton(() => ShopListResponseModel());
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
@@ -71,6 +75,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => AddressRepository());
   locator.registerLazySingleton(() => PaymentRepository());
   locator.registerLazySingleton(() => ProductRepository());
+  locator.registerLazySingleton(() => ShopListRepository());
 
   // Service
   locator.registerLazySingleton(() => LoginService());
@@ -78,6 +83,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => AddressService());
   locator.registerLazySingleton(() => PaymentService());
   locator.registerLazySingleton(() => ProductService());
+  locator.registerLazySingleton(() => ShopListService());
 }
 
 Future<void> resetLocator() async {
