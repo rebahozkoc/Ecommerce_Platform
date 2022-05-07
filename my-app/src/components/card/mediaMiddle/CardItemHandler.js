@@ -33,7 +33,7 @@ const CardItemHandler = (props) => {
       setDynamicData(data);
     } else if (sort === 3) {
       // Sort by popularity
-      data.sort((a, b) => b.stock - a.stock);
+      data.sort((a, b) => a.stock - b.stock);
       setDynamicData(data);
       console.log("sort 3");
     }

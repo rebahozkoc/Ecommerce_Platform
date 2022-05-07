@@ -48,8 +48,6 @@ const AppBarUnder = () => {
     }
   }, [isLoaded]);
 
-  console.log(pages);
-  console.log(isLoaded2);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [openPopper, setOpenPopper] = React.useState(false);
   const handleOpenNavMenu = (event) => {

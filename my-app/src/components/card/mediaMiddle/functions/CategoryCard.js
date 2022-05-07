@@ -20,7 +20,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CategoryCard = () => {
+const CategoryCard = (props) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -29,18 +29,18 @@ const CategoryCard = () => {
 
   return (
     <ThemeProvider theme={themeOptions}>
-      <Card sx={{ maxWidth: 400 }}>
-        <Link to="/Categories" underline="none">
+      <Card sx={{ maxWidth: 600 }}>
+        <Link to= {`/categories/${props.title}${props.id}`} underline="none">
           <CardMedia
             component="img"
             height="194"
-            image={`furn3.jpg`}
+            image={props.image}
             alt="Voidture not Found"
           />
         </Link>
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            This place will consist the information about category.
+          <Typography variant="body2" color="text.secondary" sx={{fontWeight:"bold"}}>
+            {props.title}
           </Typography>
         </CardContent>
       </Card>
