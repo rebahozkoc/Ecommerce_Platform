@@ -20,7 +20,10 @@ async def get_shopping_cart(
     data = crud.shopping_cart.get_multi(db=db, user=current_user)
     return Response(data=data)
 
-@router.get("/shopping_cart/{product_id}", response_model=Response[schemas.ShoppingCart])
+
+@router.get(
+    "/shopping_cart/{product_id}", response_model=Response[schemas.ShoppingCart]
+)
 async def get_shopping_cart_product(
     product_id: int,
     db: Session = Depends(deps.get_db),
@@ -36,6 +39,7 @@ async def get_shopping_cart_product(
             detail={"message": f"Product does not exists in shopping cart"},
         )
     return Response(data=data)
+
 
 @router.post("/shopping_cart/", response_model=Response)
 async def add_product_to_shopping_cart(
@@ -59,7 +63,7 @@ async def add_product_to_shopping_cart(
             detail={"message": f"Please add at least one quantity"},
         )
 
-    db_shopping_cart_product = crud.shopping_cart.get_product(
+    db_shopping_cart_product = crud.shopping_cart.get(
         db=db, user=current_user, product_id=product.id
     )
 
@@ -90,7 +94,7 @@ async def update_product_from_shopping_cart(
     """
     Updates product in shopping cart.
     """
-    db_shopping_cart_product = crud.shopping_cart.get_product(
+    db_shopping_cart_product = crud.shopping_cart.get(
         db=db, user=current_user, product_id=product_cart.product_id
     )
     if not db_shopping_cart_product:
@@ -116,12 +120,13 @@ async def update_product_from_shopping_cart(
     )
     return Response(message="Successfully updated the product from the cart")
 
+
 @router.delete(
     "/shopping_cart/{product_id}",
     response_model=Response,
     response_model_by_alias=False,
 )
-async def remove_product_off_of_cart(
+async def remove_product_from_cart(
     *,
     product_id: int,
     db: Session = Depends(deps.get_db),
@@ -130,19 +135,29 @@ async def remove_product_off_of_cart(
     """
     Removes product inside the cart of the user
     """
-    cart = crud.shopping_cart.get(db=db, user=current_user)
-    if not cart:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail={"message": f"Cart does not exist"},
-        )
-
-    product = crud.shopping_cart.get_product(db=db, user=current_user, product_id=product_id)
+    product = crud.shopping_cart.get(db=db, user=current_user, product_id=product_id)
     if not product:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Product does not exist"},
         )
 
-    product = crud.shopping_cart.remove(db=db, user= current_user, id=product.id)
+    product = crud.shopping_cart.remove(db=db, user=current_user, id=product_id)
+    return Response(message="Removed successfully")
+
+@router.delete(
+    "/shopping_cart/",
+    response_model=Response,
+    response_model_by_alias=False,
+)
+async def remove_all_product_from_cart(
+    *,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    Removes products inside the cart of the user
+    """
+
+    product = crud.shopping_cart.remove_all(db=db, user=current_user)
     return Response(message="Removed successfully")
