@@ -78,6 +78,30 @@ class _PageProductState extends State<PageProduct> {
     );
   }
 
+  SizedBox _image() {
+    bool isExist = widget.product?.photos?.isNotEmpty ?? false;
+    return SizedBox(
+      width: double.infinity,
+      height: 400,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 3,
+          itemBuilder: (context, i) {
+            return AspectRatio(
+              aspectRatio: 1,
+              child: CachedNetworkImage(
+                imageUrl: isExist
+                    ? widget.product!.photos!.first.photoUrl!
+                    : ApplicationConstants.PRODUCT_IMG,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            );
+          }),
+    );
+  }
+
+/*
   AspectRatio _image() {
     bool isExist = widget.product?.photos?.isNotEmpty ?? false;
     return AspectRatio(
@@ -91,7 +115,7 @@ class _PageProductState extends State<PageProduct> {
       ),
     );
   }
-
+*/
   ClipRRect _smallImage() => ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: CachedNetworkImage(
@@ -167,15 +191,6 @@ class _PageProductState extends State<PageProduct> {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Similar Item",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.tertiary,
-                  fontSize: 18,
-                ),
-              ),
-              _similar(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
@@ -383,17 +398,6 @@ class _PageProductState extends State<PageProduct> {
           fontSize: 18,
         ),
       ));
-
-  // SizedBox _similarItem() {
-  Padding _similar() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SizedBox(
-          width: 100,
-          child: Stack(children: [
-            _smallImage(),
-          ]),
-        ),
-      );
 
   Container _comments() => Container(
         padding: const EdgeInsets.all(8.0),
