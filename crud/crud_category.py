@@ -34,9 +34,9 @@ class CRUDCategory(
         return (
             db.query(models.Category)
             .options(joinedload(models.Category.subcategories))
+            .order_by(desc(models.Category.order_id)) #I do wonder what will happen to the already defined categories. Will they have null orders, but the order column is nullable=False, so will I get an error, 
             .offset(skip)
             .limit(limit)
-            .order_by(desc(models.Category.order)) #I do wonder what will happen to the already defined categories. Will they have null orders, but the order column is nullable=False, so will I get an error, 
             .all()
         )
 
