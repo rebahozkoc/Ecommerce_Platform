@@ -53,6 +53,12 @@ class Product(Base):
 
     shopping_cart_users = relationship("ShoppingCart", cascade="all,delete")
 
+    rate_count = column_property(
+        select([func.count(ProductRate.rate)])
+        .filter(ProductRate.product_id == id)
+        .scalar_subquery()
+    )
+
     rate = column_property(
         select([func.avg(ProductRate.rate)])
         .filter(ProductRate.product_id == id)

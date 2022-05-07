@@ -56,3 +56,4 @@ class Product(ProductInDBBase):
     photos: List[ProductPhotoBase] = []
     comment_count: int
     rate: Optional[float]
+    rate_count: Optional[float]
