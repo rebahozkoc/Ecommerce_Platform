@@ -28,72 +28,182 @@ import {
   useRecoilState,
   useRecoilValue,
 } from "recoil";
-import { loggedState } from "../recoils/atoms";
+import { getCookie, loggedState } from "../recoils/atoms";
 import { useState, useEffect } from "react";
 import {
   createShoppingDict,
   getDataWithoutAccess,
   getData,
   createOrderCookie,
-  decreaseCardCookie,
 } from "../recoils/getterFunctions";
-
+import axios from "axios";
+const access = getCookie("access_token");
 //document.cookie = "orderList=1 2 2 3 3 2 2 2 2 4 3 4";
 let mydict = createShoppingDict();
-
 const ShoppingBasket = () => {
-  console.log(mydict);
+  //console.log(mydict);
 
   const [isLoggin, setIsLogged] = useRecoilState(loggedState);
   const [filter, setFilter] = React.useState(-1);
   const [change1, setChange1] = React.useState(-1);
   const [change2, setChange2] = React.useState(-1);
 
+  const [logChange1, setLogChange1] = React.useState(-1);
+  const [logChange2, setLogChange2] = React.useState(-1);
+  const [stockQuan, setStockQuan] = useState([0, 0]);
   const [isLoaded, setLoaded] = useState(false);
   const [products, setProducts] = useState([]);
 
   //console.log(mydict);
 
   useEffect(() => {
-    for (let proId in mydict) {
-      console.log(proId);
-      getDataWithoutAccess(
-        `http://164.92.208.145/api/v1/products/${proId}`
-      ).then((res) => {
-        console.log(res.data);
-        if (res.data.stock < mydict[res.data.id]) {
-          mydict[res.data.id] = res.data.stock;
-          if (!isLoggin) {
-            createOrderCookie(mydict);
+    if (isLoggin) {
+      getData(`http://164.92.208.145/api/v1/users/shopping_cart`)
+        .then((res) => {
+          console.log(res.data);
+          setProducts(res.data);
+          setLoaded(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      for (let proId in mydict) {
+        //console.log(proId);
+        //console.log(proId);
+        getDataWithoutAccess(
+          `http://164.92.208.145/api/v1/products/${proId}`
+        ).then((res) => {
+          //console.log(res.data);
+          if (res.data.stock < mydict[res.data.id]) {
+            mydict[res.data.id] = res.data.stock;
+            if (!isLoggin) {
+              createOrderCookie(mydict);
+            }
+          }
+          setProducts((prev) => {
+            return [...prev, res.data];
+          });
+        });
+      }
+      setLoaded(true);
+    }
+  }, []);
+  const isIn = (item) => {
+    for (let i = 0; i < products.length; i++) {
+      if (item == products[i].product.id) {
+        if (products[i].product.stock <= products[i].quantity)
+          return products[i].product.stock - 1;
+        return products[i].quantity;
+      }
+    }
+    return 0;
+  };
+
+  const updateProducts = (item, newcount) => {
+    for (let i = 0; i < products.length; i++) {
+      if (item == products[i].product.id) {
+        products[i].quantity = newcount;
+      }
+    }
+    return 0;
+  };
+  useEffect(() => {
+    console.log(isLoaded, isLoggin);
+    if (isLoggin && isLoaded) {
+      if (Object.keys(mydict).length > 0) {
+        for (let item in mydict) {
+          for (let i = 0; i < mydict[item]; i++) {
+            let num = isIn(item, products);
+            if (i > 0 || num > 0) {
+              //update
+              console.log("update", item);
+              let bodyContent = JSON.stringify({
+                product_id: Number(item),
+                quantity: 1 + num,
+                created_at: "2022-05-07T09:09:00.438084",
+              });
+              axios
+                .patch(
+                  "http://164.92.208.145/api/v1/users/shopping_cart/",
+                  bodyContent,
+                  {
+                    headers: {
+                      Accept: "*/*",
+                      Authorization: `Bearer ${access}`,
+                      "Content-Type": "application/json",
+                    },
+                  }
+                )
+                .catch((res) => {
+                  console.log(res);
+                  updateProducts(Number(item), num + 1);
+                })
+                .then((err) => {
+                  console.log(err);
+                });
+            } else {
+              //post
+              console.log("new item", Number(item));
+
+              let bodyContent = JSON.stringify({
+                product_id: Number(item),
+                quantity: 1,
+                created_at: "2022-05-07T09:09:00.438084",
+              });
+              axios
+                .post(
+                  "http://164.92.208.145/api/v1/users/shopping_cart/",
+                  bodyContent,
+                  {
+                    headers: {
+                      Accept: "*/*",
+                      Authorization: `Bearer ${access}`,
+                      "Content-Type": "application/json",
+                    },
+                  }
+                )
+                .catch((res) => {
+                  console.log(res);
+                  updateProducts(Number(item), 1);
+                })
+                .then((err) => {
+                  console.log(err);
+                });
+            }
           }
         }
-        setProducts((prev) => {
-          return [...prev, res.data];
-        });
-      });
+      }
+      document.cookie = "orderList=";
+      mydict = [];
     }
-    setLoaded(true);
-  }, []);
+  }, [isLoaded]);
 
   const removeCardHandler = (toDelete) => {
     setFilter(toDelete);
-    console.log(filter);
+    //console.log(filter);
   };
-
+  //console.log(getCookie("orderList"));
+  //console.log(products);
   const filterCards = () => {
     //need post request you can make it in useeffect
-    delete mydict[filter];
-    if (!isLoggin) {
-      createOrderCookie(mydict);
+    if (filter != -1) {
+      delete mydict[filter];
+      console.log(mydict);
+      if (!isLoggin) {
+        createOrderCookie(mydict);
+      }
+
+      //window.location.reload();
     }
   };
 
   const incCard = () => {
     //need post request you can make it in useeffect
     for (let i = 0; i < products.length; i++) {
-      if (products[i].id === change2) {
-        if (mydict[change2] < products[i].id.stock) {
-          mydict[change2]++;
+      if (products[i].id === change1) {
+        if (mydict[change1] < products[i].stock) {
+          mydict[change1]++;
           if (!isLoggin) {
             createOrderCookie(mydict);
           }
@@ -110,39 +220,122 @@ const ShoppingBasket = () => {
       if (products[i].id === change2) {
         if (mydict[change2] > 0) {
           mydict[change2]--;
-          console.log(mydict);
-          decreaseCardCookie();
           if (!isLoggin) {
             createOrderCookie(mydict);
           }
         }
-        /*
-        
-        */
         return;
       }
     }
   };
+  const incCard2 = () => {
+    //need post request you can make it in useeffect
+    console.log(logChange2);
+    if (logChange1 != -1) {
+      let bodyContent = JSON.stringify({
+        product_id: Number(logChange1),
+        quantity: stockQuan[1] + 1,
+      });
+      axios
+        .patch(
+          "http://164.92.208.145/api/v1/users/shopping_cart/",
+          bodyContent,
+          {
+            headers: {
+              Accept: "*/*",
+              Authorization: `Bearer ${access}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .catch((res) => {
+          console.log(res);
+        })
+        .then((err) => {
+          console.log(err);
+        });
+      for (let i = 0; i < products.length; i++) {
+        if (products[i].product.id === logChange1) {
+          products[i].quantity++;
+          return;
+        }
+      }
+    }
+  };
+
+  const decCard2 = () => {
+    //need post request you can make it in useeffect
+    //console.log(logChange2);
+    if (logChange2 != -1) {
+      let bodyContent = JSON.stringify({
+        product_id: Number(logChange2),
+        quantity: stockQuan[1] - 1,
+      });
+      axios
+        .patch(
+          "http://164.92.208.145/api/v1/users/shopping_cart/",
+          bodyContent,
+          {
+            headers: {
+              Accept: "*/*",
+              Authorization: `Bearer ${access}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .catch((res) => {
+          console.log(res);
+        })
+        .then((err) => {
+          console.log(err);
+        });
+      for (let i = 0; i < products.length; i++) {
+        if (products[i].product.id === logChange2) {
+          products[i].quantity--;
+          return;
+        }
+      }
+    }
+  };
+
   const decreaserHandler = (toChange) => {
     setChange2(toChange);
   };
   const increaserHandler = (toChange) => {
     setChange1(toChange);
   };
+  const decreaserHandler2 = (toChange, stock, quan) => {
+    setLogChange2(toChange);
+    setStockQuan([stock, quan]);
+  };
+  const increaserHandler2 = (toChange, stock, quan) => {
+    setLogChange1(toChange);
+    setStockQuan([stock, quan]);
+  };
+
   React.useEffect(() => {
+    //window.location.reload();
     filterCards();
     setFilter(-1);
   }, [filter]);
 
   React.useEffect(() => {
     decCard();
-
     setChange2(-1);
   }, [change2]);
   React.useEffect(() => {
     incCard();
     setChange1(-1);
   }, [change1]);
+
+  React.useEffect(() => {
+    decCard2();
+    setLogChange2(-1);
+  }, [logChange2]);
+  React.useEffect(() => {
+    incCard2();
+    setLogChange1(-1);
+  }, [logChange1]);
   let totalCost = 0;
   return (
     <RecoilRoot>
@@ -160,10 +353,10 @@ const ShoppingBasket = () => {
                   backgroundColor: "white",
                 }}
               >
-                {isLoaded ? (
+                {isLoaded && !isLoggin ? (
                   <List>
                     {products.map((card) => (
-                      <ListItem key={card.id}>
+                      <ListItem key={`a${card.id}`}>
                         <ShoppingCard
                           imageId={
                             card.photos[0] != null
@@ -187,6 +380,51 @@ const ShoppingBasket = () => {
                           }}
                         >
                           {(totalCost += card.price * mydict[card.id])}
+                        </ShoppingCard>
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <div>Loading...</div>
+                )}
+                {isLoaded && isLoggin ? (
+                  <List>
+                    {products.map((card) => (
+                      <ListItem key={`a${card.product.id}`}>
+                        <ShoppingCard
+                          imageId={
+                            card.product.photos[0] != null
+                              ? card.product.photos[0].photo_url
+                              : ""
+                          }
+                          model={card.product.model}
+                          number={card.product.number}
+                          cost={card.product.price}
+                          description={card.product.description}
+                          title={card.product.title}
+                          id={card.product.id}
+                          delete={removeCardHandler}
+                          stock={card.product.stock}
+                          count={card.quantity}
+                          dec={() => {
+                            decreaserHandler2(
+                              card.product.id,
+                              card.product.stock,
+                              card.quantity
+                            );
+                          }}
+                          inc={() => {
+                            increaserHandler2(
+                              card.product.id,
+                              card.product.stock,
+                              card.quantity
+                            );
+                          }}
+                        >
+                          {
+                            (totalCost +=
+                              card.product.price * mydict[card.product.id])
+                          }
                         </ShoppingCard>
                       </ListItem>
                     ))}

@@ -14,7 +14,7 @@ import themeOptions from "../../../theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
-import { loggedState } from "../../../recoils/atoms";
+import { getCookie, loggedState } from "../../../recoils/atoms";
 import { useRecoilValue } from "recoil";
 
 import { addCardtoCookie } from "../../../recoils/getterFunctions";
@@ -25,7 +25,9 @@ const CardItem = (props) => {
     if (isLogged) {
       console.log("Post proId to shopping cart endpoint");
     } else {
+      console.log("from cart", proId);
       addCardtoCookie(proId);
+      console.log(getCookie("orderList"));
     }
   };
   const addFavourite = () => {
@@ -51,8 +53,6 @@ const CardItem = (props) => {
             color: "black",
           }}
         >
-
-
           <CardMedia
             component="img"
             height="194"
@@ -60,12 +60,14 @@ const CardItem = (props) => {
             alt="Voidture not Found"
           />
 
-          <CardHeader
-            sx={{pb:2, pt:1}}
-            style={{textAlign: "center"}}
-            title={props.title}
+          <Typography
+            sx={{ pb: 2, pt: 1, fontSize: 10 }}
+            style={{ textAlign: "center" }}
+
             //subheader="Until when promotion continues"
-          />
+          >
+            {props.title}
+          </Typography>
         </Link>
 
         <Stack spacing={{ xs: 0, sm: 0, md: 0 }} sx={{ paddingBottom: 0 }}>
@@ -73,7 +75,7 @@ const CardItem = (props) => {
             direction="row"
             justifyContent="space-evenly"
             alignItems="center"
-            sx={{ height: "30px", ml:1, pb: 2}}
+            sx={{ height: "30px", ml: 1, pb: 2 }}
           >
             <Typography
               variant="body2"

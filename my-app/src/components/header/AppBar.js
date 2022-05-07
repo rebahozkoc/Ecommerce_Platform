@@ -128,8 +128,6 @@ export default function PrimarySearchAppBar() {
     setFilter(-1);
   }, [filter]);
 
-  
-  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -285,6 +283,7 @@ export default function PrimarySearchAppBar() {
             setIsAdmin(tm);
             document.cookie = "name= empty";
             document.cookie = "access_token= empty";
+            window.location.reload();
           }}
         >
           <Typography sx={{ color: "black" }}>Sign Out</Typography>
@@ -384,31 +383,26 @@ export default function PrimarySearchAppBar() {
         <p>Favourites</p>
       </MenuItem>
       <MenuItem>
-        <Button
-          id="basket-button"
-          value="basket-button-value"
-          size="large"
-          aria-label="show items on the basket"
-          color="inherit"
-          onClick={handleClickBasket}
-        >
-          <Badge badgeContent={c.length} color="primary">
-            <ShoppingBasketOutlinedIcon />
-          </Badge>
-        </Button>
+        <Link to="/Basket" style={{ textDecoration: "none", color: "black" }}>
+          <Button size="large" color="inherit">
+            <Badge color="primary">
+              <ShoppingBasketOutlinedIcon />
+            </Badge>
+          </Button>
+        </Link>
         <p>Basket</p>
       </MenuItem>
     </Menu>
   );
 
-
-  const handleKeyPress = (event)=>{
-    if(event.key === 'Enter'){
-      console.log('enter pressed');
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      console.log("enter pressed");
       console.log(event.target.value);
-      window.location.href = "http://localhost:3000/search?search="+event.target.value;
+      window.location.href =
+        "http://localhost:3000/search?search=" + event.target.value;
     }
-  }
+  };
 
   return (
     <AppBar position="sticky" elevation={0} color="inherit">
@@ -417,11 +411,11 @@ export default function PrimarySearchAppBar() {
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-          
+
           <StyledInputBase
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
-            onKeyPress={handleKeyPress} 
+            onKeyPress={handleKeyPress}
           />
         </Search>
         <Box sx={{ flexGrow: 1 }}> </Box>
@@ -487,20 +481,31 @@ export default function PrimarySearchAppBar() {
               </Button>
             </Link>
           </Box>
-          <Button
-            id="basket-button"
-            size="large"
-            value="basket-button-value"
-            color="inherit"
-            onClick={handleClickBasket}
+          <Box
+            sx={{
+              fontWeight: "bold",
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
-            <Badge badgeContent={c.length} color="primary">
-              <ShoppingBasketOutlinedIcon />
-            </Badge>
-            <Box sx={{ fontSize: 8 }}>
-              <div>&nbsp;</div> Basket
-            </Box>
-          </Button>
+            <Link
+              to="/Basket"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge color="primary">
+                  <ShoppingBasketOutlinedIcon />
+                </Badge>
+                <Box sx={{ fontSize: 8 }}>
+                  <div>&nbsp;</div> Basket
+                </Box>
+              </Button>
+            </Link>
+          </Box>
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <Button
@@ -518,7 +523,7 @@ export default function PrimarySearchAppBar() {
       {renderMobileMenu}
       {isLogged && renderMenu}
       {!isLogged && renderMenu2}
-
+      {/*
       <ClickAwayListener onClickAway={handleClickAwayBasket}>
         <Box>
           {open && (
@@ -530,6 +535,7 @@ export default function PrimarySearchAppBar() {
           )}
         </Box>
       </ClickAwayListener>
+      */}
     </AppBar>
   );
 }

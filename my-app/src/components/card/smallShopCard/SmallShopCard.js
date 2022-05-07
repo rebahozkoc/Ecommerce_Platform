@@ -13,9 +13,25 @@ import { Link } from "react-router-dom";
 import { Typography, Button, ThemeProvider, Stack } from "@mui/material";
 import SmallItem from "./SmallItem";
 import themeOptions from "../../theme";
+import {
+  createShoppingDict,
+  getDataWithoutAccess,
+  getData,
+  createOrderCookie,
+} from "../../recoils/getterFunctions";
+import { useState, useEffect } from "react";
+import { loggedState } from "../../recoils/atoms";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
+//document.cookie = "orderList=";
+let mydict = createShoppingDict();
 
 const drawerWidth = 240;
-
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -26,9 +42,39 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const SmallShopCard = (props) => {
+  const [isLoaded, setLoaded] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [isLoggin, setIsLogged] = useRecoilState(loggedState);
+  console.log(mydict);
+
+  useEffect(() => {
+    for (let proId in mydict) {
+      console.log(proId);
+      //console.log(proId);
+      getDataWithoutAccess(
+        `http://164.92.208.145/api/v1/products/${proId}`
+      ).then((res) => {
+        //console.log(res.data);
+        if (res.data.stock < mydict[res.data.id]) {
+          mydict[res.data.id] = res.data.stock;
+          if (!isLoggin) {
+            createOrderCookie(mydict);
+          }
+        }
+        setProducts((prev) => {
+          return [...prev, res.data];
+        });
+      });
+    }
+    setLoaded(true);
+  }, []);
+
+  console.log(products);
   const removeCardHandler = (id) => {
-    props.removeCard(id);
-    //Remove Card
+    delete mydict[id];
+    if (!isLoggin) {
+      createOrderCookie(mydict);
+    }
   };
   const theme = useTheme();
   const open = true;
@@ -49,7 +95,7 @@ const SmallShopCard = (props) => {
           anchor="right"
           open={open}
         >
-          <DrawerHeader sx={{ backgroundColor: "#ffb74d" }}>
+          <DrawerHeader sx={{ backgroundColor: "#ff6600" }}>
             <Typography variant="h6">Shopping Basket</Typography>
             <Box sx={{ marginLeft: "auto" }}>
               <IconButton onClick={props.onConfirm}>
@@ -59,15 +105,23 @@ const SmallShopCard = (props) => {
           </DrawerHeader>
           <Divider />
           <List>
-            {props.cards.map((card) => (
+            {products.map((card) => (
               <ListItem button key={card.key}>
                 <SmallItem
-                  imageId={card.imageId}
-                  cost={card.cost}
+                  imageId={
+                    card.photos[0] != null ? card.photos[0].photo_url : ""
+                  }
+                  model={card.model}
+                  number={card.number}
+                  cost={card.price}
                   description={card.description}
                   title={card.title}
-                  id={card.key}
-                  delete={removeCardHandler}
+                  id={card.id}
+                  stock={card.stock}
+                  count={mydict[card.id]}
+                  delete={() => {
+                    removeCardHandler(card.id);
+                  }}
                 >
                   {(totalCost += card.cost)}
                 </SmallItem>

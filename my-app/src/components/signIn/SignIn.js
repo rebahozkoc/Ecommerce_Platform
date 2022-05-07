@@ -54,6 +54,7 @@ const SignIn = () => {
         document.cookie = `name=${data.get("email")}; expires=${expiration}`;
         document.cookie = `access_token=${response.data.access_token}; expires=${expiration}`;
 
+        window.location.reload();
         window.location.href = "http://localhost:3000";
       })
       .catch(function (error) {
