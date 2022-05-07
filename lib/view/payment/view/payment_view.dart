@@ -3,6 +3,7 @@ import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/core/widgets/productItems/cards_widget.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -26,10 +27,15 @@ class _PaymentViewState extends BaseState<PaymentView> {
         viewModel = model;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-          bottomNavigationBar: _bottomNavBar(),
+        return FutureBuilder(
+          future: viewModel.getData(),
+          builder: ((context, snapshot) => snapshot.hasData
+              ? Scaffold(
+                  appBar: _appBar(),
+                  body: _body(),
+                  bottomNavigationBar: _bottomNavBar(),
+                )
+              : const Scaffold()),
         );
       },
     );
@@ -368,32 +374,46 @@ class _PaymentViewState extends BaseState<PaymentView> {
   InkWell _savedCardContainer(BuildContext context, int index) => InkWell(
         onTap: (() => viewModel.setSelectedCard(index)),
         child: Observer(builder: (_) {
-          return Container(
-            width: 200,
-            decoration: viewModel.selectedCard == index
-                ? _selectedDecoration
-                : _unselectedDecoration,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    viewModel.selectedCard == index
-                        ? _selectedAddressIcon
-                        : const SizedBox(
-                            height: 32,
-                          ),
-                  ],
-                ),
-                _chipImage(),
-                _cardNumber(),
-                _cardName()
-              ],
-            ),
+          return ListView.separated(
+            primary: true,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: viewModel.payments.length,
+            itemBuilder: (context, index) => viewModel.payments
+                .map((e) => CardsWidget(
+                      payment: e,
+                      onTap: () => viewModel.deletePayment(
+                          id: e.id!.toInt(), index: index),
+                    ))
+                .toList()[index],
+            separatorBuilder: (context, index) => const SizedBox(width: 16),
+            /*child: Container(
+              width: 200,
+              decoration: viewModel.selectedCard == index
+                  ? _selectedDecoration
+                  : _unselectedDecoration,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      viewModel.selectedCard == index
+                          ? _selectedAddressIcon
+                          : const SizedBox(
+                              height: 32,
+                            ),
+                    ],
+                  ),
+                  _chipImage(),
+                  _cardNumber(),
+                  _cardName()
+                ],
+              ),
+            ),*/
           );
         }),
       );
@@ -439,7 +459,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _cardForm(
-            title: "Method Name",
+            title: "Card Name",
             hintText: "Payment Method Name",
             keyboardType: TextInputType.text,
             controller: viewModel.cardMethodController,
@@ -479,7 +499,26 @@ class _PaymentViewState extends BaseState<PaymentView> {
               ),
             ],
           ),
-          const SizedBox(height: 16)
+          const SizedBox(height: 16),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(160, 48),
+                padding: EdgeInsets.zero,
+                maximumSize: const Size(160, 48),
+                primary: AppColors.primary,
+                shadowColor: AppColors.transparent,
+                elevation: 0,
+              ),
+              onPressed: () async {
+                await viewModel.submit();
+              },
+              child: const Text(
+                "Save Card",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              )),
         ],
       ));
 
@@ -530,4 +569,21 @@ class _PaymentViewState extends BaseState<PaymentView> {
           )
         ],
       );
+
+  Observer _payments() => Observer(builder: (_) {
+        return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            primary: true,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => viewModel.payments
+                .map((e) => CardsWidget(
+                      payment: e,
+                      onTap: () => viewModel.deletePayment(
+                          id: e.id!.toInt(), index: index),
+                    ))
+                .toList()[index],
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
+            itemCount: viewModel.payments.length);
+      });
 }

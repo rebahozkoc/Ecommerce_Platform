@@ -1,20 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/model/base_view_model.dart';
+import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
+import 'package:mobile/locator.dart';
+import 'package:mobile/view/payment/model/payment_model.dart';
+import 'package:mobile/view/payment/repository/payment_repository.dart';
 import 'package:mobx/mobx.dart';
+import 'package:mobile/core/widgets/ToastMessage.dart';
 part 'payment_view_model.g.dart';
 
 class PaymentViewModel = _PaymentViewModelBase with _$PaymentViewModel;
 
 abstract class _PaymentViewModelBase with Store, BaseViewModel {
+  late PaymentRepository _repository;
+  late PaymentResponseModel _paymentResponseModel;
+  late PaymentsResponseModel _paymentsResponseModel;
+
   @override
   void setContext(BuildContext context) => this.context = context;
 
   @override
-  void init() {}
+  void init() {
+    _repository = locator<PaymentRepository>();
+  }
 
   void dispose() {}
+
+  @observable
+  var payments = ObservableList<PaymentModel>();
+
+  void setPayments(List<PaymentModel> payments) {
+    this.payments.clear();
+    for (var payment in payments) {
+      addNewPayment(payment);
+    }
+  }
+
+  @action
+  void addNewPayment(PaymentModel payment) {
+    payments.add(payment);
+  }
+
+  @action
+  Future<void> deletePayment({required int index, required int id}) async {
+    _paymentResponseModel = await _repository.deletePayment(
+      context: context,
+      id: id,
+    );
+    if (_paymentResponseModel.isSuccess ?? false) {
+      payments.removeAt(index);
+      showToast(
+          context: context!,
+          message: "Payment deleted successfully",
+          isSuccess: false);
+    } else {
+      showToast(
+          context: context!,
+          message: _paymentResponseModel.message ??
+              ApplicationConstants.ERROR_MESSAGE,
+          isSuccess: false);
+    }
+  }
+
+  Future<bool> getData() async {
+    _paymentsResponseModel = await _repository.getPayments(
+      context: context,
+    );
+    setPayments(_paymentsResponseModel.data!);
+    return _paymentsResponseModel.isSuccess!;
+  }
 
   @observable
   TextEditingController cardMethodController = TextEditingController();
@@ -39,6 +94,65 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
 
   @observable
   int cardButtonIndex = 0;
+
+  @action
+  submit() async {
+    if (cardMethodController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid method",
+          isSuccess: false);
+    } else if (cardNumberController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid Card Number",
+          isSuccess: false);
+    } else if (cardHolderController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid Name on Card",
+          isSuccess: false);
+    } else if (cardSecurtiyController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid CVV/CVC",
+          isSuccess: false);
+    } else if (cardDateController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter a valid postal card expiry date",
+          isSuccess: false);
+    } else {
+      await addCards();
+    }
+  }
+
+  Future<void> addCards() async {
+    PaymentModel _payment = PaymentModel(
+      paymentMethod: cardMethodController.text,
+      cardNumber: cardNumberController.text,
+      cardName: cardHolderController.text,
+      cW: cardSecurtiyController.text,
+      expiryDate: cardDateController.text,
+    );
+
+    PaymentResponseModel _paymentResponse = await _repository.setPayment(
+      context: context,
+      payment: _payment,
+    );
+
+    if (_paymentResponse.isSuccess ?? false) {
+      showToast(
+          message: "Card has been added", isSuccess: true, context: context!);
+      locator<PaymentViewModel>().addNewPayment(_payment);
+      Navigator.pop(context!);
+    } else {
+      showToast(
+          message: "Card has not been added",
+          isSuccess: false,
+          context: context!);
+    }
+  }
 
   @action
   void setSelectedCard(int index) => selectedCard = index;

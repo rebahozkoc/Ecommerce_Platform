@@ -27,5 +27,10 @@ class ApplicationConstants {
   static const ADDRESS_LIMIT = 100;
   static const ADDRESS_SKIP = 0;
 
+<<<<<<< HEAD
   static const CATEGORY_ID = 0;
+=======
+    static const PAYMENT_LIMIT = 100;
+  static const PAYMENT_SKIP = 0;
+>>>>>>> credit_card
 }
