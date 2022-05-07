@@ -51,10 +51,7 @@ const CardItem = (props) => {
             color: "black",
           }}
         >
-          <CardHeader
-            title={props.title}
-            //subheader="Until when promotion continues"
-          />
+
 
           <CardMedia
             component="img"
@@ -62,14 +59,21 @@ const CardItem = (props) => {
             image={props.imageId}
             alt="Voidture not Found"
           />
+
+          <CardHeader
+            sx={{pb:2, pt:1}}
+            style={{textAlign: "center"}}
+            title={props.title}
+            //subheader="Until when promotion continues"
+          />
         </Link>
 
         <Stack spacing={{ xs: 0, sm: 0, md: 0 }} sx={{ paddingBottom: 0 }}>
           <Stack
             direction="row"
             justifyContent="space-evenly"
-            spacing={2}
-            sx={{ height: "30px" }}
+            alignItems="center"
+            sx={{ height: "30px", ml:1, pb: 2}}
           >
             <Typography
               variant="body2"
