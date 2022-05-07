@@ -1,3 +1,4 @@
+import os
 from time import sleep
 
 import requests
@@ -5,12 +6,12 @@ import requests
 import getImg
 from getProduct import getProduct
 
-categoryURL = "https://www.vivense.com/koltuk-takimlari-mobilyalari.html?ref=menu_text"
-fileName = "Sofa Sets 0-0.json"
-category_id = 0
-subcategory_id = 0
-model = "Living Room"
-number = "Sofa Set"
+categoryURL = "https://www.vivense.com/mutfak-dolaplari.html?ref=menu_text"
+fileName = "Kitchen Cabinet 5-10.json"
+category_id = 5
+subcategory_id = 10
+model = "Kitchen"
+number = "Kitchen Cabinet"
 import json
 from bs4 import BeautifulSoup
 
@@ -21,15 +22,26 @@ product_list = soup.find_all(class_="product-card product-content parent")
 data_file = open(fileName, "a", encoding="UTF-8")
 
 productId = 0
+imageFolder = str(category_id) + "-" + str(subcategory_id)
+
+try:
+    os.mkdir(str(imageFolder))
+except OSError as error:
+    print(error)
 for i in product_list:
     product_name = i.find(class_="product-name").get_text()
     productUrl = "https://www.vivense.com/" + i.find(class_="product-link").findChild(class_="product-link").attrs["href"]
-    getProduct(productUrl, fileName, category_id, subcategory_id, model, number)
-
+    try:
+        getProduct(productUrl, fileName, category_id, subcategory_id, model, number)
+    except Exception as e:
+        print(e)
+        continue
     sleep(0.1)
-    getImg.getImg(productUrl, productId)
+    getImg.getImg(productUrl, productId, imageFolder)
     print(product_name)
     productId += 1
+    if productId == 30:
+        break
     """
     product_name = i.attrs["data-product-name"]
     price = i.attrs["data-product-price"]

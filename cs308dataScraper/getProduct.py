@@ -10,7 +10,7 @@ def getProduct(url, fileName, category, subCategory, model, number):
     soup = BeautifulSoup(result, "lxml")
 
     title = soup.find(class_="product-title").text
-    stock = random.randint(0, 100)
+    stock = random.randint(0, 10)
     price = int(soup.find(class_="price new-price").attrs["data-value"])
     description = ""
     warrantyStatus = str(random.randint(1, 5)) + "year(s)"
@@ -22,6 +22,6 @@ def getProduct(url, fileName, category, subCategory, model, number):
 
     data_file = open(fileName, "a", encoding="UTF-8")
 
-    data = {'title': title,  "description": description, "stock": stock, "price": price, "model": model, "number": number, "distributor": distributor,  "category_id": category, "subcategory_id": subCategory}
+    data = {'title': title,  "description": description, "distributor": distributor, "stock": stock, "price": price, "model": model, "number": number,  "category_id": category, "subcategory_id": subCategory}
     json.dump(data, data_file, ensure_ascii=False)
     data_file.write(",\n")
