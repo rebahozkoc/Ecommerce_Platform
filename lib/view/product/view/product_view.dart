@@ -8,8 +8,8 @@ import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 
 class ProductView extends StatefulWidget {
-  final ProductModel? product;
-  const ProductView({Key? key, this.product}) : super(key: key);
+  final ProductModel product;
+  const ProductView({Key? key, required this.product}) : super(key: key);
 
   @override
   State<ProductView> createState() => _ProductViewState();
@@ -25,9 +25,38 @@ class _ProductViewState extends BaseState<ProductView> {
         model.setContext(context);
         model.init();
         viewModel = model;
+        viewModel.product = widget.product;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
+        return FutureBuilder(
+            future: viewModel.getData(),
+            builder: ((context, snapshot) => snapshot.hasData
+                ? Scaffold(
+                    appBar: _appBar(),
+                    body: _body(),
+                    bottomNavigationBar: Container(
+                      height: 100,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(12.0),
+                          topLeft: Radius.circular(12.0),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          addToCart(),
+                          buyNow(),
+                        ],
+                      ),
+                    ),
+                  )
+                : const Center(child: CircularProgressIndicator())));
+      },
+    );
+
+    /*Scaffold(
           appBar: _appBar(),
           body: _body(),
           bottomNavigationBar: Container(
@@ -47,9 +76,7 @@ class _ProductViewState extends BaseState<ProductView> {
               ],
             ),
           ),
-        );
-      },
-    );
+        );*/
   }
 
   AppBar _appBar() {
@@ -73,8 +100,8 @@ class _ProductViewState extends BaseState<ProductView> {
         children: [
           RoundedContainer(
               child: Column(
-            children: const [
-              PageProduct(),
+            children: [
+              PageProduct(product: viewModel.product),
             ],
           )),
         ],

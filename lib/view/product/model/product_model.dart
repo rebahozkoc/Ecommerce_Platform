@@ -6,7 +6,7 @@ class ProductModel {
   num? price;
   String? model;
   String? number;
-  num? id;
+  int? id;
   String? categoryTitle;
   String? subcategoryTitle;
   List<Photo>? photos;
@@ -80,6 +80,30 @@ class Photo {
     data['id'] = id;
     data['photo_url'] = photoUrl;
     data['is_active'] = isActive;
+    return data;
+  }
+}
+
+class ProductResponseModel {
+  String? message;
+  bool? isSuccess;
+  ProductModel? data;
+
+  ProductResponseModel({this.message, this.isSuccess, this.data});
+
+  ProductResponseModel.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    isSuccess = json['isSuccess'];
+    data = json['data'] != null ? ProductModel.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['isSuccess'] = isSuccess;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
     return data;
   }
 }

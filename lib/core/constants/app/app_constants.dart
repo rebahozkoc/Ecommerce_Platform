@@ -28,4 +28,7 @@ class ApplicationConstants {
   static const ADDRESS_SKIP = 0;
 
   static const CATEGORY_ID = 0;
+
+  static const PRODUCT_ID = 10;
+
 }
