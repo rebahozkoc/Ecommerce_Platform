@@ -38,13 +38,117 @@ import { useState, useEffect } from "react";
 import { getDataWithoutAccess } from "../recoils/getterFunctions";
 import NewRating from "./Comment/NewRating";
 import axios from "axios";
-import { getCookie } from "../recoils/atoms";
+
+import { getCookie, loggedState } from "../recoils/atoms";
+
+import { getData } from "../recoils/getterFunctions";
+import { addCardtoCookie } from "../recoils/getterFunctions";
 
 const access = getCookie("access_token");
 
 let points = [0, 0, 0, 0, 0, 0, 0];
-
+let count = 0;
 const Product = () => {
+  const isLogged = useRecoilValue(loggedState);
+  const [products, setProducts] = useState([]);
+  const [isLoaded3, setLoaded3] = useState(false);
+  const [checker, setChecker] = useState(true);
+  const isIn = (item) => {
+    for (let i = 0; i < products.length; i++) {
+      if (item == products[i].product.id) {
+        if (products[i].product.stock <= products[i].quantity) {
+          return products[i].product.stock - 1;
+        }
+        products[i].quantity += count;
+        return products[i].quantity;
+      }
+    }
+    return 0;
+  };
+
+  useEffect(() => {
+    if (isLogged) {
+      getData(`http://164.92.208.145/api/v1/users/shopping_cart`)
+        .then((res) => {
+          //console.log(res.data);
+          setProducts(res.data);
+          setLoaded3(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+  const addBasket = (proId) => {
+    if (isLogged) {
+      console.log("helloooo");
+      console.log(isLoaded3, checker);
+      if (isLoaded3 && checker) {
+        setChecker(false);
+        console.log("Post proId to shopping cart endpoint");
+        let num = isIn(proId, products);
+        if (num > 0) {
+          //update
+          console.log("update", proId);
+          let bodyContent = JSON.stringify({
+            product_id: Number(proId),
+            quantity: count + Number(num),
+            created_at: "2022-05-07T09:09:00.438084",
+          });
+          axios
+            .patch(
+              "http://164.92.208.145/api/v1/users/shopping_cart/",
+              bodyContent,
+              {
+                headers: {
+                  Accept: "*/*",
+                  Authorization: `Bearer ${access}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .catch((res) => {
+              console.log(res);
+            })
+            .then((err) => {
+              console.log(err);
+            });
+        } else {
+          //post
+          console.log("new item", Number(proId));
+
+          let bodyContent = JSON.stringify({
+            product_id: Number(proId),
+            quantity: count,
+            created_at: "2022-05-07T09:09:00.438084",
+          });
+          axios
+            .post(
+              "http://164.92.208.145/api/v1/users/shopping_cart/",
+              bodyContent,
+              {
+                headers: {
+                  Accept: "*/*",
+                  Authorization: `Bearer ${access}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .catch((res) => {
+              console.log(res);
+            })
+            .then((err) => {
+              console.log(err);
+            });
+        }
+      }
+    } else {
+      console.log("from cart", proId);
+      addCardtoCookie(proId);
+      console.log(getCookie("orderList"));
+    }
+  };
+
   const [makeComment, setMakeComment] = React.useState(false);
   const [makeRating, setMakeRating] = React.useState(false);
   const { type } = useParams();
@@ -169,15 +273,15 @@ const Product = () => {
   const [change, setChange] = React.useState(false);
 
   const incCard = () => {
-    if (itemTemp.count < itemTemp.stock) {
+    if (count < itemTemp.stock) {
       setChange(true);
-      itemTemp.count++;
+      count++;
     }
   };
   const decCard = () => {
-    if (itemTemp.count > 0) {
+    if (count > 1) {
       setChange(true);
-      itemTemp.count--;
+      count--;
     }
   };
 
@@ -205,10 +309,14 @@ const Product = () => {
             cost={itemTemp.price}
             id={itemTemp.id}
             stock={itemTemp.stock}
-            count={itemTemp.count}
+            count={count}
             dec={decCard}
             inc={incCard}
             model={itemTemp.model}
+            clickHandler={() => {
+              setChecker(true);
+              addBasket(itemTemp.id);
+            }}
           ></Description>
         </Stack>
 

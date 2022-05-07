@@ -53,7 +53,15 @@ const ShoppingCard = (props) => {
     <ThemeProvider theme={themeOptions}>
       <Box disableRipple sx={{ width: 800 }}>
         <Stack direction="row" spacing={2} sx={{ height: "60px" }}>
-          <Link to="/Dummy" underline="none">
+          <Link
+            to={`/product/${props.title}`}
+            underline="none"
+            state={{ id: props.id }}
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
             <CardMedia
               component="img"
               height="100"

@@ -384,10 +384,7 @@ const ShoppingBasket = () => {
                       </ListItem>
                     ))}
                   </List>
-                ) : (
-                  <div>Loading...</div>
-                )}
-                {isLoaded && isLoggin ? (
+                ) : isLoaded && isLoggin ? (
                   <List>
                     {products.map((card) => (
                       <ListItem key={`a${card.product.id}`}>

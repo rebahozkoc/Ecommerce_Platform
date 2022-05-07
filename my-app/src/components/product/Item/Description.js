@@ -32,17 +32,19 @@ const Description = (props) => {
   };
 
   const decreaser = () => {
-    props.dec();
     setoutStock(false);
     if (props.count === 0) {
       setnotzero(true);
+    } else {
+      props.dec();
     }
   };
   const increaser = () => {
-    props.inc();
     setnotzero(false);
     if (props.count === props.stock) {
       setoutStock(true);
+    } else {
+      props.inc();
     }
   };
 

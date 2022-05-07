@@ -9,21 +9,109 @@ import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlin
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import { useState, useEffect } from "react";
 import themeOptions from "../../../theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import { getCookie, loggedState } from "../../../recoils/atoms";
 import { useRecoilValue } from "recoil";
-
+import { getData } from "../../../recoils/getterFunctions";
 import { addCardtoCookie } from "../../../recoils/getterFunctions";
+
+import axios from "axios";
+const access = getCookie("access_token");
+
 const CardItem = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const isLogged = useRecoilValue(loggedState);
+  const [products, setProducts] = useState([]);
+  const [isLoaded, setLoaded] = useState(false);
+
+  const isIn = (item) => {
+    for (let i = 0; i < products.length; i++) {
+      if (item == products[i].product.id) {
+        if (products[i].product.stock <= products[i].quantity)
+          return products[i].product.stock - 1;
+        return products[i].quantity;
+      }
+    }
+    return 0;
+  };
+
+  useEffect(() => {
+    if (isLogged) {
+      getData(`http://164.92.208.145/api/v1/users/shopping_cart`)
+        .then((res) => {
+          //console.log(res.data);
+          setProducts(res.data);
+          setLoaded(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
   const addBasket = (proId) => {
     if (isLogged) {
-      console.log("Post proId to shopping cart endpoint");
+      if (isLoaded) {
+        console.log("Post proId to shopping cart endpoint");
+        let num = isIn(proId, products);
+        if (num > 0) {
+          //update
+          console.log("update", proId);
+          let bodyContent = JSON.stringify({
+            product_id: Number(proId),
+            quantity: 1 + num,
+            created_at: "2022-05-07T09:09:00.438084",
+          });
+          axios
+            .patch(
+              "http://164.92.208.145/api/v1/users/shopping_cart/",
+              bodyContent,
+              {
+                headers: {
+                  Accept: "*/*",
+                  Authorization: `Bearer ${access}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .catch((res) => {
+              console.log(res);
+            })
+            .then((err) => {
+              console.log(err);
+            });
+        } else {
+          //post
+          console.log("new item", Number(proId));
+
+          let bodyContent = JSON.stringify({
+            product_id: Number(proId),
+            quantity: 1,
+            created_at: "2022-05-07T09:09:00.438084",
+          });
+          axios
+            .post(
+              "http://164.92.208.145/api/v1/users/shopping_cart/",
+              bodyContent,
+              {
+                headers: {
+                  Accept: "*/*",
+                  Authorization: `Bearer ${access}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .catch((res) => {
+              console.log(res);
+            })
+            .then((err) => {
+              console.log(err);
+            });
+        }
+      }
     } else {
       console.log("from cart", proId);
       addCardtoCookie(proId);
