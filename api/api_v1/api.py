@@ -6,11 +6,12 @@ from api.api_v1.endpoints.category import category
 from api.api_v1.endpoints.category import subcategory
 from api.api_v1.endpoints.user import address
 from api.api_v1.endpoints.user import credit
-
+from api.api_v1.endpoints.shoppingcart import shoppingcart
 
 api_router = APIRouter()
 
 api_router.include_router(users.router, prefix="/users", tags=["User"])
+api_router.include_router(shoppingcart.router, prefix="/users", tags=["Shopping Cart"])
 api_router.include_router(address.router, prefix="/user", tags=["User"])
 api_router.include_router(credit.router, prefix="/user", tags=["User"])
 
@@ -28,4 +29,5 @@ api_router.include_router(
 api_router.include_router(
     subcategory.router, prefix="/categories", tags=["Categories & Subcategories"]
 )
+
 

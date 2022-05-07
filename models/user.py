@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from db.base_class import Base
 
@@ -15,3 +15,7 @@ class User(Base):
     comments = relationship("Comment", back_populates="user")
     addresses = relationship("Address", back_populates="user")
     credits = relationship("Credit", back_populates="user")
+
+    shopping_cart_products = relationship(
+        "ShoppingCart", cascade="all,delete"
+    )

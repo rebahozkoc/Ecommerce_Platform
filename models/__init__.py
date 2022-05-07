@@ -4,3 +4,4 @@ from .product import Product, ProductRate
 from .category import Category, SubCategory, CategorySubCategory
 from .address import Address
 from .credit import Credit
+from .shopping_cart import ShoppingCart
