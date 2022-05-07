@@ -13,4 +13,7 @@ class PathConstants {
 
   // ADDRESS  
   static const ADDRESS = _URL + 'api/v1/user/addresses';
+
+  // PRODUCT
+  static const PRODUCT = _URL + 'api/v1/products';
 }
