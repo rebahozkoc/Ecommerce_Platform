@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get(
-    "/{product_id}/comments", response_model=Response[List[schemas.CommentBase]]
+    "/{product_id}/comments", response_model=Response[List[schemas.Comment]]
 )
 def get_comments_of_product(
     product_id: int,

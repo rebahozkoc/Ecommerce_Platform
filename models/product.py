@@ -2,7 +2,10 @@ from sqlalchemy import Column, Integer, ForeignKey, Boolean, String, Float
 from sqlalchemy.orm import relationship
 from db.base_class import Base
 from sqlalchemy.ext.associationproxy import association_proxy
-
+from sqlalchemy.orm import column_property
+from sqlalchemy.sql import select
+from sqlalchemy import func
+from models import Comment
 
 class Product(Base):
     __tablename__ = "product"
@@ -24,6 +27,7 @@ class Product(Base):
     subcategory_title = association_proxy(target_collection="category_subcategory", attr="subcategory_title")
 
     comments = relationship("Comment", back_populates="product", lazy="dynamic")
+    comment_count = column_property(select([func.count(Comment.id)]).filter(Comment.product_id==id).scalar_subquery())
     photos = relationship("ProductPhoto", back_populates="product")
     rates = relationship("ProductRate", back_populates="product")
     

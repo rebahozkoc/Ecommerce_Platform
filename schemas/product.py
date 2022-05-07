@@ -54,3 +54,4 @@ class Product(ProductInDBBase):
     subcategory_title: Optional[str]
     
     photos: List[ProductPhotoBase] = []
+    comment_count: int
