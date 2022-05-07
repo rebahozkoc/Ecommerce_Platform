@@ -53,17 +53,20 @@ class _ShopListViewState extends BaseState<ShopListView> {
   }
 
   Center _body() => Center(
-        child: Stack(
+          child: Observer(
+        builder: (_) => Stack(
           children: <Widget>[
-            ListView.builder(
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return Observer(builder: (_) {
-                    return CartProduct(
-                      shopItem: viewModel.shopList[index],
-                    );
-                  });
-                }),
+            viewModel.shopList.isNotEmpty
+                ? ListView.builder(
+                    itemCount: 8,
+                    itemBuilder: (context, index) {
+                      return Observer(builder: (_) {
+                        return CartProduct(
+                          shopItem: viewModel.shopList[index],
+                        );
+                      });
+                    })
+                : Container(),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -113,7 +116,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
             )
           ],
         ),
-      );
+      ));
 
   OutlinedButton _completeShopping() => OutlinedButton(
         onPressed: () => viewModel.navigateToPayment(),

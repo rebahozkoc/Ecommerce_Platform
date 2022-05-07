@@ -58,7 +58,6 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
     _shopListResponseModel = await _repository.getShopList(
       context: context,
     );
-    debugPrint(_shopListResponseModel.isSuccess.toString());
     if (_shopListResponseModel.isSuccess ?? false) {
       setShopList(_shopListResponseModel.data!);
     } else {
@@ -68,6 +67,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
               ApplicationConstants.ERROR_MESSAGE,
           isSuccess: false);
     }
+
     return _shopListResponseModel.isSuccess!;
   }
 }

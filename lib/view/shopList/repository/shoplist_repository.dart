@@ -34,16 +34,18 @@ class ShopListRepository extends ShopListServiceBase {
 
       return _responseModel;
     } else {
-
       String _shopListStr =
           LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST) ??
               '{}';
-
+      debugPrint("_shopListStr: $_shopListStr");
       var _shopList = json.decode(_shopListStr);
+      debugPrint("_shopList: $_shopList");
 
       ShopListResponseModel _responseModel =
           ShopListResponseModel.fromJson(_shopList);
       _responseModel.isSuccess = true;
+      
+      _responseModel.data ??= [];
       return _responseModel;
     }
   }
