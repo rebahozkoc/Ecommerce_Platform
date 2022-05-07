@@ -4,6 +4,7 @@ import 'package:mobile/core/init/icon/entypo.dart';
 import 'package:mobile/core/init/icon/font_awesome5.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
+import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 
 class CardsWidget extends StatelessWidget {
   final PaymentModel payment;
@@ -56,9 +57,9 @@ class CardsWidget extends StatelessWidget {
                 topRight: Radius.circular(10),
               ),
             ),
-            builder: (BuildContext context) => const FractionallySizedBox(
+            builder: (BuildContext context) => FractionallySizedBox(
                   heightFactor: 0.625,
-                  child: ConfirmDeleteCard(),
+                  child: ConfirmDeleteCard(onPressed: onTap),
                 )),
         child: const Icon(
           Entypo.trash,
@@ -103,7 +104,8 @@ class CardsWidget extends StatelessWidget {
 }
 
 class ConfirmDeleteCard extends StatelessWidget {
-  const ConfirmDeleteCard({Key? key}) : super(key: key);
+  final VoidCallback onPressed;
+  const ConfirmDeleteCard({Key? key, required this.onPressed}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -185,7 +187,7 @@ class ConfirmDeleteCard extends StatelessWidget {
                 elevation: 0,
               ),
               onPressed: () {
-                debugPrint("Delete clicked");
+                onPressed();
                 Navigator.pop(context);
               },
               child: const Text(
