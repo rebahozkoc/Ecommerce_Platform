@@ -61,32 +61,23 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => AddressModel());
   locator.registerLazySingleton(() => AddressResponseModel());
   locator.registerLazySingleton(() => AddressesResponseModel());
-<<<<<<< HEAD
   locator.registerLazySingleton(() => PaymentResponseModel());
   locator.registerLazySingleton(() => PaymentsResponseModel());
-=======
   locator.registerLazySingleton(() => ProductResponseModel());
->>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
   locator.registerLazySingleton(() => CategoryRepository());
   locator.registerLazySingleton(() => AddressRepository());
-<<<<<<< HEAD
   locator.registerLazySingleton(() => PaymentRepository());
-=======
   locator.registerLazySingleton(() => ProductRepository());
->>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 
   // Service
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => CategoryService());
   locator.registerLazySingleton(() => AddressService());
-<<<<<<< HEAD
   locator.registerLazySingleton(() => PaymentService());
-=======
   locator.registerLazySingleton(() => ProductService());
->>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 }
 
 Future<void> resetLocator() async {
