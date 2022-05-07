@@ -99,3 +99,34 @@ async def update_product_from_shopping_cart(
         db=db, db_obj=db_shopping_cart_product, obj_in=product_cart
     )
     return Response(message="Successfully updated the product from the cart")
+
+@router.delete(
+    "/shopping_cart/{product_id}",
+    response_model=Response,
+    response_model_by_alias=False,
+)
+async def remove_product_off_of_cart(
+    *,
+    product_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    Removes product inside the cart of the user
+    """
+    cart = crud.shopping_cart.get(db=db, user=current_user)
+    if not cart:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Cart does not exist"},
+        )
+
+    product = crud.shopping_cart.get_product(db=db, user=current_user, product_id=product_id)
+    if not product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Product does not exist"},
+        )
+
+    product = crud.shopping_cart.remove(db=db, user= current_user, id=product.id)
+    return Response(message="Removed successfully")

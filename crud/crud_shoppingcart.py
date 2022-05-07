@@ -29,6 +29,10 @@ class CRUDShoppingCart(
             .first()
         )
         return data
-
+    def remove(self, db: Session, *, id: int, user:User):
+        obj = self.get_product(db=db, user=user, product_id=id)
+        db.delete(obj)
+        db.commit()
+        return obj
 
 shopping_cart = CRUDShoppingCart(ShoppingCart)
