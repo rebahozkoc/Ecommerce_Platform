@@ -17,9 +17,25 @@ async def get_shopping_cart(
     """
     Returns shopping cart.
     """
-    data = crud.shopping_cart.get(db=db, user=current_user)
+    data = crud.shopping_cart.get_multi(db=db, user=current_user)
     return Response(data=data)
 
+@router.get("/shopping_cart/{product_id}", response_model=Response[schemas.ShoppingCart])
+async def get_shopping_cart_product(
+    product_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    Returns shopping cart product.
+    """
+    data = crud.shopping_cart.get(db=db, user=current_user, product_id=product_id)
+    if not data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Product does not exists in shopping cart"},
+        )
+    return Response(data=data)
 
 @router.post("/shopping_cart/", response_model=Response)
 async def add_product_to_shopping_cart(
