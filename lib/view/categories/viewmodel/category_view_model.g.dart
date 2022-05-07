@@ -24,8 +24,34 @@ mixin _$CategoryViewModel on _CategoryViewModelBase, Store {
     });
   }
 
+  final _$sortByAtom = Atom(name: '_CategoryViewModelBase.sortBy');
+
+  @override
+  int get sortBy {
+    _$sortByAtom.reportRead();
+    return super.sortBy;
+  }
+
+  @override
+  set sortBy(int value) {
+    _$sortByAtom.reportWrite(value, super.sortBy, () {
+      super.sortBy = value;
+    });
+  }
+
   final _$_CategoryViewModelBaseActionController =
       ActionController(name: '_CategoryViewModelBase');
+
+  @override
+  void setSortBy(int sortBy) {
+    final _$actionInfo = _$_CategoryViewModelBaseActionController.startAction(
+        name: '_CategoryViewModelBase.setSortBy');
+    try {
+      return super.setSortBy(sortBy);
+    } finally {
+      _$_CategoryViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setProducts(List<ProductModel> products) {
@@ -33,6 +59,17 @@ mixin _$CategoryViewModel on _CategoryViewModelBase, Store {
         name: '_CategoryViewModelBase.setProducts');
     try {
       return super.setProducts(products);
+    } finally {
+      _$_CategoryViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic sortProducts() {
+    final _$actionInfo = _$_CategoryViewModelBaseActionController.startAction(
+        name: '_CategoryViewModelBase.sortProducts');
+    try {
+      return super.sortProducts();
     } finally {
       _$_CategoryViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -52,7 +89,8 @@ mixin _$CategoryViewModel on _CategoryViewModelBase, Store {
   @override
   String toString() {
     return '''
-products: ${products}
+products: ${products},
+sortBy: ${sortBy}
     ''';
   }
 }

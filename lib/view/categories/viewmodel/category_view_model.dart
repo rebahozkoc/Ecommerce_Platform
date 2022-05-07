@@ -27,6 +27,20 @@ abstract class _CategoryViewModelBase with Store, BaseViewModel {
   @observable
   var products = ObservableList<ProductModel>();
 
+  var sortItems = [
+    {"name": "None", "value": 0},
+    {"name": "Price from high to low", "value": 1},
+    {"name": "Price from low to hight", "value": 2},
+    {"name": "Popularity from high to low", "value": 3},
+    {"name": "Popularity from low to hight", "value": 4},
+  ];
+
+  @observable
+  int sortBy = 0;
+
+  @action
+  void setSortBy(int sortBy) => this.sortBy = sortBy;
+
   void dispose() {}
 
   @action
@@ -34,6 +48,21 @@ abstract class _CategoryViewModelBase with Store, BaseViewModel {
     this.products.clear();
     for (var product in products) {
       addNewproduct(product);
+    }
+  }
+
+  @action
+  sortProducts() {
+    if (sortBy == 0) {
+      setProducts(_categoryResponseModel.data!.products!);
+    } else if (sortBy == 1) {
+      products.sort((a, b) => b.price!.compareTo(a.price!));
+    } else if (sortBy == 2) {
+      products.sort((a, b) => a.price!.compareTo(b.price!));
+    } else if (sortBy == 3) {
+      products.sort((a, b) => b.id!.compareTo(a.id!));
+    } else if (sortBy == 4) {
+      products.sort((a, b) => a.id!.compareTo(b.id!));
     }
   }
 
@@ -59,5 +88,9 @@ abstract class _CategoryViewModelBase with Store, BaseViewModel {
     }
 
     return _categoryResponseModel.isSuccess!;
+  }
+
+  List<String> getSubcategories() {
+    return category.subcategories!.map((e) => e.title!).toList();
   }
 }
