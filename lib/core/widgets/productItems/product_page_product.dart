@@ -5,6 +5,7 @@ import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 //import 'package:mobile/core/widgets/customScrollPhysics.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
+import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 
 class PageProduct extends StatefulWidget {
@@ -23,7 +24,14 @@ class _PageProductState extends State<PageProduct>
   int _counter = 1;
   void add() {
     setState(() {
-      _counter++;
+      if (_counter < widget.product!.stock!) {
+        _counter++;
+      } else {
+        showToast(
+            message: "You cannot add items more than there is in stock.",
+            isSuccess: false,
+            context: context);
+      }
     });
   }
 
