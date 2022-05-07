@@ -41,7 +41,7 @@ const ShoppingCard = (props) => {
   const increaser = () => {
     props.inc(props.id);
     setnotzero(false);
-    if (props.count === props.stock) {
+    if (props.count >= props.stock) {
       setoutStock(true);
     }
   };
