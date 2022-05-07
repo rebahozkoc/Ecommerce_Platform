@@ -32,17 +32,19 @@ const ShoppingCard = (props) => {
   };
 
   const decreaser = () => {
-    props.dec(props.id);
     setoutStock(false);
     if (props.count === 0) {
       setnotzero(true);
+    } else {
+      props.dec(props.id);
     }
   };
   const increaser = () => {
-    props.inc(props.id);
     setnotzero(false);
     if (props.count >= props.stock) {
       setoutStock(true);
+    } else {
+      props.inc(props.id);
     }
   };
 
@@ -61,9 +63,11 @@ const ShoppingCard = (props) => {
             />
           </Link>
           <Stack direction="column">
-            <Typography variant="body1">{props.title}</Typography>
+            <Typography variant="body1" sx={{ fontSize: 10 }}>
+              {props.title}
+            </Typography>
             <Divider />
-            <Typography variant="body2">{props.description}</Typography>
+            <Typography variant="body2">{props.number}</Typography>
             <Box sx={{ m: 2 }} />
             <Typography
               variant="body2"

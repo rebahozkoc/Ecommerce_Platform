@@ -47,29 +47,21 @@ export const getDataWithoutAccess = async (link) => {
 
 export const createShoppingDict = () => {
   let orderList = getCookie("orderList");
+  console.log(orderList);
   let cartDict = {};
-
-  while (orderList != "") {
-    let num = Number(
-      orderList[0] != "-" ? orderList[0] : orderList.substring(0, 2)
-    );
-    //console.log(cartDict);
-    if (orderList.length > 2) {
-      orderList =
-        orderList[0] != "-" ? orderList.substring(2) : orderList.substring(3);
-    } else {
-      orderList = "";
-    }
-    orderList = orderList || "";
-
+  //console.log("order", orderList);
+  orderList = orderList.split(" ");
+  for (let index = 0; index < orderList.length; index++) {
+    let num = Number(orderList[index]);
+    //console.log(num);
     if (num > 0) {
       if (num in cartDict) {
         cartDict[num] += 1;
       } else {
         cartDict[num] = 1;
       }
-    } else {
-      console.log("here", num);
+    } else if (num < 0) {
+      //console.log("here", num);
       if (!(num in cartDict)) {
         cartDict[-1 * num] = 0;
       }
@@ -80,24 +72,31 @@ export const createShoppingDict = () => {
 };
 
 export const addCardtoCookie = (proId) => {
+  console.log(proId);
   let orderList = getCookie("orderList");
+
   orderList = `${orderList} ${proId}`;
-  document.cookie = `orderList=${orderList}`;
+  document.cookie = `orderList=${orderList};path=/`;
 };
 
 export const createOrderCookie = (cartDict) => {
-  console.log(getCookie("orderList"));
-  document.cookie = "orderList=";
+  //console.log(getCookie("orderList"));
+  document.cookie = "orderList=;path=/";
 
   for (let item in cartDict) {
+    console.log("dict", item);
     for (let i = 0; i < cartDict[item]; i++) {
       addCardtoCookie(item);
     }
     if (cartDict[item] == 0) {
-      console.log("from", item);
+      //console.log("from", item);
       addCardtoCookie(-1 * item);
     }
   }
+};
+
+export const resetOrdercCookie = () => {
+  document.cookie = "orderList=;path=/";
 };
 
 export const decreaseCardCookie = (proId) => {
