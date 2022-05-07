@@ -28,7 +28,7 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
-    order_id = Column(Integer, nullable=False)
+    order_id = Column(Integer, nullable=True)
     image_url = Column(String, nullable=False)
     subcategories = relationship(
         "CategorySubCategory", cascade="all,delete", back_populates="category"
