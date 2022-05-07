@@ -7,11 +7,11 @@ import getImg
 from getProduct import getProduct
 
 categoryURL = "https://www.vivense.com/mutfak-tekstili.html?ref=menu_text"
-fileName = "Kitchen Textile 5-11.json"
-category_id = 5
-subcategory_id = 11
-model = "Kitchen"
-number = "Kitchen Textile"
+fileName = "Study Desk 6-12.json"
+category_id = 6
+subcategory_id = 12
+model = "Study Room"
+number = "Study Desk"
 import json
 from bs4 import BeautifulSoup
 

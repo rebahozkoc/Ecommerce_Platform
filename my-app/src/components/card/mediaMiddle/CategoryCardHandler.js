@@ -2,20 +2,22 @@ import { Grid, Container, Card, Box } from "@mui/material";
 import CategoryCard from "./functions/CategoryCard";
 const CategoryCardHandler = (props) => {
   const cards = props.item;
+  console.log("cards")
+  console.log(cards);
   return (
-    <>
+    <div>
       <h2 className="h2Center">Our Furn</h2>
       <Container maxWidth="lg" height="400">
         <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={3}>
-              <CategoryCard></CategoryCard>
+          {cards.map((item) => (
+            <Grid item key={item} xs={12} sm={6} md={6}>
+              <CategoryCard image={item.image_url} title= {item.title} id={item.id}></CategoryCard>
             </Grid>
           ))}
-          ;
+          
         </Grid>
       </Container>
-    </>
+    </div>
   );
 };
 export default CategoryCardHandler;

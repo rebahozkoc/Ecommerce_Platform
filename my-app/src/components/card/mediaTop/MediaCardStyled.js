@@ -27,7 +27,7 @@ export default function MediaCardStyled(props) {
 
 function Item(props) {
   return (
-    <Link to="/Dummy" underline="none" sx={{ zIndex: "0" }}>
+    <Link to="/" underline="none" sx={{ zIndex: "0" }}>
       <CardMedia
         component="img"
         height={450}
