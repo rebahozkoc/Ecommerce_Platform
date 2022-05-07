@@ -50,7 +50,7 @@ class ProductInDBBase(ProductBase):
 
 
 class Product(ProductInDBBase):
-    category_title: str
-    subcategory_title: str
+    category_title: Optional[str]
+    subcategory_title: Optional[str]
     
     photos: List[ProductPhotoBase] = []

@@ -20,3 +20,4 @@ from .category import (
 )
 from .address import AddressBase, AddressCreate, AddressInDBBase, AddressUpdate
 from .credit import CreditBase, CreditCreate, CreditInDBBase, CreditUpdate
+from .shopping_cart import ShoppingCart, ShoppingCartAddProduct, ShoppingCartUpdateProduct
