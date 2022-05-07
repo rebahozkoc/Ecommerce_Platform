@@ -9,7 +9,7 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 from sqlalchemy.orm import Session
 from fastapi import UploadFile
 from utilities.image import ImageUtilities
-
+from sqlalchemy import desc
 
 class CRUDCategory(
     CRUDBase[schemas.CategoryBase, schemas.CategoryCreate, schemas.CategoryUpdate]
@@ -36,6 +36,7 @@ class CRUDCategory(
             .options(joinedload(models.Category.subcategories))
             .offset(skip)
             .limit(limit)
+            .order_by(desc(models.Category.order)) #I do wonder what will happen to the already defined categories. Will they have null orders, but the order column is nullable=False, so will I get an error, 
             .all()
         )
 
