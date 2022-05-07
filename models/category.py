@@ -54,5 +54,6 @@ class SubCategory(Base):
         "CategorySubCategory", cascade="all,delete", back_populates="subcategory"
     )
     
-    def __init__(self, title):
+    def __init__(self, title, order_id):
         self.title = title
+        self.order_id = order_id
