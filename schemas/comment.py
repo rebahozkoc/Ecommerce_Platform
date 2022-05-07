@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 from pydantic import Extra
-
+from schemas import User
 
 class CommentBase(BaseModel):
     id: int
@@ -30,6 +30,8 @@ class CommentInDBBase(CommentBase):
     class Config:
         orm_mode = True
 
+class Comment(CommentInDBBase):
+    user: User
 
 class CommentList(BaseModel):
     comments: List[CommentBase]
