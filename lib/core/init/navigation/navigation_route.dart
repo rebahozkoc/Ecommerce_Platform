@@ -13,6 +13,7 @@ import 'package:mobile/view/comments/view/comments_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
 import 'package:mobile/view/payment/view/payment_view.dart';
+import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/view/product_view.dart';
 import 'package:mobile/view/search/view/search_view.dart';
 
@@ -41,7 +42,8 @@ class NavigationRoute {
             const AddressView(), NavigationConstants.ADRESS);
       case NavigationConstants.PRODUCT:
         return cupertinoNavigate(
-            const ProductView(), NavigationConstants.ADRESS);
+            ProductView(product: args.arguments as ProductModel),
+            NavigationConstants.ADRESS);
       case NavigationConstants.PAYMENT:
         return bottomToTopNavigate(
             const PaymentView(), NavigationConstants.PAYMENT);

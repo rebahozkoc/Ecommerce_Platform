@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/constants/image/image_constants.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 
@@ -11,15 +13,21 @@ class LargeProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(8)),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.white,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [_content(), _infos(), Container()],
+    return InkWell(
+      onTap: () => NavigationService.instance.navigateToPage(
+        path: NavigationConstants.PRODUCT,
+        data: product,
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        child: Container(
+          decoration: const BoxDecoration(
+            color: AppColors.white,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [_content(), _infos(), Container()],
+          ),
         ),
       ),
     );
@@ -121,6 +129,8 @@ class LargeProduct extends StatelessWidget {
     return Text(
       isExist ? product!.title! : "Wing Chair",
       textAlign: TextAlign.start,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       style: const TextStyle(
         color: AppColors.tertiary,
         fontWeight: FontWeight.bold,
@@ -145,7 +155,7 @@ class LargeProduct extends StatelessWidget {
   Text _price() {
     bool isExist = product?.price?.isFinite ?? false;
     return Text(
-     (isExist ? product!.price!.toString() : "380")+"₺",
+      (isExist ? product!.price!.toString() : "380") + "₺",
       textAlign: TextAlign.start,
       style: const TextStyle(
         color: AppColors.primary,
