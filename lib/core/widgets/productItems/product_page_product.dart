@@ -82,10 +82,10 @@ class _PageProductState extends State<PageProduct>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               const SizedBox(height: 24),
-              _favoriteButton(),
+              //_favoriteButton(),
               const SizedBox(height: 24),
-              _shoppingCartButton(),
-              const SizedBox(height: 230),
+              //_shoppingCartButton(),
+              const SizedBox(height: 300),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -21,7 +21,8 @@ class CartProduct extends StatefulWidget {
 
 class _CartProductState extends State<CartProduct> {
   late int _counter = widget.shopItem?.quantity ?? 1;
-
+  late String _title =
+      widget.shopItem!.product!.title!.substring(0, 17) + '...';
   @override
   Widget build(BuildContext context) {
     // setState(() {
@@ -51,7 +52,8 @@ class _CartProductState extends State<CartProduct> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 25, 5, 5),
                   child: Text(
-                    widget.shopItem!.product!.title!,
+                    _title,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -72,6 +74,8 @@ class _CartProductState extends State<CartProduct> {
                         ),
                       ),
                     ),
+                    SizedBox(width: 60),
+                    _buttons(),
                   ],
                 ),
                 Row(
@@ -85,17 +89,12 @@ class _CartProductState extends State<CartProduct> {
                         style: const TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w900,
-                          fontSize: 18,
+                          fontSize: 16,
                         ),
                       ),
                     ),
                   ],
                 )
-              ],
-            ),
-            Row(
-              children: [
-                _buttons(),
               ],
             ),
           ],

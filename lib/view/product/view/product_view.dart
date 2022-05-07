@@ -71,8 +71,8 @@ class _ProductViewState extends BaseState<ProductView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          addToFavorites(),
           addToCart(),
-          buyNow(),
         ],
       ),
     );
@@ -106,12 +106,12 @@ class _ProductViewState extends BaseState<ProductView> {
         ],
       );
 
-  OutlinedButton addToCart() => OutlinedButton(
+  OutlinedButton addToFavorites() => OutlinedButton(
         onPressed: () {
-          debugPrint("Add to cart button pressed...");
+          debugPrint("Add to favorites button pressed...");
         },
         child: const Text(
-          "Add To Cart",
+          "Add To Favorites",
           style: TextStyle(
             color: AppColors.white,
             fontSize: 14,
@@ -124,10 +124,10 @@ class _ProductViewState extends BaseState<ProductView> {
             side: const BorderSide(width: 1.0, color: AppColors.white)),
       );
 
-  OutlinedButton buyNow() => OutlinedButton(
+  OutlinedButton addToCart() => OutlinedButton(
         onPressed: () {},
         child: const Text(
-          "Buy Now",
+          "Add To Cart",
           style: TextStyle(
             color: AppColors.black,
             fontSize: 14,
