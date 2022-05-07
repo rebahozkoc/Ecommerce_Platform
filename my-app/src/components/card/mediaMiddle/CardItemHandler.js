@@ -6,17 +6,16 @@ import CardItem from "./functions/CardItem";
 const CardItemHandler = (props) => {
   const data = structuredClone(props.item);
   let dataCopy = structuredClone(props.item);
-  
+
   const [dynamicData, setDynamicData] = React.useState(data);
   const [changed, setChanged] = React.useState(false);
-
 
   React.useEffect(() => {
     setChanged(false);
   }, [changed]);
 
   const handleSort = (sort) => {
-    if (sort === 0){
+    if (sort === 0) {
       setDynamicData(dataCopy);
       console.log(dataCopy);
       console.log("sort 0");
@@ -26,14 +25,13 @@ const CardItemHandler = (props) => {
       // Sort by price low to high
       data.sort((a, b) => a.price - b.price);
       setDynamicData(data);
-
     } else if (sort === 2) {
       // Sort by price high to low
       data.sort((a, b) => b.price - a.price);
       setDynamicData(data);
     } else if (sort === 3) {
       // Sort by popularity
-      data.sort((a, b) => a.stock - b.stock);
+      data.sort((a, b) => b.comment_count - a.comment_count);
       setDynamicData(data);
       console.log("sort 3");
     }
@@ -41,8 +39,6 @@ const CardItemHandler = (props) => {
     setChanged(true);
   };
 
-
-  
   return (
     <div>
       <Typography

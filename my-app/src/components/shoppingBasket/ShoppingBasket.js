@@ -418,10 +418,7 @@ const ShoppingBasket = () => {
                             );
                           }}
                         >
-                          {
-                            (totalCost +=
-                              card.product.price * mydict[card.product.id])
-                          }
+                          {(totalCost += card.product.price * card.quantity)}
                         </ShoppingCard>
                       </ListItem>
                     ))}
