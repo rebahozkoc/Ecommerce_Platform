@@ -198,6 +198,33 @@ const ShoppingBasket = () => {
     }
   };
 
+  const filterCards2 = () => {
+    //need post request you can make it in useeffect
+    if (filter != -1) {
+      axios
+        .delete(`http://164.92.208.145/api/v1/users/shopping_cart/${filter}`, {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          let newpro = products.filter(
+            (product) => product.product.id !== filter
+          );
+          setProducts(newpro);
+          console.log(products);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      //window.location.reload();
+    }
+  };
+
   const incCard = () => {
     //need post request you can make it in useeffect
     for (let i = 0; i < products.length; i++) {
@@ -315,7 +342,7 @@ const ShoppingBasket = () => {
 
   React.useEffect(() => {
     //window.location.reload();
-    filterCards();
+    isLoggin ? filterCards2() : filterCards();
     setFilter(-1);
   }, [filter]);
 
@@ -418,10 +445,7 @@ const ShoppingBasket = () => {
                             );
                           }}
                         >
-                          {
-                            (totalCost +=
-                              card.product.price * mydict[card.product.id])
-                          }
+                          {(totalCost += card.product.price * card.quantity)}
                         </ShoppingCard>
                       </ListItem>
                     ))}

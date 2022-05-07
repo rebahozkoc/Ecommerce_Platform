@@ -44,11 +44,11 @@ const Ratings = (props) => {
             fontSize={10}
             padding={(2, 2, 2, 2)}
           >
-            {props.points[5]} Reviews
+            {props.rateCount} Reviews
           </Typography>
           <Rating
             name="read-only"
-            value={Number(props.points[6]) / Number(props.points[5])}
+            value={props.avgRating || 0}
             precision={0.1}
             readOnly
           />

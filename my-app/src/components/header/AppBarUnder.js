@@ -29,6 +29,7 @@ const AppBarUnder = () => {
     });
 
     setData(data.data);
+    console.log(data.data);
     setIsLoaded(true);
   };
 
@@ -38,9 +39,9 @@ const AppBarUnder = () => {
 
   useEffect(() => {
     if (isLoaded) {
-      let tmp = pages[5];
+      let tmp = pages[4];
       pages.map((page, index) => {
-        pages[5 - index] = pages[4 - index];
+        pages[4 - index] = pages[3 - index];
       });
       pages[0] = tmp;
 
