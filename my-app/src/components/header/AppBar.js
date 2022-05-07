@@ -472,7 +472,7 @@ export default function PrimarySearchAppBar() {
                 aria-label="show 4 new mails"
                 color="inherit"
               >
-                <Badge badgeContent={4} color="primary">
+                <Badge color="primary">
                   <FavoriteOutlinedIcon />
                 </Badge>
                 <Box sx={{ fontSize: 8 }}>

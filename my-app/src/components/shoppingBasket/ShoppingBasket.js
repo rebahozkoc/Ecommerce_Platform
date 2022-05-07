@@ -431,11 +431,14 @@ const ShoppingBasket = () => {
                 )}
                 <Divider sx={{ size: 100 }} />
                 <Link to="/" style={{ color: "black" }}>
+                <Stack direction="row" sx={{mt:2}}>
+                <ArrowBackIosOutlinedIcon />
                   <Typography sx={{ color: "black" }}>
                     {" "}
-                    <ArrowBackIosOutlinedIcon />
+                    
                     Back to Shopping
                   </Typography>
+                  </Stack>
                 </Link>
               </Box>
             </Grid>
