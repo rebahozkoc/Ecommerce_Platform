@@ -23,12 +23,9 @@ class CRUDProduct(
             .first()
         )
 
-        # TODO: Not useful way to do it! Change it!
-        # data.category_title = data.category_subcategory.category.title
-        #data.subcategory_title = data.category_subcategory.subcategory.title
-
         if not data:
             return None
+
         return data
         
     def create(self, db: Session, *, obj_in: schemas.ProductCreate) -> Product:
