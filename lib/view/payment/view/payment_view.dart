@@ -3,8 +3,8 @@ import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
-import 'package:mobile/core/widgets/productItems/cards_widget.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -361,59 +361,49 @@ class _PaymentViewState extends BaseState<PaymentView> {
         height: 150,
         width: double.infinity,
         margin: const EdgeInsets.fromLTRB(8, 16, 8, 0),
-        child: ListView.separated(
-          primary: true,
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => _savedCardContainer(context, index),
-          separatorBuilder: (context, index) => const SizedBox(width: 16),
-          itemCount: 3,
-        ),
-      );
-
-  InkWell _savedCardContainer(BuildContext context, int index) => InkWell(
-        onTap: (() => viewModel.setSelectedCard(index)),
         child: Observer(builder: (_) {
           return ListView.separated(
             primary: true,
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: viewModel.payments.length,
-            itemBuilder: (context, index) => viewModel.payments
-                .map((e) => CardsWidget(
-                      payment: e,
-                      onTap: () => viewModel.deletePayment(
-                          id: e.id!.toInt(), index: index),
-                    ))
-                .toList()[index],
+            itemBuilder: (context, index) =>
+                _savedCard(viewModel.payments[index], index),
             separatorBuilder: (context, index) => const SizedBox(width: 16),
-            /*child: Container(
-              width: 200,
-              decoration: viewModel.selectedCard == index
-                  ? _selectedDecoration
-                  : _unselectedDecoration,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      viewModel.selectedCard == index
-                          ? _selectedAddressIcon
-                          : const SizedBox(
-                              height: 32,
-                            ),
-                    ],
-                  ),
-                  _chipImage(),
-                  _cardNumber(),
-                  _cardName()
-                ],
-              ),
-            ),*/
+            itemCount: viewModel.payments.length,
+          );
+        }),
+      );
+
+
+  InkWell _savedCard(PaymentModel payment, int index) => InkWell(
+        onTap: (() => viewModel.setSelectedCard(index)),
+        child: Observer(builder: (_) {
+          return Container(
+            width: 200,
+            decoration: viewModel.selectedCard == index
+                ? _selectedDecoration
+                : _unselectedDecoration,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    viewModel.selectedCard == index
+                        ? _selectedAddressIcon
+                        : const SizedBox(
+                            height: 32,
+                          ),
+                  ],
+                ),
+                _chipImage(),
+                _cardNumber(payment.cardNumber),
+                _cardName(payment.cardName),
+              ],
+            ),
           );
         }),
       );
@@ -426,12 +416,12 @@ class _PaymentViewState extends BaseState<PaymentView> {
         ),
       );
 
-  Container _cardNumber() => Container(
+  Container _cardNumber(String? text) => Container(
         width: double.infinity,
         margin: const EdgeInsets.only(left: 16, bottom: 3, top: 16),
-        child: const Text(
-          "1234 56•• •••• 7890",
-          style: TextStyle(
+        child:  Text(
+          text ?? "1234 56•• •••• 7890",
+          style: const TextStyle(
             color: AppColors.textColorGray,
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -439,12 +429,12 @@ class _PaymentViewState extends BaseState<PaymentView> {
         ),
       );
 
-  Container _cardName() => Container(
+  Container _cardName(String? text) => Container(
         width: double.infinity,
         margin: const EdgeInsets.only(left: 16),
-        child: const Text(
-          "Charles Leclerc",
-          style: TextStyle(
+        child:  Text(
+          text ?? "Charles Leclerc",
+          style: const TextStyle(
             color: AppColors.darkGray,
             fontSize: 14,
             fontWeight: FontWeight.w400,
@@ -569,21 +559,4 @@ class _PaymentViewState extends BaseState<PaymentView> {
           )
         ],
       );
-
-  Observer _payments() => Observer(builder: (_) {
-        return ListView.separated(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-            primary: true,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => viewModel.payments
-                .map((e) => CardsWidget(
-                      payment: e,
-                      onTap: () => viewModel.deletePayment(
-                          id: e.id!.toInt(), index: index),
-                    ))
-                .toList()[index],
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemCount: viewModel.payments.length);
-      });
 }

@@ -20,41 +20,20 @@ class _ProductViewState extends BaseState<ProductView> {
   @override
   Widget build(BuildContext context) {
     return BaseView(
-      viewModel: locator<ProductViewModel>(),
-      onModelReady: (dynamic model) async {
-        model.setContext(context);
-        model.init();
-        viewModel = model;
-        viewModel.product = widget.product;
-      },
-      onPageBuilder: (context, value) {
-        return FutureBuilder(
-            future: viewModel.getData(),
-            builder: ((context, snapshot) => snapshot.hasData
-                ? Scaffold(
-                    appBar: _appBar(),
-                    body: _body(),
-                    bottomNavigationBar: Container(
-                      height: 100,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(12.0),
-                          topLeft: Radius.circular(12.0),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          addToCart(),
-                          buyNow(),
-                        ],
-                      ),
-                    ),
-                  )
-                : const Center(child: CircularProgressIndicator())));
-      },
-    );
+        viewModel: locator<ProductViewModel>(),
+        onModelReady: (dynamic model) async {
+          model.setContext(context);
+          model.init();
+          viewModel = model;
+          viewModel.product = widget.product;
+        },
+        onPageBuilder: (context, value) {
+          return Scaffold(
+            appBar: _appBar(),
+            body: _body(),
+            bottomNavigationBar: _bottomNavBar(),
+          );
+        });
 
     /*Scaffold(
           appBar: _appBar(),
@@ -77,6 +56,26 @@ class _ProductViewState extends BaseState<ProductView> {
             ),
           ),
         );*/
+  }
+
+  Container _bottomNavBar() {
+    return Container(
+      height: 100,
+      decoration: const BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(12.0),
+          topLeft: Radius.circular(12.0),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          addToCart(),
+          buyNow(),
+        ],
+      ),
+    );
   }
 
   AppBar _appBar() {

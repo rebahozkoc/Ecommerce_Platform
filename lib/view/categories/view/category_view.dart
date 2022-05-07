@@ -90,7 +90,7 @@ class _CategoryViewState extends BaseState<CategoryView> {
               ),
             ),
             builder: (context) => FractionallySizedBox(
-              heightFactor: 0.75,
+              heightFactor: 0.625,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(25),
@@ -123,7 +123,7 @@ class _CategoryViewState extends BaseState<CategoryView> {
           children: [
             _indicator(),
             ExpansionPanelList.radio(
-              elevation: 0,
+              //elevation: 0,
               children: [_sortBy()],
               dividerColor: AppColors.darkGray,
             ),

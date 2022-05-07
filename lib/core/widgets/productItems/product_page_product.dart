@@ -160,16 +160,16 @@ class _PageProductState extends State<PageProduct>
     );
   }
 */
-  ClipRRect _smallImage() => ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        child: CachedNetworkImage(
-          imageUrl:
-              "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
-          width: 100,
-          height: 100,
-          fit: BoxFit.fill,
-        ),
-      );
+  // ClipRRect _smallImage() => ClipRRect(
+  //       borderRadius: const BorderRadius.all(Radius.circular(8)),
+  //       child: CachedNetworkImage(
+  //         imageUrl:
+  //             "http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png",
+  //         width: 100,
+  //         height: 100,
+  //         fit: BoxFit.fill,
+  //       ),
+  //     );
 
   InkWell _favoriteButton() => InkWell(
         onTap: (() {
@@ -265,7 +265,7 @@ class _PageProductState extends State<PageProduct>
     return Text(
       "Item ID: " + widget.product!.id!.toString(),
       textAlign: TextAlign.start,
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.tertiary,
         fontWeight: FontWeight.w600,
         fontSize: 14,
@@ -278,7 +278,7 @@ class _PageProductState extends State<PageProduct>
     return Text(
       isExist ? widget.product!.distributor! : "Goal Design",
       textAlign: TextAlign.start,
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.darkGray,
         fontWeight: FontWeight.w400,
         fontSize: 12,
@@ -290,7 +290,7 @@ class _PageProductState extends State<PageProduct>
     return Text(
       widget.product!.price!.toString() + "₺",
       textAlign: TextAlign.start,
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.primary,
         fontWeight: FontWeight.w900,
         fontSize: 22,
@@ -383,7 +383,7 @@ class _PageProductState extends State<PageProduct>
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Flexible(
@@ -391,7 +391,7 @@ class _PageProductState extends State<PageProduct>
           isExist
               ? widget.product!.description!
               : "People have been using natural objects, such as tree stumps, rocks and moss, as furniture since the beginning of human civilisation. Archaeological research.",
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.darkGray,
             fontWeight: FontWeight.w400,
             fontSize: 14,

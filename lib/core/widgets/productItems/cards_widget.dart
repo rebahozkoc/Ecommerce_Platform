@@ -4,7 +4,6 @@ import 'package:mobile/core/init/icon/entypo.dart';
 import 'package:mobile/core/init/icon/font_awesome5.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
-import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 
 class CardsWidget extends StatelessWidget {
   final PaymentModel payment;
