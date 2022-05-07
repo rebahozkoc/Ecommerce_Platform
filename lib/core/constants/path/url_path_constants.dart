@@ -14,5 +14,10 @@ class PathConstants {
   // ADDRESS  
   static const ADDRESS = _URL + 'api/v1/user/addresses';
 
+<<<<<<< HEAD
   static const PAYMENT = _URL + 'api/v1/user/credit';
+=======
+  // PRODUCT
+  static const PRODUCT = _URL + 'api/v1/products';
+>>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 }

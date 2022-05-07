@@ -10,7 +10,7 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
-  int _counter = 0;
+  int _counter = 1;
   void add(){
     setState(() {
       _counter++;

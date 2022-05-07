@@ -24,6 +24,9 @@ import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/payment/repository/payment_repository.dart';
 import 'package:mobile/view/payment/service/payment_service.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
+import 'package:mobile/view/product/model/product_model.dart';
+import 'package:mobile/view/product/repository/product_repository.dart';
+import 'package:mobile/view/product/service/product_service.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 import 'package:mobile/view/search/viewmodel/search_view_model.dart';
 import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
@@ -50,7 +53,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => PaymentViewModel());
   locator.registerLazySingleton(() => CommentsViewModel());
   locator.registerLazySingleton(() => AddCommentsViewModel());
-
+  
   // Model
   locator.registerLazySingleton(() => UserTokenModel());
   locator.registerLazySingleton(() => CategoriesResponseModel());
@@ -58,20 +61,32 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => AddressModel());
   locator.registerLazySingleton(() => AddressResponseModel());
   locator.registerLazySingleton(() => AddressesResponseModel());
+<<<<<<< HEAD
   locator.registerLazySingleton(() => PaymentResponseModel());
   locator.registerLazySingleton(() => PaymentsResponseModel());
+=======
+  locator.registerLazySingleton(() => ProductResponseModel());
+>>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
   locator.registerLazySingleton(() => CategoryRepository());
   locator.registerLazySingleton(() => AddressRepository());
+<<<<<<< HEAD
   locator.registerLazySingleton(() => PaymentRepository());
+=======
+  locator.registerLazySingleton(() => ProductRepository());
+>>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 
   // Service
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => CategoryService());
   locator.registerLazySingleton(() => AddressService());
+<<<<<<< HEAD
   locator.registerLazySingleton(() => PaymentService());
+=======
+  locator.registerLazySingleton(() => ProductService());
+>>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 }
 
 Future<void> resetLocator() async {

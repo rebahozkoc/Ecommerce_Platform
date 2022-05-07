@@ -29,8 +29,14 @@ class ApplicationConstants {
 
 <<<<<<< HEAD
   static const CATEGORY_ID = 0;
+<<<<<<< HEAD
 =======
     static const PAYMENT_LIMIT = 100;
   static const PAYMENT_SKIP = 0;
 >>>>>>> credit_card
+=======
+
+  static const PRODUCT_ID = 10;
+
+>>>>>>> fc6ea7214912a17deaa0218e599abf278e4913e7
 }
