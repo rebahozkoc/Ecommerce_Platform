@@ -12,6 +12,7 @@ SubCategory
 class SubCategoryBase(BaseModel):
     id: int = Field(alias="subcategory_id")
     title: str = Field(alias="subcategory_title")
+    order_id: Optional[int] = 0
 
     class Config:
         orm_mode = True
@@ -20,7 +21,8 @@ class SubCategoryBase(BaseModel):
 
 class SubCategoryCreate(BaseModel):
     title: str
-
+    order_id: Optional[int] = 0
+    
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
@@ -45,6 +47,7 @@ Category schemas
 
 class CategoryBase(BaseModel):
     title: str = Field(alias="category_title")
+    order_id: Optional[int] = 0
 
     class Config:
         allow_population_by_field_name = True
@@ -52,6 +55,7 @@ class CategoryBase(BaseModel):
 
 class CategoryCreate(CategoryBase):
     title: str
+    order_id: Optional[int] = 0
 
 
 class CategoryUpdate(CategoryCreate):

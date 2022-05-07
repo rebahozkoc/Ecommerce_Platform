@@ -28,6 +28,7 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
+    order_id = Column(Integer, nullable=False)
     image_url = Column(String, nullable=False)
     subcategories = relationship(
         "CategorySubCategory", cascade="all,delete", back_populates="category"
@@ -38,8 +39,9 @@ class Category(Base):
         return list(chain(*[s.products for s in self.subcategories]))
 
 
-    def __init__(self, title):
+    def __init__(self, title, order_id):
         self.title = title
+        self.order_id = order_id
 
 
 class SubCategory(Base):
@@ -47,9 +49,11 @@ class SubCategory(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
+    order_id = Column(Integer, nullable=False)
     categories = relationship(
         "CategorySubCategory", cascade="all,delete", back_populates="subcategory"
     )
     
-    def __init__(self, title):
+    def __init__(self, title, order_id):
         self.title = title
+        self.order_id = order_id
