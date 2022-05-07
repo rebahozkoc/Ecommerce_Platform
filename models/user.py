@@ -17,5 +17,5 @@ class User(Base):
     credits = relationship("Credit", back_populates="user")
 
     shopping_cart_products = relationship(
-        "ShoppingCart", cascade="all,delete"
+        "ShoppingCart"
     )
