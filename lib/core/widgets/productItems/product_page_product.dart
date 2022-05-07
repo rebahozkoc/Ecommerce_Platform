@@ -15,7 +15,11 @@ class PageProduct extends StatefulWidget {
   State<PageProduct> createState() => _PageProductState();
 }
 
-class _PageProductState extends State<PageProduct> {
+class _PageProductState extends State<PageProduct>
+    with TickerProviderStateMixin {
+  late TabController controller;
+  int index = 0;
+
   int _counter = 1;
   void add() {
     setState(() {
@@ -28,6 +32,19 @@ class _PageProductState extends State<PageProduct> {
       if (_counter != 0) {
         _counter--;
       }
+    });
+  }
+
+  @override
+  void initState() {
+    controller = TabController(length: 3, vsync: this);
+    controller.addListener(_setActiveTabIndex);
+    super.initState();
+  }
+
+  void _setActiveTabIndex() {
+    setState(() {
+      index = controller.index;
     });
   }
 
@@ -81,13 +98,12 @@ class _PageProductState extends State<PageProduct> {
   SizedBox _image() {
     bool isExist = widget.product?.photos?.isNotEmpty ?? false;
     return SizedBox(
-      width: double.infinity,
-      height: 400,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          itemBuilder: (context, i) {
-            return AspectRatio(
+        width: double.infinity,
+        height: 400,
+        child: TabBarView(
+          controller: controller,
+          children: [
+            AspectRatio(
               aspectRatio: 1,
               child: CachedNetworkImage(
                 imageUrl: isExist
@@ -96,9 +112,29 @@ class _PageProductState extends State<PageProduct> {
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
-            );
-          }),
-    );
+            ),
+            AspectRatio(
+              aspectRatio: 1,
+              child: CachedNetworkImage(
+                imageUrl: isExist
+                    ? widget.product!.photos!.first.photoUrl!
+                    : ApplicationConstants.PRODUCT_IMG,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            ),
+            AspectRatio(
+              aspectRatio: 1,
+              child: CachedNetworkImage(
+                imageUrl: isExist
+                    ? widget.product!.photos!.first.photoUrl!
+                    : ApplicationConstants.PRODUCT_IMG,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ],
+        ));
   }
 
 /*
