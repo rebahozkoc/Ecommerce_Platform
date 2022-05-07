@@ -10,7 +10,7 @@ import json
 from bs4 import BeautifulSoup
 
 
-def getImg(url, productId):
+def getImg(url, productId, folderName):
     r = requests.get(url)
     result = r.text
     soup = BeautifulSoup(result, "lxml")
@@ -19,7 +19,7 @@ def getImg(url, productId):
 
     imgNum= 0
     try:
-        os.mkdir(str(productId))
+        os.mkdir(folderName + "/" + str(productId))
     except OSError as error:
         print(error)
     for img in imgs.findAll(name="img"):
@@ -27,6 +27,6 @@ def getImg(url, productId):
         imgNum += 1
         img_data = requests.get(imgUrl).content
         print("Downlaoding", imgUrl)
-        with open(str(productId) + "/" + str(imgNum) + ".jpg", 'wb') as handler:
+        with open(folderName + "/" + str(productId) + "/" + str(imgNum) + ".jpg", 'wb') as handler:
             handler.write(img_data)
         time.sleep(0.1)

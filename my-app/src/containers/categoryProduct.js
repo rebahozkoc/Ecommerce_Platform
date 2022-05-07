@@ -38,6 +38,7 @@ const CategoryProduct = () => {
       `http://164.92.208.145/api/v1/categories/${lastId}`
     ).then((res) => {
       setProducts(res.data.products);
+      console.log(products);
       setLoaded(true);
     });
   }, [type]);
