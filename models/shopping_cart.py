@@ -14,7 +14,7 @@ class ShoppingCart(Base):
 
     # relations
     user_id = Column(ForeignKey("user.id"))
-    user = relationship("User", cascade="all,delete")
+    user = relationship("User", back_populates="shopping_cart_products")
 
     product_id = Column(ForeignKey("product.id"))
-    product = relationship("Product")
+    product = relationship("Product", back_populates="shopping_cart_users")

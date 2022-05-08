@@ -9,7 +9,7 @@ class Comment(Base):
     content = Column(String(1000), nullable=False)
 
     user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship("User", back_populates="comments")
+    user = relationship("User", back_populates="comments", cascade="all,delete")
 
     product_id = Column(Integer, ForeignKey('product.id'))
-    product = relationship("Product", back_populates="comments")
+    product = relationship("Product", back_populates="comments", cascade="all,delete")

@@ -43,31 +43,29 @@ async def get_product(
             detail={"message": f"Product does not exists"},
         )
 
-    # base_product = schemas.ProductShow(**product.__dict__)
-    # base_product.average_rate = crud.product.get_avg_rate(db=db, id=product.id)
-
     return Response(data=product)
-@router.delete(
-    "/{product_id}", response_model=Response[schemas.ProductBase]
-)
+
+
+@router.delete("/{product_id}", response_model=Response[schemas.ProductBase])
 def delete_product(
-        *,
-        product_id: int,
-        db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(deps.get_current_user),
-    ) -> Any:
-        """
-        Delete a product by id.
-        """
-        product = crud.product.get(db=db, field="id", value=product_id)
-        if not product:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail={"message": f"Product does not exist"},
-            )
-        
-        product = crud.product.remove(db=db, id=product_id)
-        return Response(data=product, isSuccess=True)
+    *,
+    product_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+) -> Any:
+    """
+    Delete a product by id.
+    """
+    product = crud.product.get(db=db, field="id", value=product_id)
+    if not product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Product does not exist"},
+        )
+
+    product = crud.product.remove(db=db, id=product_id)
+    return Response(data=product, isSuccess=True)
+
 
 @router.post("/{id}/photo/add", response_model=Response)
 async def add_photo_to_product(
