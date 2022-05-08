@@ -57,17 +57,32 @@ class _ShopListViewState extends BaseState<ShopListView> {
         builder: (_) => Stack(
           children: <Widget>[
             viewModel.shopList.isNotEmpty
-                ? ListView.builder(
-                    itemCount: viewModel.shopList.length,
-                    itemBuilder: (context, index) {
-                      return Observer(builder: (_) {
-                        return CartProduct(
-                          shopItem: viewModel.shopList[index],
-                          onIncrease: () => viewModel.increaseQuantity(viewModel.shopList[index]),
-                          onDecrease: () => viewModel.decreaseQuantity(viewModel.shopList[index]),
-                        );
-                      });
-                    })
+                ? RefreshIndicator(
+                    color: AppColors.primary,
+                    onRefresh: () {
+                      return Future.delayed(
+                        Duration(seconds: 1),
+                        () {
+                          setState(() {
+                            viewModel.init();
+                          });
+                        },
+                      );
+                    },
+                    child: ListView.builder(
+                        itemCount: viewModel.shopList.length,
+                        itemBuilder: (context, index) {
+                          return Observer(builder: (_) {
+                            return CartProduct(
+                              shopItem: viewModel.shopList[index],
+                              onIncrease: () => viewModel
+                                  .increaseQuantity(viewModel.shopList[index]),
+                              onDecrease: () => viewModel
+                                  .decreaseQuantity(viewModel.shopList[index]),
+                            );
+                          });
+                        }),
+                  )
                 : Container(),
             Align(
               alignment: Alignment.bottomCenter,
@@ -92,7 +107,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           RichText(
-                              text:  TextSpan(children: [
+                              text: TextSpan(children: [
                             const TextSpan(
                                 text: "Total: ",
                                 style: TextStyle(

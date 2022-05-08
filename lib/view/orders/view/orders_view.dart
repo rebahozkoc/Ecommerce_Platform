@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
+import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/productItems/track_product_big.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
@@ -54,22 +55,35 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
 
   Center _body() =>  Center(
     child: Expanded(
-      child: ListView(
-        children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-
-          children: const [
-            TrackProductBig(),
-            TrackProductBig(),
-            TrackProductBig(),
-            TrackProductBig(),
-            TrackProductBig(),
-
+      child: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () {
+            return Future.delayed(
+              Duration(seconds: 1),
+              () {
+                setState(() {
+                  viewModel.init();
+                });
+              },
+            );
+          },
+        child: ListView(
+          children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+      
+            children: const [
+              TrackProductBig(),
+              TrackProductBig(),
+              TrackProductBig(),
+              TrackProductBig(),
+              TrackProductBig(),
+      
+            ],
+          ),
+      
           ],
         ),
-
-        ],
       )
     ),
 
