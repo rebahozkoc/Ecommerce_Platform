@@ -94,6 +94,13 @@ class CRUDProduct(
         return db.query(func.avg(ProductRate.rate).label("average")).filter(
             ProductRate.id == id
         )
-
+    
+    def decrease_stock(self, db: Session, product_id: int, quantity: int):
+        product = db.query(Product).filter(Product.id == product_id).first()
+        product.stock = product.stock - quantity
+        db.add(product)
+        db.commit()
+        db.refresh(product)
+        return product
 
 product = CRUDProduct(Product)
