@@ -436,8 +436,8 @@ class _PageProductState extends State<PageProduct>
 
   TextButton _commentButton() => TextButton(
       onPressed: () {
-        NavigationService.instance
-            .navigateToPage(path: NavigationConstants.COMMENTS);
+        NavigationService.instance.navigateToPage(
+            path: NavigationConstants.COMMENTS, data: widget.product);
       },
       child: const Text(
         "Show all",

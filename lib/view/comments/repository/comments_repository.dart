@@ -9,11 +9,11 @@ class CommentsRepository with CommentsServiceBase {
   final _service = locator<CommentsService>();
 
   @override
-  Future<CommentsModel> getComments({
+  Future<CommentsModelResponse> getComments({
     BuildContext? context,
     int? productId,
   }) async {
-    CommentsModel _responseModel = await _service.getComments(
+    CommentsModelResponse _responseModel = await _service.getComments(
       context: context,
       productId: productId ?? ApplicationConstants.PRODUCT_ID,
     );

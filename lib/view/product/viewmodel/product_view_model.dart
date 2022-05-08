@@ -16,7 +16,7 @@ class ProductViewModel = _ProductViewModelBase with _$ProductViewModel;
 
 abstract class _ProductViewModelBase with Store, BaseViewModel {
   late ProductModel product;
-  late CommentsModel comments;
+  late CommentsModelResponse comments;
   late ProductRepository _repository;
   late ProductResponseModel _productResponseModel;
 

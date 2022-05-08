@@ -7,7 +7,7 @@ import 'package:mobile/view/comments/model/comments_model.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 
 class CommentsView extends StatefulWidget {
-  final CommentsModel comments;
+  final CommentsModelResponse comments;
   const CommentsView({Key? key, required this.comments}) : super(key: key);
 
   @override

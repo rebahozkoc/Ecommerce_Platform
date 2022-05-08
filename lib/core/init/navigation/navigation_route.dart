@@ -53,7 +53,7 @@ class NavigationRoute {
             const ChangeAddressView(), NavigationConstants.CHANGE_ADRESS);
       case NavigationConstants.COMMENTS:
         return cupertinoNavigate(
-            CommentsView(comments: args.arguments as CommentsModel),
+            CommentsView(comments: args.arguments as CommentsModelResponse),
             NavigationConstants.COMMENTS);
       case NavigationConstants.ADD_COMMENT:
         return cupertinoNavigate(

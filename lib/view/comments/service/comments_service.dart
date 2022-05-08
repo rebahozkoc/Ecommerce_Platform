@@ -7,11 +7,11 @@ import 'package:mobile/view/comments/service/comments_service_base.dart';
 
 class CommentsService with CommentsServiceBase {
   @override
-  Future<CommentsModel> getComments({
+  Future<CommentsModelResponse> getComments({
     BuildContext? context,
     int? productId,
   }) async {
-    CommentsModel _responseModel = locator<CommentsModel>();
+    CommentsModelResponse _responseModel = locator<CommentsModelResponse>();
     try {
       Response response;
       Dio dio = Dio();
@@ -25,12 +25,12 @@ class CommentsService with CommentsServiceBase {
         options: Options(headers: header),
       );
 
-      _responseModel = CommentsModel.fromJson(response.data);
+      _responseModel = CommentsModelResponse.fromJson(response.data);
       return _responseModel;
     } on DioError catch (exception) {
       debugPrint("Error");
       debugPrint(exception.response!.data);
-      _responseModel = locator<CommentsModel>();
+      _responseModel = locator<CommentsModelResponse>();
       _responseModel.isSuccess = false;
       return _responseModel;
     }

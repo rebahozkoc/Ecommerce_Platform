@@ -1,17 +1,19 @@
-class CommentsModel {
-  Null? message;
+import 'package:mobile/view/account/model/account_model.dart';
+
+class CommentsModelResponse {
+  String? message;
   bool? isSuccess;
-  List<Data>? data;
+  List<CommentModel>? data;
 
-  CommentsModel({this.message, this.isSuccess, this.data});
+  CommentsModelResponse({this.message, this.isSuccess, this.data});
 
-  CommentsModel.fromJson(Map<String, dynamic> json) {
+  CommentsModelResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     isSuccess = json['isSuccess'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <CommentModel>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new CommentModel.fromJson(v));
       });
     }
   }
@@ -27,15 +29,15 @@ class CommentsModel {
   }
 }
 
-class Data {
+class CommentModel {
   int? id;
   int? productId;
   String? content;
   User? user;
 
-  Data({this.id, this.productId, this.content, this.user});
+  CommentModel({this.id, this.productId, this.content, this.user});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CommentModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     productId = json['product_id'];
     content = json['content'];
@@ -50,31 +52,6 @@ class Data {
     if (this.user != null) {
       data['user'] = this.user!.toJson();
     }
-    return data;
-  }
-}
-
-class User {
-  String? email;
-  bool? isActive;
-  String? fullName;
-  int? id;
-
-  User({this.email, this.isActive, this.fullName, this.id});
-
-  User.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    isActive = json['is_active'];
-    fullName = json['full_name'];
-    id = json['id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
-    data['is_active'] = this.isActive;
-    data['full_name'] = this.fullName;
-    data['id'] = this.id;
     return data;
   }
 }

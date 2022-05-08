@@ -14,9 +14,9 @@ part 'comments_view_model.g.dart';
 class CommentsViewModel = _CommentsViewModelBase with _$CommentsViewModel;
 
 abstract class _CommentsViewModelBase with Store, BaseViewModel {
-  late CommentsModel comments;
+  late CommentsModelResponse comments;
   late CommentsRepository _repository;
-  late CommentsModel _commentsModel;
+  late CommentsModelResponse _commentsModel;
 
   @override
   void setContext(BuildContext context) => this.context = context;
