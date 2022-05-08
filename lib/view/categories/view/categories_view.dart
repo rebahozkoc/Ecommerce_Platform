@@ -51,12 +51,25 @@ class _CategoriesViewState extends BaseState<CategoriesView> {
 
   SizedBox _body() => SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SearchButtonWidget(),
-              _gridView(),
-            ],
+        child: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () {
+            return Future.delayed(
+              const Duration(seconds: 1),
+              () {
+                setState(() {
+                  viewModel.init();
+                });
+              },
+            );
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SearchButtonWidget(),
+                _gridView(),
+              ],
+            ),
           ),
         ),
       );
@@ -76,8 +89,8 @@ class _CategoriesViewState extends BaseState<CategoriesView> {
       });
 
   InkWell _categoryContainer(CategoryModel category) => InkWell(
-    onTap: () => viewModel.navigateToCategory(category),
-    child: Container(
+        onTap: () => viewModel.navigateToCategory(category),
+        child: Container(
           //padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
@@ -101,7 +114,8 @@ class _CategoriesViewState extends BaseState<CategoriesView> {
                       imageUrl: category.imageUrl!,
                       fit: BoxFit.fitHeight,
                       placeholder: (BuildContext context, String string) =>
-                          Image(image: AssetImage(ImageConstants.instance.logo))),
+                          Image(
+                              image: AssetImage(ImageConstants.instance.logo))),
                 ),
               ),
               Text(
@@ -115,5 +129,5 @@ class _CategoriesViewState extends BaseState<CategoriesView> {
             ],
           ),
         ),
-  );
+      );
 }

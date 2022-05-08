@@ -3,6 +3,7 @@ import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
+import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/productItems/large_product.dart';
 import 'package:mobile/core/widgets/search_button.dart';
 import 'package:mobile/locator.dart';
@@ -48,38 +49,51 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
 
   SizedBox _body() => SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SearchButtonWidget(),
-              GridView.count(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                shrinkWrap: true,
-                childAspectRatio: 24 / 37,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                children: const [
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                  LargeProduct(),
-                ],
-              ),
-            ],
+        child: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () {
+            return Future.delayed(
+              const Duration(seconds: 1),
+              () {
+                setState(() {
+                  viewModel.init();
+                });
+              },
+            );
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SearchButtonWidget(),
+                GridView.count(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  shrinkWrap: true,
+                  childAspectRatio: 24 / 37,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  children: const [
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                    LargeProduct(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );

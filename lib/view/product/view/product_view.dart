@@ -101,16 +101,27 @@ class _ProductViewState extends BaseState<ProductView> {
     );
   }
 
-  SingleChildScrollView _body() => SingleChildScrollView(
-        child: RoundedContainer(
-          child: Column(
-            children: [
-              PageProduct(
-                product: viewModel.product,
-                onIncrease: () => viewModel.incrementQuantity(),
-              ),
-            ],
-          ),
+  RefreshIndicator _body() => RefreshIndicator(
+        color: AppColors.primary,
+        onRefresh: () {
+          return Future.delayed(
+            const Duration(seconds: 1),
+            () {
+              setState(() {
+                viewModel.init();
+              });
+            },
+          );
+        },
+        child: ListView(
+          children: [
+            RoundedContainer(
+                child: Column(
+              children: [
+                PageProduct(product: viewModel.product),
+              ],
+            )),
+          ],
         ),
       );
 
