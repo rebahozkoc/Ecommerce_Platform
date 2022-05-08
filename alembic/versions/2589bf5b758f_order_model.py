@@ -36,7 +36,7 @@ def upgrade():
     op.create_index(op.f('ix_order_id'), 'order', ['id'], unique=False)
     op.alter_column('subcategory', 'order_id',
                existing_type=sa.INTEGER(),
-               nullable=False)
+               nullable=True)
     # ### end Alembic commands ###
 
 

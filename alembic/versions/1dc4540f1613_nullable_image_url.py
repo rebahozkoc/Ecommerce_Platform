@@ -23,7 +23,7 @@ def upgrade():
                nullable=True)
     op.alter_column('subcategory', 'order_id',
                existing_type=sa.INTEGER(),
-               nullable=False)
+               nullable=True)
     # ### end Alembic commands ###
 
 
