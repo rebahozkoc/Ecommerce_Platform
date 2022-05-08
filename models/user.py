@@ -16,6 +16,6 @@ class User(Base):
     addresses = relationship("Address", back_populates="user")
     credits = relationship("Credit", back_populates="user")
 
-    shopping_cart_products = relationship(
-        "ShoppingCart"
-    )
+    shopping_cart_products = relationship("ShoppingCart")
+
+    orders = relationship("Order")

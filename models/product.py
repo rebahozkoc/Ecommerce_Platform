@@ -52,6 +52,7 @@ class Product(Base):
     rates = relationship("ProductRate", back_populates="product")
 
     shopping_cart_users = relationship("ShoppingCart", cascade="all,delete")
+    ordered_products = relationship("Order", cascade="all,delete")
 
     rate_count = column_property(
         select([func.count(ProductRate.rate)])
