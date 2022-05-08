@@ -11,12 +11,63 @@ import {
   TextField,
 } from "@mui/material";
 import classes from "../Item/ImagePop.module.css";
+import axios from "axios";
+import { getCookie } from "../../recoils/atoms";
 
-import { useRecoilState } from "recoil";
+const access = getCookie("access_token");
 
 const NewReview = (props) => {
   const [value, setValue] = React.useState(3);
 
+  const addNewComment = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const newComment = data.get("comment");
+    //console.log(newComment);
+    axios
+      .post(
+        `http://164.92.208.145/api/v1/products/${props.id}/comment`,
+        {
+          content: newComment,
+          rate: value,
+        },
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(newComment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    let bodyContent2 = JSON.stringify({
+      rate: Number(value),
+    });
+    axios
+      .post(
+        `http://164.92.208.145/api/v1/products/${props.id}/rate?rate=${value}`,
+        bodyContent2,
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    props.onConfirm();
+  };
   return (
     <div>
       <div className={classes.backdrop} />
@@ -43,7 +94,7 @@ const NewReview = (props) => {
             alignItems: "center",
           }}
           component="form"
-          onSubmit={props.onConfirm}
+          onSubmit={addNewComment}
           noValidate
         >
           <Grid container justifyContent="center">

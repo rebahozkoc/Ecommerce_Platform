@@ -5,9 +5,9 @@ import { loggedState } from "../../recoils/atoms";
 import Rating from "@mui/material/Rating";
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
+
 const Ratings = (props) => {
   const isLogged = useRecoilValue(loggedState);
-  //console.log(Number(props.points[6]) / Number(props.points[5]));
   return (
     <Box
       sx={{
@@ -66,7 +66,7 @@ const Ratings = (props) => {
           </Typography>
           <Rating name="read-only" value={5} readOnly />
           <Typography component="legend" align="right" fontSize={12}>
-            {props.points[4]}
+            {0}
           </Typography>
         </Stack>
         <Stack
@@ -81,7 +81,7 @@ const Ratings = (props) => {
           </Typography>
           <Rating name="read-only" value={4} readOnly />
           <Typography component="legend" align="right" fontSize={12}>
-            {props.points[3]}
+            {0}
           </Typography>
         </Stack>
         <Stack
@@ -96,7 +96,7 @@ const Ratings = (props) => {
           </Typography>
           <Rating name="read-only" value={3} readOnly />
           <Typography component="legend" align="right" fontSize={12}>
-            {props.points[2]}
+            {0}
           </Typography>
         </Stack>
         <Stack
@@ -111,7 +111,7 @@ const Ratings = (props) => {
           </Typography>
           <Rating name="read-only" value={2} readOnly />
           <Typography component="legend" align="right" fontSize={12}>
-            {props.points[1]}
+            {0}
           </Typography>
         </Stack>
         <Stack
@@ -126,7 +126,7 @@ const Ratings = (props) => {
           </Typography>
           <Rating name="read-only" value={1} readOnly />
           <Typography component="legend" align="right" fontSize={12}>
-            {props.points[0]}
+            {0}
           </Typography>
         </Stack>
       </Box>
