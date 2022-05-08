@@ -34,14 +34,15 @@ class ShopListRepository extends ShopListServiceBase {
       );
       return _responseModel;
     } else {
-      String _shopListStr =
-          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST) ??
-              '[]';
+      String? _shopListStr =
+          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<ShopListItem> _shopList = json.decode(_shopListStr);
+      List<Map<String, dynamic>> _data = _shopListStr != null
+          ? json.decode(_shopListStr)
+          : <Map<String, dynamic>>[];
 
       ShopListResponseModel _responseModel = ShopListResponseModel(
-        data: _shopList,
+        data: _data.map((e) => ShopListItem.fromJson(e)).toList(),
         isSuccess: true,
         message: "Successfully collect the cart",
       );
@@ -73,20 +74,27 @@ class ShopListRepository extends ShopListServiceBase {
 
       return _responseModel;
     } else {
-      String _shopListStr =
-          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST) ??
-              '[]';
+      String? _shopListStr =
+          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<ShopListItem> _shopList = json.decode(_shopListStr);
+      List<Map<String, dynamic>> _data = _shopListStr != null
+          ? json.decode(_shopListStr)
+          : <Map<String, dynamic>>[];
+
+      List<ShopListItem> _shopList =
+          _data.map((e) => ShopListItem.fromJson(e)).toList();
+
       _shopList.add(ShopListItem(
         product: ProductModel(
           id: id ?? 0,
         ),
         quantity: quantity ?? 0,
       ));
-      _shopListStr = json.encode(_shopList);
+
+      _data = _shopList.map((e) => e.toJson()).toList();
+
       LocaleManager.instance
-          .setStringValue(PreferencesKeys.SHOPLIST, _shopListStr);
+          .setStringValue(PreferencesKeys.SHOPLIST, json.encode(_data));
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
         isSuccess: true,
         data: null,
@@ -145,15 +153,22 @@ class ShopListRepository extends ShopListServiceBase {
 
       return _responseModel;
     } else {
-      String _shopListStr =
-          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST) ??
-              '[]';
+      String? _shopListStr =
+          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<ShopListItem> _shopList = json.decode(_shopListStr);
-      _shopList.removeWhere((element) => element.product!.id == id);
-      _shopListStr = json.encode(_shopList);
+      List<Map<String, dynamic>> _data = _shopListStr != null
+          ? json.decode(_shopListStr)
+          : <Map<String, dynamic>>[];
+
+      List<ShopListItem> _shopList =
+          _data.map((e) => ShopListItem.fromJson(e)).toList();
+
+      _shopList.removeWhere((e) => e.product!.id == id);
+
+      _data = _shopList.map((e) => e.toJson()).toList();
+
       LocaleManager.instance
-          .setStringValue(PreferencesKeys.SHOPLIST, _shopListStr);
+          .setStringValue(PreferencesKeys.SHOPLIST, json.encode(_data));
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
         isSuccess: true,
         data: null,
@@ -183,14 +198,18 @@ class ShopListRepository extends ShopListServiceBase {
 
       return _responseModel;
     } else {
-      String _shopListStr =
-          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST) ??
-              '[]';
+      String? _shopListStr =
+          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<ShopListItem> _shopList = json.decode(_shopListStr);
-      ShopListItem? _shopListItem = _shopList.firstWhere(
-        (element) => element.product!.id == id,
-      );
+      List<Map<String, dynamic>> _data = _shopListStr != null
+          ? json.decode(_shopListStr)
+          : <Map<String, dynamic>>[];
+
+      List<ShopListItem> _shopList =
+          _data.map((e) => ShopListItem.fromJson(e)).toList();
+
+      ShopListItem _shopListItem =
+          _shopList.firstWhere((e) => e.product!.id == id);
 
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
         isSuccess: true,
@@ -222,17 +241,22 @@ class ShopListRepository extends ShopListServiceBase {
       );
       return _responseModel;
     } else {
-      String _shopListStr =
-          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST) ??
-              '[]';
+      String? _shopListStr =
+          LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<ShopListItem> _shopList = json.decode(_shopListStr);
-      _shopList.firstWhere((element) => element.product!.id == id).quantity =
-          quantity ?? 0;
+      List<Map<String, dynamic>> _data = _shopListStr != null
+          ? json.decode(_shopListStr)
+          : <Map<String, dynamic>>[];
 
-      _shopListStr = json.encode(_shopList);
+      List<ShopListItem> _shopList =
+          _data.map((e) => ShopListItem.fromJson(e)).toList();
+
+      _shopList.firstWhere((e) => e.product!.id == id).quantity = quantity ?? 0;
+
+      _data = _shopList.map((e) => e.toJson()).toList();
+
       LocaleManager.instance
-          .setStringValue(PreferencesKeys.SHOPLIST, _shopListStr);
+          .setStringValue(PreferencesKeys.SHOPLIST, json.encode(_data));
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
         isSuccess: true,
         data: null,

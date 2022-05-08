@@ -119,6 +119,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
       context: context,
     );
     if (_shopListResponseModel.isSuccess ?? false) {
+      debugPrint('getShopList success');
       setShopList(_shopListResponseModel.data!);
     } else {
       showToast(
