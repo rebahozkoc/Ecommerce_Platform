@@ -30,74 +30,85 @@ class _CommentsViewState extends State<CommentsView> {
         );
       },
     );
-
   }
 
   AppBar _appBar() => AppBar(
         title: const Text("All Comments"),
       );
 
-  ListView _body() => ListView(
-      children: [
-        Padding(
-            padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Row(
-                children: const [
-                  Text(
-                    "There are 3 comments about this product",
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                    ),
-                  )
-                ],
-              ),
-              const CommentWidget(),
-              const CommentWidget(),
-              const CommentWidget(),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+  RefreshIndicator _body() => RefreshIndicator(
+        color: AppColors.primary,
+        onRefresh: () {
+          return Future.delayed(
+            Duration(seconds: 1),
+            () {
+              setState(() {
+                viewModel.init();
+              });
+            },
+          );
+        },
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
                 children: [
-                  addComment(),
+                  Row(
+                    children: const [
+                      Text(
+                        "There are 3 comments about this product",
+                        style: TextStyle(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                        ),
+                      )
+                    ],
+                  ),
+                  const CommentWidget(),
+                  const CommentWidget(),
+                  const CommentWidget(),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      addComment(),
+                    ],
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
-  );
+      );
 
   OutlinedButton addComment() => OutlinedButton(
-    onPressed: (){
-      viewModel.navigateToAddCommentsView(context);
-    },
-    child: RichText(
-        text: const TextSpan(
-            children: [
-              WidgetSpan(
-                child: Icon(Icons.chat_bubble, size: 18, color: AppColors.white,),
-              ),
-              TextSpan(
-                text: " Add Review",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              )
-            ]
-        )
-    ),
-    style: OutlinedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        primary: AppColors.primary,
-        fixedSize: const Size(360, 60),
-        side: const BorderSide(width: 1.0, color: AppColors.primary)
-    ),
-  );
+        onPressed: () {
+          viewModel.navigateToAddCommentsView(context);
+        },
+        child: RichText(
+            text: const TextSpan(children: [
+          WidgetSpan(
+            child: Icon(
+              Icons.chat_bubble,
+              size: 18,
+              color: AppColors.white,
+            ),
+          ),
+          TextSpan(
+            text: " Add Review",
+            style: TextStyle(
+              color: AppColors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
+          )
+        ])),
+        style: OutlinedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            primary: AppColors.primary,
+            fixedSize: const Size(360, 60),
+            side: const BorderSide(width: 1.0, color: AppColors.primary)),
+      );
 }
-

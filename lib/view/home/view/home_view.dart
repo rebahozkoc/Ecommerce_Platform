@@ -55,7 +55,8 @@ class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
                     appBar: _appBar(),
                     body: _body(),
                   )
-                : const HomeShimmerView()));      },
+                : const HomeShimmerView()));
+      },
     );
   }
 
@@ -67,16 +68,29 @@ class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
 
   SizedBox _body() => SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SearchButtonWidget(),
-              _advertisements(),
-              _highlights(),
-              _categories(),
-              _categories(),
-              const SizedBox(height: 12)
-            ],
+        child: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () {
+            return Future.delayed(
+              Duration(seconds: 1),
+              () {
+                setState(() {
+                  viewModel.init();
+                });
+              },
+            );
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SearchButtonWidget(),
+                _advertisements(),
+                _highlights(),
+                _categories(),
+                _categories(),
+                const SizedBox(height: 12)
+              ],
+            ),
           ),
         ),
       );
