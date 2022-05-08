@@ -146,7 +146,6 @@ class _ProductViewState extends BaseState<ProductView> {
 
   OutlinedButton addToCart() => OutlinedButton(
         onPressed: () async {
-          debugPrint("quan${viewModel.quantity.toString()}");
           ShopListViewModel _shopList = locator<ShopListViewModel>();
           _shopList.init();
           bool _isSuccess = await _shopList.addQuantity(
