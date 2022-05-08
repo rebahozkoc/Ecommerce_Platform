@@ -88,7 +88,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                height: 60,
+                height: 90,
                 decoration: const BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.only(
