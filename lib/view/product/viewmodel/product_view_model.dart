@@ -4,6 +4,7 @@ import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/comments/model/comments_model.dart';
 import 'package:mobile/view/comments/view/comments_view.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/repository/product_repository.dart';
@@ -15,6 +16,7 @@ class ProductViewModel = _ProductViewModelBase with _$ProductViewModel;
 
 abstract class _ProductViewModelBase with Store, BaseViewModel {
   late ProductModel product;
+  late CommentsModel comments;
   late ProductRepository _repository;
   late ProductResponseModel _productResponseModel;
 
@@ -49,7 +51,9 @@ abstract class _ProductViewModelBase with Store, BaseViewModel {
   void navigateToCommentsView(BuildContext context) =>
       pushNewScreenWithRouteSettings(
         context,
-        screen: const CommentsView(),
+        screen: CommentsView(
+          comments: comments,
+        ),
         settings: const RouteSettings(name: NavigationConstants.COMMENTS),
         withNavBar: true,
         pageTransitionAnimation: PageTransitionAnimation.cupertino,

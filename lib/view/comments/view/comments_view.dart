@@ -3,10 +3,12 @@ import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/productItems/comment_widget.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/comments/model/comments_model.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 
 class CommentsView extends StatefulWidget {
-  const CommentsView({Key? key}) : super(key: key);
+  final CommentsModel comments;
+  const CommentsView({Key? key, required this.comments}) : super(key: key);
 
   @override
   State<CommentsView> createState() => _CommentsViewState();
@@ -22,6 +24,7 @@ class _CommentsViewState extends State<CommentsView> {
         model.setContext(context);
         model.init();
         viewModel = model;
+        viewModel.comments = widget.comments;
       },
       onPageBuilder: (context, value) {
         return Scaffold(
@@ -55,9 +58,7 @@ class _CommentsViewState extends State<CommentsView> {
                   )
                 ],
               ),
-              const CommentWidget(),
-              const CommentWidget(),
-              const CommentWidget(),
+              CommentWidget(comment: viewModel.comments),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -9,6 +9,7 @@ import 'package:mobile/view/auth/login/view/login_view.dart';
 import 'package:mobile/view/categories/model/category_model.dart';
 import 'package:mobile/view/categories/view/category_view.dart';
 import 'package:mobile/view/comments/add_comments/view/add_comments_view.dart';
+import 'package:mobile/view/comments/model/comments_model.dart';
 import 'package:mobile/view/comments/view/comments_view.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
@@ -52,7 +53,8 @@ class NavigationRoute {
             const ChangeAddressView(), NavigationConstants.CHANGE_ADRESS);
       case NavigationConstants.COMMENTS:
         return cupertinoNavigate(
-            const CommentsView(), NavigationConstants.COMMENTS);
+            CommentsView(comments: args.arguments as CommentsModel),
+            NavigationConstants.COMMENTS);
       case NavigationConstants.ADD_COMMENT:
         return cupertinoNavigate(
             const AddCommentsView(), NavigationConstants.ADD_COMMENT);

@@ -15,6 +15,9 @@ import 'package:mobile/view/categories/service/category_service.dart';
 import 'package:mobile/view/categories/viewmodel/categories_view_model.dart';
 import 'package:mobile/view/categories/viewmodel/category_view_model.dart';
 import 'package:mobile/view/comments/add_comments/viewmodel/add_comments_view_model.dart';
+import 'package:mobile/view/comments/model/comments_model.dart';
+import 'package:mobile/view/comments/repository/comments_repository.dart';
+import 'package:mobile/view/comments/service/comments_service.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
@@ -56,7 +59,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => PaymentViewModel());
   locator.registerLazySingleton(() => CommentsViewModel());
   locator.registerLazySingleton(() => AddCommentsViewModel());
-  
+
   // Model
   locator.registerLazySingleton(() => UserTokenModel());
   locator.registerLazySingleton(() => CategoriesResponseModel());
@@ -69,6 +72,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ProductResponseModel());
   locator.registerLazySingleton(() => ShopListResponseModel());
   locator.registerLazySingleton(() => ShopListItemResponseModel());
+  locator.registerLazySingleton(() => CommentsModel());
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
@@ -77,7 +81,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => PaymentRepository());
   locator.registerLazySingleton(() => ProductRepository());
   locator.registerLazySingleton(() => ShopListRepository());
-
+  locator.registerLazySingleton(() => CommentsRepository());
   // Service
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => CategoryService());
@@ -85,6 +89,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => PaymentService());
   locator.registerLazySingleton(() => ProductService());
   locator.registerLazySingleton(() => ShopListService());
+  locator.registerLazySingleton(() => CommentsService());
 }
 
 Future<void> resetLocator() async {
