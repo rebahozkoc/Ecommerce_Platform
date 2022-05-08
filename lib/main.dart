@@ -8,18 +8,109 @@ import 'package:mobile/core/init/navigation/navigation_route.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/network/log_inceptor.dart';
 import 'package:mobile/core/init/theme/app_theme.dart';
+import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/init/theme/light_theme.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/bottombar_view.dart';
+import 'dart:io';
 
 Future<void> main() async {
   await _init();
 
-  runApp(EasyLocalization(
-    child: const MyApp(),
-    supportedLocales: LanguageManager.instance.supportedLocales,
-    path: ApplicationConstants.LANG_ASSET_PATH,
-  ));
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      runApp(EasyLocalization(
+        child: const MyApp(),
+        supportedLocales: LanguageManager.instance.supportedLocales,
+        path: ApplicationConstants.LANG_ASSET_PATH,
+      ));
+    }
+  } on SocketException catch (_) {
+    runApp(NoInt());
+  }
+}
+
+class NoInt extends StatelessWidget {
+  const NoInt({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppThemeLight.instance.theme,
+      home: Scaffold(
+          body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'No Internet Connection',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  "Voidture requires internet connection to run\n           Please check your connection.",
+                  style: TextStyle(
+                    color: AppColors.tertiary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: OutlinedButton(
+                onPressed: () async {
+                  try {
+                    final result = await InternetAddress.lookup('google.com');
+                    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                      runApp(EasyLocalization(
+                        child: const MyApp(),
+                        supportedLocales:
+                            LanguageManager.instance.supportedLocales,
+                        path: ApplicationConstants.LANG_ASSET_PATH,
+                      ));
+                    }
+                  } on SocketException catch (_) {
+                    debugPrint("No Internet Connection");
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    primary: AppColors.white,
+                    fixedSize: const Size(150, 50),
+                    side: const BorderSide(width: 1.0, color: AppColors.white)),
+                child: const Text(
+                  'Try Again',
+                  style: TextStyle(color: AppColors.white),
+                ),
+              ),
+            )
+          ],
+        ),
+      )),
+    );
+  }
 }
 
 Future<void> _init() async {
