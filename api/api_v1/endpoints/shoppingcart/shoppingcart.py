@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from api import deps
@@ -41,7 +42,7 @@ async def get_shopping_cart_product(
     return Response(data=data)
 
 
-@router.post("/shopping_cart/", response_model=Response)
+@router.post("/shopping_cart", response_model=Response)
 async def add_product_to_shopping_cart(
     product_cart: schemas.ShoppingCartAddProduct,
     db: Session = Depends(deps.get_db),
@@ -85,7 +86,7 @@ async def add_product_to_shopping_cart(
     return Response(message="Successfully added the product to the cart")
 
 
-@router.patch("/shopping_cart/", response_model=Response)
+@router.patch("/shopping_cart", response_model=Response)
 async def update_product_from_shopping_cart(
     product_cart: schemas.ShoppingCartUpdateProduct,
     db: Session = Depends(deps.get_db),
@@ -146,7 +147,7 @@ async def remove_product_from_cart(
     return Response(message="Removed successfully")
 
 @router.delete(
-    "/shopping_cart/",
+    "/shopping_cart",
     response_model=Response,
     response_model_by_alias=False,
 )
