@@ -1,8 +1,9 @@
 import { Box, Stack, Card, CardContent, Typography } from "@mui/material";
 import themeOptions from "../../theme";
-import PendingActionsTwoToneIcon from '@mui/icons-material/PendingActionsTwoTone';
-import LocalShippingTwoToneIcon from '@mui/icons-material/LocalShippingTwoTone';
-import CheckCircleOutlineTwoToneIcon from '@mui/icons-material/CheckCircleOutlineTwoTone';
+import PendingActionsTwoToneIcon from "@mui/icons-material/PendingActionsTwoTone";
+import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
+import CheckCircleOutlineTwoToneIcon from "@mui/icons-material/CheckCircleOutlineTwoTone";
+import { Link } from "react-router-dom";
 const OrderItem = (props) => {
   const order = props.data;
   return (
@@ -18,48 +19,83 @@ const OrderItem = (props) => {
     >
       <CardContent sx={{ pt: 3 }}>
         <Stack direction="row" alignItems="center">
-          
-          <img src={order.orderImage} height={64} alt={order.orderId} />
-
+          <Link
+            to={`/product/${order.product.title}`}
+            underline="none"
+            state={{ id: order.product.id }}
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            <img
+              src={order.product.photos[0].photo_url}
+              height={64}
+              alt={"Voidture not Found"}
+            />
+          </Link>
           <Stack
             direction="column"
             alignItems="flex-start"
             justifyContent="center"
             ml={2}
-            
           >
-            <Typography variant="h6" component="div" sx={{ mb: 1 }}>
-              {order.orderTitle}
+            <Typography component="div" sx={{ mb: 1 }} fontSize={10}>
+              {order.product.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Order ID: {order.orderId}
+              Quantity: {order.quantity}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Order Date: {order.orderDate}
+              Price: {order.product.price}
             </Typography>
-          </Stack >
-            
+          </Stack>
+
           <Box flexGrow={1}></Box>
 
-            {(() => {
-                if (order.orderStatus === "Pending") {
-                    return <Stack direction="row" gap={1}> <PendingActionsTwoToneIcon color="primary"  style={{ fontSize: 25}} /> {order.orderStatus} </Stack>
-                } else if (order.orderStatus === "Shipped") {
-                    return <Stack direction="row" gap={1}> <LocalShippingTwoToneIcon color="primary"  style={{ fontSize: 25 }} /> {order.orderStatus}</Stack>
-                } else if (order.orderStatus === "Delivered") {
-                    return <Stack direction="row" gap={1}>  <CheckCircleOutlineTwoToneIcon color="primary" style={{ fontSize: 25 }} />  {order.orderStatus} </Stack>
-                }
-            })()}
-                
-            <Box flexGrow={2}></Box>
+          {(() => {
+            //change status to order.orderStatus
+            let status = "Processing";
+            if (status === "Processing") {
+              return (
+                <Stack direction="row" gap={1}>
+                  <PendingActionsTwoToneIcon
+                    color="primary"
+                    style={{ fontSize: 25 }}
+                  />
+                  {status}
+                </Stack>
+              );
+            } else if (status === "In-transit") {
+              return (
+                <Stack direction="row" gap={1}>
+                  <LocalShippingTwoToneIcon
+                    color="primary"
+                    style={{ fontSize: 25 }}
+                  />
+                  {status}
+                </Stack>
+              );
+            } else if (status === "Delivered") {
+              return (
+                <Stack direction="row" gap={1}>
+                  <CheckCircleOutlineTwoToneIcon
+                    color="primary"
+                    style={{ fontSize: 25 }}
+                  />
+                  {status}
+                </Stack>
+              );
+            }
+          })()}
 
-            
-            <Stack direction="row" gap={1}>
-                <Typography variant="h6" style={{ fontWeight: 600 }}>
-                    Order total: {order.orderTotal} $
-                </Typography>
-            </Stack>
+          <Box flexGrow={2}></Box>
 
+          <Stack direction="row" gap={1}>
+            <Typography variant="h6" style={{ fontWeight: 600 }}>
+              Order total: {order.quantity * order.product.price} $
+            </Typography>
+          </Stack>
         </Stack>
       </CardContent>
     </Card>

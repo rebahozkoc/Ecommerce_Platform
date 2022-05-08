@@ -1,80 +1,37 @@
 import ProfilePageContainer from "./profilePageContainer";
 import OrderItem from "./order/orderItem";
 import { Stack } from "@mui/material";
+import { getData } from "../recoils/getterFunctions";
+import React from "react";
+import ReactDOM from "react-dom";
+import { useState, useEffect } from "react";
+
 const OrderPage = () => {
-  const orderList = [
-    {
-      orderId: "1",
-      orderDate: "2020-01-01",
-      orderStatus: "Pending",
-      orderTotal: "100",
-      orderImage:
-        "https://img.vivense.com/1920x1280/images/7f2c0de1211f401b8215e1344945642f.jpg",
-    },
-    {
-      orderId: "2",
-      orderDate: "2020-01-01",
-      orderStatus: "Delivered",
-      orderTotal: "100",
-      orderImage:
-        "https://img.vivense.com/1920x1280/images/7f2c0de1211f401b8215e1344945642f.jpg",
-    },
-    {
-      orderId: "3",
-      orderDate: "2020-01-01",
-      orderStatus: "Shipped",
-      orderTotal: "100",
-      orderImage:
-        "https://img.vivense.com/1920x1280/images/70c32b239dcb43c29014d19c4fb520fc.jpg",
-    },
-    {
-      orderId: "4",
-      orderDate: "2020-01-01",
-      orderStatus: "Pending",
-      orderTotal: "100",
-      orderImage:
-        "https://img.vivense.com/1920x1280/images/7f2c0de1211f401b8215e1344945642f.jpg",
-    },
-    {
-      orderId: "5",
-      orderDate: "2020-01-01",
-      orderStatus: "Pending",
-      orderTotal: "100",
-      orderImage:
-        "https://img.vivense.com/1920x1280/images/7f2c0de1211f401b8215e1344945642f.jpg",
-    },
-    {
-      orderId: "6",
-      orderDate: "2020-01-01",
-      orderStatus: "Pending",
-      orderTotal: "100",
-      orderImage:
-        "https://img.vivense.com/1920x1280/images/7f2c0de1211f401b8215e1344945642f.jpg",
-    },
-    {
-      orderId: "7",
-      orderDate: "2020-01-01",
-      orderStatus: "Pending",
-      orderTotal: "100",
-      orderImage:
-        "https://img.vivense.com/1920x1280/images/7f2c0de1211f401b8215e1344945642f.jpg",
-    },
-  ];
-  const orderWidget = (
+  const [orderList, setData] = useState([]);
+  const [isLoaded, setLoaded] = useState(false);
+  useEffect(() => {
+    getData(`http://164.92.208.145/api/v1/users/orders`)
+      .then((res) => {
+        setData(res.data);
+        setLoaded(true);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  const orderWidget = isLoaded ? (
     <Stack direction="column">
       {orderList.map((order, index) => {
         return (
           <div style={{ display: "block" }}>
-            <OrderItem
-                data={order}
-              >
-              </OrderItem>
+            <OrderItem key={index} data={order}></OrderItem>
           </div>
         );
       })}
-
-      
     </Stack>
+  ) : (
+    <div>Loading...</div>
   );
 
   return (
