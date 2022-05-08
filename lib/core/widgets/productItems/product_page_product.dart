@@ -299,11 +299,16 @@ class _PageProductState extends State<PageProduct>
   }
 
   RichText _rating() => RichText(
-        text: const TextSpan(children: [
-          WidgetSpan(child: Icon(Icons.star, size: 16)),
+        text: TextSpan(children: [
+          const WidgetSpan(
+              child: Icon(
+            Icons.star,
+            size: 16,
+            color: AppColors.primary,
+          )),
           TextSpan(
-            text: "3,4",
-            style: TextStyle(
+            text: widget.product!.rate?.toString() ?? "No Ratings",
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,

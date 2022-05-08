@@ -102,7 +102,7 @@ class _CartProductState extends State<CartProduct> {
 
   Container _buttons() {
     return Container(
-        width: 50,
+        width: 70,
         height: 30,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -115,30 +115,37 @@ class _CartProductState extends State<CartProduct> {
               text: TextSpan(
                 children: <TextSpan>[
                   TextSpan(
-                      text: "- ",
+                      text: "-  ",
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           bool isSuccess = widget.onDecrease != null
                               ? await widget.onDecrease!()
                               : false;
                           setState(() {
-                            if (isSuccess) {
-                            }
+                            if (isSuccess) {}
                           });
                         }),
                   TextSpan(
                     text: "${widget.shopItem!.quantity!}",
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
                   TextSpan(
-                      text: " +",
+                      text: "  +",
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           bool isSuccess = widget.onDecrease != null
                               ? await widget.onIncrease!()
                               : false;
                           setState(() {
-                            if (isSuccess) {
-                            }
+                            if (isSuccess) {}
                           });
                         }),
                 ],

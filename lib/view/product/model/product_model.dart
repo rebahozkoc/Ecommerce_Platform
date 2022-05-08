@@ -11,6 +11,7 @@ class ProductModel {
   String? subcategoryTitle;
   List<Photo>? photos;
   int? commentCount;
+  num? rate;
 
   ProductModel(
       {this.title,
@@ -24,7 +25,8 @@ class ProductModel {
       this.categoryTitle,
       this.subcategoryTitle,
       this.photos,
-      this.commentCount});
+      this.commentCount,
+      this.rate});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -37,6 +39,7 @@ class ProductModel {
     id = json['id'];
     categoryTitle = json['category_title'];
     subcategoryTitle = json['subcategory_title'];
+    rate = json['rate'];
     if (json['photos'] != null) {
       photos = <Photo>[];
       json['photos'].forEach((v) {
