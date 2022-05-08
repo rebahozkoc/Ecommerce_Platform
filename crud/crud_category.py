@@ -41,13 +41,14 @@ class CRUDCategory(
         )
 
     def create(
-        self, db: Session, *, obj_in: schemas.CategoryCreate, image: UploadFile
+        self, db: Session, *, obj_in: schemas.CategoryCreate, image: UploadFile = None
     ) -> Category:
         obj_in_data = jsonable_encoder(obj_in)
         db_obj = self.model(**obj_in_data)  # type: ignore
         if self.get(db=db, field="title", value=obj_in.title):
             return None
-        db_obj.image_url = ImageUtilities.save_image(image, "categories")
+        if image:
+            db_obj.image_url = ImageUtilities.save_image(image, "categories")
         db.commit()
         db.add(db_obj)
         db.commit()
