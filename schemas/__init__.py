@@ -25,3 +25,4 @@ from .shopping_cart import (
     ShoppingCartAddProduct,
     ShoppingCartUpdateProduct,
 )
+from .order import Order, OrderShoppingCart

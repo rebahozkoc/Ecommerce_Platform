@@ -4,9 +4,9 @@ from db.base_class import Base
 import enum
 
 class OrderStatus(enum.Enum):
-    Processing = 1
-    Intransit = 2
-    Delivered = 3
+    PROCESSING = "PROCESSING"
+    INTRANSIT = "INTRANSIT"
+    DELIVERED = "DELIVERED"
 
 class Order(Base):
     __tablename__ = "order"
@@ -23,3 +23,9 @@ class Order(Base):
 
     product_id = Column(ForeignKey("product.id"))
     product = relationship("Product", back_populates="ordered_products")
+
+    address_id = Column(ForeignKey("address.id"))
+    address = relationship("Address", back_populates="orders")
+
+    credit_id = Column(ForeignKey("credit.id"))
+    credit = relationship("Credit", back_populates="orders")
