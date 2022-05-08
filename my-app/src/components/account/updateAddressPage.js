@@ -78,6 +78,15 @@ const UpdateAddressPage = () => {
     setOpen(false);
   };
 
+  const [addressAdded, setAddressAdded] = useState(false);
+  const [addressVal, setAddressVal] = useState([]);
+  const newAddress = (val) => {
+    console.log(val);
+
+    setAddressVal(val);
+    setAddressAdded(true);
+  };
+  useEffect(() => {}, [addressAdded]);
   const addressWidget = (
     <div>
       {addressList.map((address, index) => {
@@ -113,7 +122,7 @@ const UpdateAddressPage = () => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
-          <AddressListAddNew data={dialogContent} />
+          <AddressListAddNew data={dialogContent} up={newAddress} />
         </DialogContent>
       </Dialog>
     </div>

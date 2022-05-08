@@ -10,10 +10,13 @@ import AddressListGetOld from "../addressList/addressListGetOld";
 import PaymentAddNew from "./paymentAddNew";
 import { useState, useEffect } from "react";
 import { getData } from "../../recoils/getterFunctions";
+import { useRecoilState } from "recoil";
+import { creditCardId } from "../../recoils/atoms";
 
 export default function AddressListForm(props) {
   //const addressList = props.addressList;
   const [isLoaded, setLoaded] = useState(false);
+  const [creditId, setCreditID] = useRecoilState(creditCardId);
 
   const [addressList, setAddressList] = useState([]);
   useEffect(() => {
@@ -30,11 +33,12 @@ export default function AddressListForm(props) {
   //console.log(addressList);
   const [value, setValue] = React.useState(0);
   const [newAddress, setNewAddress] = React.useState(false);
-
+  const [update, setUpdate] = React.useState(false);
   const handleChange = (event) => {
     //console.log("handleChange");
     //console.log(event.target.value);
     setValue(event.target.value);
+    setUpdate(true);
     if (event.target.value === "new") {
       setNewAddress(true);
     } else {
@@ -42,6 +46,11 @@ export default function AddressListForm(props) {
     }
   };
 
+  useEffect(() => {
+    setCreditID(value);
+
+    setUpdate(false);
+  }, [update]);
   return (
     <React.Fragment>
       <Box sx={{ maxWidth: 750, pl: 4, pr: 4, pb: 4, pt: 3 }}>
@@ -54,13 +63,13 @@ export default function AddressListForm(props) {
             onChange={handleChange}
             defaultValue={0}
           >
-            {addressList.map((address, index) => {
+            {addressList.map((address) => {
               //console.log(index);
               if (address["name"] != "Add New Address")
                 return (
                   <FormControlLabel
-                    key={index}
-                    value={index}
+                    key={address["id"]}
+                    value={address["id"]}
                     control={<Radio />}
                     label={
                       <AddressListGetOld

@@ -37,10 +37,14 @@ import {
   createOrderCookie,
 } from "../recoils/getterFunctions";
 import axios from "axios";
+import { totalCost as tc } from "../recoils/atoms";
+
 const access = getCookie("access_token");
+
 //document.cookie = "orderList=1 2 2 3 3 2 2 2 2 4 3 4";
 let mydict = createShoppingDict();
 const ShoppingBasket = () => {
+  const [tCost, setTCost] = useRecoilState(tc);
   //console.log(mydict);
 
   const [isLoggin, setIsLogged] = useRecoilState(loggedState);
@@ -363,7 +367,16 @@ const ShoppingBasket = () => {
     incCard2();
     setLogChange1(-1);
   }, [logChange1]);
-  let totalCost = 0;
+  let totalCost1 = 0;
+
+  products.map((card) => {
+    let count = isLoggin ? card.quantity : mydict[card.id];
+    let cost1 = isLoggin ? card.product.price : card.price;
+    totalCost1 += count * cost1;
+  });
+  setTCost(totalCost1);
+  document.cookie = `totalCost=${totalCost1};path=/`;
+
   return (
     <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
@@ -405,9 +418,7 @@ const ShoppingBasket = () => {
                           inc={() => {
                             increaserHandler(card.id);
                           }}
-                        >
-                          {(totalCost += card.price * mydict[card.id])}
-                        </ShoppingCard>
+                        ></ShoppingCard>
                       </ListItem>
                     ))}
                   </List>
@@ -444,9 +455,7 @@ const ShoppingBasket = () => {
                               card.quantity
                             );
                           }}
-                        >
-                          {(totalCost += card.product.price * card.quantity)}
-                        </ShoppingCard>
+                        ></ShoppingCard>
                       </ListItem>
                     ))}
                   </List>
@@ -455,13 +464,12 @@ const ShoppingBasket = () => {
                 )}
                 <Divider sx={{ size: 100 }} />
                 <Link to="/" style={{ color: "black" }}>
-                <Stack direction="row" sx={{mt:2}}>
-                <ArrowBackIosOutlinedIcon />
-                  <Typography sx={{ color: "black" }}>
-                    {" "}
-                    
-                    Back to Shopping
-                  </Typography>
+                  <Stack direction="row" sx={{ mt: 2 }}>
+                    <ArrowBackIosOutlinedIcon />
+                    <Typography sx={{ color: "black" }}>
+                      {" "}
+                      Back to Shopping
+                    </Typography>
                   </Stack>
                 </Link>
               </Box>
@@ -505,7 +513,7 @@ const ShoppingBasket = () => {
                       fontWeight="bold"
                       sx={{ fontSize: 16 }}
                     >
-                      {totalCost}$
+                      {tCost}$
                     </Typography>
                   </Stack>
                   <Box sx={{ m: 1 }} />
@@ -548,7 +556,7 @@ const ShoppingBasket = () => {
                       fontWeight="bold"
                       sx={{ fontSize: 16 }}
                     >
-                      {totalCost + 10}$
+                      {tCost + 10}$
                     </Typography>
                   </Stack>
                 </Card>

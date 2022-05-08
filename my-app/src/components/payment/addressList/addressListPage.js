@@ -1,21 +1,35 @@
+import * as React from "react";
 import AddressListHeader from "./addressListHeader";
 import AddressListTabBar from "./addressListTabBar";
-import { ThemeProvider, Box} from "@mui/material";
+import { ThemeProvider, Box } from "@mui/material";
 import themeOptions from "../../theme";
 import AddressListSummary from "./addressListSummary";
 import { CssBaseline, Stack } from "@mui/material";
 import Footer from "../../footer/Footer";
+import { useState, useEffect } from "react";
 
-const addressListPage = () => {
+const AddressListPage = () => {
+  const [addressId, setAddressId] = useState(-1);
+  const addressIdHolder = (id) => {
+    setAddressId(id);
+    console.log(id);
+  };
   return (
     <ThemeProvider theme={themeOptions}>
       <CssBaseline />
       <Box sx={{ ml: 12, mr: 12 }}>
-        
         <AddressListHeader></AddressListHeader>
         <Stack direction="row" justifyContent="center" spacing={4}>
-          <AddressListTabBar isAddress={true}></AddressListTabBar>
-          <AddressListSummary totalCost={1000} isAddress={true} buttonText={"Go To Payment"} link={"/payment"}></AddressListSummary>
+          <AddressListTabBar
+            isAddress={true}
+            addressId={addressIdHolder}
+          ></AddressListTabBar>
+          <AddressListSummary
+            isAddress={true}
+            buttonText={"Go To Payment"}
+            link={"/payment"}
+            addressId={addressId}
+          ></AddressListSummary>
         </Stack>
         <Footer bgcolor={"#FFFFF"}></Footer>
       </Box>
@@ -23,7 +37,7 @@ const addressListPage = () => {
   );
 };
 
-export default addressListPage;
+export default AddressListPage;
 
 /*
       <Box sx={{ml: 12, mr: 12}}>

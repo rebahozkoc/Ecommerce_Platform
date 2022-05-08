@@ -15,8 +15,11 @@ let headersList = {
   "Content-Type": "application/json",
 };
 console.log(access);
-const addressListAddNew = (props) => {
+const AddressListAddNew = (props) => {
   const data = props.data;
+
+  const [isNew, setisNew] = React.useState(false);
+  const [New, setNew] = React.useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data2 = new FormData(event.currentTarget);
@@ -36,13 +39,18 @@ const addressListAddNew = (props) => {
       .post("http://164.92.208.145/api/v1/user/addresses", bodyContent, {
         headers: headersList,
       })
-      .then(function (response) {
-        console.log(response.data);
+      .then((response) => {
+        setNew(response.data);
+        setisNew(true);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  React.useEffect(() => {
+    props.up(New);
+  }, [isNew]);
   return (
     <React.Fragment>
       <Box
@@ -169,4 +177,4 @@ const addressListAddNew = (props) => {
   );
 };
 
-export default addressListAddNew;
+export default AddressListAddNew;

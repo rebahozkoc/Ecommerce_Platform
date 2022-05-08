@@ -45,7 +45,7 @@ ReactDOM.render(
         <Route path="/update-favorites" element={<UpdateFavoritesPage />} />
         <Route path="/update-payment" element={<UpdatePaymentPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
-        <Route path="/search" element={<SearchPage/>} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/" element={<App />}></Route>
       </Routes>
     </BrowserRouter>

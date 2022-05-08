@@ -1,8 +1,9 @@
 import AddressListHeader from "../addressList/addressListHeader";
 import AddressListTabBar from "../addressList/addressListTabBar";
-import { ThemeProvider, Box} from "@mui/material";
+import { ThemeProvider, Box } from "@mui/material";
 import themeOptions from "../../theme";
 import AddressListSummary from "../addressList/addressListSummary";
+import PaymentSummary from "./PaymentSummary";
 import { CssBaseline, Stack } from "@mui/material";
 //import Footer from "../../footer/Footer";
 
@@ -13,11 +14,18 @@ const paymentPage = () => {
       <Box sx={{ ml: 12, mr: 12 }}>
         <AddressListHeader></AddressListHeader>
         <Stack direction="row" justifyContent="center" spacing={4}>
-          <AddressListTabBar isAddress={false}></AddressListTabBar>
-          <AddressListSummary totalCost={1000} isAddress={false} buttonText={"MAKE PAYMENT"} link={"/payment-success"}></AddressListSummary>
+          <AddressListTabBar
+            isAddress={false}
+            addressId={() => {}}
+          ></AddressListTabBar>
+          <PaymentSummary
+            totalCost={1000}
+            isAddress={false}
+            buttonText={"MAKE PAYMENT"}
+            link={"/payment-success"}
+            addressId={0}
+          ></PaymentSummary>
         </Stack>
-
-        
       </Box>
     </ThemeProvider>
   );

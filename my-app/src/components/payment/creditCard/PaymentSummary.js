@@ -10,13 +10,46 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { addressId } from "../../recoils/atoms";
+import { creditCardId } from "../../recoils/atoms";
 import { getCookie } from "../../recoils/atoms";
-export default function AddressListSummary(props) {
-  let tCost = Number(getCookie("totalCost"));
-  const [addressId2, setAddressId] = useRecoilState(addressId);
-  document.cookie = `addressId=${props.addressId};path=/`;
-  setAddressId(props.addressId);
+import axios from "axios";
+
+const access = getCookie("access_token");
+export default function PaymentSummary(props) {
+  let totalCost1 = Number(getCookie("totalCost"));
+  const creditId = useRecoilValue(creditCardId);
+  const handleClick = () => {
+    const addressId = Number(getCookie("addressId"));
+    if (addressId && creditId) {
+      console.log("asdasd", creditId, addressId);
+
+      let bodyContent = JSON.stringify({
+        address_id: addressId,
+        credit_id: creditId,
+      });
+      axios
+        .post(
+          "http://164.92.208.145/api/v1/users/shopping_cart/order",
+          bodyContent,
+          {
+            headers: {
+              Accept: "*/*",
+              Authorization: `Bearer ${access}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert("Please check Your Credit Card and Address Selection");
+    }
+  };
+
   return (
     <div>
       <Paper sx={{}}>
@@ -61,7 +94,7 @@ export default function AddressListSummary(props) {
                 fontWeight="bold"
                 sx={{ fontSize: 16 }}
               >
-                {tCost}$
+                {totalCost1}$
               </Typography>
             </Stack>
             <Box sx={{ m: 1 }} />
@@ -104,33 +137,26 @@ export default function AddressListSummary(props) {
                 fontWeight="bold"
                 sx={{ fontSize: 16 }}
               >
-                {tCost + 10}$
+                {totalCost1 + 10}$
               </Typography>
             </Stack>
           </Card>
           <Stack justifyContent="center" alignItems="center">
-            <Link
-              to={props.link}
-              style={{
-                textDecoration: "none",
-                color: "black",
+            <Button
+              onClick={handleClick}
+              variant="contained"
+              sx={{
+                backgroundColor: "#ff6600",
+                display: "block",
+                padding: (8, 1, 8, 1),
+                mb: 2,
+                justify: "center",
               }}
             >
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#ff6600",
-                  display: "block",
-                  padding: (8, 1, 8, 1),
-                  mb: 2,
-                  justify: "center",
-                }}
-              >
-                <Typography sx={{ color: "black" }}>
-                  {props.buttonText}
-                </Typography>
-              </Button>
-            </Link>
+              <Typography sx={{ color: "black" }}>
+                {props.buttonText}
+              </Typography>
+            </Button>
           </Stack>
         </Box>
       </Paper>

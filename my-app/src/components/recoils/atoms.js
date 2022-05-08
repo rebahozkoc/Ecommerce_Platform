@@ -49,3 +49,18 @@ export const categories = atom({
   key: "categories",
   default: [],
 });
+
+export const addressId = atom({
+  key: "addressId",
+  default: 0,
+});
+
+export const creditCardId = atom({
+  key: "creditCardId",
+  default: 0,
+});
+
+export const totalCost = atom({
+  key: "totalCost",
+  default: -10,
+});

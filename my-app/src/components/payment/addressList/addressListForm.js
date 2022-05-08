@@ -33,17 +33,25 @@ export default function AddressListForm(props) {
   //console.log(addressList);
   const [value, setValue] = React.useState(0);
   const [newAddress, setNewAddress] = React.useState(false);
+  const addressIdHolder2 = () => {
+    props.addressIdHolder(value);
+  };
 
   const handleChange = (event) => {
     //console.log("handleChange");
     //console.log(event.target.value);
     setValue(event.target.value);
+    //console.log(value);
     if (event.target.value === "new") {
       setNewAddress(true);
     } else {
       setNewAddress(false);
     }
   };
+
+  useEffect(() => {
+    addressIdHolder2();
+  }, [value]);
 
   return (
     <React.Fragment>
@@ -58,13 +66,14 @@ export default function AddressListForm(props) {
             onChange={handleChange}
           >
             {isLoaded ? (
-              addressList.map((address, index) => {
+              addressList.map((address) => {
                 //console.log(index);
+                //console.log(address["id"]);
                 if (address["name"] != "Add New Address")
                   return (
                     <FormControlLabel
-                      key={index}
-                      value={index}
+                      key={address["id"]}
+                      value={address["id"]}
                       control={<Radio />}
                       label={
                         <AddressListGetOld
@@ -97,7 +106,7 @@ export default function AddressListForm(props) {
           />
         </Box>
       </Box>
-      {newAddress ? <AddressListAddNew /> : <div> </div>}
+      {newAddress ? <AddressListAddNew up={() => {}} /> : <div> </div>}
     </React.Fragment>
   );
 }
