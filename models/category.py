@@ -49,7 +49,7 @@ class SubCategory(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
-    order_id = Column(Integer, nullable=False)
+    order_id = Column(Integer, nullable=True)
     categories = relationship(
         "CategorySubCategory", cascade="all,delete", back_populates="subcategory"
     )
