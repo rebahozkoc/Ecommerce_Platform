@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/path/url_path_constants.dart';
 import 'package:mobile/core/init/network/network_error.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/shopList/model/shoplist_model.dart';
 import 'package:mobile/view/shopList/service/shoplist_service_base.dart';
 
@@ -153,7 +154,7 @@ class ShopListService extends ShopListServiceBase {
     BuildContext? context,
     String? token,
     String? createdAt,
-    int? id,
+    ProductModel? product,
     int? quantity,
   }) async {
     ShopListItemResponseModel _responseModel =
@@ -169,7 +170,7 @@ class ShopListService extends ShopListServiceBase {
 
       var data = {
         'created_at': createdAt,
-        'product_id': id,
+        'product_id': product?.id ?? 0,
         'quantity': quantity,
       };
 
@@ -195,7 +196,7 @@ class ShopListService extends ShopListServiceBase {
   Future<ShopListItemResponseModel> updateShopListItem({
     BuildContext? context,
     String? token,
-    int? id,
+    ProductModel? product,
     int? quantity,
   }) async {
     ShopListItemResponseModel _responseModel =
@@ -210,7 +211,7 @@ class ShopListService extends ShopListServiceBase {
       };
 
       var data = {
-        "product_id": id,
+        "product_id": product?.id ?? 0,
         "quantity": quantity,
       };
       response = await dio.patch(

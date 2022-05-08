@@ -65,6 +65,7 @@ class ProductModel {
       data['photos'] = photos!.map((v) => v.toJson()).toList();
     }
     data['comment_count'] = commentCount;
+    data['rate'] = rate;
     return data;
   }
 }

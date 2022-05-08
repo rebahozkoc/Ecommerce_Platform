@@ -7,6 +7,7 @@ import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/auth/login/model/login_model.dart';
 import 'package:mobile/view/auth/login/repository/login_repository.dart';
+import 'package:mobile/view/shopList/repository/shoplist_repository.dart';
 import 'package:mobx/mobx.dart';
 part 'login_view_model.g.dart';
 
@@ -45,6 +46,8 @@ abstract class _LoginViewModelBase with Store, BaseViewModel {
           isSuccess: false);
     } else {
       await getUserToken();
+      var _shopList = locator<ShopListRepository>();
+      await _shopList.saveShopListItems();
     }
   }
 

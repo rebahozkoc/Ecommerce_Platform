@@ -25,6 +25,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
   @override
   void init() {
     _repository = locator<ShopListRepository>();
+    //_repository.deleteShopList();
   }
 
   void dispose() {}
@@ -163,7 +164,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
       {BuildContext? context}) async {
     _shopListItemResponseModel = await _repository.updateShopListItem(
       context: this.context,
-      id: shopItem.product?.id,
+      product: shopItem.product,
       quantity: shopItem.quantity,
     );
     if (!(_shopListItemResponseModel.isSuccess ?? false)) {
@@ -199,13 +200,14 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
       {BuildContext? context}) async {
     _shopListItemResponseModel = await _repository.addShopListItem(
       context: context,
-      id: shopItem.product?.id,
+      product: shopItem.product,
       quantity: shopItem.quantity,
     );
 
     if (_shopListItemResponseModel.isSuccess ?? false) {
       addShop(shopItem);
-     } else { showToast(
+    } else {
+      showToast(
           context: context ?? this.context!,
           message: _shopListItemResponseModel.message ??
               ApplicationConstants.ERROR_MESSAGE,
