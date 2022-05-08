@@ -14,7 +14,6 @@ from fastapi.testclient import TestClient
 from db.session import SessionLocal
 from sqlalchemy.orm import Session
 from core.config import settings
-from tests.utils.utils import get_superuser_token_headers
 from tests.utils.user import authentication_token_from_email
 
 # Apply migrations at beginning and end of testing session
