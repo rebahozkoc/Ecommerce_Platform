@@ -213,7 +213,6 @@ class ShopListService extends ShopListServiceBase {
         "product_id": id,
         "quantity": quantity,
       };
-
       response = await dio.patch(
         PathConstants.SHOPLIST,
         data: data,

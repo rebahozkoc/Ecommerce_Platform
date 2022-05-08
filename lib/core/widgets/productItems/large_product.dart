@@ -5,7 +5,11 @@ import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/core/widgets/ToastMessage.dart';
+import 'package:mobile/locator.dart';
 import 'package:mobile/view/product/model/product_model.dart';
+import 'package:mobile/view/shopList/model/shoplist_model.dart';
+import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 
 class LargeProduct extends StatelessWidget {
   final ProductModel? product;
@@ -26,14 +30,14 @@ class LargeProduct extends StatelessWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [_content(), _infos(), Container()],
+            children: [_content(context), _infos(), Container()],
           ),
         ),
       ),
     );
   }
 
-  SizedBox _content() {
+  SizedBox _content(BuildContext context) {
     return SizedBox(
       child: Stack(children: [
         _image(),
@@ -45,7 +49,7 @@ class LargeProduct extends StatelessWidget {
             children: [
               _favoriteButton(),
               const SizedBox(height: 12),
-              _shoppingCartButton(),
+              _shoppingCartButton(context),
             ],
           ),
         )
@@ -86,9 +90,19 @@ class LargeProduct extends StatelessWidget {
         ),
       );
 
-  InkWell _shoppingCartButton() => InkWell(
-        onTap: (() {
-          debugPrint("Shopping Cart Button Clicked...");
+  InkWell _shoppingCartButton(BuildContext context) => InkWell(
+        onTap: (() async {
+          ShopListViewModel _shopList = locator<ShopListViewModel>();
+          _shopList.init();
+          bool _isSuccess = await _shopList.addQuantity(
+              ShopListItem(quantity: 1, product: product),
+              context: context);
+          showToast(
+              context: context,
+              message: _isSuccess
+                  ? "Product added to shopping cart"
+                  : "You cannot add items more than there is in stock.",
+              isSuccess: _isSuccess);
         }),
         child: Container(
           height: 28,

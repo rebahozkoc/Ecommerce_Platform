@@ -121,12 +121,9 @@ class _CartProductState extends State<CartProduct> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
-                          bool isSuccess = widget.onDecrease != null
+                          widget.onDecrease != null
                               ? await widget.onDecrease!()
-                              : false;
-                          setState(() {
-                            if (isSuccess) {}
-                          });
+                              : null;
                         }),
                   TextSpan(
                     text: "${widget.shopItem!.quantity!}",
@@ -141,12 +138,9 @@ class _CartProductState extends State<CartProduct> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
-                          bool isSuccess = widget.onDecrease != null
+                          widget.onIncrease != null
                               ? await widget.onIncrease!()
-                              : false;
-                          setState(() {
-                            if (isSuccess) {}
-                          });
+                              : null;
                         }),
                 ],
               ),

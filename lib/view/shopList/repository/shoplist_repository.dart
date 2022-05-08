@@ -208,13 +208,17 @@ class ShopListRepository extends ShopListServiceBase {
       List<ShopListItem> _shopList =
           _data.map((e) => ShopListItem.fromJson(e)).toList();
 
-      ShopListItem _shopListItem =
-          _shopList.firstWhere((e) => e.product!.id == id);
+      ShopListItem _shopListItem = _shopList.firstWhere(
+        (e) => e.product!.id == id,
+        orElse: () => ShopListItem(),
+      );
 
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
-        isSuccess: true,
+        isSuccess: _shopListItem.quantity != null,
         data: _shopListItem,
-        message: "Successfully collect the product from the cart",
+        message: _shopListItem.quantity != null
+            ? "Successfully collect the product from the cart"
+            : "The product is not in the cart",
       );
 
       return _responseModel;

@@ -10,7 +10,14 @@ import 'package:mobile/view/product/model/product_model.dart';
 
 class PageProduct extends StatefulWidget {
   final ProductModel? product;
-  const PageProduct({Key? key, required this.product}) : super(key: key);
+  final Function? onIncrease;
+  final Function? onDecrease;
+  const PageProduct({
+    Key? key,
+    required this.product,
+    this.onIncrease,
+    this.onDecrease,
+  }) : super(key: key);
 
   @override
   State<PageProduct> createState() => _PageProductState();
@@ -26,6 +33,7 @@ class _PageProductState extends State<PageProduct>
     setState(() {
       if (_counter < widget.product!.stock!) {
         _counter++;
+        widget.onIncrease != null ? widget.onIncrease!() : null;
       } else {
         showToast(
             message: "You cannot add items more than there is in stock.",
@@ -39,13 +47,18 @@ class _PageProductState extends State<PageProduct>
     setState(() {
       if (_counter != 0) {
         _counter--;
+        widget.onDecrease != null ? widget.onDecrease!() : null;
       }
     });
   }
 
   @override
   void initState() {
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(
+        length: widget.product?.photos?.isNotEmpty ?? false
+            ? widget.product!.photos!.length
+            : 1,
+        vsync: this);
     controller.addListener(_setActiveTabIndex);
     super.initState();
   }
@@ -110,38 +123,31 @@ class _PageProductState extends State<PageProduct>
         height: 400,
         child: TabBarView(
           controller: controller,
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: isExist
-                    ? widget.product!.photos!.first.photoUrl!
-                    : ApplicationConstants.PRODUCT_IMG,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
-            AspectRatio(
-              aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: isExist
-                    ? widget.product!.photos!.first.photoUrl!
-                    : ApplicationConstants.PRODUCT_IMG,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
-            AspectRatio(
-              aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: isExist
-                    ? widget.product!.photos!.first.photoUrl!
-                    : ApplicationConstants.PRODUCT_IMG,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
+          children: widget.product!.photos?.isNotEmpty ?? false
+              ? widget.product!.photos!
+                  .map((e) => AspectRatio(
+                        aspectRatio: 1,
+                        child: CachedNetworkImage(
+                          imageUrl: isExist
+                              ? e.photoUrl!
+                              : ApplicationConstants.PRODUCT_IMG,
+                          width: double.infinity,
+                          fit: BoxFit.fill,
+                        ),
+                      ))
+                  .toList()
+              : [
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: CachedNetworkImage(
+                      imageUrl: isExist
+                          ? widget.product!.photos!.first.photoUrl!
+                          : ApplicationConstants.PRODUCT_IMG,
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ],
         ));
   }
 

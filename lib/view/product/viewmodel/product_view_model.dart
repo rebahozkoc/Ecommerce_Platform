@@ -28,6 +28,19 @@ abstract class _ProductViewModelBase with Store, BaseViewModel {
 
   void dispose() {}
 
+  @observable
+  int quantity = 1;
+
+  @action
+  void incrementQuantity() {
+    quantity++;
+  }
+
+  @action
+  void decrementQuantity() {
+    quantity--;
+  }
+
   Future<bool> getData() async {
     _productResponseModel = await _repository.getProduct(
       context: context,

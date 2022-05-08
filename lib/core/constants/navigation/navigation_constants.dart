@@ -3,6 +3,7 @@
 class NavigationConstants {
   static const DEFAULT = '/';
   static const SEARCH = '/search';
+  static const SHOPLIST = '/shoplist';
   static const PRODUCT = '/product';
   static const HOME = '/shopList';
   static const FAVORITES = '/favorites';

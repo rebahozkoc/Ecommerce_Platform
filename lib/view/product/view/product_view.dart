@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/productItems/product_page_product.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
+import 'package:mobile/view/shopList/model/shoplist_model.dart';
+import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 
 class ProductView extends StatefulWidget {
   final ProductModel product;
@@ -20,7 +25,7 @@ class _ProductViewState extends BaseState<ProductView> {
   @override
   Widget build(BuildContext context) {
     return BaseView(
-        viewModel: locator<ProductViewModel>(),
+        viewModel: ProductViewModel(),
         onModelReady: (dynamic model) async {
           model.setContext(context);
           model.init();
@@ -87,7 +92,8 @@ class _ProductViewState extends BaseState<ProductView> {
       actions: [
         IconButton(
           onPressed: () {
-            debugPrint("Cart Button Pressed");
+            NavigationService.instance
+                .navigateToPage(path: NavigationConstants.SHOPLIST);
           },
           icon: const Icon(Icons.shopping_bag),
         )
@@ -95,20 +101,22 @@ class _ProductViewState extends BaseState<ProductView> {
     );
   }
 
-  ListView _body() => ListView(
-        children: [
-          RoundedContainer(
-              child: Column(
+  SingleChildScrollView _body() => SingleChildScrollView(
+        child: RoundedContainer(
+          child: Column(
             children: [
-              PageProduct(product: viewModel.product),
+              PageProduct(
+                product: viewModel.product,
+                onIncrease: () => viewModel.incrementQuantity(),
+              ),
             ],
-          )),
-        ],
+          ),
+        ),
       );
 
   OutlinedButton addToFavorites() => OutlinedButton(
         onPressed: () {
-          debugPrint("Add to favorites button pressed...");
+          debugPrint("Favorite Button Clicked...");
         },
         child: const Text(
           "Add To Favorites",
@@ -125,7 +133,23 @@ class _ProductViewState extends BaseState<ProductView> {
       );
 
   OutlinedButton addToCart() => OutlinedButton(
-        onPressed: () {},
+        onPressed: () async {
+          debugPrint("quan${viewModel.quantity.toString()}");
+          ShopListViewModel _shopList = locator<ShopListViewModel>();
+          _shopList.init();
+          bool _isSuccess = await _shopList.addQuantity(
+              ShopListItem(
+                quantity: viewModel.quantity,
+                product: widget.product,
+              ),
+              context: context);
+          showToast(
+              context: context,
+              message: _isSuccess
+                  ? "Product added to shopping cart"
+                  : "You cannot add items more than there is in stock.",
+              isSuccess: _isSuccess);
+        },
         child: const Text(
           "Add To Cart",
           style: TextStyle(
