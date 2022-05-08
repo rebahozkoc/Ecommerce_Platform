@@ -20,4 +20,11 @@ abstract class PaymentServiceBase {
     String token,
     int id,
   });
+
+  Future<PaymentResponseModel> order({
+    BuildContext context,
+    String token,
+    int addressId,
+    int cardId,
+  });
 }

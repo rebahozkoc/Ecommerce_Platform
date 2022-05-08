@@ -4,8 +4,11 @@ import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/address/model/adress_model.dart';
+import 'package:mobile/view/address/repository/address_repository.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/payment/repository/payment_repository.dart';
+import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 part 'payment_view_model.g.dart';
@@ -16,19 +19,21 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
   late PaymentRepository _repository;
   late PaymentResponseModel _paymentResponseModel;
   late PaymentsResponseModel _paymentsResponseModel;
-
+  late AddressRepository _addressRepository;
   @override
   void setContext(BuildContext context) => this.context = context;
 
   @override
   void init() {
     _repository = locator<PaymentRepository>();
+    _addressRepository = locator<AddressRepository>();
   }
 
   void dispose() {}
 
   @observable
   var payments = ObservableList<PaymentModel>();
+  var addresses = ObservableList<AddressModel>();
 
   void setPayments(List<PaymentModel> payments) {
     this.payments.clear();
@@ -37,9 +42,27 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
     }
   }
 
+  void setAddresses(List<AddressModel> addresses) {
+    this.addresses.clear();
+    for (var address in addresses) {
+      addNewAddress(address);
+    }
+  }
+
+  @action
+  void addNewAddress(AddressModel address) {
+    insertFirstAddress(address);
+    addresses.add(address);
+  }
+
   @action
   void insertFirstPayment(PaymentModel payment) {
     this.payments.insert(0, payment);
+  }
+
+  @action
+  void insertFirstAddress(AddressModel address) {
+    this.addresses.insert(0, address);
   }
 
   @action
@@ -73,6 +96,9 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
       context: context,
     );
     setPayments(_paymentsResponseModel.data!);
+    AddressesResponseModel addressResponse =
+        await _addressRepository.getAddresses(context: context);
+    setAddresses(addressResponse.data!);
     return _paymentsResponseModel.isSuccess!;
   }
 
@@ -158,6 +184,24 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
           isSuccess: false,
           context: context!);
     }
+  }
+
+  Future<void> order() async {
+    PaymentResponseModel _paymentResponse = await _repository.order(
+      context: context,
+      addressId: addresses[selectedAddress].id,
+      cardId: payments[selectedCard].id,
+    );
+
+    if (_paymentResponse.isSuccess ?? false) {
+      locator<ShopListViewModel>().getShopList();
+      Navigator.pop(context!);
+    }
+    showToast(
+      message: "${_paymentResponse.message}",
+      isSuccess: _paymentResponse.isSuccess ?? false,
+      context: context!,
+    );
   }
 
   @action

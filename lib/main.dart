@@ -18,7 +18,7 @@ Future<void> main() async {
   await _init();
 
   try {
-    final result = await InternetAddress.lookup('google.com');
+    final result = await InternetAddress.lookup('164.92.208.145');
     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       runApp(EasyLocalization(
         child: const MyApp(),

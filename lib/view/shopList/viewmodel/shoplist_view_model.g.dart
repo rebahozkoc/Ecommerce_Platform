@@ -27,13 +27,13 @@ mixin _$ShopListViewModel on _ShopListViewModelBase, Store {
   final _$totalPriceAtom = Atom(name: '_ShopListViewModelBase.totalPrice');
 
   @override
-  int get totalPrice {
+  num get totalPrice {
     _$totalPriceAtom.reportRead();
     return super.totalPrice;
   }
 
   @override
-  set totalPrice(int value) {
+  set totalPrice(num value) {
     _$totalPriceAtom.reportWrite(value, super.totalPrice, () {
       super.totalPrice = value;
     });
