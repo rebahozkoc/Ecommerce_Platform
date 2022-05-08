@@ -57,8 +57,12 @@ def delete_address(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Address does not exist"},
         )
-
-    address = crud.address.remove(db=db, id=address_id)
+    #address will never be erased, why? because when an address is erased previously done orders are dependet on these addresses and when they are erased the orders get broken 
+    #so whenever an address is erased, in reality it sis just assigned to a anothoer account with the id 13
+    address.user_id=13
+    db.add(address)
+    db.commit()
+    #address = crud.address.remove(db=db, id=address_id)
     return Response(data=address, isSuccess=True)
 
 @router.patch("/addresses/{address_id}", response_model=Response[schemas.AddressBase])
