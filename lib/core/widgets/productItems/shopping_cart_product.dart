@@ -7,8 +7,8 @@ import 'package:mobile/view/shopList/model/shoplist_model.dart';
 
 class CartProduct extends StatefulWidget {
   final ShopListItem? shopItem;
-  final VoidCallback? onIncrease;
-  final VoidCallback? onDecrease;
+  final Function? onIncrease;
+  final Function? onDecrease;
   const CartProduct({
     Key? key,
     this.shopItem,
@@ -20,14 +20,10 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
-  late int _counter = widget.shopItem?.quantity ?? 1;
-  late String _title =
+  late final String _title =
       widget.shopItem!.product!.title!.substring(0, 17) + '...';
   @override
   Widget build(BuildContext context) {
-    // setState(() {
-    //   _counter = widget.shopItem?.quantity ?? 1;
-    // });
     return InkWell(
       child: Container(
         height: 120,
@@ -74,7 +70,7 @@ class _CartProductState extends State<CartProduct> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 60),
+                    const SizedBox(width: 60),
                     _buttons(),
                   ],
                 ),
@@ -83,7 +79,8 @@ class _CartProductState extends State<CartProduct> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
                       child: Text(
-                        (widget.shopItem!.product!.price! * _counter)
+                        (widget.shopItem!.product!.price! *
+                                    widget.shopItem!.quantity!)
                                 .toString() +
                             "₺",
                         style: const TextStyle(
@@ -120,23 +117,29 @@ class _CartProductState extends State<CartProduct> {
                   TextSpan(
                       text: "- ",
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
+                        ..onTap = () async {
+                          bool isSuccess = widget.onDecrease != null
+                              ? await widget.onDecrease!()
+                              : false;
                           setState(() {
-                            _counter--;
+                            if (isSuccess) {
+                            }
                           });
-                          widget.onDecrease;
                         }),
                   TextSpan(
-                    text: "$_counter",
+                    text: "${widget.shopItem!.quantity!}",
                   ),
                   TextSpan(
                       text: " +",
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
+                        ..onTap = () async {
+                          bool isSuccess = widget.onDecrease != null
+                              ? await widget.onIncrease!()
+                              : false;
                           setState(() {
-                            _counter++;
+                            if (isSuccess) {
+                            }
                           });
-                          widget.onIncrease;
                         }),
                 ],
               ),

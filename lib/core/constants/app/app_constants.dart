@@ -20,6 +20,7 @@ class ApplicationConstants {
       'http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png';
 
   static const ERROR_MESSAGE = 'There is a problem. Please try again later.';
+  static const SUCCESS_MESSAGE = 'Successfully completed.';
 
   static const CATEGORY_LIMIT = 6;
   static const CATEGORY_SKIP = 0;

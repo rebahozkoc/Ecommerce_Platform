@@ -171,42 +171,42 @@ class _PageProductState extends State<PageProduct>
   //       ),
   //     );
 
-  InkWell _favoriteButton() => InkWell(
-        onTap: (() {
-          debugPrint("Favorite Button Clicked...");
-        }),
-        child: Container(
-          height: 28,
-          width: 28,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(14)),
-            color: AppColors.white,
-          ),
-          child: const Icon(
-            Icons.star_border_rounded,
-            size: 16,
-          ),
-        ),
-      );
+  // InkWell _favoriteButton() => InkWell(
+  //       onTap: (() {
+  //         debugPrint("Favorite Button Clicked...");
+  //       }),
+  //       child: Container(
+  //         height: 28,
+  //         width: 28,
+  //         decoration: const BoxDecoration(
+  //           borderRadius: BorderRadius.all(Radius.circular(14)),
+  //           color: AppColors.white,
+  //         ),
+  //         child: const Icon(
+  //           Icons.star_border_rounded,
+  //           size: 16,
+  //         ),
+  //       ),
+  //     );
 
-  InkWell _shoppingCartButton() => InkWell(
-        onTap: (() {
-          debugPrint("Shopping Cart Button Clicked...");
-        }),
-        child: Container(
-          height: 28,
-          width: 28,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(13)),
-            color: AppColors.primary,
-          ),
-          child: const Icon(
-            Icons.add_shopping_cart_outlined,
-            color: AppColors.white,
-            size: 12,
-          ),
-        ),
-      );
+  // InkWell _shoppingCartButton() => InkWell(
+  //       onTap: (() {
+  //         debugPrint("Shopping Cart Button Clicked...");
+  //       }),
+  //       child: Container(
+  //         height: 28,
+  //         width: 28,
+  //         decoration: const BoxDecoration(
+  //           borderRadius: BorderRadius.all(Radius.circular(13)),
+  //           color: AppColors.primary,
+  //         ),
+  //         child: const Icon(
+  //           Icons.add_shopping_cart_outlined,
+  //           color: AppColors.white,
+  //           size: 12,
+  //         ),
+  //       ),
+  //     );
 
   SizedBox _infos() => SizedBox(
         child: Padding(

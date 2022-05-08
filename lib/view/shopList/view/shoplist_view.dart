@@ -29,7 +29,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
       },
       onPageBuilder: (context, value) {
         return FutureBuilder(
-            future: viewModel.getData(),
+            future: viewModel.getShopList(),
             builder: ((context, snapshot) => snapshot.hasData
                 ? Scaffold(
                     appBar: _appBar(),
@@ -58,11 +58,13 @@ class _ShopListViewState extends BaseState<ShopListView> {
           children: <Widget>[
             viewModel.shopList.isNotEmpty
                 ? ListView.builder(
-                    itemCount: 8,
+                    itemCount: viewModel.shopList.length,
                     itemBuilder: (context, index) {
                       return Observer(builder: (_) {
                         return CartProduct(
                           shopItem: viewModel.shopList[index],
+                          onIncrease: () => viewModel.increaseQuantity(viewModel.shopList[index]),
+                          onDecrease: () => viewModel.decreaseQuantity(viewModel.shopList[index]),
                         );
                       });
                     })
@@ -90,8 +92,8 @@ class _ShopListViewState extends BaseState<ShopListView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           RichText(
-                              text: const TextSpan(children: [
-                            TextSpan(
+                              text:  TextSpan(children: [
+                            const TextSpan(
                                 text: "Total: ",
                                 style: TextStyle(
                                   color: AppColors.black,
@@ -99,8 +101,8 @@ class _ShopListViewState extends BaseState<ShopListView> {
                                   fontSize: 16,
                                 )),
                             TextSpan(
-                                text: "310 TL",
-                                style: TextStyle(
+                                text: "${viewModel.totalPrice} TL",
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.white,

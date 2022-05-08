@@ -10,4 +10,36 @@ abstract class ShopListServiceBase {
     int skip,
     int limit,
   });
+
+  Future<ShopListItemResponseModel> deleteShopList({
+    BuildContext context,
+    String token,
+  });
+
+  Future<ShopListItemResponseModel> getShopListItem({
+    BuildContext context,
+    String token,
+    int id,
+  });
+
+  Future<ShopListItemResponseModel> deleteShopListItem({
+    BuildContext context,
+    String token,
+    int id,
+  });
+
+  Future<ShopListItemResponseModel> addShopListItem({
+    BuildContext context,
+    String token,
+    String createdAt,
+    int id,
+    int quantity,
+  });
+
+  Future<ShopListItemResponseModel> updateShopListItem({
+    BuildContext context,
+    String token,
+    int id,
+    int quantity,
+  });
 }

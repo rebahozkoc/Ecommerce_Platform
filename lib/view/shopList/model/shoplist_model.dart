@@ -29,6 +29,30 @@ class ShopListResponseModel {
   }
 }
 
+class ShopListItemResponseModel {
+  String? message;
+  bool? isSuccess;
+  ShopListItem? data;
+
+  ShopListItemResponseModel({this.message, this.isSuccess, this.data});
+
+  ShopListItemResponseModel.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    isSuccess = json['isSuccess'];
+    data = json['data'] != null ? ShopListItem.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['isSuccess'] = isSuccess;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
 class ShopListItem {
   int? quantity;
   ProductModel? product;

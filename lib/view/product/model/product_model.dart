@@ -10,6 +10,7 @@ class ProductModel {
   String? categoryTitle;
   String? subcategoryTitle;
   List<Photo>? photos;
+  int? commentCount;
 
   ProductModel(
       {this.title,
@@ -22,7 +23,8 @@ class ProductModel {
       this.id,
       this.categoryTitle,
       this.subcategoryTitle,
-      this.photos});
+      this.photos,
+      this.commentCount});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -41,6 +43,7 @@ class ProductModel {
         photos!.add(Photo.fromJson(v));
       });
     }
+    commentCount = json['comment_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -58,6 +61,7 @@ class ProductModel {
     if (photos != null) {
       data['photos'] = photos!.map((v) => v.toJson()).toList();
     }
+    data['comment_count'] = commentCount;
     return data;
   }
 }

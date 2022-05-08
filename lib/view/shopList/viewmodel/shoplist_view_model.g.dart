@@ -24,6 +24,21 @@ mixin _$ShopListViewModel on _ShopListViewModelBase, Store {
     });
   }
 
+  final _$totalPriceAtom = Atom(name: '_ShopListViewModelBase.totalPrice');
+
+  @override
+  int get totalPrice {
+    _$totalPriceAtom.reportRead();
+    return super.totalPrice;
+  }
+
+  @override
+  set totalPrice(int value) {
+    _$totalPriceAtom.reportWrite(value, super.totalPrice, () {
+      super.totalPrice = value;
+    });
+  }
+
   final _$_ShopListViewModelBaseActionController =
       ActionController(name: '_ShopListViewModelBase');
 
@@ -39,11 +54,66 @@ mixin _$ShopListViewModel on _ShopListViewModelBase, Store {
   }
 
   @override
-  void addNewShop(ShopListItem shopItem) {
+  void clearShopList() {
     final _$actionInfo = _$_ShopListViewModelBaseActionController.startAction(
-        name: '_ShopListViewModelBase.addNewShop');
+        name: '_ShopListViewModelBase.clearShopList');
     try {
-      return super.addNewShop(shopItem);
+      return super.clearShopList();
+    } finally {
+      _$_ShopListViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addShop(ShopListItem shopItem) {
+    final _$actionInfo = _$_ShopListViewModelBaseActionController.startAction(
+        name: '_ShopListViewModelBase.addShop');
+    try {
+      return super.addShop(shopItem);
+    } finally {
+      _$_ShopListViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeShop(ShopListItem shopItem) {
+    final _$actionInfo = _$_ShopListViewModelBaseActionController.startAction(
+        name: '_ShopListViewModelBase.removeShop');
+    try {
+      return super.removeShop(shopItem);
+    } finally {
+      _$_ShopListViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void increasePrice(int price) {
+    final _$actionInfo = _$_ShopListViewModelBaseActionController.startAction(
+        name: '_ShopListViewModelBase.increasePrice');
+    try {
+      return super.increasePrice(price);
+    } finally {
+      _$_ShopListViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void decreasePrice(int price) {
+    final _$actionInfo = _$_ShopListViewModelBaseActionController.startAction(
+        name: '_ShopListViewModelBase.decreasePrice');
+    try {
+      return super.decreasePrice(price);
+    } finally {
+      _$_ShopListViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearShopListAndGetData() {
+    final _$actionInfo = _$_ShopListViewModelBaseActionController.startAction(
+        name: '_ShopListViewModelBase.clearShopListAndGetData');
+    try {
+      return super.clearShopListAndGetData();
     } finally {
       _$_ShopListViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -52,7 +122,8 @@ mixin _$ShopListViewModel on _ShopListViewModelBase, Store {
   @override
   String toString() {
     return '''
-shopList: ${shopList}
+shopList: ${shopList},
+totalPrice: ${totalPrice}
     ''';
   }
 }
