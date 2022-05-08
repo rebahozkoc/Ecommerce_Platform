@@ -18,10 +18,13 @@ const SearchPage = (props) => {
   const [dynamicData, setDynamicData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    getData(`http://164.92.208.145/api/v1/categories/${searchParam}`).then(
+    
+    getData(`http://164.92.208.145/api/v1/products/?query=${searchParam}`).then(
       (res) => {
-        setDynamicData(res.data.products);
+        console.log(res.data);
+        setDynamicData(res.data);
         setIsLoaded(true);
+        
       }
     );
   }, [isLoaded, searchParam]);
