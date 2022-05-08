@@ -108,13 +108,10 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
       } else {
         _item.data!.quantity = _item.data!.quantity! - shopItem.quantity!;
       }
-
       return _isSucess;
     } else {
       bool _isSucess = await addShopListItem(shopItem);
-      if (_isSucess) {
-        increasePrice(shopItem.product!.price!.toInt() * shopItem.quantity!);
-      } else {
+      if (!_isSucess) {
         shopItem.quantity = shopItem.quantity! - shopItem.quantity!;
       }
 
@@ -206,8 +203,9 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
       quantity: shopItem.quantity,
     );
 
-    if (!(_shopListItemResponseModel.isSuccess ?? false)) {
-      showToast(
+    if (_shopListItemResponseModel.isSuccess ?? false) {
+      addShop(shopItem);
+     } else { showToast(
           context: context ?? this.context!,
           message: _shopListItemResponseModel.message ??
               ApplicationConstants.ERROR_MESSAGE,
