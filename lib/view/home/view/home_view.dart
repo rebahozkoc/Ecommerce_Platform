@@ -55,7 +55,8 @@ class _HomeViewState extends BaseState<HomeView> with TickerProviderStateMixin {
                     appBar: _appBar(),
                     body: _body(),
                   )
-                : const HomeShimmerView()));      },
+                : const HomeShimmerView()));
+      },
     );
   }
 

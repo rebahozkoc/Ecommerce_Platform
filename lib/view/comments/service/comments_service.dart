@@ -24,7 +24,6 @@ class CommentsService with CommentsServiceBase {
         PathConstants.PRODUCT + "/$productId" + "/comments",
         options: Options(headers: header),
       );
-
       _responseModel = CommentsModelResponse.fromJson(response.data);
       return _responseModel;
     } on DioError catch (exception) {

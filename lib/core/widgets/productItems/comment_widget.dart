@@ -3,7 +3,7 @@ import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/view/comments/model/comments_model.dart';
 
 class CommentWidget extends StatefulWidget {
-  final CommentsModelResponse? comment;
+  final CommentModel comment;
   const CommentWidget({Key? key, required this.comment}) : super(key: key);
 
   @override
@@ -73,8 +73,8 @@ class _CommentWidgetState extends State<CommentWidget> {
               children: [
                 Flexible(
                   child: Text(
-                    widget!.comment!.data![0].content!,
-                    style: TextStyle(
+                    widget.comment.content!,
+                    style: const TextStyle(
                       color: AppColors.black,
                       fontWeight: FontWeight.w400,
                       fontSize: 14,

@@ -14,7 +14,7 @@ part 'comments_view_model.g.dart';
 class CommentsViewModel = _CommentsViewModelBase with _$CommentsViewModel;
 
 abstract class _CommentsViewModelBase with Store, BaseViewModel {
-  late CommentsModelResponse comments;
+  late int productId;
   late CommentsRepository _repository;
   late CommentsModelResponse _commentsModel;
 
@@ -28,14 +28,35 @@ abstract class _CommentsViewModelBase with Store, BaseViewModel {
 
   void dispose() {}
 
+  @observable
+  var comments = ObservableList<CommentModel>();
+
+  @action
+  void addComment(CommentModel comment) {
+    comments.add(comment);
+  }
+
+  @action
+  void removeComment(CommentModel comment) {
+    comments.remove(comment);
+  }
+
+  @action
+  void setComments(List<CommentModel> comments) {
+    this.comments.clear();
+    for (var comment in comments) {
+      this.comments.add(comment);
+    }
+  }
+
   Future<bool> getData() async {
     _commentsModel = await _repository.getComments(
       context: context,
-      productId: ApplicationConstants.PRODUCT_ID,
+      productId: 12,
     );
-    debugPrint(_commentsModel.isSuccess.toString());
     if (_commentsModel.isSuccess ?? false) {
-      comments = _commentsModel;
+      setComments(_commentsModel.data ?? []);
+
     } else {
       showToast(
           context: context!,

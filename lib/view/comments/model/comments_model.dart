@@ -13,15 +13,15 @@ class CommentsModelResponse {
     if (json['data'] != null) {
       data = <CommentModel>[];
       json['data'].forEach((v) {
-        data!.add(new CommentModel.fromJson(v));
+        data!.add(CommentModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['isSuccess'] = this.isSuccess;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['isSuccess'] = isSuccess;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -41,16 +41,16 @@ class CommentModel {
     id = json['id'];
     productId = json['product_id'];
     content = json['content'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['product_id'] = this.productId;
-    data['content'] = this.content;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['product_id'] = productId;
+    data['content'] = content;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }
