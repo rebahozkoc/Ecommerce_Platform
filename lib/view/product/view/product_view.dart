@@ -110,6 +110,7 @@ class _ProductViewState extends BaseState<ProductView> {
               setState(() {
                 viewModel.init();
               });
+              viewModel.getData();
             },
           );
         },
