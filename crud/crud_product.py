@@ -8,6 +8,7 @@ from fastapi import status, HTTPException, UploadFile
 from utilities.image import ImageUtilities
 from sqlalchemy.sql import func
 from models import CategorySubCategory
+from sqlalchemy import or_
 
 
 class CRUDProduct(
@@ -27,7 +28,7 @@ class CRUDProduct(
             return None
 
         return data
-        
+
     def create(self, db: Session, *, obj_in: schemas.ProductCreate) -> Product:
         obj_in_data = obj_in.dict()
         db_obj = self.model(**obj_in_data)  # type: ignore
@@ -46,8 +47,6 @@ class CRUDProduct(
 
         # TODO: Not useful way to do it! Change it!
         db_obj.category_subcategory_id = category_subcategory.id
-        #db_obj.category_title = category_subcategory.category.title
-        #db_obj.subcategory_title = category_subcategory.subcategory.title
 
         db.add(db_obj)
         db.commit()
@@ -94,7 +93,7 @@ class CRUDProduct(
         return db.query(func.avg(ProductRate.rate).label("average")).filter(
             ProductRate.id == id
         )
-    
+
     def decrease_stock(self, db: Session, product_id: int, quantity: int):
         product = db.query(Product).filter(Product.id == product_id).first()
         product.stock = product.stock - quantity
@@ -102,5 +101,21 @@ class CRUDProduct(
         db.commit()
         db.refresh(product)
         return product
+
+    def search_title_description(self, db: Session, query: str, skip: int, limit: int):
+        products = (
+            db.query(Product)
+            .filter(
+                or_(
+                    Product.title.contains(query),
+                    Product.description.contains(query),
+                )
+            )
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+        return products
+
 
 product = CRUDProduct(Product)
