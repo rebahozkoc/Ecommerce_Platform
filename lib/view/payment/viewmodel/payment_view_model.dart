@@ -8,6 +8,7 @@ import 'package:mobile/view/address/model/adress_model.dart';
 import 'package:mobile/view/address/repository/address_repository.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/payment/repository/payment_repository.dart';
+import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 part 'payment_view_model.g.dart';
@@ -48,7 +49,7 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
     }
   }
 
-    @action
+  @action
   void addNewAddress(AddressModel address) {
     insertFirstAddress(address);
     addresses.add(address);
@@ -95,7 +96,8 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
       context: context,
     );
     setPayments(_paymentsResponseModel.data!);
-    AddressesResponseModel addressResponse = await _addressRepository.getAddresses(context: context);
+    AddressesResponseModel addressResponse =
+        await _addressRepository.getAddresses(context: context);
     setAddresses(addressResponse.data!);
     return _paymentsResponseModel.isSuccess!;
   }
@@ -182,6 +184,24 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
           isSuccess: false,
           context: context!);
     }
+  }
+
+  Future<void> order() async {
+    PaymentResponseModel _paymentResponse = await _repository.order(
+      context: context,
+      addressId: addresses[selectedAddress].id,
+      cardId: payments[selectedCard].id,
+    );
+
+    if (_paymentResponse.isSuccess ?? false) {
+      locator<ShopListViewModel>().getShopList();
+      Navigator.pop(context!);
+    }
+    showToast(
+      message: "${_paymentResponse.message}",
+      isSuccess: _paymentResponse.isSuccess ?? false,
+      context: context!,
+    );
   }
 
   @action

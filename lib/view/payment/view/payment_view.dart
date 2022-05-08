@@ -9,6 +9,7 @@ import 'package:mobile/view/address/model/adress_model.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({Key? key}) : super(key: key);
@@ -56,8 +57,8 @@ class _PaymentViewState extends BaseState<PaymentView> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
+                      children:  [
+                        const Text(
                           "AMOUNT TO BE PAID",
                           style: TextStyle(
                             color: AppColors.darkGray,
@@ -65,21 +66,23 @@ class _PaymentViewState extends BaseState<PaymentView> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Text(
-                          "169,90",
-                          style: TextStyle(
-                            color: AppColors.textColorGray,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
+                        Observer(builder: (_) {
+                          return Text(
+                            locator<ShopListViewModel>().totalPrice.toString(),
+                            style: const TextStyle(
+                              color: AppColors.textColorGray,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        })
                       ],
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(180, 64),
                         ),
-                        onPressed: () => debugPrint("Confirm Cart"),
+                        onPressed: () => viewModel.order(),
                         child: const Text(
                           "Confirm cart",
                           style: TextStyle(

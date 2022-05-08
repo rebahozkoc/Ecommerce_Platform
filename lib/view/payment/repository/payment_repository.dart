@@ -66,4 +66,24 @@ class PaymentRepository extends PaymentServiceBase {
 
     return _responseModel;
   }
+
+  @override
+  Future<PaymentResponseModel> order({
+    BuildContext? context,
+    String? token,
+    int? addressId,
+    int? cardId,
+  }) async {
+    await getUserToken();
+    var token = LocaleManager.instance.getStringValue(PreferencesKeys.TOKEN)!;
+
+    PaymentResponseModel _responseModel = await _service.order(
+      context: context,
+      token: token,
+      addressId: addressId ?? 0,
+      cardId: cardId ?? 0,
+    );
+
+    return _responseModel;
+  }
 }

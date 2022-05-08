@@ -34,7 +34,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
   var shopList = ObservableList<ShopListItem>();
 
   @observable
-  int totalPrice = 0;
+  num totalPrice = 0;
 
   @action
   void setShopList(List<ShopListItem> shopList) {
