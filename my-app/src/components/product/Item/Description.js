@@ -53,7 +53,29 @@ const Description = (props) => {
     <ThemeProvider theme={themeOptions}>
       <Box
         disableRipple
-        sx={{ width: 800, backgroundColor: "white", padding: (1, 1, 1, 1) }}
+        sx={{
+          width: 800,
+          backgroundColor: "white",
+          pl: 1,
+          pr: 1,
+          pt: 1,
+          pb:
+            props.description.length > 900
+              ? 70
+              : props.description.length > 750
+              ? 60
+              : props.description.length > 600
+              ? 50
+              : props.description.length > 500
+              ? 40
+              : props.description.length > 400
+              ? 30
+              : props.description.length > 300
+              ? 30
+              : props.description.length > 100
+              ? 20
+              : 5,
+        }}
       >
         <Stack direction="column" spacing={2} sx={{ height: "60px" }}>
           <Stack direction="column" spacing={1}>
