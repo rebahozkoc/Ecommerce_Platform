@@ -29,7 +29,7 @@ async def order_shopping_cart(
 @router.get("/orders", response_model=Response[List[schemas.Order]])
 async def previous_orders(
     skip: int = 0,
-    limit: int = 0,
+    limit: int = 100,
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user),
 ):

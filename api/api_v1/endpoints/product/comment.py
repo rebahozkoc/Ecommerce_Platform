@@ -39,6 +39,14 @@ def create_comment(
     comment_in.user_id = current_user.id
     product = crud.product.get(db=db, field="id", value=product_id)
     comment_in.product_id = product_id
+
+    if comment_in.rate <= 1 or comment_in.rate > 5:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Rate should be between 1 and 5"},
+        )
+
+
     comment = crud.comment.create(db=db, obj_in=comment_in)
     return Response(data=comment, isSuccess=True)
 

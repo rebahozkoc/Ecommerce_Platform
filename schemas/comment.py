@@ -8,6 +8,7 @@ class CommentBase(BaseModel):
     id: int
     product_id: int
     content: str
+    rate: int
 
     class Config:
         orm_mode = True
@@ -15,6 +16,7 @@ class CommentBase(BaseModel):
 
 class CommentCreate(BaseModel):
     content: str
+    rate: int
 
     class Config:
         extra = Extra.allow

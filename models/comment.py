@@ -7,6 +7,7 @@ class Comment(Base):
     
     id = Column(Integer, primary_key=True)
     content = Column(String(1000), nullable=False)
+    rate = Column(Integer)
 
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship("User", back_populates="comments", cascade="all,delete")
