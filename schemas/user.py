@@ -49,3 +49,7 @@ class UserAddresses(UserBase):
 class UserCredits(UserBase):
     id: int
     credits: List[CreditBase]
+
+class ChangePasswordIn(BaseModel):
+    current_password: str
+    new_password: str #we assume that the front end will check if the password is iinserted correctly, meaning like many other online services we too will check for typos by requesting that the password is enterd twice and compared
