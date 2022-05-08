@@ -8,7 +8,7 @@ import crud, models, schemas
 from schemas import Response
 from typing import Any, List
 
-from schemas.user import ChangePasswordIn, UserBase, UserUpdate
+from schemas.user import ChangePasswordIn, User, UserBase, UserInDBBase, UserUpdate
 
 router = APIRouter()
 
@@ -35,11 +35,14 @@ def update_user(
     """
     #I am assuming the only necesary check for the update of the user info would have been existance check but 
     #we already know it exists thanks to the currnet_user
+    user_in=User(
+        email=user_in.email,
+        full_name=user_in.full_name,
+        is_active=user_in.is_active,
+    )
     user = crud.user.update(
         db, db_obj=current_user, obj_in=user_in)
     return Response(message="Updated successfully")
-
-
 
 @router.patch("/change_password", response_model=Response)
 def update_password(
@@ -52,19 +55,5 @@ def update_password(
     Updates the password of current user
     """
     #check the efficacy of the old_password
-    if not verify_password(change_in.current_password,current_user.hashed_password):
-         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"message": f"The password entered is wrong"},
-        )
-    #be annoying
-    if change_in.current_password==change_in.new_password:
-        raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE,
-            detail={"message": f"New password cannot be your old password"},
-        )
-    hashed= get_password_hash(change_in.new_password)
-    current_user.hashed_password=hashed
-    db.add(current_user)
-    db.commit()
-    return Response(message="Updated password of user successfully.")
+    return crud.user.update_password(db=db, current_user=current_user, change_in= change_in)
+    
