@@ -13,11 +13,18 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { creditCardId } from "../../recoils/atoms";
 import { getCookie } from "../../recoils/atoms";
 import axios from "axios";
-
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 const access = getCookie("access_token");
 export default function PaymentSummary(props) {
   let totalCost1 = Number(getCookie("totalCost"));
   const creditId = useRecoilValue(creditCardId);
+  const navigate = useNavigate();
+  const handleOnClick = useCallback(
+    () => navigate(`/payment-success`),
+    [navigate]
+  );
+
   const handleClick = () => {
     const addressId = Number(getCookie("addressId"));
     if (addressId && creditId) {
@@ -41,6 +48,7 @@ export default function PaymentSummary(props) {
         )
         .then((res) => {
           console.log(res);
+          handleOnClick();
         })
         .catch((err) => {
           console.log(err);

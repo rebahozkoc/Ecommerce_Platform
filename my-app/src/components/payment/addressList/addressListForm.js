@@ -13,7 +13,7 @@ import FormLabel from "@mui/material/FormLabel";
 import AddressListGetOld from "./addressListGetOld";
 import { useState, useEffect } from "react";
 import { getData } from "../../recoils/getterFunctions";
-
+import { getCookie } from "../../recoils/atoms";
 export default function AddressListForm(props) {
   //const addressList = props.addressList;
   const [isLoaded, setLoaded] = useState(false);
@@ -41,6 +41,7 @@ export default function AddressListForm(props) {
     //console.log("handleChange");
     //console.log(event.target.value);
     setValue(event.target.value);
+
     //console.log(value);
     if (event.target.value === "new") {
       setNewAddress(true);
@@ -50,8 +51,13 @@ export default function AddressListForm(props) {
   };
 
   useEffect(() => {
+    if (value != 0) {
+      document.cookie = `addressId=${value};path=/`;
+    }
+
     addressIdHolder2();
   }, [value]);
+  const addressVal = Number(getCookie("addressId"));
 
   return (
     <React.Fragment>
@@ -61,8 +67,8 @@ export default function AddressListForm(props) {
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
-            defaultValue={0}
-            value={value}
+            defaultValue={addressVal}
+            value={addressVal}
             onChange={handleChange}
           >
             {isLoaded ? (

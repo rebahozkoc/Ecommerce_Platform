@@ -173,14 +173,19 @@ const Product = () => {
 
   const [isLoaded2, setLoaded2] = useState(false);
   const [comments, setComments] = useState([]);
+
   useEffect(() => {
     getDataWithoutAccess(
       `http://164.92.208.145/api/v1/products/${productId}/comments`
-    ).then((res) => {
-      //console.log(res.data);
-      setComments(res.data);
-      setLoaded2(true);
-    });
+    )
+      .then((res) => {
+        //console.log(res.data);
+        setComments(res.data);
+        setLoaded2(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   //console.log("product id is", itemTemp);
@@ -191,23 +196,35 @@ const Product = () => {
   const clickHandler2 = () => {
     setMakeRating(true);
   };
+
   const closeComment = (event) => {
+    let value = Number(getCookie("rating"));
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
     const newComment = data.get("comment");
-    console.log(newComment);
-    axios.post(
-      `http://164.92.208.145/api/v1/products/${productId}/comment`,
-      {
-        content: newComment,
-      },
-      {
-        headers: {
-          Accept: "*/*",
-          Authorization: `Bearer ${access}`,
+    //console.log(newComment);
+    axios
+      .post(
+        `http://164.92.208.145/api/v1/products/${productId}/comment`,
+        {
+          content: newComment,
+          rate: value,
         },
-      }
-    );
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(newComment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setMakeComment(false);
   };
   const cancelComment = () => {
@@ -242,15 +259,26 @@ const Product = () => {
 
   const commentDeleter = (deleteId) => {
     console.log("comment to delete is", deleteId);
-    axios.delete(
-      `http://164.92.208.145/api/v1/products/${productId}/comments/${deleteId}`,
-      {
-        headers: {
-          Accept: "*/*",
-          Authorization: `Bearer ${access}`,
-        },
-      }
-    );
+    axios
+      .delete(
+        `http://164.92.208.145/api/v1/products/${productId}/comments/${deleteId}`,
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const commentApprove = (approveId) => {
+    console.log("waiting to implement");
   };
   const comment = () => {
     points[0] = 0;
@@ -344,28 +372,33 @@ const Product = () => {
                 }}
               >
                 <List>
-                  {comments.map((card) => (
-                    <ListItem key={card.id}>
-                      <CommentCard
-                        name={"username"}
-                        comment={card.content}
-                        topic={"title"}
-                        id={card.id}
-                        productId={productId}
-                        deleteComment={commentDeleter}
-                      ></CommentCard>
-                    </ListItem>
-                  ))}
+                  {comments.map(
+                    (card) => (
+                      console.log(card),
+                      (
+                        <ListItem key={card.id}>
+                          <CommentCard
+                            name={card.user.full_name}
+                            comment={card.content}
+                            topic={card.rate}
+                            id={card.id}
+                            productId={productId}
+                            deleteComment={commentDeleter}
+                            ApproveComment={commentApprove}
+                          ></CommentCard>
+                        </ListItem>
+                      )
+                    )
+                  )}
                 </List>
                 <Divider sx={{ size: 100 }} />
                 <Link to="/" style={{ color: "black" }}>
-                  <Stack direction="row" sx={{mt:2}}>
-                  <ArrowBackIosOutlinedIcon />
-                  <Typography sx={{ color: "black" }}>
-                    {" "}
-                    
-                    Back to Shopping
-                  </Typography>
+                  <Stack direction="row" sx={{ mt: 2 }}>
+                    <ArrowBackIosOutlinedIcon />
+                    <Typography sx={{ color: "black" }}>
+                      {" "}
+                      Back to Shopping
+                    </Typography>
                   </Stack>
                 </Link>
               </Box>

@@ -15,7 +15,7 @@ import { getCookie } from "../../recoils/atoms";
 export default function AddressListSummary(props) {
   let tCost = Number(getCookie("totalCost"));
   const [addressId2, setAddressId] = useRecoilState(addressId);
-  document.cookie = `addressId=${props.addressId};path=/`;
+
   setAddressId(props.addressId);
   return (
     <div>

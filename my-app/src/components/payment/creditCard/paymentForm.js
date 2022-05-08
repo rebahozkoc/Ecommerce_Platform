@@ -11,7 +11,7 @@ import PaymentAddNew from "./paymentAddNew";
 import { useState, useEffect } from "react";
 import { getData } from "../../recoils/getterFunctions";
 import { useRecoilState } from "recoil";
-import { creditCardId } from "../../recoils/atoms";
+import { creditCardId, getCookie } from "../../recoils/atoms";
 
 export default function AddressListForm(props) {
   //const addressList = props.addressList;
@@ -48,9 +48,13 @@ export default function AddressListForm(props) {
 
   useEffect(() => {
     setCreditID(value);
-
+    if (value != 0) {
+      document.cookie = `cardId=${value};path=/`;
+    }
     setUpdate(false);
   }, [update]);
+
+  const cardId = getCookie("cardId");
   return (
     <React.Fragment>
       <Box sx={{ maxWidth: 750, pl: 4, pr: 4, pb: 4, pt: 3 }}>
@@ -59,7 +63,7 @@ export default function AddressListForm(props) {
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
-            value={value}
+            value={cardId}
             onChange={handleChange}
             defaultValue={0}
           >

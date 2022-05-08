@@ -9,7 +9,7 @@ import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
 import { nameState } from "../../recoils/atoms";
 import { useRecoilValue } from "recoil";
-
+import DoneIcon from "@mui/icons-material/Done";
 /*
 <Rating
                     name="simple-controlled"
@@ -166,9 +166,8 @@ const CommentCard = (props) => {
     myComment = props.comment.substr(0, 300);
   }
 
-  React.useEffect(() => {}, [outStock, notZero]);
+  React.useEffect(() => {}, [outStock, notZero, openComment]);
 
-  React.useEffect(() => {}, [openComment]);
   return (
     <ThemeProvider theme={themeOptions}>
       <Stack direction="row">
@@ -188,15 +187,7 @@ const CommentCard = (props) => {
               >
                 {props.name}
               </Typography>
-              <Typography
-                variant="body1"
-                component="legend"
-                align="right"
-                fontWeight="bold"
-                fontSize={15}
-              >
-                {props.topic}
-              </Typography>
+              <Rating name="read-only" value={props.topic} readOnly />
             </Stack>
             <Typography component="legend" align="left" fontSize={12}>
               {!openComment && myComment}
@@ -214,13 +205,22 @@ const CommentCard = (props) => {
           <Divider />
         </Box>
         {adminState && (
-          <Button
-            onClick={() => {
-              props.deleteComment(props.id);
-            }}
-          >
-            <DeleteIcon></DeleteIcon>
-          </Button>
+          <>
+            <Button
+              onClick={() => {
+                props.ApproveComment(props.id);
+              }}
+            >
+              <DoneIcon></DoneIcon>
+            </Button>
+            <Button
+              onClick={() => {
+                props.deleteComment(props.id);
+              }}
+            >
+              <DeleteIcon></DeleteIcon>
+            </Button>
+          </>
         )}
       </Stack>
     </ThemeProvider>

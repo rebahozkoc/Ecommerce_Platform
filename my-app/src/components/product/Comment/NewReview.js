@@ -12,13 +12,30 @@ import {
 } from "@mui/material";
 import classes from "../Item/ImagePop.module.css";
 
+import { useRecoilState } from "recoil";
+
 const NewReview = (props) => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(3);
+
   return (
     <div>
       <div className={classes.backdrop} />
       <Card className={classes.modal}>
-        <Box sx={{ m: 1 }} />
+        <Box sx={{ m: 2 }} />
+
+        <Grid container justifyContent="center">
+          <Typography component="legend">Rating</Typography>
+          <Rating
+            name="simple-controlled"
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+              console.log(newValue);
+              document.cookie = `rating=${newValue};`;
+            }}
+          />
+        </Grid>
+        <Box sx={{ m: 2 }} />
         <Box
           sx={{
             display: "flex",

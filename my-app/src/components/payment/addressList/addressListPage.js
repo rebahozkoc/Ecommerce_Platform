@@ -12,7 +12,7 @@ const AddressListPage = () => {
   const [addressId, setAddressId] = useState(-1);
   const addressIdHolder = (id) => {
     setAddressId(id);
-    console.log(id);
+    //console.log(id);
   };
   return (
     <ThemeProvider theme={themeOptions}>
