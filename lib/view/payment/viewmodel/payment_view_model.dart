@@ -38,6 +38,11 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
   }
 
   @action
+  void insertFirstPayment(PaymentModel payment) {
+    this.payments.insert(0, payment);
+  }
+
+  @action
   void addNewPayment(PaymentModel payment) {
     payments.add(payment);
   }
@@ -144,8 +149,9 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
     if (_paymentResponse.isSuccess ?? false) {
       showToast(
           message: "Card has been added", isSuccess: true, context: context!);
-      locator<PaymentViewModel>().addNewPayment(_payment);
-      Navigator.pop(context!);
+      insertFirstPayment(_payment);
+      setSelectedCard(0);
+      setCardButtonIndex(0);
     } else {
       showToast(
           message: "Card has not been added",

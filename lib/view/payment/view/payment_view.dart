@@ -423,7 +423,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
           text ?? "1234 56•• •••• 7890",
           style: const TextStyle(
             color: AppColors.textColorGray,
-            fontSize: 16,
+            fontSize: 15.5,
             fontWeight: FontWeight.w500,
           ),
         ),
