@@ -5,6 +5,7 @@ import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/address/model/adress_model.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -166,7 +167,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => _addresContainer(context, index),
           separatorBuilder: (context, index) => const SizedBox(width: 16),
-          itemCount: 3,
+          itemCount: viewModel.addresses.length,
         ),
       );
 
@@ -191,8 +192,8 @@ class _PaymentViewState extends BaseState<PaymentView> {
                     _addressEditButton()
                   ],
                 ),
-                _addressName(),
-                _addressText()
+                _addressName(viewModel.addresses[index], index),
+                _addressText(viewModel.addresses[index], index),
               ],
             ),
           );
@@ -249,11 +250,11 @@ class _PaymentViewState extends BaseState<PaymentView> {
         ),
       );
 
-  Padding _addressName() => const Padding(
-        padding: EdgeInsets.only(left: 8),
+  Padding _addressName(AddressModel address, int index) => Padding(
+        padding: const EdgeInsets.only(left: 8),
         child: Text(
-          "Home Address",
-          style: TextStyle(
+          address.personalName!,
+          style: const TextStyle(
             color: AppColors.textColorGray,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -261,27 +262,27 @@ class _PaymentViewState extends BaseState<PaymentView> {
         ),
       );
 
-  Padding _addressText() => Padding(
+  Padding _addressText(AddressModel address, int index) => Padding(
         padding: const EdgeInsets.only(left: 8, top: 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
-              "Küçük Çamlıca Mahallesi Şehit İsmail Moray Sokak No:3",
+              address.fullAddress!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.darkGray,
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
-              "ÜSKÜDAR/ İSTANBUL",
+              address.city! + "/" + address.province!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.darkGray,
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
