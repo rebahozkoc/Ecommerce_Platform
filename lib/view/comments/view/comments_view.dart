@@ -19,7 +19,6 @@ class _CommentsViewState extends State<CommentsView> {
   @override
   Widget build(BuildContext context) {
     return BaseView(
-<<<<<<< HEAD
         viewModel: locator<CommentsViewModel>(),
         onModelReady: (dynamic model) async {
           model.setContext(context);
@@ -40,28 +39,12 @@ class _CommentsViewState extends State<CommentsView> {
                   )),
           );
         });
-=======
-      viewModel: locator<CommentsViewModel>(),
-      onModelReady: (dynamic model) async {
-        model.setContext(context);
-        model.init();
-        viewModel = model;
-      },
-      onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-        );
-      },
-    );
->>>>>>> a822a29682362136cded5dc63c146e5c9ccc390a
   }
 
   AppBar _appBar() => AppBar(
         title: const Text("All Comments"),
       );
 
-<<<<<<< HEAD
   SingleChildScrollView _body() => SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(12.0),
@@ -92,54 +75,11 @@ class _CommentsViewState extends State<CommentsView> {
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-=======
-  RefreshIndicator _body() => RefreshIndicator(
-        color: AppColors.primary,
-        onRefresh: () {
-          return Future.delayed(
-            const Duration(seconds: 1),
-            () {
-              setState(() {
-                viewModel.init();
-              });
-            },
-          );
-        },
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
->>>>>>> a822a29682362136cded5dc63c146e5c9ccc390a
-                children: [
-                  Row(
-                    children: const [
-                      Text(
-                        "There are 3 comments about this product",
-                        style: TextStyle(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  ),
-                  const CommentWidget(),
-                  const CommentWidget(),
-                  const CommentWidget(),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      addComment(),
-                    ],
-                  ),
-                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      );
+  );
 
   OutlinedButton addComment() => OutlinedButton(
         onPressed: () {
