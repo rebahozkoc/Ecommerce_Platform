@@ -76,10 +76,11 @@ class _CommentsViewState extends State<CommentsView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
+              addComment(),
             ],
           ),
         ),
-  );
+      );
 
   OutlinedButton addComment() => OutlinedButton(
         onPressed: () {
