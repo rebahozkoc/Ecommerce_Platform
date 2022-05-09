@@ -1,8 +1,8 @@
-import sendMail
+import utilities.sendMail as sendMail
 import reportlab
 import pdfkit
 import json
-import gen_invoice
+import utilities.gen_invoice as gen_invoice
 path_wkthmltopdf = b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe'
 
 # Load the json data file

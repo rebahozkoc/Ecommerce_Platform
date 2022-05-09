@@ -12,6 +12,7 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         self, db: Session, current_user: User, order_details: schemas.OrderShoppingCart
     ):
         shopping_cart_items = crud.shopping_cart.get_multi(db=db, user=current_user)
+        json_data = None
 
         for item in shopping_cart_items:
             order = models.Order(
@@ -26,6 +27,7 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
             crud.product.decrease_stock(
                 db=db, product_id=item.product_id, quantity=item.quantity
             )
+        
         db.commit()
 
         crud.shopping_cart.remove_all(db=db, user=current_user)

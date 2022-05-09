@@ -11,9 +11,8 @@ def trChar(text):
     return text
 
 
-def gen_invoice(jsonFile, username):
+def gen_invoice(orders_json, username):
     """Modify the invoice html file to include the invoice data"""
-    orders_json = json.load(open(jsonFile, "r", encoding='utf-8'))
 
     address_dict = orders_json["data"][0]["address"]
     personal_info = address_dict["personal_name"] + "\n" + address_dict["phone_number"] + "\n" +\
