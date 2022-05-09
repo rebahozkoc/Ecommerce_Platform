@@ -127,6 +127,7 @@ class _SearchViewState extends BaseState<SearchView> {
         value: data["value"] != viewModel.sortBy,
         contentPadding: EdgeInsets.zero,
         onChanged: (sortBy) {
+          viewModel.setSortBy(data["value"]);
           viewModel.sortProducts();
         },
         activeColor: AppColors.primary,
