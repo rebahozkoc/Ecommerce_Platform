@@ -133,6 +133,7 @@ dmypy.json
 
 # Media folder
 media/
+static/
 
 # IDEs
 .idea/*
