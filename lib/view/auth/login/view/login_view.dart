@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
+import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/extension/string_extension.dart';
 import 'package:mobile/core/init/lang/locale_keys.g.dart';
+import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/auth/login/viewmodel/login_view_model.dart';
 
@@ -48,8 +50,22 @@ class _LoginViewState extends BaseState<LoginView> {
             loginButton(),
             forgotLabel,
             register,
+            withoutLogin(),
           ],
         ),
+      );
+
+  Row withoutLogin() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () {
+              NavigationService.instance
+                  .navigateToPageClear(path: NavigationConstants.DEFAULT);
+            },
+            child: const Text("Continue without login"),
+          )
+        ],
       );
 
   final title = const Text(
@@ -63,50 +79,52 @@ class _LoginViewState extends BaseState<LoginView> {
   );
 
   TextFormField email() => TextFormField(
-    keyboardType: TextInputType.emailAddress,
-    controller: viewModel.emailController,
-    autocorrect: false,
-    autofocus: false,
-    decoration: const InputDecoration(
-      labelText: "Email",
-      labelStyle: TextStyle(color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),
-      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.secondary)),
-      focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: AppColors.primary)),
-    ),
-  );
+        keyboardType: TextInputType.emailAddress,
+        controller: viewModel.emailController,
+        autocorrect: false,
+        autofocus: false,
+        decoration: const InputDecoration(
+          labelText: "Email",
+          labelStyle: TextStyle(
+              color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColors.secondary)),
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primary)),
+        ),
+      );
 
   TextFormField password() => TextFormField(
-    autofocus: false,
-    obscureText: true,
-    controller: viewModel.passwordController,
-    decoration: const InputDecoration(
-      labelText: "Password",
-      labelStyle: TextStyle(color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),
-      contentPadding:  EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.secondary)),
-      focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primary)),
-    ),
-  );
+        autofocus: false,
+        obscureText: true,
+        controller: viewModel.passwordController,
+        decoration: const InputDecoration(
+          labelText: "Password",
+          labelStyle: TextStyle(
+              color: AppColors.gray, fontSize: 12, fontWeight: FontWeight.bold),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColors.secondary)),
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primary)),
+        ),
+      );
 
   Padding loginButton() => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 16.0),
-    child: MaterialButton(
-      height: 50,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      onPressed: () => viewModel.submit(),
-      padding: const EdgeInsets.all(12),
-      color: AppColors.primary,
-      child: Text(LocaleKeys.login.locale,
-          style: const TextStyle(color: Colors.white)),
-    ),
-  );
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: MaterialButton(
+          height: 50,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          onPressed: () => viewModel.submit(),
+          padding: const EdgeInsets.all(12),
+          color: AppColors.primary,
+          child: Text(LocaleKeys.login.locale,
+              style: const TextStyle(color: Colors.white)),
+        ),
+      );
 
   final register = Row(
     mainAxisAlignment: MainAxisAlignment.center,

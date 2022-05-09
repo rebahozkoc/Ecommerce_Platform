@@ -81,7 +81,12 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => PaymentRepository());
   locator.registerLazySingleton(() => ProductRepository());
   locator.registerLazySingleton(() => ShopListRepository());
+<<<<<<< HEAD
   locator.registerLazySingleton(() => CommentsRepository());
+=======
+  
+
+>>>>>>> a822a29682362136cded5dc63c146e5c9ccc390a
   // Service
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => CategoryService());

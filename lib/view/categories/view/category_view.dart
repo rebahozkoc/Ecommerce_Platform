@@ -53,12 +53,25 @@ class _CategoryViewState extends BaseState<CategoryView> {
 
   SizedBox _body() => SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SearchButtonWidget(),
-              _gridView(),
-            ],
+        child: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () {
+            return Future.delayed(
+              const Duration(seconds: 1),
+              () {
+                setState(() {
+                  viewModel.init();
+                });
+              },
+            );
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SearchButtonWidget(),
+                _gridView(),
+              ],
+            ),
           ),
         ),
       );

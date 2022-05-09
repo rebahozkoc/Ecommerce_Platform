@@ -137,7 +137,7 @@ class _SearchViewState extends BaseState<SearchView> {
           childAspectRatio: 24 / 37,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          children: const [
+          children:  const [
             LargeProduct(),
             LargeProduct(),
             LargeProduct(),

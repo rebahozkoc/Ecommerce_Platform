@@ -175,6 +175,39 @@ mixin _$PaymentViewModel on _PaymentViewModelBase, Store {
       ActionController(name: '_PaymentViewModelBase');
 
   @override
+  void addNewAddress(AddressModel address) {
+    final _$actionInfo = _$_PaymentViewModelBaseActionController.startAction(
+        name: '_PaymentViewModelBase.addNewAddress');
+    try {
+      return super.addNewAddress(address);
+    } finally {
+      _$_PaymentViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void insertFirstPayment(PaymentModel payment) {
+    final _$actionInfo = _$_PaymentViewModelBaseActionController.startAction(
+        name: '_PaymentViewModelBase.insertFirstPayment');
+    try {
+      return super.insertFirstPayment(payment);
+    } finally {
+      _$_PaymentViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void insertFirstAddress(AddressModel address) {
+    final _$actionInfo = _$_PaymentViewModelBaseActionController.startAction(
+        name: '_PaymentViewModelBase.insertFirstAddress');
+    try {
+      return super.insertFirstAddress(address);
+    } finally {
+      _$_PaymentViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addNewPayment(PaymentModel payment) {
     final _$actionInfo = _$_PaymentViewModelBaseActionController.startAction(
         name: '_PaymentViewModelBase.addNewPayment');

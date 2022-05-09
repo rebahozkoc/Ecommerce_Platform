@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/image/image_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/address/model/adress_model.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/payment/viewmodel/payment_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({Key? key}) : super(key: key);
@@ -54,8 +57,8 @@ class _PaymentViewState extends BaseState<PaymentView> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
+                      children:  [
+                        const Text(
                           "AMOUNT TO BE PAID",
                           style: TextStyle(
                             color: AppColors.darkGray,
@@ -63,21 +66,23 @@ class _PaymentViewState extends BaseState<PaymentView> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Text(
-                          "169,90",
-                          style: TextStyle(
-                            color: AppColors.textColorGray,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
+                        Observer(builder: (_) {
+                          return Text(
+                            locator<ShopListViewModel>().totalPrice.toString(),
+                            style: const TextStyle(
+                              color: AppColors.textColorGray,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        })
                       ],
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(180, 64),
                         ),
-                        onPressed: () => debugPrint("Confirm Cart"),
+                        onPressed: () => viewModel.order(),
                         child: const Text(
                           "Confirm cart",
                           style: TextStyle(
@@ -165,7 +170,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => _addresContainer(context, index),
           separatorBuilder: (context, index) => const SizedBox(width: 16),
-          itemCount: 3,
+          itemCount: viewModel.addresses.length,
         ),
       );
 
@@ -190,8 +195,8 @@ class _PaymentViewState extends BaseState<PaymentView> {
                     _addressEditButton()
                   ],
                 ),
-                _addressName(),
-                _addressText()
+                _addressName(viewModel.addresses[index], index),
+                _addressText(viewModel.addresses[index], index),
               ],
             ),
           );
@@ -248,11 +253,11 @@ class _PaymentViewState extends BaseState<PaymentView> {
         ),
       );
 
-  Padding _addressName() => const Padding(
-        padding: EdgeInsets.only(left: 8),
+  Padding _addressName(AddressModel address, int index) => Padding(
+        padding: const EdgeInsets.only(left: 8),
         child: Text(
-          "Home Address",
-          style: TextStyle(
+          address.personalName!,
+          style: const TextStyle(
             color: AppColors.textColorGray,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -260,27 +265,27 @@ class _PaymentViewState extends BaseState<PaymentView> {
         ),
       );
 
-  Padding _addressText() => Padding(
+  Padding _addressText(AddressModel address, int index) => Padding(
         padding: const EdgeInsets.only(left: 8, top: 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
-              "Küçük Çamlıca Mahallesi Şehit İsmail Moray Sokak No:3",
+              address.fullAddress!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.darkGray,
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
-              "ÜSKÜDAR/ İSTANBUL",
+              address.city! + "/" + address.province!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.darkGray,
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
@@ -374,7 +379,6 @@ class _PaymentViewState extends BaseState<PaymentView> {
         }),
       );
 
-
   InkWell _savedCard(PaymentModel payment, int index) => InkWell(
         onTap: (() => viewModel.setSelectedCard(index)),
         child: Observer(builder: (_) {
@@ -419,11 +423,11 @@ class _PaymentViewState extends BaseState<PaymentView> {
   Container _cardNumber(String? text) => Container(
         width: double.infinity,
         margin: const EdgeInsets.only(left: 16, bottom: 3, top: 16),
-        child:  Text(
+        child: Text(
           text ?? "1234 56•• •••• 7890",
           style: const TextStyle(
             color: AppColors.textColorGray,
-            fontSize: 16,
+            fontSize: 15.5,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -432,7 +436,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
   Container _cardName(String? text) => Container(
         width: double.infinity,
         margin: const EdgeInsets.only(left: 16),
-        child:  Text(
+        child: Text(
           text ?? "Charles Leclerc",
           style: const TextStyle(
             color: AppColors.darkGray,
@@ -454,7 +458,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
             keyboardType: TextInputType.text,
             controller: viewModel.cardMethodController,
           ),
-          _cardForm(
+          _cardFormNumber(
             title: "Card Number",
             hintText: "**** **** **** ***",
             keyboardType: TextInputType.number,
@@ -559,4 +563,88 @@ class _PaymentViewState extends BaseState<PaymentView> {
           )
         ],
       );
+
+  Column _cardFormNumber({
+    required String title,
+    required String hintText,
+    required TextInputType keyboardType,
+    required TextEditingController controller,
+  }) =>
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: AppColors.textColorGray,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          TextFormField(
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CardNumberFormatter(),
+            ],
+            maxLength: 19,
+            cursorColor: Colors.indigoAccent,
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.next,
+            autocorrect: false,
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: hintText,
+              filled: true,
+              fillColor: AppColors.white,
+              enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide.none),
+              disabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide.none),
+              focusedBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderSide: BorderSide(
+                  color: AppColors.primary,
+                  width: 1.5,
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+}
+
+class CardNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue previousValue,
+    TextEditingValue nextValue,
+  ) {
+    var inputText = nextValue.text;
+
+    if (nextValue.selection.baseOffset == 0) {
+      return nextValue;
+    }
+
+    var bufferString = new StringBuffer();
+    for (int i = 0; i < inputText.length; i++) {
+      bufferString.write(inputText[i]);
+      var nonZeroIndexValue = i + 1;
+      if (nonZeroIndexValue % 4 == 0 && nonZeroIndexValue != inputText.length) {
+        bufferString.write(' ');
+      }
+    }
+
+    var string = bufferString.toString();
+    return nextValue.copyWith(
+      text: string,
+      selection: new TextSelection.collapsed(
+        offset: string.length,
+      ),
+    );
+  }
 }

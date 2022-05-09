@@ -16,6 +16,7 @@ import 'package:mobile/view/payment/view/payment_view.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/view/product_view.dart';
 import 'package:mobile/view/search/view/search_view.dart';
+import 'package:mobile/view/shopList/view/shoplist_view.dart';
 
 class NavigationRoute {
   static final NavigationRoute _instance = NavigationRoute._init();
@@ -37,6 +38,9 @@ class NavigationRoute {
       case NavigationConstants.BOTTOM_BAR:
         return bottomToTopNavigate(
             const BottomBarView(), NavigationConstants.BOTTOM_BAR);
+      case NavigationConstants.SHOPLIST:
+        return cupertinoNavigate(
+            const ShopListView(), NavigationConstants.SHOPLIST);
       case NavigationConstants.ADRESS:
         return cupertinoNavigate(
             const AddressView(), NavigationConstants.ADRESS);

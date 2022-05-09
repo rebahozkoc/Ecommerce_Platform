@@ -37,10 +37,7 @@ class ShopListRepository extends ShopListServiceBase {
       String? _shopListStr =
           LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<Map<String, dynamic>> _data = _shopListStr != null
-          ? json.decode(_shopListStr)
-          : <Map<String, dynamic>>[];
-
+      List _data = _shopListStr != null ? jsonDecode(_shopListStr) : [];
       ShopListResponseModel _responseModel = ShopListResponseModel(
         data: _data.map((e) => ShopListItem.fromJson(e)).toList(),
         isSuccess: true,
@@ -56,7 +53,7 @@ class ShopListRepository extends ShopListServiceBase {
     BuildContext? context,
     String? token,
     String? createdAt,
-    int? id,
+    ProductModel? product,
     int? quantity,
   }) async {
     if (LocaleManager.instance.getBoolValue(PreferencesKeys.IS_LOGINED) ??
@@ -68,7 +65,7 @@ class ShopListRepository extends ShopListServiceBase {
         context: context,
         token: token,
         createdAt: createdAt ?? DateTime.now().toIso8601String(),
-        id: id ?? 0,
+        product: product,
         quantity: quantity ?? 0,
       );
 
@@ -77,24 +74,20 @@ class ShopListRepository extends ShopListServiceBase {
       String? _shopListStr =
           LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<Map<String, dynamic>> _data = _shopListStr != null
-          ? json.decode(_shopListStr)
-          : <Map<String, dynamic>>[];
+      List _data = _shopListStr != null ? jsonDecode(_shopListStr) : [];
 
       List<ShopListItem> _shopList =
           _data.map((e) => ShopListItem.fromJson(e)).toList();
 
       _shopList.add(ShopListItem(
-        product: ProductModel(
-          id: id ?? 0,
-        ),
-        quantity: quantity ?? 0,
+        product: product,
+        quantity: quantity ?? 1,
       ));
-
+      //debugPrint("ShopList After: ${_shopList.toString()}");
       _data = _shopList.map((e) => e.toJson()).toList();
 
       LocaleManager.instance
-          .setStringValue(PreferencesKeys.SHOPLIST, json.encode(_data));
+          .setStringValue(PreferencesKeys.SHOPLIST, jsonEncode(_data));
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
         isSuccess: true,
         data: null,
@@ -122,7 +115,7 @@ class ShopListRepository extends ShopListServiceBase {
 
       return _responseModel;
     } else {
-      LocaleManager.instance.setStringValue(PreferencesKeys.SHOPLIST, '[]');
+      LocaleManager.instance.removeValue(PreferencesKeys.SHOPLIST);
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
         isSuccess: true,
         data: null,
@@ -156,9 +149,7 @@ class ShopListRepository extends ShopListServiceBase {
       String? _shopListStr =
           LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<Map<String, dynamic>> _data = _shopListStr != null
-          ? json.decode(_shopListStr)
-          : <Map<String, dynamic>>[];
+      List _data = _shopListStr != null ? jsonDecode(_shopListStr) : [];
 
       List<ShopListItem> _shopList =
           _data.map((e) => ShopListItem.fromJson(e)).toList();
@@ -201,20 +192,22 @@ class ShopListRepository extends ShopListServiceBase {
       String? _shopListStr =
           LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<Map<String, dynamic>> _data = _shopListStr != null
-          ? json.decode(_shopListStr)
-          : <Map<String, dynamic>>[];
+      List _data = _shopListStr != null ? jsonDecode(_shopListStr) : [];
 
       List<ShopListItem> _shopList =
           _data.map((e) => ShopListItem.fromJson(e)).toList();
 
-      ShopListItem _shopListItem =
-          _shopList.firstWhere((e) => e.product!.id == id);
+      ShopListItem _shopListItem = _shopList.firstWhere(
+        (e) => e.product!.id == id,
+        orElse: () => ShopListItem(),
+      );
 
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
-        isSuccess: true,
+        isSuccess: _shopListItem.quantity != null,
         data: _shopListItem,
-        message: "Successfully collect the product from the cart",
+        message: _shopListItem.quantity != null
+            ? "Successfully collect the product from the cart"
+            : "The product is not in the cart",
       );
 
       return _responseModel;
@@ -225,7 +218,7 @@ class ShopListRepository extends ShopListServiceBase {
   Future<ShopListItemResponseModel> updateShopListItem({
     BuildContext? context,
     String? token,
-    int? id,
+    ProductModel? product,
     int? quantity,
   }) async {
     if (LocaleManager.instance.getBoolValue(PreferencesKeys.IS_LOGINED) ??
@@ -236,7 +229,7 @@ class ShopListRepository extends ShopListServiceBase {
           await _service.updateShopListItem(
         context: context,
         token: token,
-        id: id ?? 0,
+        product: product,
         quantity: quantity ?? 0,
       );
       return _responseModel;
@@ -244,26 +237,56 @@ class ShopListRepository extends ShopListServiceBase {
       String? _shopListStr =
           LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
 
-      List<Map<String, dynamic>> _data = _shopListStr != null
-          ? json.decode(_shopListStr)
-          : <Map<String, dynamic>>[];
+      List _data = _shopListStr != null ? jsonDecode(_shopListStr) : [];
 
       List<ShopListItem> _shopList =
           _data.map((e) => ShopListItem.fromJson(e)).toList();
 
-      _shopList.firstWhere((e) => e.product!.id == id).quantity = quantity ?? 0;
+      bool _isSuccess =
+          (quantity ?? 0) > 0 && (quantity ?? 0) <= product!.stock!;
+      if (_isSuccess) {
+        _shopList.firstWhere((e) => e.product!.id == product.id).quantity =
+            quantity;
+      }
 
       _data = _shopList.map((e) => e.toJson()).toList();
 
       LocaleManager.instance
           .setStringValue(PreferencesKeys.SHOPLIST, json.encode(_data));
       ShopListItemResponseModel _responseModel = ShopListItemResponseModel(
-        isSuccess: true,
+        isSuccess: _isSuccess,
         data: null,
-        message: "Successfully updated the product in the cart",
+        message: (quantity ?? 0) > product!.stock!
+            ? "You cannot add items more than there is in stock."
+            : "Successfully updated the product in the cart",
       );
 
       return _responseModel;
     }
+  }
+
+  Future<void> saveShopListItems() async {
+    String? _shopListStr =
+        LocaleManager.instance.getStringValue(PreferencesKeys.SHOPLIST);
+
+    List _data = _shopListStr != null ? jsonDecode(_shopListStr) : [];
+
+    List<ShopListItem> _shopList =
+        _data.map((e) => ShopListItem.fromJson(e)).toList();
+
+    for (ShopListItem item in _shopList) {
+      ShopListItemResponseModel _response =
+          await getShopListItem(context: null, id: item.product!.id);
+      if ((_response.isSuccess ?? false) &&
+          _response.data!.quantity! < _response.data!.product!.stock!) {
+        item.quantity = _response.data!.quantity! + 1;
+        await updateShopListItem(
+            product: item.product, quantity: item.quantity);
+      } else {
+        await addShopListItem(product: item.product, quantity: item.quantity);
+      }
+    }
+
+    LocaleManager.instance.removeValue(PreferencesKeys.SHOPLIST);
   }
 }

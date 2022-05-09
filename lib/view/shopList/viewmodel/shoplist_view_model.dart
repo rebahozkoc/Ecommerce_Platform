@@ -25,6 +25,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
   @override
   void init() {
     _repository = locator<ShopListRepository>();
+    //_repository.deleteShopList();
   }
 
   void dispose() {}
@@ -33,7 +34,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
   var shopList = ObservableList<ShopListItem>();
 
   @observable
-  int totalPrice = 0;
+  num totalPrice = 0;
 
   @action
   void setShopList(List<ShopListItem> shopList) {
@@ -53,15 +54,13 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
   @action
   void addShop(ShopListItem shopItem) {
     shopList.add(shopItem);
-    increasePrice(
-        shopItem.quantity!.toInt() * shopItem.product!.price!.toInt());
+    increasePrice(shopItem.quantity! * shopItem.product!.price!.toInt());
   }
 
   @action
   void removeShop(ShopListItem shopItem) {
     shopList.remove(shopItem);
-    decreasePrice(
-        shopItem.quantity!.toInt() * shopItem.product!.price!.toInt());
+    decreasePrice(shopItem.quantity! * shopItem.product!.price!.toInt());
   }
 
   @action
@@ -82,25 +81,55 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
 
   Future<bool> increaseQuantity(ShopListItem shopItem) async {
     debugPrint('increaseQuantity');
-    shopItem.quantity = shopItem.quantity!.toInt() + 1;
+    shopItem.quantity = shopItem.quantity! + 1;
     bool _isSucess = await updateShopListItem(shopItem);
     if (_isSucess) {
       increasePrice(shopItem.product!.price!.toInt());
     } else {
-      shopItem.quantity = shopItem.quantity!.toInt() - 1;
+      shopItem.quantity = shopItem.quantity! - 1;
     }
 
     return _isSucess;
   }
 
-  Future<bool> decreaseQuantity(ShopListItem shopItem) async {
-    if (shopItem.quantity!.toInt() > 1) {
-      shopItem.quantity = shopItem.quantity!.toInt() - 1;
-      bool _isSucess = await updateShopListItem(shopItem);
+  Future<bool> addQuantity(ShopListItem shopItem,
+      {BuildContext? context}) async {
+    debugPrint('addQuantity');
+    ShopListItemResponseModel _item =
+        await getShopListItem(shopItem.product!.id!);
+
+    bool isExist = _item.isSuccess!;
+    debugPrint('isExist: $isExist');
+    if (isExist) {
+      _item.data!.quantity = _item.data!.quantity! + shopItem.quantity!;
+      bool _isSucess = await updateShopListItem(_item.data!, context: context);
+      debugPrint('_isSucess: $_isSucess');
+      if (_isSucess) {
+        increasePrice(shopItem.product!.price!.toInt() * shopItem.quantity!);
+      } else {
+        _item.data!.quantity = _item.data!.quantity! - shopItem.quantity!;
+      }
+      return _isSucess;
+    } else {
+      bool _isSucess = await addShopListItem(shopItem);
+      if (!_isSucess) {
+        shopItem.quantity = shopItem.quantity! - shopItem.quantity!;
+      }
+
+      return _isSucess;
+    }
+  }
+
+  Future<bool> decreaseQuantity(ShopListItem shopItem,
+      {BuildContext? context}) async {
+    debugPrint('decreaseQuantity');
+    if (shopItem.quantity! > 1) {
+      shopItem.quantity = shopItem.quantity! - 1;
+      bool _isSucess = await updateShopListItem(shopItem, context: context);
       if (_isSucess) {
         decreasePrice(shopItem.product!.price!.toInt());
       } else {
-        shopItem.quantity = shopItem.quantity!.toInt() + 1;
+        shopItem.quantity = shopItem.quantity! + 1;
       }
       return _isSucess;
     } else {
@@ -108,22 +137,21 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
       if (_isSucess) {
         removeShop(shopItem);
       } else {
-        shopItem.quantity = shopItem.quantity!.toInt() + 1;
+        shopItem.quantity = shopItem.quantity! + 1;
       }
       return _isSucess;
     }
   }
 
-  Future<bool> getShopList() async {
+  Future<bool> getShopList({BuildContext? context}) async {
     _shopListResponseModel = await _repository.getShopList(
-      context: context,
+      context: this.context,
     );
     if (_shopListResponseModel.isSuccess ?? false) {
-      debugPrint('getShopList success');
       setShopList(_shopListResponseModel.data!);
     } else {
       showToast(
-          context: context!,
+          context: context ?? this.context!,
           message: _shopListResponseModel.message ??
               ApplicationConstants.ERROR_MESSAGE,
           isSuccess: false);
@@ -132,16 +160,16 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
     return _shopListResponseModel.isSuccess!;
   }
 
-  Future<bool> updateShopListItem(ShopListItem shopItem) async {
-
+  Future<bool> updateShopListItem(ShopListItem shopItem,
+      {BuildContext? context}) async {
     _shopListItemResponseModel = await _repository.updateShopListItem(
-      context: context,
-      id: shopItem.product?.id,
+      context: this.context,
+      product: shopItem.product,
       quantity: shopItem.quantity,
     );
     if (!(_shopListItemResponseModel.isSuccess ?? false)) {
       showToast(
-          context: context!,
+          context: context ?? this.context!,
           message: _shopListItemResponseModel.message ??
               ApplicationConstants.ERROR_MESSAGE,
           isSuccess: false);
@@ -150,7 +178,8 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
     return _shopListItemResponseModel.isSuccess!;
   }
 
-  Future<bool> deleteShopListItem(ShopListItem shopItem) async {
+  Future<bool> deleteShopListItem(ShopListItem shopItem,
+      {BuildContext? context}) async {
     _shopListItemResponseModel = await _repository.deleteShopListItem(
       context: context,
       id: shopItem.product?.id,
@@ -158,13 +187,42 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
 
     if (!(_shopListItemResponseModel.isSuccess ?? false)) {
       showToast(
-          context: context!,
+          context: context ?? this.context!,
           message: _shopListItemResponseModel.message ??
               ApplicationConstants.ERROR_MESSAGE,
           isSuccess: false);
     }
 
     return _shopListItemResponseModel.isSuccess!;
+  }
+
+  Future<bool> addShopListItem(ShopListItem shopItem,
+      {BuildContext? context}) async {
+    _shopListItemResponseModel = await _repository.addShopListItem(
+      context: context,
+      product: shopItem.product,
+      quantity: shopItem.quantity,
+    );
+
+    if (_shopListItemResponseModel.isSuccess ?? false) {
+      addShop(shopItem);
+    } else {
+      showToast(
+          context: context ?? this.context!,
+          message: _shopListItemResponseModel.message ??
+              ApplicationConstants.ERROR_MESSAGE,
+          isSuccess: false);
+    }
+
+    return _shopListItemResponseModel.isSuccess!;
+  }
+
+  Future<ShopListItemResponseModel> getShopListItem(int id) async {
+    _shopListItemResponseModel = await _repository.getShopListItem(
+      context: context,
+      id: id,
+    );
+    return _shopListItemResponseModel;
   }
 
   void navigateToPayment() => NavigationService.instance.navigateToPage(

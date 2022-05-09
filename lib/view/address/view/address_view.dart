@@ -46,9 +46,22 @@ class _AddressViewState extends BaseState<AddressView> {
 
   SizedBox _body() => SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [_title(), _newAdress(), _adresses()],
+        child: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () {
+            return Future.delayed(
+              const Duration(seconds: 1),
+              () {
+                setState(() {
+                  viewModel.init();
+                });
+              },
+            );
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [_title(), _newAdress(), _adresses()],
+            ),
           ),
         ),
       );
