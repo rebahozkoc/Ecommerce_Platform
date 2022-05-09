@@ -30,7 +30,7 @@ import { getDataWithoutAccess } from "../recoils/getterFunctions";
 import NewRating from "./Comment/NewRating";
 import axios from "axios";
 
-import { getCookie, loggedState } from "../recoils/atoms";
+import { getCookie, loggedState, nameState } from "../recoils/atoms";
 import { getData } from "../recoils/getterFunctions";
 import { addCardtoCookie } from "../recoils/getterFunctions";
 
@@ -51,6 +51,7 @@ const Product = () => {
 
   const stateParamValue = useLocation();
   const productId = stateParamValue.state.id;
+  const admin = useRecoilValue(nameState);
 
   const clickHandler = () => {
     setMakeComment(true);
@@ -255,17 +256,21 @@ const Product = () => {
                 }}
               >
                 <List>
-                  {comments.map((card) => (
-                    <ListItem key={card.id}>
-                      <CommentCard
-                        name={card.user.full_name}
-                        comment={card.content}
-                        topic={card.rate}
-                        id={card.id}
-                        productId={productId}
-                      ></CommentCard>
-                    </ListItem>
-                  ))}
+                  {comments.map(
+                    (card) =>
+                      (admin || card.is_active) && (
+                        <ListItem key={card.id}>
+                          <CommentCard
+                            name={card.user.full_name}
+                            comment={card.content}
+                            topic={card.rate}
+                            id={card.id}
+                            productId={productId}
+                            isVal={card.is_active}
+                          ></CommentCard>
+                        </ListItem>
+                      )
+                  )}
                 </List>
                 <Divider sx={{ size: 100 }} />
                 <Link to="/" style={{ color: "black" }}>

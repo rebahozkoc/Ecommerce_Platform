@@ -62,3 +62,8 @@ export const totalCost = atom({
   key: "totalCost",
   default: -10,
 });
+
+export const orders = atom({
+  key: "orders",
+  default: -10,
+});

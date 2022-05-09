@@ -24,6 +24,7 @@ import UpdatePaymentPage from "./components/account/updatePaymentPage";
 import PaymentSuccessPage from "./components/payment/paymentSuccess/paymentSuccessPage";
 import { RecoilRoot } from "recoil";
 import SearchPage from "./components/search/searchPage";
+import Export from "./components/invoicePdf/Invoice";
 ReactDOM.render(
   <RecoilRoot>
     <BrowserRouter>
@@ -46,6 +47,7 @@ ReactDOM.render(
         <Route path="/update-payment" element={<UpdatePaymentPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/Export" element={<Export />} />
         <Route path="/" element={<App />}></Route>
       </Routes>
     </BrowserRouter>

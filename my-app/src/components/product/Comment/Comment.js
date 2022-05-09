@@ -49,8 +49,26 @@ const CommentCard = (props) => {
         console.log(err);
       });
   };
-  const commentApprove = (approveId) => {
-    console.log("waiting to implement");
+  const commentApprove = () => {
+    axios
+      .post(
+        `http://164.92.208.145/api/v1/products/${props.productId}/comment/${props.id}/active`,
+        {
+          is_active: true,
+        },
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -89,7 +107,7 @@ const CommentCard = (props) => {
 
           <Divider />
         </Box>
-        {adminState && (
+        {adminState && !props.isVal && (
           <>
             <Button
               onClick={() => {
@@ -98,13 +116,15 @@ const CommentCard = (props) => {
             >
               <DoneIcon></DoneIcon>
             </Button>
-            <Button
-              onClick={() => {
-                commentDeleter();
-              }}
-            >
-              <DeleteIcon></DeleteIcon>
-            </Button>
+            {/*
+              <Button
+                onClick={() => {
+                  commentDeleter();
+                }}
+              >
+                <DeleteIcon></DeleteIcon>
+              </Button>
+              */}
           </>
         )}
       </Stack>

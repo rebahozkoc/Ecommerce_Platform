@@ -41,9 +41,9 @@ const InvoiceCard = (props) => {
             variant="body1"
             color="text.secondary"
             fontWeight="bold"
-            fontSize={8}
+            fontSize={6}
           >
-            Delivery Time: some date time
+            {props.model}: {props.title}
           </Typography>
 
           <Box sx={{ m: 2 }} />

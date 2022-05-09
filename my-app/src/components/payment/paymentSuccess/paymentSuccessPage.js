@@ -6,7 +6,17 @@ import themeOptions from "../../style/theme";
 import Export from "../../invoicePdf/Invoice";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { orders } from "../../recoils/atoms";
+import { getData } from "../../recoils/getterFunctions";
+
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 const PaymentSuccessPage = () => {
+  const navigate = useNavigate();
+
+  const handleOnClick = useCallback(() => navigate("/Export"), [navigate]);
+
   return (
     <ThemeProvider theme={themeOptions}>
       <CssBaseline />
@@ -50,14 +60,7 @@ const PaymentSuccessPage = () => {
 
           <Button
             variant="contained"
-            onClick={() => {
-              ReactDOM.render(
-                <BrowserRouter>
-                  <Export />
-                </BrowserRouter>,
-                document.getElementById("root")
-              );
-            }}
+            onClick={handleOnClick}
             sx={{
               backgroundColor: themeOptions.palette.primary.light,
               display: "block",
