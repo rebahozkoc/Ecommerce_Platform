@@ -70,7 +70,8 @@ class _PageProductState extends State<PageProduct>
 
   @override
   void initState() {
-    controller = TabController(length: widget.product!.photos!.length, vsync: this);
+    controller =
+        TabController(length: widget.product!.photos!.length, vsync: this);
     getComments();
     controller.addListener(_setActiveTabIndex);
     super.initState();
@@ -254,11 +255,11 @@ class _PageProductState extends State<PageProduct>
                 height: 10,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
-                children: [_commentTitle(), _commentButton()],
+                children: [_commentButton()],
               ),
-              _comments(),
+              //_comments(),
             ],
           ),
         ),
@@ -424,13 +425,14 @@ class _PageProductState extends State<PageProduct>
     );
   }
 
+/*
   Text _commentTitle() => const Text("Best comments",
       style: TextStyle(
         fontWeight: FontWeight.bold,
         color: AppColors.tertiary,
         fontSize: 18,
       ));
-
+*/
   RichText _stock() => RichText(
         text: TextSpan(children: [
           TextSpan(
@@ -458,7 +460,7 @@ class _PageProductState extends State<PageProduct>
             path: NavigationConstants.COMMENTS, data: widget.product!.id);
       },
       child: const Text(
-        "Show all",
+        "Show all comments",
         style: TextStyle(
           color: AppColors.primary,
           fontWeight: FontWeight.bold,
@@ -466,7 +468,7 @@ class _PageProductState extends State<PageProduct>
         ),
       ));
 
-  Container _comments() => Container(
+  /* Container _comments() => Container(
         padding: const EdgeInsets.all(8.0),
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -475,7 +477,7 @@ class _PageProductState extends State<PageProduct>
         child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: comments.length,
+          itemCount: 1,
           itemBuilder: ((context, index) => Column(
                 children: [
                   Row(
@@ -520,5 +522,5 @@ class _PageProductState extends State<PageProduct>
                 ],
               )),
         ),
-      );
+      );*/
 }

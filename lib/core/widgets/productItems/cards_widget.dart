@@ -82,7 +82,7 @@ class CardsWidget extends StatelessWidget {
           payment.cardNumber!,
           style: const TextStyle(
             color: AppColors.textColorGray,
-            fontSize: 16,
+            fontSize: 15.5,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -104,7 +104,8 @@ class CardsWidget extends StatelessWidget {
 
 class ConfirmDeleteCard extends StatelessWidget {
   final VoidCallback onPressed;
-  const ConfirmDeleteCard({Key? key, required this.onPressed}) : super(key: key);
+  const ConfirmDeleteCard({Key? key, required this.onPressed})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
