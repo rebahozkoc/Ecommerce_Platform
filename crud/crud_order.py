@@ -38,12 +38,9 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         return_URL = gen_invoice(item_list, username)
         
         css = 'example.css'
-        config = pdfkit.configuration(wkhtmltopdf=path_wkthmltopdf)
         options = {'enable-local-file-access': True}
-        pdfkit.from_file(return_URL, return_URL.replace("html", "pdf"), css=css, configuration=config, options=options)
         
-        
-        files = [return_URL.replace("html", "pdf")]
+        files = [return_URL.replace("html", "html")]
         content = "Hello Dear user, \n This is an invoice for your recent purchase. \n Thank you for your business."
         
         utilities.sendMail.send_mail(usermail, "Your Invoice from Voidture Inc.", content, files)
