@@ -1849,3 +1849,5 @@ cs308dataScraper/9-44/9/9.jpg
 cs308dataScraper/Study Desk 9-44.json
 cs308dataScraper/Corner Chairs 8-41.json
 cs308dataScraper/8-41.zip
+my-app/src/components/payment/paymentSuccess/orderInvoice.js
+my-app/src/components/payment/paymentSuccess/orderStatus.js
