@@ -1,7 +1,7 @@
 from datetime import datetime
-from pydantic import BaseModel, validator
-from pydantic import Extra
+from pydantic import BaseModel, validator, Extra
 from schemas import Product
+from typing import List
 
 # Shared properties
 class ShoppingCart(BaseModel):
@@ -24,3 +24,6 @@ class ShoppingCartAddProduct(BaseModel):
 class ShoppingCartUpdateProduct(BaseModel):
     product_id: int
     quantity: int
+
+class ShoppingCartList(BaseModel):
+    data: List[ShoppingCart]

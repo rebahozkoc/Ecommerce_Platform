@@ -1,5 +1,6 @@
 import bs4
 import json
+import uuid
 
 
 def trChar(text):
@@ -11,18 +12,38 @@ def trChar(text):
     return text
 
 
+def get_file_dir(username, fileType):
+    return (
+        "./media/invoices/"
+        + fileType
+        + "/"
+        + username
+        + "."
+        + fileType
+    )
+
+
 def gen_invoice(orders_json, username):
     """Modify the invoice html file to include the invoice data"""
 
-    address_dict = orders_json["data"][0]["address"]
-    personal_info = address_dict["personal_name"] + "\n" + address_dict["phone_number"] + "\n" +\
-                    address_dict["full_address"] +\
-                    address_dict["postal_code"] + address_dict["province"] + " " + address_dict["city"] + \
-                    address_dict["country"] + "\n" + "09-05-2022"
-
+    address_dict = orders_json["address"]
+    personal_info = (
+        address_dict["personal_name"]
+        + "\n"
+        + address_dict["phone_number"]
+        + "\n"
+        + address_dict["full_address"]
+        + address_dict["postal_code"]
+        + address_dict["province"]
+        + " "
+        + address_dict["city"]
+        + address_dict["country"]
+        + "\n"
+        + "09-05-2022"
+    )
 
     # load the file
-    with open("file.html") as inf:
+    with open("./assets/file.html") as inf:
         txt = inf.read()
         soup = bs4.BeautifulSoup(txt, "html.parser")
         invoice = soup.find(class_="invoice")
@@ -40,7 +61,15 @@ def gen_invoice(orders_json, username):
         pi.append(t)
 
         t = soup.new_tag("p")
-        t.string = address_dict["postal_code"] + " " + address_dict["province"] + " " + address_dict["city"] + " " + address_dict["country"]
+        t.string = (
+            address_dict["postal_code"]
+            + " "
+            + address_dict["province"]
+            + " "
+            + address_dict["city"]
+            + " "
+            + address_dict["country"]
+        )
         pi.append(t)
 
         t = soup.new_tag("p")
@@ -70,8 +99,10 @@ def gen_invoice(orders_json, username):
             t.string = title
             new_tag.append(t)
 
-            k = soup.new_tag("td", class_= "alignright")
-            k.string = str(quantity) + " x " + str(price) + "$" + " = " + str(subtotal) + "$"
+            k = soup.new_tag("td", class_="alignright")
+            k.string = (
+                str(quantity) + " x " + str(price) + "$" + " = " + str(subtotal) + "$"
+            )
             new_tag.append(k)
             invoice_items.append(new_tag)
 
@@ -83,12 +114,14 @@ def gen_invoice(orders_json, username):
 
         invoice.append(new_tag)
 
-
     # create new link
-    #new_link = soup.new_tag("link", rel="icon", type="image/png", href="img/tor.png")
+    # new_link = soup.new_tag("link", rel="icon", type="image/png", href="img/tor.png")
     # insert it into the document
-    #soup.head.append(new_link)
+    # soup.head.append(new_link)
 
     # save the file again
-    with open(username + "invoice.html", "w", encoding='utf-8') as outf:
+    with open(get_file_dir(username, "html"), "w", encoding="utf-8") as outf:
         outf.write(str(soup))
+        
+    return_url = get_file_dir(username, "html")
+    return return_url

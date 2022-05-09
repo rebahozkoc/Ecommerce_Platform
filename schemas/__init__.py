@@ -24,5 +24,6 @@ from .shopping_cart import (
     ShoppingCart,
     ShoppingCartAddProduct,
     ShoppingCartUpdateProduct,
+    ShoppingCartList,
 )
 from .order import Order, OrderShoppingCart
