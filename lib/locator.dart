@@ -24,6 +24,9 @@ import 'package:mobile/view/comments/service/comments_service.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
+import 'package:mobile/view/orders/model/order_model.dart';
+import 'package:mobile/view/orders/repository/orders_repository.dart';
+import 'package:mobile/view/orders/service/orders_service.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
 import 'package:mobile/view/cards/viewmodel/cards_view_model.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
@@ -81,6 +84,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => SearchResponseModel());
   locator.registerLazySingleton(() => UserResponseModel());
   locator.registerLazySingleton(() => CommentsModelResponse());
+  locator.registerLazySingleton(() => OrderResponseModel());
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
@@ -92,6 +96,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => SearchRepository());
   locator.registerLazySingleton(() => AccountRepository());
   locator.registerLazySingleton(() => CommentsRepository());
+  locator.registerLazySingleton(() => OrderRepository());
   
   // Service
   locator.registerLazySingleton(() => LoginService());
@@ -103,6 +108,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => SearchService());
   locator.registerLazySingleton(() => AccountService());
   locator.registerLazySingleton(() => CommentsService());
+  locator.registerLazySingleton(() => OrderService());
 }
 
 Future<void> resetLocator() async {

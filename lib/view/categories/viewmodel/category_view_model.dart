@@ -71,7 +71,6 @@ abstract class _CategoryViewModelBase with Store, BaseViewModel {
       context: context,
       id: category.id,
     );
-    debugPrint(_categoryResponseModel.isSuccess.toString());
     if (_categoryResponseModel.isSuccess ?? false) {
       setProducts(_categoryResponseModel.data!.products!);
     } else {

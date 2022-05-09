@@ -11,6 +11,9 @@ class PathConstants {
   // USER
   static const USER = _URL + 'api/v1/users';
 
+  // ORDERS
+  static const ORDER = _URL + 'api/v1/users/orders';
+
   // CATEGORY
   static const CATEGORY = _URL + 'api/v1/categories';
 

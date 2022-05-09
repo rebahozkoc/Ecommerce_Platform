@@ -3,8 +3,8 @@ import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/productItems/track_product_big.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/categories/view/categories_shimmer_view.dart';
 import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
-
 
 class OrdersView extends StatefulWidget {
   const OrdersView({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class OrdersView extends StatefulWidget {
   State<OrdersView> createState() => _OrdersViewState();
 }
 
-class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
+class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin {
   late OrdersViewModel viewModel;
   late TabController controller;
   int index = 0;
@@ -41,10 +41,15 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
         viewModel = model;
       },
       onPageBuilder: (context, value) {
-        return Scaffold(
-          appBar: _appBar(),
-          body: _body(),
-        );
+        return FutureBuilder(
+          future: viewModel.getOrders(context: context),
+            builder: ((context, snapshot) => snapshot.hasData
+                ? Scaffold(
+                    appBar: _appBar(),
+                    body: _body(),
+                  )
+                : const CategoriesShimmerView()));
+        
       },
     );
   }
@@ -53,9 +58,8 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
         title: const Text("Order Tracking"),
       );
 
-  Center _body() =>  Center(
-    child: Expanded(
-      child: RefreshIndicator(
+  Center _body({BuildContext? context}) => Center(
+        child: RefreshIndicator(
           color: AppColors.primary,
           onRefresh: () {
             return Future.delayed(
@@ -63,32 +67,27 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin{
               () {
                 setState(() {
                   viewModel.init();
+                  viewModel.getOrders(context: context);
                 });
               },
             );
           },
-        child: ListView(
-          children: [
-          Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-      
-            children: const [
-              TrackProductBig(),
-              TrackProductBig(),
-              TrackProductBig(),
-              TrackProductBig(),
-              TrackProductBig(),
-      
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              ListView.builder(
+                itemCount: viewModel.orders.length,
+                shrinkWrap: true,
+                //physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return TrackProductBig(
+                    order: viewModel.orders[index],
+                  );
+                },
+              ),
             ],
           ),
-      
-          ],
         ),
-      )
-    ),
-
-  );
-
+      );
 }
-
-
