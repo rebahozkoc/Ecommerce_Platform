@@ -34,9 +34,10 @@ class TrackProductBig extends StatelessWidget {
                 children: [
                   const SizedBox(width: 20),
                   Padding(
-                    padding:const  EdgeInsets.fromLTRB(10, 15, 5, 5),
+                    padding: const EdgeInsets.fromLTRB(10, 15, 5, 5),
                     child: Text(
-                      order.product!.title?.substring(0, 17) ?? "Slipover armchair",
+                      order.product!.title?.substring(0, 12) ??
+                          "Slipover armchair",
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -119,7 +120,7 @@ class TrackProductBig extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                children:  [
+                children: [
                   Text("Order-ID: ${order.product?.id}",
                       style: const TextStyle(
                         color: AppColors.black,
@@ -188,21 +189,24 @@ class TrackProductBig extends StatelessWidget {
                 ],
               ),
               Row(
-                children: const [
-                  Text(
-                    "Orta Mahallesi, Üniversite Caddesi\nNo:27 Tuzla, 34956 İstanbul",
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
+                children: [
+                  Flexible(
+                    child: Text(
+                      order.address!.fullAddress ??
+                          "Orta Mahallesi, Üniversite Caddesi\nNo:27 Tuzla, 34956 İstanbul",
+                      style: TextStyle(
+                        color: AppColors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ],
               ),
               Row(
-                children: const [
+                children: [
                   Text(
-                    "Charles Leclerc - 90505***4567",
+                    order.address!.name ?? "Charles Leclerc - 90505***4567",
                     style: TextStyle(
                       color: AppColors.black,
                       fontSize: 12,
@@ -247,8 +251,8 @@ class TrackProductBig extends StatelessWidget {
               const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Sum",
                     style: TextStyle(
                         color: AppColors.black,
@@ -256,8 +260,8 @@ class TrackProductBig extends StatelessWidget {
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    "₺380",
-                    style: TextStyle(
+                    order.product!.price.toString() ?? "₺380",
+                    style: const TextStyle(
                         color: AppColors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.w700),

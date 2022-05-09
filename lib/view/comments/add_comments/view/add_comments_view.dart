@@ -121,7 +121,7 @@ class _AddCommentsViewState extends BaseState<AddCommentsView> {
   OutlinedButton submitReview() => OutlinedButton(
         onPressed: () async {
           showToast(
-              context: context!,
+              context: context,
               message: "Comment has been added",
               isSuccess: true);
           await viewModel.submit();
