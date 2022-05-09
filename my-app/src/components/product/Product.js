@@ -129,7 +129,7 @@ const Product = () => {
     return 0;
   };
 
-  const addBasket = (proId) => {
+  const addBasket = async (proId) => {
     if (isLogged) {
       console.log("helloooo");
       console.log(isLoaded3, checker);
@@ -142,10 +142,10 @@ const Product = () => {
           console.log("update", proId);
           let bodyContent = JSON.stringify({
             product_id: Number(proId),
-            quantity: count + Number(num),
+            quantity: Number(num),
             created_at: "2022-05-07T09:09:00.438084",
           });
-          axios
+          await axios
             .patch(
               "http://164.92.208.145/api/v1/users/shopping_cart/",
               bodyContent,
@@ -172,7 +172,7 @@ const Product = () => {
             quantity: count,
             created_at: "2022-05-07T09:09:00.438084",
           });
-          axios
+          await axios
             .post(
               "http://164.92.208.145/api/v1/users/shopping_cart/",
               bodyContent,

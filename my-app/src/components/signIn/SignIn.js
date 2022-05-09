@@ -24,11 +24,11 @@ const SignIn = () => {
     return new Date(new Date(date).setHours(date.getHours() + hours));
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    axios
+    await axios
       .post(
         "http://164.92.208.145/api/v1/auth/login",
         new URLSearchParams({
@@ -48,7 +48,7 @@ const SignIn = () => {
         document.cookie = `name=${data.get("email")}; expires=${expiration}`;
         document.cookie = `access_token=${response.data.access_token}; expires=${expiration}`;
 
-        window.location.reload();
+        //window.location.reload();
         window.location.href = "http://localhost:3000";
       })
       .catch(function (error) {

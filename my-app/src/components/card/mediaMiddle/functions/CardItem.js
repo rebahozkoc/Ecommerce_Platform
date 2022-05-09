@@ -52,7 +52,7 @@ const CardItem = (props) => {
         });
     }
   }, []);
-  const addBasket = (proId) => {
+  const addBasket = async (proId) => {
     if (isLogged) {
       if (isLoaded) {
         console.log("Post proId to shopping cart endpoint");
@@ -65,7 +65,7 @@ const CardItem = (props) => {
             quantity: 1 + num,
             created_at: "2022-05-07T09:09:00.438084",
           });
-          axios
+          await axios
             .patch(
               "http://164.92.208.145/api/v1/users/shopping_cart/",
               bodyContent,
@@ -92,7 +92,7 @@ const CardItem = (props) => {
             quantity: 1,
             created_at: "2022-05-07T09:09:00.438084",
           });
-          axios
+          await axios
             .post(
               "http://164.92.208.145/api/v1/users/shopping_cart/",
               bodyContent,

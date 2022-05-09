@@ -54,36 +54,36 @@ const OrderItem = (props) => {
           <Box flexGrow={1}></Box>
 
           {(() => {
-            //change status to order.orderStatus
-            let status = "Processing";
-            if (status === "Processing") {
+            //change status to order.order_status
+
+            if (order.order_status === "PROCESSING") {
               return (
                 <Stack direction="row" gap={1}>
                   <PendingActionsTwoToneIcon
                     color="primary"
                     style={{ fontSize: 25 }}
                   />
-                  {status}
+                  {order.order_status}
                 </Stack>
               );
-            } else if (status === "In-transit") {
+            } else if (order.order_status === "In-transit") {
               return (
                 <Stack direction="row" gap={1}>
                   <LocalShippingTwoToneIcon
                     color="primary"
                     style={{ fontSize: 25 }}
                   />
-                  {status}
+                  {order.order_status}
                 </Stack>
               );
-            } else if (status === "Delivered") {
+            } else if (order.order_status === "Delivered") {
               return (
                 <Stack direction="row" gap={1}>
                   <CheckCircleOutlineTwoToneIcon
                     color="primary"
                     style={{ fontSize: 25 }}
                   />
-                  {status}
+                  {order.order_status}
                 </Stack>
               );
             }
