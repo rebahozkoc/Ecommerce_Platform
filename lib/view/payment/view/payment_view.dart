@@ -57,7 +57,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children:  [
+                      children: [
                         const Text(
                           "AMOUNT TO BE PAID",
                           style: TextStyle(
@@ -68,7 +68,8 @@ class _PaymentViewState extends BaseState<PaymentView> {
                         ),
                         Observer(builder: (_) {
                           return Text(
-                            locator<ShopListViewModel>().totalPrice.toString(),
+                            locator<ShopListViewModel>().totalPrice.toString() +
+                                " TL",
                             style: const TextStyle(
                               color: AppColors.textColorGray,
                               fontSize: 24,
@@ -642,7 +643,7 @@ class CardNumberFormatter extends TextInputFormatter {
     var string = bufferString.toString();
     return nextValue.copyWith(
       text: string,
-      selection:  TextSelection.collapsed(
+      selection: TextSelection.collapsed(
         offset: string.length,
       ),
     );
