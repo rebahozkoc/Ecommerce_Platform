@@ -12,7 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import { Link } from "react-router-dom";
 import { Typography, Button, ThemeProvider, Stack } from "@mui/material";
 import SmallItem from "./SmallItem";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import {
   createShoppingDict,
   getDataWithoutAccess,

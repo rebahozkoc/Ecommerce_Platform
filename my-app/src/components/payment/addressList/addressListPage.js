@@ -2,7 +2,7 @@ import * as React from "react";
 import AddressListHeader from "./addressListHeader";
 import AddressListTabBar from "./addressListTabBar";
 import { ThemeProvider, Box } from "@mui/material";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import AddressListSummary from "./addressListSummary";
 import { CssBaseline, Stack } from "@mui/material";
 import Footer from "../../footer/Footer";

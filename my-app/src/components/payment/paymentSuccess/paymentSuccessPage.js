@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Stack, ThemeProvider, Typography } from "@mui/material";
 import { CssBaseline, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import Export from "../../invoicePdf/Invoice";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";

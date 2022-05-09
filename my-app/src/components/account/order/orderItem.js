@@ -1,5 +1,5 @@
 import { Box, Stack, Card, CardContent, Typography } from "@mui/material";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import PendingActionsTwoToneIcon from "@mui/icons-material/PendingActionsTwoTone";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import CheckCircleOutlineTwoToneIcon from "@mui/icons-material/CheckCircleOutlineTwoTone";

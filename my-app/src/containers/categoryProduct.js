@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@mui/material/styles";
-import themeOptions from "../components/theme";
+import themeOptions from "../components/style/theme";
 import PrimarySearchAppBar from "../components/header/AppBar";
 import ResponsiveAppBar from "../components/header/AppBarUnder";
 import Footer from "../components/footer/Footer";
@@ -11,8 +11,10 @@ import { useEffect, useState } from "react";
 import { getDataWithoutAccess } from "../components/recoils/getterFunctions";
 
 const CategoryProduct = () => {
+  const [isLoaded, setLoaded] = useState(false);
+  const [products, setProducts] = useState([]);
+
   const { type } = useParams();
-  //console.log(type);
   const stateParamValue = useLocation();
   const title =
     stateParamValue.state != null
@@ -27,11 +29,7 @@ const CategoryProduct = () => {
   const subId =
     stateParamValue.state != null ? stateParamValue.state.subId : null;
 
-  const [isLoaded, setLoaded] = useState(false);
-  const [products, setProducts] = useState([]);
   const lastId = subId || catId;
-
-  //console.log(mydict);
 
   useEffect(() => {
     getDataWithoutAccess(

@@ -1,8 +1,7 @@
 import * as React from "react";
-import themeOptions from "../theme";
+import themeOptions from "../style/theme";
 import { Typography, Menu, MenuItem, Button } from "@mui/material";
 export default function SortDropDown(props) {
-
   const [buttonText, setButtonText] = React.useState("Sort");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -17,10 +16,10 @@ export default function SortDropDown(props) {
       setButtonText("Sort by: Price (High to Low)");
     } else if (event.target.value === 3) {
       setButtonText("Sort by: Popularity");
-    }else{
+    } else {
       setButtonText("Sort by: Default");
     }
-  }
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,8 +44,8 @@ export default function SortDropDown(props) {
           mb: 2,
           justify: "center",
           borderRadius: "0",
-          pl:4,
-          pr:4
+          pl: 4,
+          pr: 4,
         }}
       >
         <Typography sx={{ color: "white" }}>{buttonText}</Typography>
@@ -70,10 +69,18 @@ export default function SortDropDown(props) {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={handleSelect} value={0}>Default</MenuItem>
-        <MenuItem onClick={handleSelect} value={1}>Price (Low to High)</MenuItem>
-        <MenuItem onClick={handleSelect} value={2} >Price (High to Low)</MenuItem>
-        <MenuItem onClick={handleSelect} value={3}>Popularity</MenuItem>
+        <MenuItem onClick={handleSelect} value={0}>
+          Default
+        </MenuItem>
+        <MenuItem onClick={handleSelect} value={1}>
+          Price (Low to High)
+        </MenuItem>
+        <MenuItem onClick={handleSelect} value={2}>
+          Price (High to Low)
+        </MenuItem>
+        <MenuItem onClick={handleSelect} value={3}>
+          Popularity
+        </MenuItem>
       </Menu>
     </div>
   );

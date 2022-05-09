@@ -4,10 +4,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  Grid,
   Box,
   Typography,
   Container,
@@ -15,7 +11,7 @@ import {
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ThemeProvider } from "@mui/material";
-import themeOptions from "../theme";
+import themeOptions from "../style/theme";
 
 export default function ResetPassword() {
   const handleSubmit = (event) => {

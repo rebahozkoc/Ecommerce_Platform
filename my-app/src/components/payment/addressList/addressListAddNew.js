@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Box, Button } from "@mui/material";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import { getCookie } from "../../recoils/atoms";
 import axios from "axios";
 const access = getCookie("access_token");

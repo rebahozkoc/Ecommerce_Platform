@@ -6,7 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import themeOptions from "../theme";
+import themeOptions from "../style/theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, Stack, Divider, Button } from "@mui/material";
 import { Link } from "react-router-dom";

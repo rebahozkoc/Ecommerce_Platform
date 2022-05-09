@@ -5,9 +5,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from "recoil";
-import * as React from "react";
-import { useState } from "react";
-import axios from "axios";
+
 export function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);

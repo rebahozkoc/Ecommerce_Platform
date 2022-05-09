@@ -11,7 +11,7 @@ import {
 import PrimarySearchAppBar from "../header/AppBar";
 import ResponsiveAppBar from "../header/AppBarUnder";
 import Footer from "../footer/Footer";
-import themeOptions from "../theme";
+import themeOptions from "../style/theme";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material/";
 import ListItemButton from "@mui/material/ListItemButton";

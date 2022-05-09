@@ -2,7 +2,7 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, Stack, Divider, Button } from "@mui/material";
 import { Rating } from "@mui/material";
