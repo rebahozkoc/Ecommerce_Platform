@@ -57,12 +57,12 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
 
   @action
   void insertFirstPayment(PaymentModel payment) {
-    this.payments.insert(0, payment);
+    payments.insert(0, payment);
   }
 
   @action
   void insertFirstAddress(AddressModel address) {
-    this.addresses.insert(0, address);
+    addresses.insert(0, address);
   }
 
   @action

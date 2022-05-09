@@ -45,7 +45,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
       title: Text(LocaleKeys.shopList.locale),
       actions: [
         IconButton(
-          onPressed: () => viewModel.navigateToPayment(),
+        onPressed: () => viewModel.navigateToPayment(context),
           icon: const Icon(Icons.payment),
         )
       ],
@@ -123,7 +123,7 @@ class _ShopListViewState extends BaseState<ShopListView> {
                                   color: AppColors.white,
                                 ))
                           ])),
-                          _completeShopping(),
+                          _completeShopping(context),
                         ],
                       ),
                     ],
@@ -135,8 +135,8 @@ class _ShopListViewState extends BaseState<ShopListView> {
         ),
       ));
 
-  OutlinedButton _completeShopping() => OutlinedButton(
-        onPressed: () => viewModel.navigateToPayment(),
+  OutlinedButton _completeShopping(BuildContext context) => OutlinedButton(
+        onPressed: () => viewModel.navigateToPayment(context),
         child: const Text(
           "Buy Now",
           style: TextStyle(

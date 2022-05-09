@@ -9,6 +9,22 @@ part of 'search_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SearchViewModel on _SearchViewModelBase, Store {
+  final _$searchControllerAtom =
+      Atom(name: '_SearchViewModelBase.searchController');
+
+  @override
+  TextEditingController get searchController {
+    _$searchControllerAtom.reportRead();
+    return super.searchController;
+  }
+
+  @override
+  set searchController(TextEditingController value) {
+    _$searchControllerAtom.reportWrite(value, super.searchController, () {
+      super.searchController = value;
+    });
+  }
+
   final _$isFocusedAtom = Atom(name: '_SearchViewModelBase.isFocused');
 
   @override
@@ -39,19 +55,48 @@ mixin _$SearchViewModel on _SearchViewModelBase, Store {
     });
   }
 
-  final _$searchControllerAtom =
-      Atom(name: '_SearchViewModelBase.searchController');
+  final _$isLoadingAtom = Atom(name: '_SearchViewModelBase.isLoading');
 
   @override
-  TextEditingController get searchController {
-    _$searchControllerAtom.reportRead();
-    return super.searchController;
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
   }
 
   @override
-  set searchController(TextEditingController value) {
-    _$searchControllerAtom.reportWrite(value, super.searchController, () {
-      super.searchController = value;
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  final _$resultsAtom = Atom(name: '_SearchViewModelBase.results');
+
+  @override
+  ObservableList<ProductModel> get results {
+    _$resultsAtom.reportRead();
+    return super.results;
+  }
+
+  @override
+  set results(ObservableList<ProductModel> value) {
+    _$resultsAtom.reportWrite(value, super.results, () {
+      super.results = value;
+    });
+  }
+
+  final _$sortByAtom = Atom(name: '_SearchViewModelBase.sortBy');
+
+  @override
+  int get sortBy {
+    _$sortByAtom.reportRead();
+    return super.sortBy;
+  }
+
+  @override
+  set sortBy(int value) {
+    _$sortByAtom.reportWrite(value, super.sortBy, () {
+      super.sortBy = value;
     });
   }
 
@@ -78,11 +123,80 @@ mixin _$SearchViewModel on _SearchViewModelBase, Store {
   }
 
   @override
+  void setSortBy(int sortBy) {
+    final _$actionInfo = _$_SearchViewModelBaseActionController.startAction(
+        name: '_SearchViewModelBase.setSortBy');
+    try {
+      return super.setSortBy(sortBy);
+    } finally {
+      _$_SearchViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setProducts(List<ProductModel> results) {
+    final _$actionInfo = _$_SearchViewModelBaseActionController.startAction(
+        name: '_SearchViewModelBase.setProducts');
+    try {
+      return super.setProducts(results);
+    } finally {
+      _$_SearchViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic sortProducts() {
+    final _$actionInfo = _$_SearchViewModelBaseActionController.startAction(
+        name: '_SearchViewModelBase.sortProducts');
+    try {
+      return super.sortProducts();
+    } finally {
+      _$_SearchViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addNewproduct(ProductModel product) {
+    final _$actionInfo = _$_SearchViewModelBaseActionController.startAction(
+        name: '_SearchViewModelBase.addNewproduct');
+    try {
+      return super.addNewproduct(product);
+    } finally {
+      _$_SearchViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSearchEmpty(bool value) {
+    final _$actionInfo = _$_SearchViewModelBaseActionController.startAction(
+        name: '_SearchViewModelBase.setSearchEmpty');
+    try {
+      return super.setSearchEmpty(value);
+    } finally {
+      _$_SearchViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLoading(bool value) {
+    final _$actionInfo = _$_SearchViewModelBaseActionController.startAction(
+        name: '_SearchViewModelBase.setLoading');
+    try {
+      return super.setLoading(value);
+    } finally {
+      _$_SearchViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+searchController: ${searchController},
 isFocused: ${isFocused},
 isSearchEmpty: ${isSearchEmpty},
-searchController: ${searchController}
+isLoading: ${isLoading},
+results: ${results},
+sortBy: ${sortBy}
     ''';
   }
 }

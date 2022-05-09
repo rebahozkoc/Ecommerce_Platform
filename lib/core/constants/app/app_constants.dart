@@ -15,7 +15,7 @@ class ApplicationConstants {
   static const ISOLATE_NAME = 'LocatorIsolate';
 
   static const PROFILE_IMG =
-      'https://pbs.twimg.com/profile_images/1276567411240681472/8KdXHFdK_400x400.jpg';
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
   static const PRODUCT_IMG =
       'http://employee-self-service.de/wp-content/themes/dante/images/default-thumb.png';
 

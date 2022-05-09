@@ -11,6 +11,7 @@ class ProductModel {
   String? subcategoryTitle;
   List<Photo>? photos;
   int? commentCount;
+  num? rateCount;
   num? rate;
 
   ProductModel(
@@ -47,6 +48,7 @@ class ProductModel {
       });
     }
     commentCount = json['comment_count'];
+    rateCount = json['rate_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +68,7 @@ class ProductModel {
     }
     data['comment_count'] = commentCount;
     data['rate'] = rate;
+    data['rate_count'] = rateCount;
     return data;
   }
 }

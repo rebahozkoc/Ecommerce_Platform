@@ -43,17 +43,6 @@ mixin _$CategoryViewModel on _CategoryViewModelBase, Store {
       ActionController(name: '_CategoryViewModelBase');
 
   @override
-  void setSortBy(int sortBy) {
-    final _$actionInfo = _$_CategoryViewModelBaseActionController.startAction(
-        name: '_CategoryViewModelBase.setSortBy');
-    try {
-      return super.setSortBy(sortBy);
-    } finally {
-      _$_CategoryViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setProducts(List<ProductModel> products) {
     final _$actionInfo = _$_CategoryViewModelBaseActionController.startAction(
         name: '_CategoryViewModelBase.setProducts');

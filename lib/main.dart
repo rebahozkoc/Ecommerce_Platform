@@ -27,7 +27,7 @@ Future<void> main() async {
       ));
     }
   } on SocketException catch (_) {
-    runApp(NoInt());
+    runApp(const NoInt());
   }
 }
 

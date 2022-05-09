@@ -225,7 +225,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
     return _shopListItemResponseModel;
   }
 
-  void navigateToPayment() => NavigationService.instance.navigateToPage(
+  void navigateToPayment(BuildContext context) => totalPrice > 0 ? NavigationService.instance.navigateToPage(
       path: (LocaleManager.instance.getBoolValue(PreferencesKeys.IS_LOGINED) ??
                   false) ||
               (LocaleManager.instance
@@ -233,5 +233,8 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
                   false)
           ? NavigationConstants.PAYMENT
           : NavigationConstants.LOGIN_REQUIRED,
-      data: "Please login to complete the purchase");
+      data: "Please login to complete the purchase") : showToast(
+          context: context,
+          message: "Please add items to cart",
+          isSuccess: false);
 }

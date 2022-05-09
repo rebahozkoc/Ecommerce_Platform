@@ -5,6 +5,8 @@ import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/cache/locale_manager.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/account/model/account_model.dart';
+import 'package:mobile/view/account/repository/account_repository.dart';
 import 'package:mobile/view/orders/view/orders_view.dart';
 import 'package:mobile/view/address/view/address_view.dart';
 import 'package:mobile/view/cards/view/cards_view.dart';
@@ -15,13 +17,33 @@ part 'account_view_model.g.dart';
 class AccountViewModel = _AccountViewModelBase with _$AccountViewModel;
 
 abstract class _AccountViewModelBase with Store, BaseViewModel {
+  late UserResponseModel _userResponseModel;
+  late AccountRepository _repository;
+
   @override
   void setContext(BuildContext context) => this.context = context;
 
   @override
-  void init() {}
+  void init() {
+    _repository = locator<AccountRepository>();
+    getUser();
+  }
 
   void dispose() {}
+
+  @observable
+  UserModel user = UserModel(fullName: "User");
+
+  @action
+  setUser(UserModel user) {
+    this.user = user;
+  }
+
+  
+  void getUser() async {
+    _userResponseModel = await _repository.getUser(context: context);
+    setUser(_userResponseModel.data ?? UserModel(fullName: ""));
+  }
 
   void navigateToOrders(BuildContext context) => pushNewScreenWithRouteSettings(
         context,

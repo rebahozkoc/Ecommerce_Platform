@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/path/url_path_constants.dart';
 import 'package:mobile/core/init/network/network_error.dart';
-import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/auth/login/model/login_model.dart';
 import 'package:mobile/view/auth/login/service/login_service_base.dart';

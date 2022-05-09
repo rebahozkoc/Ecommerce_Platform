@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
@@ -105,13 +106,15 @@ class _AccountViewState extends BaseState<AccountView> {
         ),
       ));
 
-  Text _name() => const Text(
-        "Charles Leclerc",
-        style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: AppColors.tertiary),
-      );
+  Observer _name() => Observer(builder: (_) {
+        return Text(
+          "${viewModel.user.fullName != "" ? viewModel.user.fullName : "User"}",
+          style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColors.tertiary),
+        );
+      });
 }
 
 class ProfileButtons extends StatelessWidget {

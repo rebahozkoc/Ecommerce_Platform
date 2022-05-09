@@ -39,11 +39,6 @@ abstract class _CategoryViewModelBase with Store, BaseViewModel {
   int sortBy = 0;
 
   @action
-  void setSortBy(int sortBy) => this.sortBy = sortBy;
-
-  void dispose() {}
-
-  @action
   void setProducts(List<ProductModel> products) {
     this.products.clear();
     for (var product in products) {
