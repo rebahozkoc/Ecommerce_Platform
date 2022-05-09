@@ -24,7 +24,7 @@ class CommentsRepository with CommentsServiceBase {
   }
 
   @override
-  Future<CommentsModelResponse> addComment({
+  Future<CommentsModelResponse> setComment({
     BuildContext? context,
     int? productId,
     String? token,
@@ -33,7 +33,7 @@ class CommentsRepository with CommentsServiceBase {
     await getUserToken();
     var token = LocaleManager.instance.getStringValue(PreferencesKeys.TOKEN)!;
 
-    CommentsModelResponse _responseModel = await _service.addComment(
+    CommentsModelResponse _responseModel = await _service.setComment(
       context: context,
       productId: productId,
       token: token,

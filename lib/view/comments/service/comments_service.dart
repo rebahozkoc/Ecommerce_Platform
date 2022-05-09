@@ -36,7 +36,7 @@ class CommentsService with CommentsServiceBase {
   }
 
   @override
-  Future<CommentsModelResponse> addComment({
+  Future<CommentsModelResponse> setComment({
     BuildContext? context,
     int? productId,
     String? token,
@@ -49,6 +49,7 @@ class CommentsService with CommentsServiceBase {
 
       var header = {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       };
 
       response = await dio.post(
@@ -58,6 +59,7 @@ class CommentsService with CommentsServiceBase {
       );
 
       _responseModel = CommentsModelResponse.fromJson(response.data);
+      debugPrint(_responseModel.message);
       return _responseModel;
     } on DioError catch (exception) {
       debugPrint("Error");

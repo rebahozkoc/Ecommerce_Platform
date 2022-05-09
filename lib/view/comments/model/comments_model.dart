@@ -30,16 +30,15 @@ class CommentsModelResponse {
 }
 
 class CommentModel {
-  int? id;
   int? productId;
   String? content;
   int? rate;
+  bool? isActive;
   UserModel? user;
 
-  CommentModel({this.id, this.productId, this.content, this.user, this.rate});
+  CommentModel({this.productId, this.content, this.user, this.rate, this.isActive});
 
   CommentModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     productId = json['product_id'];
     content = json['content'];
     user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
@@ -48,10 +47,10 @@ class CommentModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
     data['product_id'] = productId;
     data['content'] = content;
     data['rate'] = rate;
+    data['is_active'] = isActive;
     if (user != null) {
       data['user'] = user!.toJson();
     }

@@ -6,6 +6,8 @@ import 'package:mobile/core/widgets/productItems/comment_widget.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 
+late int product_id;
+
 class CommentsView extends StatefulWidget {
   final int productId;
   const CommentsView({Key? key, required this.productId}) : super(key: key);
@@ -45,45 +47,62 @@ class _CommentsViewState extends State<CommentsView> {
         title: const Text("All Comments"),
       );
 
-  SingleChildScrollView _body() => SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Row(
+  RefreshIndicator _body() => RefreshIndicator(
+        color: AppColors.primary,
+        onRefresh: () {
+          return Future.delayed(
+            const Duration(seconds: 1),
+            () {
+              setState(() {
+                viewModel.init();
+              });
+              viewModel.getData();
+            },
+          );
+        },
+        child: ListView(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(12.0),
+              child: Column(
                 children: [
+                  Row(
+                    children: [
+                      Observer(builder: (_) {
+                        return Text(
+                          "There are ${viewModel.comments.length} comments about this product",
+                          style: const TextStyle(
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                          ),
+                        );
+                      })
+                    ],
+                  ),
                   Observer(builder: (_) {
-                    return Text(
-                      "There are ${viewModel.comments.length} comments about this product",
-                      style: const TextStyle(
-                        color: AppColors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                      ),
-                    );
-                  })
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: ((context, index) =>
+                            CommentWidget(comment: viewModel.comments[index])),
+                        itemCount: viewModel.comments.length);
+                  }),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  addComment(),
                 ],
               ),
-              Observer(builder: (_) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: ((context, index) =>
-                        CommentWidget(comment: viewModel.comments[index])),
-                    itemCount: viewModel.comments.length);
-              }),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
-              addComment(),
-            ],
-          ),
+            ),
+          ],
         ),
       );
 
   OutlinedButton addComment() => OutlinedButton(
         onPressed: () {
+          product_id = widget.productId;
           viewModel.navigateToAddCommentsView(context);
         },
         child: RichText(

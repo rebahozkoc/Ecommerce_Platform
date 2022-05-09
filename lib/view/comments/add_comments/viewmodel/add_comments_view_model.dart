@@ -6,13 +6,14 @@ import 'package:mobile/view/comments/add_comments/view/add_comments_view.dart';
 import 'package:mobile/view/comments/model/comments_model.dart';
 import 'package:mobile/view/comments/repository/comments_repository.dart';
 import 'package:mobx/mobx.dart';
+import 'package:mobile/view/comments/view/comments_view.dart';
 part 'add_comments_view_model.g.dart';
 
 class AddCommentsViewModel = _AddCommentsViewModelBase
     with _$AddCommentsViewModel;
 
 abstract class _AddCommentsViewModelBase with Store, BaseViewModel {
-  late int productId;
+  late int productId = product_id;
   late int rate;
   late CommentsRepository _repository;
   @override
@@ -46,11 +47,11 @@ abstract class _AddCommentsViewModelBase with Store, BaseViewModel {
   Future<void> addComment() async {
     CommentModel _comment = CommentModel(
       content: contentController.text,
-      productId: 61,
+      productId: productId,
       rate: productRating,
     );
 
-    CommentsModelResponse _commentResponse = await _repository.addComment(
+    CommentsModelResponse _commentResponse = await _repository.setComment(
       comment: _comment,
       context: context,
       productId: _comment.productId,

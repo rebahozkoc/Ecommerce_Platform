@@ -10,6 +10,7 @@ import 'package:mobile/view/comments/model/comments_model.dart';
 import 'package:mobile/view/comments/repository/comments_repository.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 
+
 class PageProduct extends StatefulWidget {
   final ProductModel? product;
   const PageProduct({Key? key, required this.product}) : super(key: key);

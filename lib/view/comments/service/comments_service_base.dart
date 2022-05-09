@@ -7,7 +7,7 @@ abstract class CommentsServiceBase {
     int productId,
   });
 
-  Future<CommentsModelResponse> addComment({
+  Future<CommentsModelResponse> setComment({
     BuildContext context,
     int productId,
     CommentModel comment,
