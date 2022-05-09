@@ -9,6 +9,7 @@ class CommentBase(BaseModel):
     product_id: int
     content: str
     rate: int
+    is_active: bool
 
     class Config:
         orm_mode = True
@@ -21,6 +22,8 @@ class CommentCreate(BaseModel):
     class Config:
         extra = Extra.allow
 
+class CommentUpdateActive(BaseModel):
+    is_active: bool
 
 class CommentUpdate(CommentCreate):
     pass

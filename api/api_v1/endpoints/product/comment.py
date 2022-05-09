@@ -77,3 +77,24 @@ def delete_comment(
         )
     comment = crud.comment.remove(db=db, id=comment_id)
     return Response(data=comment, isSuccess=True)
+
+@router.post("/{product_id}/comment/{id}/active", response_model=Response[schemas.CommentBase])
+def create_comment(
+    *,
+    product_id: int,
+    id: int,
+    comment_in: schemas.CommentUpdateActive,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+) -> Any:
+    """
+    Activate the comment.
+    """
+    db_comment = crud.comment.get(db=db, field="id", value=id)
+    if not db_comment:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Comment does not exist"},
+        )
+    comment = crud.comment.update(db=db, db_obj=db_comment, obj_in=comment_in)
+    return Response(data=comment)

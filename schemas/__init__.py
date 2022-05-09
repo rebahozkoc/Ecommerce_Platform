@@ -2,7 +2,7 @@ from .msg import Msg
 from .response import Response
 from .token import Token, TokenPayload
 from .user import User, UserCreate, UserInDB, UserUpdate, ChangePasswordIn
-from .comment import CommentBase, CommentList, CommentCreate, Comment
+from .comment import CommentBase, CommentList, CommentCreate, Comment, CommentUpdateActive
 from .product import ProductBase, ProductCreate, ProductUpdate, Product
 from .category import (
     CategoryBase,
