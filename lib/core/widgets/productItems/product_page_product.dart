@@ -70,7 +70,7 @@ class _PageProductState extends State<PageProduct>
 
   @override
   void initState() {
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: widget.product!.photos!.length, vsync: this);
     getComments();
     controller.addListener(_setActiveTabIndex);
     super.initState();
@@ -136,41 +136,33 @@ class _PageProductState extends State<PageProduct>
         height: 400,
         child: TabBarView(
           controller: controller,
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: isExist
-                    ? widget.product!.photos!.first.photoUrl!
-                    : ApplicationConstants.PRODUCT_IMG,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
-            AspectRatio(
-              aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: isExist
-                    ? widget.product!.photos!.first.photoUrl!
-                    : ApplicationConstants.PRODUCT_IMG,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
-            AspectRatio(
-              aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: isExist
-                    ? widget.product!.photos!.first.photoUrl!
-                    : ApplicationConstants.PRODUCT_IMG,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
+          children: widget.product!.photos?.isNotEmpty ?? false
+              ? widget.product!.photos!
+                  .map((e) => AspectRatio(
+                        aspectRatio: 1,
+                        child: CachedNetworkImage(
+                          imageUrl: isExist
+                              ? e.photoUrl!
+                              : ApplicationConstants.PRODUCT_IMG,
+                          width: double.infinity,
+                          fit: BoxFit.fill,
+                        ),
+                      ))
+                  .toList()
+              : [
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: CachedNetworkImage(
+                      imageUrl: isExist
+                          ? widget.product!.photos!.first.photoUrl!
+                          : ApplicationConstants.PRODUCT_IMG,
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ],
         ));
   }
-
 /*
   AspectRatio _image() {
     bool isExist = widget.product?.photos?.isNotEmpty ?? false;
@@ -462,8 +454,8 @@ class _PageProductState extends State<PageProduct>
 
   TextButton _commentButton() => TextButton(
       onPressed: () {
-        NavigationService.instance
-            .navigateToPage(path: NavigationConstants.COMMENTS, data: widget.product!.id);
+        NavigationService.instance.navigateToPage(
+            path: NavigationConstants.COMMENTS, data: widget.product!.id);
       },
       child: const Text(
         "Show all",
