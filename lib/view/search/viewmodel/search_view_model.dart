@@ -53,10 +53,9 @@ abstract class _SearchViewModelBase with Store, BaseViewModel {
 
   var sortItems = [
     {"name": "None", "value": 0},
-    {"name": "Price from high to low", "value": 1},
-    {"name": "Price from low to hight", "value": 2},
-    {"name": "Popularity from high to low", "value": 3},
-    {"name": "Popularity from low to hight", "value": 4},
+    {"name": "Popularity", "value": 1},
+    {"name": "Price from high to low", "value": 2},
+    {"name": "Price from low to hight", "value": 3},
   ];
 
   @action
@@ -78,13 +77,11 @@ abstract class _SearchViewModelBase with Store, BaseViewModel {
     if (sortBy == 0) {
       setProducts(_searchResponseModel.data!);
     } else if (sortBy == 1) {
-      results.sort((a, b) => b.price!.compareTo(a.price!));
+      results.sort((a, b) => b.commentCount!.compareTo(a.commentCount!));
     } else if (sortBy == 2) {
-      results.sort((a, b) => a.price!.compareTo(b.price!));
+      results.sort((a, b) => b.price!.compareTo(a.price!));
     } else if (sortBy == 3) {
-      results.sort((a, b) => b.id!.compareTo(a.id!));
-    } else if (sortBy == 4) {
-      results.sort((a, b) => a.id!.compareTo(b.id!));
+      results.sort((a, b) => a.price!.compareTo(b.price!));
     }
   }
 
