@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-import themeOptions from "../../../theme";
+import themeOptions from "../../../style/theme";
 import { ThemeProvider } from "@emotion/react";
 
 const ExpandMore = styled((props) => {
@@ -30,7 +30,7 @@ const CategoryCard = (props) => {
   return (
     <ThemeProvider theme={themeOptions}>
       <Card sx={{ maxWidth: 600 }}>
-        <Link to= {`/categories/${props.title}${props.id}`} underline="none">
+        <Link to={`/categories/${props.title}${props.id}`} underline="none">
           <CardMedia
             component="img"
             height="194"
@@ -39,7 +39,11 @@ const CategoryCard = (props) => {
           />
         </Link>
         <CardContent>
-          <Typography variant="body2" color="text.secondary" sx={{fontWeight:"bold"}}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontWeight: "bold" }}
+          >
             {props.title}
           </Typography>
         </CardContent>

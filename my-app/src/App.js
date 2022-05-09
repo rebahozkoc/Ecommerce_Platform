@@ -1,6 +1,6 @@
 import ResponsiveAppBar from "./components/header/AppBarUnder";
 import PrimarySearchAppBar from "./components/header/AppBar";
-import themeOptions from "./components/theme";
+import themeOptions from "./components/style/theme";
 import { ThemeProvider } from "@emotion/react";
 import Footer from "./components/footer/Footer";
 import CategoryCardHandler from "./components/card/mediaMiddle/CategoryCardHandler";
@@ -14,9 +14,7 @@ import MediaCardStyled from "./components/card/mediaTop/MediaCardStyled";
 import { useEffect, useState } from "react";
 import { getData } from "./components/recoils/getterFunctions";
 
-import {
-  RecoilRoot,
-} from "recoil";
+import { RecoilRoot } from "recoil";
 
 export default function App() {
   console.log(document.cookie);

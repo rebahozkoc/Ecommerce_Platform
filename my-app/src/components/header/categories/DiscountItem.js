@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 
 import Typography from "@mui/material/Typography";
 
-import themeOptions from "./../../theme";
+import themeOptions from "../../style/theme";
 import { ThemeProvider } from "@emotion/react";
 import { Link } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";

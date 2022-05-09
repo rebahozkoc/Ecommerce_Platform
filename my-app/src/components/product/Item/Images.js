@@ -3,7 +3,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/styles";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import ImagePop from "./ImagePop";
 
 function srcset(image, size, rows = 1, cols = 1) {

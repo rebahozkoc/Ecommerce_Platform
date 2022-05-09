@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useState, useEffect } from "react";
-import themeOptions from "../../../theme";
+import themeOptions from "../../../style/theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline, Stack } from "@mui/material";
 import { Link } from "react-router-dom";

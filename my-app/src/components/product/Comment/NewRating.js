@@ -11,9 +11,36 @@ import {
   TextField,
 } from "@mui/material";
 import classes from "../Item/ImagePop.module.css";
+import axios from "axios";
+import { getCookie } from "../../recoils/atoms";
+
+const access = getCookie("access_token");
 
 const NewRating = (props) => {
   const [value, setValue] = React.useState(0);
+
+  const newRating = () => {
+    let bodyContent = JSON.stringify({
+      rate: Number(value),
+    });
+    axios
+      .post(
+        `http://164.92.208.145/api/v1/products/${props.id}/rate?rate=${value}`,
+        bodyContent,
+        {
+          headers: {
+            Accept: "*/*",
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <div className={classes.backdrop} />
@@ -48,6 +75,7 @@ const NewRating = (props) => {
           <Grid container justifyContent="flex-end">
             <Button
               onClick={() => {
+                newRating();
                 props.onRating(value);
               }}
               variant="contained"

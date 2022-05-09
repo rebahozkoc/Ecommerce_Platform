@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import themeOptions from "../theme";
+import themeOptions from "../style/theme";
 import PrimarySearchAppBar from "../header/AppBar";
 import ResponsiveAppBar from "../header/AppBarUnder";
 import Footer from "../footer/Footer";
@@ -18,13 +18,11 @@ const SearchPage = (props) => {
   const [dynamicData, setDynamicData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    
     getData(`http://164.92.208.145/api/v1/products/?query=${searchParam}`).then(
       (res) => {
         console.log(res.data);
         setDynamicData(res.data);
         setIsLoaded(true);
-        
       }
     );
   }, [isLoaded, searchParam]);
@@ -39,7 +37,7 @@ const SearchPage = (props) => {
         {isLoaded ? (
           <CardItemHandler item={dynamicData} title={title}></CardItemHandler>
         ) : (
-          <Box sx={{ height: 300, mt:10 }} justifyContent="center" >
+          <Box sx={{ height: 300, mt: 10 }} justifyContent="center">
             <Typography variant="h4" align="center">
               There are no results for <b>{searchParam}</b>
             </Typography>

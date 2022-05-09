@@ -15,16 +15,14 @@ import {
 import axios from "axios";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ThemeProvider } from "@mui/material";
-import themeOptions from "../theme";
-import { loggedState } from "../recoils/atoms";
-import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
+import themeOptions from "../style/theme";
+
+import { RecoilRoot } from "recoil";
 
 const SignIn = () => {
   function addHoursToDate(date, hours) {
     return new Date(new Date(date).setHours(date.getHours() + hours));
   }
-
-  const setIslogged = useSetRecoilState(loggedState);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,12 +42,8 @@ const SignIn = () => {
         }
       )
       .then(function (response) {
-        //alert("Success");
-        <RecoilRoot>setIslogged(true);</RecoilRoot>;
-        //console.log(response.data);
         let myDate = new Date();
         let expiration = addHoursToDate(myDate, 60);
-        //console.log(document.cookie);
         document.cookie = `isLogged=${true}; expires=${expiration}`;
         document.cookie = `name=${data.get("email")}; expires=${expiration}`;
         document.cookie = `access_token=${response.data.access_token}; expires=${expiration}`;

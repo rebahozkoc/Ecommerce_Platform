@@ -8,31 +8,22 @@ import {
   ListItem,
   Divider,
   Grid,
-  Card,
   Stack,
-  Button,
 } from "@mui/material";
 import PrimarySearchAppBar from "../header/AppBar";
 import ResponsiveAppBar from "../header/AppBarUnder";
 import Footer from "../footer/Footer";
-import themeOptions from "../theme";
+import themeOptions from "../style/theme";
 import { ThemeProvider } from "@emotion/react";
 import CommentCard from "./Comment/Comment";
 import { CssBaseline } from "@mui/material/";
 import { Link } from "react-router-dom";
-import Rating from "@mui/material/Rating";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import Ratings from "./Comment/Ratings";
 import Images from "./Item/Images";
 import Description from "./Item/Description";
 import NewReview from "./Comment/NewReview";
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from "recoil";
+import { RecoilRoot, useRecoilValue } from "recoil";
 import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getDataWithoutAccess } from "../recoils/getterFunctions";
@@ -40,30 +31,57 @@ import NewRating from "./Comment/NewRating";
 import axios from "axios";
 
 import { getCookie, loggedState } from "../recoils/atoms";
-
 import { getData } from "../recoils/getterFunctions";
 import { addCardtoCookie } from "../recoils/getterFunctions";
 
 const access = getCookie("access_token");
 
-let points = [0, 0, 0, 0, 0, 0, 0];
 let count = 0;
 const Product = () => {
   const isLogged = useRecoilValue(loggedState);
   const [products, setProducts] = useState([]);
   const [isLoaded3, setLoaded3] = useState(false);
   const [checker, setChecker] = useState(true);
-  const isIn = (item) => {
-    for (let i = 0; i < products.length; i++) {
-      if (item == products[i].product.id) {
-        if (products[i].product.stock <= products[i].quantity) {
-          return products[i].product.stock - 1;
-        }
-        products[i].quantity += count;
-        return products[i].quantity;
-      }
+  const [makeComment, setMakeComment] = React.useState(false);
+  const [makeRating, setMakeRating] = React.useState(false);
+  const [isLoaded, setLoaded] = useState(false);
+  const [itemTemp, setProduct] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [change, setChange] = React.useState(false);
+
+  const stateParamValue = useLocation();
+  const productId = stateParamValue.state.id;
+
+  const clickHandler = () => {
+    setMakeComment(true);
+  };
+  const clickHandler2 = () => {
+    setMakeRating(true);
+  };
+  const closeComment = (event) => {
+    setMakeComment(false);
+  };
+  const cancelComment = () => {
+    setMakeComment(false);
+  };
+  const ratingCancel = () => {
+    setMakeRating(false);
+  };
+  const ratingPost = (value) => {
+    setMakeRating(false);
+  };
+
+  const incCard = () => {
+    if (count < itemTemp.stock) {
+      setChange(true);
+      count++;
     }
-    return 0;
+  };
+  const decCard = () => {
+    if (count > 1) {
+      setChange(true);
+      count--;
+    }
   };
 
   useEffect(() => {
@@ -78,7 +96,38 @@ const Product = () => {
           console.log(err);
         });
     }
+    getDataWithoutAccess(
+      `http://164.92.208.145/api/v1/products/${productId}`
+    ).then((res) => {
+      //console.log(res.data);
+      getDataWithoutAccess(
+        `http://164.92.208.145/api/v1/products/${productId}/comments`
+      )
+        .then((res) => {
+          //console.log(res.data);
+          setComments(res.data);
+          setLoaded(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setProduct(res.data);
+    });
   }, []);
+
+  const isIn = (item) => {
+    for (let i = 0; i < products.length; i++) {
+      if (item == products[i].product.id) {
+        if (products[i].product.stock <= products[i].quantity) {
+          return products[i].product.stock - 1;
+        }
+        products[i].quantity += count;
+        return products[i].quantity;
+      }
+    }
+    return 0;
+  };
+
   const addBasket = (proId) => {
     if (isLogged) {
       console.log("helloooo");
@@ -147,171 +196,6 @@ const Product = () => {
       for (let i = 0; i < count; i++) {
         addCardtoCookie(proId);
       }
-      console.log(getCookie("orderList"));
-    }
-  };
-
-  const [makeComment, setMakeComment] = React.useState(false);
-  const [makeRating, setMakeRating] = React.useState(false);
-  const { type } = useParams();
-  const stateParamValue = useLocation();
-
-  const productId = stateParamValue.state.id;
-  //const productId = 4;
-
-  const [isLoaded, setLoaded] = useState(false);
-  const [itemTemp, setProduct] = useState([]);
-  useEffect(() => {
-    getDataWithoutAccess(
-      `http://164.92.208.145/api/v1/products/${productId}`
-    ).then((res) => {
-      //console.log(res.data);
-      setProduct(res.data);
-      setLoaded(true);
-    });
-  }, []);
-
-  const [isLoaded2, setLoaded2] = useState(false);
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    getDataWithoutAccess(
-      `http://164.92.208.145/api/v1/products/${productId}/comments`
-    )
-      .then((res) => {
-        //console.log(res.data);
-        setComments(res.data);
-        setLoaded2(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  //console.log("product id is", itemTemp);
-  const clickHandler = () => {
-    setMakeComment(true);
-  };
-
-  const clickHandler2 = () => {
-    setMakeRating(true);
-  };
-
-  const closeComment = (event) => {
-    let value = Number(getCookie("rating"));
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-    const newComment = data.get("comment");
-    //console.log(newComment);
-    axios
-      .post(
-        `http://164.92.208.145/api/v1/products/${productId}/comment`,
-        {
-          content: newComment,
-          rate: value,
-        },
-        {
-          headers: {
-            Accept: "*/*",
-            Authorization: `Bearer ${access}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        console.log(newComment);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setMakeComment(false);
-  };
-  const cancelComment = () => {
-    setMakeComment(false);
-  };
-  const ratingCancel = () => {
-    setMakeRating(false);
-  };
-  const ratingPost = (value) => {
-    let bodyContent = JSON.stringify({
-      rate: Number(value),
-    });
-    axios
-      .post(
-        `http://164.92.208.145/api/v1/products/${productId}/rate?rate=${value}`,
-        bodyContent,
-        {
-          headers: {
-            Accept: "*/*",
-            Authorization: `Bearer ${access}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setMakeRating(false);
-  };
-
-  const commentDeleter = (deleteId) => {
-    console.log("comment to delete is", deleteId);
-    axios
-      .delete(
-        `http://164.92.208.145/api/v1/products/${productId}/comments/${deleteId}`,
-        {
-          headers: {
-            Accept: "*/*",
-            Authorization: `Bearer ${access}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const commentApprove = (approveId) => {
-    console.log("waiting to implement");
-  };
-  const comment = () => {
-    points[0] = 0;
-    points[1] = 0;
-    points[2] = 0;
-    points[3] = 0;
-    points[4] = 0;
-    points[5] = 0;
-    points[6] = 0;
-    comments.map((card) => {
-      points[card.id - 1]++;
-      points[5]++;
-      points[6] += card.id;
-    });
-  };
-  comment();
-  React.useEffect(() => {
-    comment();
-    //console.log(points[5]);
-  }, [makeComment]);
-
-  const [change, setChange] = React.useState(false);
-
-  const incCard = () => {
-    if (count < itemTemp.stock) {
-      setChange(true);
-      count++;
-    }
-  };
-  const decCard = () => {
-    if (count > 1) {
-      setChange(true);
-      count--;
     }
   };
 
@@ -319,7 +203,7 @@ const Product = () => {
     setChange(false);
   }, [change]);
 
-  return isLoaded && isLoaded2 ? (
+  return isLoaded ? (
     <RecoilRoot>
       <ThemeProvider theme={themeOptions}>
         <CssBaseline />
@@ -358,7 +242,6 @@ const Product = () => {
               <Ratings
                 avgRating={itemTemp.rate}
                 rateCount={itemTemp.rate_count}
-                points={points}
                 clickHandler={clickHandler}
                 ratingHandler={clickHandler2}
               ></Ratings>
@@ -372,24 +255,17 @@ const Product = () => {
                 }}
               >
                 <List>
-                  {comments.map(
-                    (card) => (
-                      console.log(card),
-                      (
-                        <ListItem key={card.id}>
-                          <CommentCard
-                            name={card.user.full_name}
-                            comment={card.content}
-                            topic={card.rate}
-                            id={card.id}
-                            productId={productId}
-                            deleteComment={commentDeleter}
-                            ApproveComment={commentApprove}
-                          ></CommentCard>
-                        </ListItem>
-                      )
-                    )
-                  )}
+                  {comments.map((card) => (
+                    <ListItem key={card.id}>
+                      <CommentCard
+                        name={card.user.full_name}
+                        comment={card.content}
+                        topic={card.rate}
+                        id={card.id}
+                        productId={productId}
+                      ></CommentCard>
+                    </ListItem>
+                  ))}
                 </List>
                 <Divider sx={{ size: 100 }} />
                 <Link to="/" style={{ color: "black" }}>
@@ -410,11 +286,16 @@ const Product = () => {
           <NewReview
             onConfirm={closeComment}
             onCancel={cancelComment}
+            id={productId}
           ></NewReview>
         )}
 
         {makeRating && (
-          <NewRating onRating={ratingPost} onCancel={ratingCancel}></NewRating>
+          <NewRating
+            onRating={ratingPost}
+            onCancel={ratingCancel}
+            id={productId}
+          ></NewRating>
         )}
       </ThemeProvider>
       <Footer />

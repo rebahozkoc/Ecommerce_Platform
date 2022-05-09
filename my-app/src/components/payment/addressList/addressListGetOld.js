@@ -4,7 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import { Box, CardActionArea } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Stack, Grid } from "@mui/material";

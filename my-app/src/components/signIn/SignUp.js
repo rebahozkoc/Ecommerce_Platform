@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,41 +10,38 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import themeOptions from "../theme";
+import themeOptions from "../style/theme";
 import axios from "axios";
-import { Alert } from "@mui/material";
 
 export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const full_name =  `${data.get("firstName")} ${data.get("lastName")}`;
+    const full_name = `${data.get("firstName")} ${data.get("lastName")}`;
     if (full_name === " ") {
       alert("Please enter your full name");
-    }else{
-    axios
-      .post("http://164.92.208.145/api/v1/auth/registration", {
-        email: data.get("email"),
-        is_active: true,
-        full_name: full_name,
-        password: data.get("password"),
-      })
-      .then(function (response) {
-        //<Alert severity="success">Registration is successful! Redirecting to the home page.</Alert>
-        window.location.href = "http://localhost:3000/SignIn";
-
-      })
-      .catch(function (error) {
-        if (error.response.status === 400) {
-          alert("This user already exists");
-        } else{
-          if (error.response.status === 422) {
-        alert("Wrong or missing email or password");
+    } else {
+      axios
+        .post("http://164.92.208.145/api/v1/auth/registration", {
+          email: data.get("email"),
+          is_active: true,
+          full_name: full_name,
+          password: data.get("password"),
+        })
+        .then(function (response) {
+          window.location.href = "http://localhost:3000/SignIn";
+        })
+        .catch(function (error) {
+          if (error.response.status === 400) {
+            alert("This user already exists");
           } else {
-            alert("Something went wrong");
-          } 
-        }
-      });
+            if (error.response.status === 422) {
+              alert("Wrong or missing email or password");
+            } else {
+              alert("Something went wrong");
+            }
+          }
+        });
     }
   };
 

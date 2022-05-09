@@ -1,7 +1,7 @@
 import AddressListHeader from "../addressList/addressListHeader";
 import AddressListTabBar from "../addressList/addressListTabBar";
 import { ThemeProvider, Box } from "@mui/material";
-import themeOptions from "../../theme";
+import themeOptions from "../../style/theme";
 import AddressListSummary from "../addressList/addressListSummary";
 import PaymentSummary from "./PaymentSummary";
 import { CssBaseline, Stack } from "@mui/material";
