@@ -3,21 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
-//import 'package:mobile/core/widgets/customScrollPhysics.dart';
 import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
+import 'package:mobile/locator.dart';
+import 'package:mobile/view/comments/model/comments_model.dart';
+import 'package:mobile/view/comments/repository/comments_repository.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 
 class PageProduct extends StatefulWidget {
   final ProductModel? product;
-  final Function? onIncrease;
-  final Function? onDecrease;
-  const PageProduct({
-    Key? key,
-    required this.product,
-    this.onIncrease,
-    this.onDecrease,
-  }) : super(key: key);
+  const PageProduct({Key? key, required this.product}) : super(key: key);
 
   @override
   State<PageProduct> createState() => _PageProductState();
@@ -26,6 +21,7 @@ class PageProduct extends StatefulWidget {
 class _PageProductState extends State<PageProduct>
     with TickerProviderStateMixin {
   late TabController controller;
+  List<CommentModel> comments = [];
   int index = 0;
 
   int _counter = 1;
@@ -33,7 +29,6 @@ class _PageProductState extends State<PageProduct>
     setState(() {
       if (_counter < widget.product!.stock!) {
         _counter++;
-        widget.onIncrease != null ? widget.onIncrease!() : null;
       } else {
         showToast(
             message: "You cannot add items more than there is in stock.",
@@ -43,22 +38,40 @@ class _PageProductState extends State<PageProduct>
     });
   }
 
+  void navigateToComments() async {
+    await NavigationService.instance.navigateToPage(
+      path: NavigationConstants.COMMENTS,
+      data: widget.product!.id,
+    );
+  }
+
+  void getComments() async {
+    CommentsModelResponse commentsResponse =
+        await locator<CommentsRepository>().getComments(
+      context: context,
+      productId: widget.product!.id, //widget.product!.id,
+    );
+    setState(() {
+      comments = commentsResponse.data ?? [];
+      if (comments.length > 5) {
+        comments = comments.take(5).toList();
+      }
+    });
+    debugPrint("length ${comments.length.toString()}");
+  }
+
   void remove() {
     setState(() {
       if (_counter != 0) {
         _counter--;
-        widget.onDecrease != null ? widget.onDecrease!() : null;
       }
     });
   }
 
   @override
   void initState() {
-    controller = TabController(
-        length: widget.product?.photos?.isNotEmpty ?? false
-            ? widget.product!.photos!.length
-            : 1,
-        vsync: this);
+    controller = TabController(length: 3, vsync: this);
+    getComments();
     controller.addListener(_setActiveTabIndex);
     super.initState();
   }
@@ -123,31 +136,38 @@ class _PageProductState extends State<PageProduct>
         height: 400,
         child: TabBarView(
           controller: controller,
-          children: widget.product!.photos?.isNotEmpty ?? false
-              ? widget.product!.photos!
-                  .map((e) => AspectRatio(
-                        aspectRatio: 1,
-                        child: CachedNetworkImage(
-                          imageUrl: isExist
-                              ? e.photoUrl!
-                              : ApplicationConstants.PRODUCT_IMG,
-                          width: double.infinity,
-                          fit: BoxFit.fill,
-                        ),
-                      ))
-                  .toList()
-              : [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: CachedNetworkImage(
-                      imageUrl: isExist
-                          ? widget.product!.photos!.first.photoUrl!
-                          : ApplicationConstants.PRODUCT_IMG,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: CachedNetworkImage(
+                imageUrl: isExist
+                    ? widget.product!.photos!.first.photoUrl!
+                    : ApplicationConstants.PRODUCT_IMG,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            ),
+            AspectRatio(
+              aspectRatio: 1,
+              child: CachedNetworkImage(
+                imageUrl: isExist
+                    ? widget.product!.photos!.first.photoUrl!
+                    : ApplicationConstants.PRODUCT_IMG,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            ),
+            AspectRatio(
+              aspectRatio: 1,
+              child: CachedNetworkImage(
+                imageUrl: isExist
+                    ? widget.product!.photos!.first.photoUrl!
+                    : ApplicationConstants.PRODUCT_IMG,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ],
         ));
   }
 
@@ -443,7 +463,7 @@ class _PageProductState extends State<PageProduct>
   TextButton _commentButton() => TextButton(
       onPressed: () {
         NavigationService.instance
-            .navigateToPage(path: NavigationConstants.COMMENTS);
+            .navigateToPage(path: NavigationConstants.COMMENTS, data: widget.product!.id);
       },
       child: const Text(
         "Show all",
@@ -460,49 +480,53 @@ class _PageProductState extends State<PageProduct>
         decoration: const BoxDecoration(
             color: AppColors.lightGray,
             borderRadius: BorderRadius.all(Radius.circular(6.0))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "A**** B**** (22) - İstanbul",
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                RichText(
-                  text: const TextSpan(children: [
-                    WidgetSpan(child: Icon(Icons.star, size: 16)),
-                    TextSpan(
-                      text: "5.0",
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: comments.length,
+          itemBuilder: ((context, index) => Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "A**** B**** (22) - İstanbul",
+                        style: TextStyle(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  ]),
-                ),
-              ],
-            ),
-            Row(
-              children: const [
-                Flexible(
-                    child: Text(
-                  "This chair seems pretty sturdy. It’s also very soft, and the cushion is nice and thick. It took maybe 5 minutes to put together, and has no problem holding everyone in the family",
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
+                      RichText(
+                        text: const TextSpan(children: [
+                          WidgetSpan(child: Icon(Icons.star, size: 16)),
+                          TextSpan(
+                            text: "5.0",
+                            style: TextStyle(
+                              color: AppColors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ]),
+                      ),
+                    ],
                   ),
-                ))
-              ],
-            )
-          ],
+                  Row(
+                    children: const [
+                      Flexible(
+                          child: Text(
+                        "This chair seems pretty sturdy. It’s also very soft, and the cushion is nice and thick. It took maybe 5 minutes to put together, and has no problem holding everyone in the family",
+                        style: TextStyle(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+                      ))
+                    ],
+                  ),
+                ],
+              )),
         ),
       );
 }

@@ -33,6 +33,6 @@ class ApplicationConstants {
   static const PAYMENT_LIMIT = 100;
   static const PAYMENT_SKIP = 0;
 
-  static const PRODUCT_ID = 10;
+  static const PRODUCT_ID = 12;
 
 }
