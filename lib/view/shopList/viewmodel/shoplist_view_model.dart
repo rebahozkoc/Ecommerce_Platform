@@ -111,7 +111,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
       }
       return _isSucess;
     } else {
-      bool _isSucess = await addShopListItem(shopItem);
+      bool _isSucess = await addShopListItem(shopItem,context: context);
       if (!_isSucess) {
         shopItem.quantity = shopItem.quantity! - shopItem.quantity!;
       }
@@ -207,6 +207,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
     if (_shopListItemResponseModel.isSuccess ?? false) {
       addShop(shopItem);
     } else {
+      debugPrint("check");
       showToast(
           context: context ?? this.context!,
           message: _shopListItemResponseModel.message ??
@@ -214,7 +215,7 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
           isSuccess: false);
     }
 
-    return _shopListItemResponseModel.isSuccess!;
+    return _shopListItemResponseModel.isSuccess ?? false;
   }
 
   Future<ShopListItemResponseModel> getShopListItem(int id) async {
@@ -225,15 +226,18 @@ abstract class _ShopListViewModelBase with Store, BaseViewModel {
     return _shopListItemResponseModel;
   }
 
-  void navigateToPayment(BuildContext context) => totalPrice > 0 ? NavigationService.instance.navigateToPage(
-      path: (LocaleManager.instance.getBoolValue(PreferencesKeys.IS_LOGINED) ??
-                  false) ||
-              (LocaleManager.instance
-                      .getBoolValue(PreferencesKeys.IS_REGISTERED) ??
-                  false)
-          ? NavigationConstants.PAYMENT
-          : NavigationConstants.LOGIN_REQUIRED,
-      data: "Please login to complete the purchase") : showToast(
+  void navigateToPayment(BuildContext context) => totalPrice > 0
+      ? NavigationService.instance.navigateToPage(
+          path: (LocaleManager.instance
+                          .getBoolValue(PreferencesKeys.IS_LOGINED) ??
+                      false) ||
+                  (LocaleManager.instance
+                          .getBoolValue(PreferencesKeys.IS_REGISTERED) ??
+                      false)
+              ? NavigationConstants.PAYMENT
+              : NavigationConstants.LOGIN_REQUIRED,
+          data: "Please login to complete the purchase")
+      : showToast(
           context: context,
           message: "Please add items to cart",
           isSuccess: false);
