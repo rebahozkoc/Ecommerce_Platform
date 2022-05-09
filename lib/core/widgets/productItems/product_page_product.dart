@@ -41,7 +41,7 @@ class _PageProductState extends State<PageProduct>
   void navigateToComments() async {
     await NavigationService.instance.navigateToPage(
       path: NavigationConstants.COMMENTS,
-      data: comments,
+      data: widget.product!.id,
     );
   }
 
@@ -49,11 +49,11 @@ class _PageProductState extends State<PageProduct>
     CommentsModelResponse commentsResponse =
         await locator<CommentsRepository>().getComments(
       context: context,
-      productId: 12, //widget.product!.id,
+      productId: widget.product!.id, //widget.product!.id,
     );
     setState(() {
       comments = commentsResponse.data ?? [];
-      if (comments.length > 5){
+      if (comments.length > 5) {
         comments = comments.take(5).toList();
       }
     });
@@ -462,8 +462,8 @@ class _PageProductState extends State<PageProduct>
 
   TextButton _commentButton() => TextButton(
       onPressed: () {
-        NavigationService.instance.navigateToPage(
-            path: NavigationConstants.COMMENTS, data: 12);
+        NavigationService.instance
+            .navigateToPage(path: NavigationConstants.COMMENTS, data: widget.product!.id);
       },
       child: const Text(
         "Show all",

@@ -27,6 +27,7 @@ class _CommentsViewState extends State<CommentsView> {
           viewModel.productId = widget.productId;
         },
         onPageBuilder: (context, value) {
+          debugPrint(viewModel.productId.toString());
           return FutureBuilder(
             future: viewModel.getData(),
             builder: ((context, snapshot) => !snapshot.hasData

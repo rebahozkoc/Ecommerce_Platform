@@ -52,11 +52,10 @@ abstract class _CommentsViewModelBase with Store, BaseViewModel {
   Future<bool> getData() async {
     _commentsModel = await _repository.getComments(
       context: context,
-      productId: 12,
+      productId: productId,
     );
     if (_commentsModel.isSuccess ?? false) {
       setComments(_commentsModel.data ?? []);
-
     } else {
       showToast(
           context: context!,

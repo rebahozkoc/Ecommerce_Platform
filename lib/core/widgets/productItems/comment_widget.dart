@@ -26,22 +26,22 @@ class _CommentWidgetState extends State<CommentWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "A**** B**** (22) - İstanbul",
-                style: TextStyle(
+              Text(
+                widget.comment.user!.fullName!,
+                style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
               RichText(
-                text: const TextSpan(children: [
-                  WidgetSpan(
+                text: TextSpan(children: [
+                  const WidgetSpan(
                       child:
                           Icon(Icons.star, size: 16, color: AppColors.primary)),
                   TextSpan(
-                    text: "5.0",
-                    style: TextStyle(
+                    text: widget.comment.rate!.toString(),
+                    style: const TextStyle(
                       color: AppColors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -49,18 +49,6 @@ class _CommentWidgetState extends State<CommentWidget> {
                   ),
                 ]),
               ),
-            ],
-          ),
-          Row(
-            children: const [
-              Text(
-                "17 August 2020, Monday",
-                style: TextStyle(
-                  color: AppColors.gray,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
             ],
           ),
           Container(

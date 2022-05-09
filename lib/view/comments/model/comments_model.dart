@@ -33,15 +33,17 @@ class CommentModel {
   int? id;
   int? productId;
   String? content;
+  int? rate;
   User? user;
 
-  CommentModel({this.id, this.productId, this.content, this.user});
+  CommentModel({this.id, this.productId, this.content, this.user, this.rate});
 
   CommentModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     productId = json['product_id'];
     content = json['content'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
+    rate = json['rate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -49,6 +51,7 @@ class CommentModel {
     data['id'] = id;
     data['product_id'] = productId;
     data['content'] = content;
+    data['rate'] = rate;
     if (user != null) {
       data['user'] = user!.toJson();
     }

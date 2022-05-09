@@ -6,4 +6,11 @@ abstract class CommentsServiceBase {
     BuildContext context,
     int productId,
   });
+
+  Future<CommentsModelResponse> addComment({
+    BuildContext context,
+    int productId,
+    CommentModel comment,
+    String token,
+  });
 }

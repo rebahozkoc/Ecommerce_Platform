@@ -34,4 +34,37 @@ class CommentsService with CommentsServiceBase {
       return _responseModel;
     }
   }
+
+  @override
+  Future<CommentsModelResponse> addComment({
+    BuildContext? context,
+    int? productId,
+    String? token,
+    CommentModel? comment,
+  }) async {
+    CommentsModelResponse _responseModel = locator<CommentsModelResponse>();
+    try {
+      Response response;
+      Dio dio = Dio();
+
+      var header = {
+        'Content-Type': 'application/json',
+      };
+
+      response = await dio.post(
+        PathConstants.PRODUCT + "/$productId" + "/comment",
+        data: comment!.toJson(),
+        options: Options(headers: header),
+      );
+
+      _responseModel = CommentsModelResponse.fromJson(response.data);
+      return _responseModel;
+    } on DioError catch (exception) {
+      debugPrint("Error");
+      debugPrint(exception.response?.data);
+      _responseModel = locator<CommentsModelResponse>();
+      _responseModel.isSuccess = false;
+      return _responseModel;
+    }
+  }
 }
