@@ -2,13 +2,14 @@ from datetime import datetime
 from pydantic import BaseModel, validator
 from pydantic import Extra
 from schemas import Product, AddressBase, CreditBase
-
+from models.order import OrderStatus
 # Shared properties
 class Order(BaseModel):
     quantity: int
     product: Product
     address: AddressBase
     credit: CreditBase
+    order_status: OrderStatus
 
 
     class Config:
