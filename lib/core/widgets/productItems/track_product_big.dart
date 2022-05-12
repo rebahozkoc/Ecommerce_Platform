@@ -7,7 +7,12 @@ import 'package:mobile/view/orders/model/order_model.dart';
 
 class TrackProductBig extends StatelessWidget {
   final OrderModel order;
-  const TrackProductBig({Key? key, required this.order}) : super(key: key);
+  final String status;
+  const TrackProductBig({
+    Key? key,
+    required this.order,
+    required this.status,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +110,7 @@ class TrackProductBig extends StatelessWidget {
   }
 
   InkWell _status() {
-    late int status = 2;
+    debugPrint(status);
     return InkWell(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -131,7 +136,7 @@ class TrackProductBig extends StatelessWidget {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  if (status == 0)
+                  if (status == "PROCESSING")
                     RichText(
                       text: const TextSpan(
                         children: [
@@ -145,7 +150,7 @@ class TrackProductBig extends StatelessWidget {
                         ],
                       ),
                     ),
-                  if (status == 1)
+                  if (status == "INTRANSIT")
                     RichText(
                       text: const TextSpan(
                         children: [
@@ -159,7 +164,7 @@ class TrackProductBig extends StatelessWidget {
                         ],
                       ),
                     ),
-                  if (status == 2)
+                  if (status == "DELIVERED")
                     RichText(
                       text: const TextSpan(
                         children: [
@@ -194,7 +199,7 @@ class TrackProductBig extends StatelessWidget {
                     child: Text(
                       order.address!.fullAddress ??
                           "Orta Mahallesi, Üniversite Caddesi\nNo:27 Tuzla, 34956 İstanbul",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -207,7 +212,7 @@ class TrackProductBig extends StatelessWidget {
                 children: [
                   Text(
                     order.address!.name ?? "Charles Leclerc - 90505***4567",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.black,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -260,7 +265,7 @@ class TrackProductBig extends StatelessWidget {
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    order.product!.price.toString() ?? "₺380",
+                    order.product!.price?.toString() ?? "₺380",
                     style: const TextStyle(
                         color: AppColors.black,
                         fontSize: 14,

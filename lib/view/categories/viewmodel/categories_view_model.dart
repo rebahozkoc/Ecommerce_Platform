@@ -35,8 +35,9 @@ abstract class _CategoriesViewModelBase with Store, BaseViewModel {
     for (var category in categories) {
       addNewCategory(category);
     }
-    this.categories.insert(0, this.categories.last);
-    this.categories.removeLast();
+    this.categories.insert(0, this.categories[this.categories.length - 2]);
+    this.categories.removeAt(this.categories.length - 2);
+    //this.categories.removeLast();
   }
 
   @action

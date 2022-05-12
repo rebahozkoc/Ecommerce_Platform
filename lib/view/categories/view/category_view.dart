@@ -66,15 +66,40 @@ class _CategoryViewState extends BaseState<CategoryView> {
             );
           },
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SearchButtonWidget(),
-                _gridView(),
-              ],
-            ),
+            child: Observer(builder: (_) {
+              bool isEmpty = viewModel.products.isEmpty;
+              return Column(
+                children: [
+                  const SearchButtonWidget(),
+                  !isEmpty ? _gridView() : _notFound(),
+                ],
+              );
+            }),
           ),
         ),
       );
+
+  Center _notFound() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Icon(
+            Icons.search,
+            size: 48,
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(12, 20, 12, 0),
+            child: Text(
+              "There are currently no products in this category.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: AppColors.tertiary, fontSize: 22),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   Observer _gridView() => Observer(builder: (_) {
         return GridView.count(

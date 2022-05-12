@@ -5,7 +5,6 @@ import 'package:mobile/core/widgets/login_requreid_widget.dart';
 import 'package:mobile/view/account/view/account_view.dart';
 import 'package:mobile/view/categories/view/categories_view.dart';
 import 'package:mobile/view/favorites/view/favorites_view.dart';
-import 'package:mobile/view/home/view/home_view.dart';
 import 'package:mobile/view/shopList/view/shoplist_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -14,7 +13,7 @@ class BottomBarView extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      const HomeView(),
+      //const HomeView(),
       const CategoriesView(),
       const ShopListView(),
       const FavoritesView(),
@@ -27,12 +26,12 @@ class BottomBarView extends StatelessWidget {
 
   List<PersistentBottomNavBarItem> _navBarItems() {
     return [
-      PersistentBottomNavBarItem(
-          icon: const Icon(Icons.home),
-          inactiveIcon: const Icon(Icons.home_outlined),
-          iconSize: 28,
-          activeColorPrimary: const Color(0xFFFF6600),
-          inactiveColorPrimary: const Color(0xFFD8D8D8)),
+      // PersistentBottomNavBarItem(
+      //     icon: const Icon(Icons.home),
+      //     inactiveIcon: const Icon(Icons.home_outlined),
+      //     iconSize: 28,
+      //     activeColorPrimary: const Color(0xFFFF6600),
+      //     inactiveColorPrimary: const Color(0xFFD8D8D8)),
       PersistentBottomNavBarItem(
           icon: const Icon(Icons.grid_view_rounded),
           inactiveIcon: const Icon(Icons.grid_view_outlined),

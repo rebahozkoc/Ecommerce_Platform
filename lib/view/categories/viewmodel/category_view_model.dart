@@ -46,6 +46,7 @@ abstract class _CategoryViewModelBase with Store, BaseViewModel {
     for (var product in products) {
       addNewproduct(product);
     }
+    
   }
 
   @action

@@ -33,14 +33,16 @@ class OrderResponseModel {
 
 class OrderModel {
   int? quantity;
+  String? orderStatus;
   ProductModel? product;
   AddressModel? address;
   PaymentModel? credit;
 
-  OrderModel({this.quantity, this.product, this.address, this.credit});
+  OrderModel({this.quantity, this.product, this.address, this.credit, this.orderStatus});
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     quantity = json['quantity'];
+    orderStatus = json['order_tatus'];
     product =
         json['product'] != null ? ProductModel.fromJson(json['product']) : null;
     address =
@@ -52,6 +54,7 @@ class OrderModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['quantity'] = quantity;
+    data['order_status'] = orderStatus;
     if (product != null) {
       data['product'] = product!.toJson();
     }
@@ -64,6 +67,3 @@ class OrderModel {
     return data;
   }
 }
-
-
-

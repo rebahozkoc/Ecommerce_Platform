@@ -13,7 +13,7 @@ class AddCommentsViewModel = _AddCommentsViewModelBase
     with _$AddCommentsViewModel;
 
 abstract class _AddCommentsViewModelBase with Store, BaseViewModel {
-  late int productId = product_id;
+  late int product_id = product_id;
   late int rate;
   late CommentsRepository _repository;
   @override

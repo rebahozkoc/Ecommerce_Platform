@@ -6,7 +6,7 @@ import 'package:mobile/core/widgets/productItems/comment_widget.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
 
-late int product_id;
+late int productId;
 
 class CommentsView extends StatefulWidget {
   final int productId;
@@ -102,7 +102,7 @@ class _CommentsViewState extends State<CommentsView> {
 
   OutlinedButton addComment() => OutlinedButton(
         onPressed: () {
-          product_id = widget.productId;
+          productId = widget.productId;
           viewModel.navigateToAddCommentsView(context);
         },
         child: RichText(

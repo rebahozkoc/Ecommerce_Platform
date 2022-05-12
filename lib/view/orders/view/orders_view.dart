@@ -83,6 +83,7 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin {
                 itemBuilder: (context, index) {
                   return TrackProductBig(
                     order: viewModel.orders[index],
+                    status: "PROCESSING",
                   );
                 },
               ),
