@@ -36,7 +36,7 @@ class Product(Base):
 
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))
     category_subcategory = relationship(
-        "CategorySubCategory", cascade="all,delete", back_populates="products"
+        "CategorySubCategory", back_populates="products"
     )
 
     # proxies
