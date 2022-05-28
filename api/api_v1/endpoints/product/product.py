@@ -5,6 +5,7 @@ from api import deps
 import crud, models, schemas
 from schemas import Response
 from typing import Any
+from schemas.product import ProductBase
 from utilities.image import ImageUtilities
 
 router = APIRouter()
@@ -46,7 +47,7 @@ async def get_product(
     return Response(data=product)
 
 
-@router.delete("/{product_id}", response_model=Response[schemas.ProductBase])
+@router.delete("/{product_id}", response_model=Response)
 def delete_product(
     *,
     product_id: int,
@@ -64,7 +65,8 @@ def delete_product(
         )
 
     product = crud.product.remove(db=db, id=product_id)
-    return Response(data=product, isSuccess=True)
+    #print(product)
+    return Response(isSuccess=True)
 
 
 @router.post("/{id}/photo/add", response_model=Response)
