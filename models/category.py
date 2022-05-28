@@ -13,8 +13,8 @@ class CategorySubCategory(Base):
     category_id = Column(ForeignKey("category.id"))
     subcategory_id = Column(ForeignKey("subcategory.id"))
 
-    category = relationship("Category", cascade="all,delete", back_populates="subcategories")
-    subcategory = relationship("SubCategory", back_populates="categories")
+    category = relationship("Category", back_populates="subcategories")
+    subcategory = relationship("SubCategory", cascade="all,delete", back_populates="categories")
 
     # proxies
     category_title = association_proxy(target_collection="category", attr="title")
