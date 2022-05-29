@@ -50,7 +50,8 @@ class Product(Base):
     comments = relationship("Comment", back_populates="product", lazy="dynamic")
     photos = relationship("ProductPhoto", back_populates="product")
     rates = relationship("ProductRate", back_populates="product")
-
+    favorites= relationship("Favorite", back_populates="product")
+    
     shopping_cart_users = relationship("ShoppingCart", cascade="all,delete")
     ordered_products = relationship("Order", cascade="all,delete")
 

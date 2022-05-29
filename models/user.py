@@ -19,3 +19,5 @@ class User(Base):
     shopping_cart_products = relationship("ShoppingCart")
 
     orders = relationship("Order")
+
+    favorites = relationship("Favorite")
