@@ -21,7 +21,20 @@ async def favorite(
     """
     Add product to favorite table.
     """
-
+    #an exeption if product does not exist
+    product = crud.product.get(db=db, id=favorite_details.product_id)
+    if not product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Product does not exist"},
+        )
+    
+    #an http exception is raised if the product is already in the favorite table with the current user
+    if crud.favorite.exists(db=db, user_id=current_user.id, id=favorite_details.product_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"message": "Product already in favorite table"},
+        )
     favorite = crud.favorite.create_favorite(
         db=db, user_id=current_user.id, favorite_details=favorite_details
     )
@@ -52,6 +65,14 @@ async def update_favorite(
     """
     Update favorite
     """
+    #an exeption if favorite does not exist
+    favorite = crud.favorite.get(db=db, user_id=current_user.id, id=product_id)
+    if not favorite:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Favorite does not exist"},
+        )
+    
     favorite = crud.favorite.update_favorite(
         db=db,
         current_user=current_user.id,
@@ -70,6 +91,13 @@ async def delete_favorite(
     """
     Delete product from favorite table.
     """
+    #an exeption if favorite does not exist
+    favorite = crud.favorite.get(db=db, user_id=current_user.id, id=product_id)
+    if not favorite:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"message": f"Favorite does not exist"},
+        )
 
     crud.favorite.delete_favorite(db=db, current_user=current_user.id, product_id=product_id)
 
