@@ -4,7 +4,7 @@ from api import deps
 
 import crud, models, schemas
 from schemas import Response
-from typing import Any
+from typing import Any, List
 from schemas.product import ProductBase
 from utilities.image import ImageUtilities
 
@@ -68,27 +68,30 @@ def delete_product(
     #print(product)
     return Response(isSuccess=True)
 
-
-@router.post("/{id}/photo/add", response_model=Response)
-async def add_photo_to_product(
-    *,
-    id: int,
-    photo: UploadFile = File(...),
+#a post method that adds multiple photos to a product
+@router.post("/{product_id}/photo/add", response_model=Response[schemas.Product])
+async def add_photos(
+    product_id: int,
+    files: List[UploadFile] = File(...),
     db: Session = Depends(deps.get_db),
-):
+    current_user: models.User = Depends(deps.get_current_user),
+) -> Any:
     """
-    Uploads photo of product.
+    Add photos to a product
     """
-    product = crud.product.get(db=db, field="id", value=id)
+    product = crud.product.get(db=db, field="id", value=product_id)
     if not product:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"message": f"Product does not exists"},
+            detail={"message": f"Product does not exist"},
         )
+    
+    for file in files:
+        added_photo = crud.product.add_photo(db=db, product=product, photo=file)
+        photo_url = ImageUtilities.get_image_url(added_photo.photo_url)
 
-    added_photo = crud.product.add_photo(db=db, product=product, photo=photo)
-    photo_url = ImageUtilities.get_image_url(added_photo.photo_url)
-    return Response(data=photo_url, message="Uploaded photo successfully")
+    return Response(data=product)
+    
 
 
 @router.delete("/{id}/photo/{photo_id}/remove", response_model=Response)
