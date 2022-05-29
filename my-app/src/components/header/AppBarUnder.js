@@ -36,7 +36,7 @@ const AppBarUnder = () => {
   useEffect(() => {
     getData();
   }, []);
-
+  /*
   useEffect(() => {
     if (isLoaded) {
       let tmp = pages[4];
@@ -48,7 +48,7 @@ const AppBarUnder = () => {
       setIsLoaded2(true);
     }
   }, [isLoaded]);
-
+  */
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [openPopper, setOpenPopper] = React.useState(false);
   const handleOpenNavMenu = (event) => {
@@ -143,7 +143,7 @@ const AppBarUnder = () => {
                 justifyContent="space-around"
                 paddingBottom="0"
               >
-                {isLoaded2 ? (
+                {isLoaded ? (
                   pages.map((page, i) => (
                     <Button
                       aria-describedby={id}

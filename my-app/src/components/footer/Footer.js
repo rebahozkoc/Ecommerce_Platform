@@ -1,13 +1,25 @@
 import React from "react";
 import { Container, Grid, Box, Link, Typography } from "@mui/material";
-
+import { CssBaseline } from "@mui/material";
 export default function Footer(props) {
   return (
-    <footer>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "10vh",
+      }}
+    >
+      <CssBaseline />
+
       <Box
-        px={{ xs: 3, sm: 10 }}
-        py={{ xs: 3, sm: 5 }}
-        bgcolor= {props.bgcolor ? props.bgcolor: "text.secondary"}
+        component="footer"
+        sx={{
+          py: 3,
+          px: 2,
+          mt: "auto",
+        }}
+        bgcolor={props.bgcolor ? props.bgcolor : "text.secondary"}
         color="white"
       >
         <Container maxWidth="lg">
@@ -92,6 +104,6 @@ export default function Footer(props) {
           </Box>
         </Container>
       </Box>
-    </footer>
+    </Box>
   );
 }
