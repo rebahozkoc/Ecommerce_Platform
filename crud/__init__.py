@@ -6,3 +6,4 @@ from .crud_address import address
 from .crud_credit import credit
 from .crud_shoppingcart import shopping_cart
 from .crud_order import order
+from .crud_favorite import favorite

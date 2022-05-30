@@ -6,3 +6,4 @@ from .address import Address
 from .credit import Credit
 from .shopping_cart import ShoppingCart
 from .order import Order
+from .favorite import Favorite
