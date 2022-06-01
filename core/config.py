@@ -44,6 +44,7 @@ class Settings(BaseSettings):
     TEST_USER_PASSWORD: str = os.getenv("TEST_USER_PASSWORD")
 
     CRYPTO_ALGORITHM: str = os.getenv("CRYPTO_ALGORITHM", "HS256")
+    HASH_KEY: str = os.getenv("HASH_KEY")
 
 
 settings = Settings()
