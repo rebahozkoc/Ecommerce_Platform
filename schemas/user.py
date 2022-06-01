@@ -4,6 +4,7 @@ from pydantic import BaseModel, EmailStr
 
 from schemas.address import AddressBase
 from schemas.credit import CreditBase
+from schemas.favorite import FavoriteBase
 
 
 # Shared properties
@@ -50,6 +51,10 @@ class UserAddresses(UserBase):
 class UserCredits(UserBase):
     id: int
     credits: List[CreditBase]
+
+class UserFavorite(UserBase):
+    id: int
+    favorite: List[FavoriteBase]
 
 class ChangePasswordIn(BaseModel):
     current_password: str

@@ -27,3 +27,4 @@ from .shopping_cart import (
     ShoppingCartList,
 )
 from .order import Order, OrderShoppingCart
+from .favorite import FavoriteCreate, FavoriteUpdate, FavoriteInDBBase
