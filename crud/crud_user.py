@@ -20,6 +20,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             email=obj_in.email,
             hashed_password=get_password_hash(obj_in.password),
             full_name=obj_in.full_name,
+            user_type= obj_in.user_type
         )
         db.add(db_obj)
         db.commit()
@@ -50,7 +51,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def is_active(self, user: User) -> bool:
         return user.is_active
     
-    
+
     
     def update_password(self, current_user:User, db: Session, change_in: ChangePasswordIn) -> Response:
         if not verify_password(change_in.current_password,current_user.hashed_password):
