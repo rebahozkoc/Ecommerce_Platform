@@ -102,6 +102,14 @@ class CRUDProduct(
         db.refresh(product)
         return product
 
+    def increase_stock(self, db: Session, product_id: int, stock: int):
+        product = db.query(Product).filter(Product.id == product_id).first()
+        product.stock = stock
+        db.add(product)
+        db.commit()
+        db.refresh(product)
+        return product
+
     def search_title_description(self, db: Session, query: str, skip: int, limit: int):
         products = (
             db.query(Product)
