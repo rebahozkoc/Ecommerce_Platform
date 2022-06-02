@@ -17,7 +17,7 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean(), default=True)
-    user_type = Column(Enum(UserType), nullable=False, default=UserType.CUSTOMER)
+    user_type = Column(Enum(UserType), nullable=True, default=UserType.CUSTOMER)
 
     comments = relationship("Comment", back_populates="user")
     addresses = relationship("Address", back_populates="user")

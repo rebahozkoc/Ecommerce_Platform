@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('full_name', sa.String(), nullable=True),
-    sa.Column('user_type', sa.Enum('CUSTOMER', 'SALES_MANAGER', 'PRODUCT_MANAGER', name='usertype'), nullable=False),
+    sa.Column('user_type', sa.Enum('CUSTOMER', 'SALES_MANAGER', 'PRODUCT_MANAGER', name='usertype'), nullable=True),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('hashed_password', sa.String(), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=True),
