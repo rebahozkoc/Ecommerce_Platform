@@ -1,7 +1,7 @@
 from tkinter import Image
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 from sqlalchemy.orm import Session
-import crud, schemas
+import crud, schemas, models
 from typing import List
 from api import deps
 from schemas.response import Response
@@ -64,10 +64,17 @@ async def create_category(
     category_in: schemas.CategoryCreate = Depends(),
     image: UploadFile = File(...),
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ):
     """
     Creates category from title and image.
     """
+    if current_user.user_type != models.user.UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message": "Only product managers can create categories."},
+        )
+
     category = crud.category.create(db, obj_in=category_in, image=image)
     if not category:
         raise HTTPException(
@@ -87,10 +94,17 @@ async def update_category(
     category_in: schemas.CategoryUpdate = Depends(),
     image: UploadFile = File(None),
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ):
     """
     Updates category title with id
     """
+    if current_user.user_type != models.user.UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message": "Only product managers can update categories."},
+        )
+
     current_category = crud.category.get(db=db, field="id", value=id)
     if not current_category:
         raise HTTPException(
@@ -111,10 +125,18 @@ async def remove_category(
     *,
     id: int,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ):
     """
     Deletes category title with id
     """
+    
+    if current_user.user_type != models.user.UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message": "Only product managers can delete categories."},
+        )
+
     current_category = crud.category.get(db=db, field="id", value=id)
     if not current_category:
         raise HTTPException(
