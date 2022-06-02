@@ -131,6 +131,7 @@ class _RegisterViewState extends State<RegisterView> {
   TextFormField fullName() => TextFormField(
         autofocus: false,
         obscureText: false,
+        controller: viewModel.fullNameController,
         decoration: const InputDecoration(
           labelText: "Full Name",
           labelStyle: TextStyle(
@@ -150,7 +151,9 @@ class _RegisterViewState extends State<RegisterView> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          onPressed: () {},
+          onPressed: () async {
+            await viewModel.register();
+          },
           padding: const EdgeInsets.all(12),
           color: AppColors.primary,
           child: Text("Create an account",

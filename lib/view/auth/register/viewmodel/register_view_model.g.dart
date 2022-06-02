@@ -41,11 +41,49 @@ mixin _$RegisterViewModel on _RegisterViewModelBase, Store {
     });
   }
 
+  final _$fullNameControllerAtom =
+      Atom(name: '_RegisterViewModelBase.fullNameController');
+
+  @override
+  TextEditingController get fullNameController {
+    _$fullNameControllerAtom.reportRead();
+    return super.fullNameController;
+  }
+
+  @override
+  set fullNameController(TextEditingController value) {
+    _$fullNameControllerAtom.reportWrite(value, super.fullNameController, () {
+      super.fullNameController = value;
+    });
+  }
+
+  final _$submitAsyncAction = AsyncAction('_RegisterViewModelBase.submit');
+
+  @override
+  Future submit() {
+    return _$submitAsyncAction.run(() => super.submit());
+  }
+
+  final _$_RegisterViewModelBaseActionController =
+      ActionController(name: '_RegisterViewModelBase');
+
+  @override
+  void _listener() {
+    final _$actionInfo = _$_RegisterViewModelBaseActionController.startAction(
+        name: '_RegisterViewModelBase._listener');
+    try {
+      return super._listener();
+    } finally {
+      _$_RegisterViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 emailController: ${emailController},
-passwordController: ${passwordController}
+passwordController: ${passwordController},
+fullNameController: ${fullNameController}
     ''';
   }
 }
