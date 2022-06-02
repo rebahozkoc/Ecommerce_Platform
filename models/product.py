@@ -32,6 +32,7 @@ class Product(Base):
     price = Column(Float)
     model = Column(String)
     number = Column(String)
+    discount = Column(Integer, nullable=True)
     distributor = Column(String)
 
     category_subcategory_id = Column(Integer, ForeignKey("category_subcategory.id"))

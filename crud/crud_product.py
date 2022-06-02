@@ -110,6 +110,22 @@ class CRUDProduct(
         db.refresh(product)
         return product
 
+    def update_price(self, db: Session, product_id: int, price: int):
+        product = db.query(Product).filter(Product.id == product_id).first()
+        product.price = price
+        db.add(product)
+        db.commit()
+        db.refresh(product)
+        return product
+
+    def update_discount(self, db: Session, product_id: int, discount: int):
+        product = db.query(Product).filter(Product.id == product_id).first()
+        product.discount = discount
+        db.add(product)
+        db.commit()
+        db.refresh(product)
+        return product        
+
     def search_title_description(self, db: Session, query: str, skip: int, limit: int):
         products = (
             db.query(Product)
