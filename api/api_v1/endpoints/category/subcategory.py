@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-import crud, schemas
+import crud, schemas, models
 from typing import List
 from api import deps
 from schemas.response import Response
@@ -18,10 +18,16 @@ async def create_subcategory(
     id: int,
     subcategory_in: schemas.SubCategoryCreate,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ):
     """
     Creates subcategory and adds to the specified category.
     """
+    if current_user.user_type != models.user.UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message": "Only product managers can create subcategories."},
+        )
     category = crud.category.get(db=db, field="id", value=id)
     if not category:
         raise HTTPException(
@@ -52,10 +58,16 @@ async def remove_subcategory(
     id: int,
     sub_id: int,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user), 
 ):
     """
     Removes subcategory
     """
+    if current_user.user_type != models.user.UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message": "Only product managers can delete subcategories."},
+        )
     category = crud.category.get(db=db, field="id", value=id)
     if not category:
         raise HTTPException(
@@ -85,10 +97,16 @@ async def update_subcategory(
     sub_id: int,
     subcategory_in: schemas.SubCategoryUpdate,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ):
     """
     Updates subcategory
     """
+    if current_user.user_type != models.user.UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message": "Only product managers can update subcategories."},
+        )
     category = crud.category.get(db=db, field="id", value=id)
     if not category:
         raise HTTPException(
