@@ -57,3 +57,4 @@ class Product(ProductInDBBase):
     comment_count: int
     rate: Optional[float]
     rate_count: Optional[float]
+    discount: Optional[int]

@@ -5,7 +5,6 @@ from api import deps
 import crud, models, schemas
 from schemas import Response
 from typing import Any
-from utilities.image import ImageUtilities
 
 router = APIRouter()
 

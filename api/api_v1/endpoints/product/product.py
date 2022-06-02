@@ -6,7 +6,6 @@ import crud, models, schemas
 from models.user import UserType
 from schemas import Response
 from typing import Any, List
-from schemas.product import ProductBase
 from utilities.image import ImageUtilities
 
 router = APIRouter()
@@ -94,7 +93,7 @@ async def update_stock(
     if current_user.user_type != UserType.PRODUCT_MANAGER:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"message":"Only product managers can update products"},
+            detail={"message":"Only product managers can update products stock"},
         )
 
     product = crud.product.increase_stock(db=db, product_id=id, stock=stock)
