@@ -21,7 +21,7 @@ def get_user(
     """
     Get user data such as email and name, this needs to be updated when a new data point is added to the user
     """
-    return Response(message="User data", data=UserBase(email=current_user.email, full_name=current_user.full_name, is_active=current_user.is_active))
+    return Response(message="User data", data=UserBase(email=current_user.email, full_name=current_user.full_name, is_active=current_user.is_active, user_type=current_user.user_type))
 
 @router.patch("/change_user_data", response_model=Response[UserBase])
 def update_user(
@@ -39,6 +39,7 @@ def update_user(
         email=user_in.email,
         full_name=user_in.full_name,
         is_active=user_in.is_active,
+        user_type=user_in.user_type
     )
     user = crud.user.update(
         db, db_obj=current_user, obj_in=user_in)

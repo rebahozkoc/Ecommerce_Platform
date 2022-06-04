@@ -96,5 +96,12 @@ def create_comment(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Comment does not exist"},
         )
+
+    if current_user.user_type != models.user.UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message": "Only product managers can approve the comments."},
+        )
+
     comment = crud.comment.update(db=db, db_obj=db_comment, obj_in=comment_in)
     return Response(data=comment)

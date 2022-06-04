@@ -1,9 +1,11 @@
 from typing import List, Optional
 
 from pydantic import BaseModel, EmailStr
+from models.user import UserType
 
 from schemas.address import AddressBase
 from schemas.credit import CreditBase
+from schemas.favorite import FavoriteBase
 
 
 # Shared properties
@@ -11,6 +13,7 @@ class UserBase(BaseModel):
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
     full_name: Optional[str] = None
+    user_type: Optional[UserType] = UserType.CUSTOMER
 
 
 # Properties to receive via API on creation
@@ -50,6 +53,10 @@ class UserAddresses(UserBase):
 class UserCredits(UserBase):
     id: int
     credits: List[CreditBase]
+
+class UserFavorite(UserBase):
+    id: int
+    favorite: List[FavoriteBase]
 
 class ChangePasswordIn(BaseModel):
     current_password: str
