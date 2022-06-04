@@ -15,6 +15,15 @@ class CRUDFavorite(CRUDBase[Favorite, FavoriteCreate, FavoriteUpdate]):
             .limit(limit)
             .all()
         )
+    def get_multi_by_product_id(self, db: Session, *, product_id: int, skip: int = 0, limit: int = 100) -> List[FavoriteInDBBase]:
+        return (
+            db.query(Favorite)
+            .filter(Favorite.product_id == product_id)
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+
     def create_favorite(self, db: Session, *, user_id: int, favorite_details: FavoriteCreate) -> Favorite:
         favorite = Favorite(user_id=user_id, product_id=favorite_details.product_id)
         db.add(favorite)
@@ -25,7 +34,7 @@ class CRUDFavorite(CRUDBase[Favorite, FavoriteCreate, FavoriteUpdate]):
     def exists(self, db: Session, *, user_id: int, id: int):
         return (
             db.query(Favorite)
-            .filter(Favorite.user_id == user_id, Favorite.id == id)
+            .filter(Favorite.user_id == user_id, Favorite.product_id == id)
             .first()
         )
     
@@ -54,6 +63,10 @@ class CRUDFavorite(CRUDBase[Favorite, FavoriteCreate, FavoriteUpdate]):
             db.refresh(favorite)
             return favorite
         return None
+    
+    #get favorite product by user_id and product_id
+    def get_with_product_and_user(self, db: Session, *, user_id: int, product_id: int) -> Favorite:
+        return db.query(Favorite).filter(Favorite.user_id == user_id, Favorite.product_id == product_id).first()
 
 favorite = CRUDFavorite(Favorite)
 
