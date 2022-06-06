@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Enum, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, Enum, ForeignKey, DateTime, String, Boolean
 from sqlalchemy.orm import relationship
 from db.base_class import Base
 import enum
@@ -9,6 +9,7 @@ class OrderStatusEnum(str, enum.Enum):
     PROCESSING = "PROCESSING"
     INTRANSIT = "INTRANSIT"
     DELIVERED = "DELIVERED"
+    REFUNDED = "REFUNDED"
 
 
 class Order(Base):
@@ -27,7 +28,9 @@ class Order(Base):
     credit_id = Column(ForeignKey("credit.id"))
     credit = relationship("Credit", back_populates="orders")
 
-    order_details = relationship("OrderItem", cascade="all,delete", back_populates="order")
+    order_details = relationship(
+        "OrderItem", cascade="all,delete", back_populates="order"
+    )
 
 
 class OrderItem(Base):
@@ -44,3 +47,16 @@ class OrderItem(Base):
 
     order_status = Column(Enum(OrderStatusEnum))
     quantity = Column(Integer)
+    refund = relationship("RefundOrder", back_populates="orderitem", uselist=False)
+
+
+class RefundOrder(Base):
+    __tablename__ = "refundorder"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    reason = Column(String(), nullable=False)
+    status = Column(Boolean, default=False)
+
+    orderitem_id = Column(Integer, ForeignKey("orderitem.id"))
+    orderitem = relationship("OrderItem", back_populates="refund")

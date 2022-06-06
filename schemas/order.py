@@ -13,9 +13,10 @@ class OrderItem(BaseModel):
     quantity: int
     order_status: OrderStatusEnum
 
-
     class Config:
         orm_mode = True
+
+
 class Order(BaseModel):
     address: AddressBase
     credit: CreditBase
