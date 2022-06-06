@@ -2,30 +2,45 @@ from sqlalchemy import Column, Integer, Enum, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from db.base_class import Base
 import enum
+import datetime
 
-class OrderStatus(enum.Enum):
+
+class OrderStatusEnum(enum.Enum):
     PROCESSING = "PROCESSING"
     INTRANSIT = "INTRANSIT"
     DELIVERED = "DELIVERED"
+
 
 class Order(Base):
     __tablename__ = "order"
 
     id = Column(Integer, primary_key=True, index=True)
-
-    quantity = Column(Integer)
-    order_status = Column(Enum(OrderStatus))
-    created_at = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.datetime.now())
 
     # relations
     user_id = Column(ForeignKey("user.id"))
     user = relationship("User", back_populates="orders")
-
-    product_id = Column(ForeignKey("product.id"))
-    product = relationship("Product", back_populates="ordered_products")
 
     address_id = Column(ForeignKey("address.id"))
     address = relationship("Address", back_populates="orders")
 
     credit_id = Column(ForeignKey("credit.id"))
     credit = relationship("Credit", back_populates="orders")
+
+    order_details = relationship("OrderItem", cascade="all,delete")
+
+
+class OrderItem(Base):
+    __tablename__ = "orderitem"
+
+    id = Column(Integer, primary_key=True, index=True)
+    created_at = Column(DateTime, default=datetime.datetime.now())
+
+    order_id = Column(ForeignKey("order.id"))
+    order = relationship("Order", back_populates="order_details")
+
+    product_id = Column(ForeignKey("product.id"))
+    product = relationship("Product", back_populates="ordered_products")
+
+    order_status = Column(Enum(OrderStatusEnum))
+    quantity = Column(Integer)

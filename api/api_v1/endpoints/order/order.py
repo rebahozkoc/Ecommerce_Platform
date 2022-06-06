@@ -23,8 +23,6 @@ async def order_shopping_cart(
         db=db, current_user=current_user, order_details=order_details
     )
 
-    
-
     return Response(message="Successfully ordered the products")
 
 

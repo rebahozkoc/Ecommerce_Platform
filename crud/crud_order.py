@@ -13,6 +13,7 @@ import pdfkit
 import json
 import utilities.gen_invoice
 
+
 class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
     def create_order(
         self, db: Session, current_user: User, order_details: schemas.OrderShoppingCart
@@ -21,40 +22,48 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
 
         item_list = schemas.ShoppingCartList(data=shopping_cart_items)
         item_list = item_list.dict()
-        gorkem = (
-            db.query(models.Address)
-            .filter(models.Address.id == order_details.address_id)
-            .first()
-        )
-        item_list["address"] = jsonable_encoder(gorkem)
+        # gorkem = (
+        #    db.query(models.Address)
+        #    .filter(models.Address.id == order_details.address_id)
+        #    .first()
+        # )
+        # item_list["address"] = jsonable_encoder(gorkem)
+        # path_wkthmltopdf = "/usr/local/bin/wkhtmltopdf"
 
-        path_wkthmltopdf = '/usr/local/bin/wkhtmltopdf'
-        
-        # Load the json data file
-        usermail = "yasinugur.cs@gmail.com"
-        username = usermail.split("@")[0]
-        
-        # Create the invoice pdf
-        return_URL = gen_invoice(item_list, username)
-        
-        css = 'example.css'
-        options = {'enable-local-file-access': True}
-        
-        files = [return_URL.replace("html", "html")]
-        content = "Hello Dear user, \n This is an invoice for your recent purchase. \n Thank you for your business."
-        
-        utilities.sendMail.send_mail(usermail, "Your Invoice from Voidture Inc.", content, files)
+        ## Load the json data file
+        # usermail = "yasinugur.cs@gmail.com"
+        # username = usermail.split("@")[0]
+
+        ## Create the invoice pdf
+        # return_URL = gen_invoice(item_list, username)
+
+        # css = "example.css"
+        # options = {"enable-local-file-access": True}
+
+        # files = [return_URL.replace("html", "html")]
+        # content = "Hello Dear user, \n This is an invoice for your recent purchase. \n Thank you for your business."
+
+        # utilities.sendMail.send_mail(
+        #    usermail, "Your Invoice from Voidture Inc.", content, files
+        # )
+
+        new_order = models.Order(
+            user_id=current_user.id,
+            address_id=order_details.address_id,
+            credit_id=order_details.credit_id,
+        )
+
+        db.add(new_order)
+        db.commit()
 
         for item in shopping_cart_items:
-            order = models.Order(
+            orderitem = models.OrderItem(
                 order_status="PROCESSING",
+                order_id=new_order.id,
                 product_id=item.product_id,
-                user_id=item.user_id,
                 quantity=item.quantity,
-                address_id=order_details.address_id,
-                credit_id=order_details.credit_id,
             )
-            db.add(order)
+            db.add(orderitem)
             crud.product.decrease_stock(
                 db=db, product_id=item.product_id, quantity=item.quantity
             )
