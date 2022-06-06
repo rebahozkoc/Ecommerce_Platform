@@ -13,14 +13,7 @@ def trChar(text):
 
 
 def get_file_dir(username, fileType):
-    return (
-        "./media/invoices/"
-        + fileType
-        + "/"
-        + username
-        + "."
-        + fileType
-    )
+    return "./media/invoices/" + fileType + "/" + username + "." + fileType
 
 
 def gen_invoice(orders_json, username):
@@ -83,17 +76,20 @@ def gen_invoice(orders_json, username):
             quantity = order["quantity"]
             price = product["price"]
             title = trChar(product["title"])
-            photo = product["photos"][0]["photo_url"]
+            photo = None
+            if len(product["photos"]) != 0:
+                photo = product["photos"][0]["photo_url"]
             subtotal = quantity * price
             total_price += subtotal
             new_tag = soup.new_tag("tr")
-            t1 = soup.new_tag("td")
 
-            img = soup.new_tag("img")
-            img["src"] = photo
-            img["width"] = "100"
-            t1.append(img)
-            new_tag.append(t1)
+            if photo:
+                t1 = soup.new_tag("td")
+                img = soup.new_tag("img")
+                img["src"] = photo
+                img["width"] = "100"
+                t1.append(img)
+                new_tag.append(t1)
 
             t = soup.new_tag("td")
             t.string = title
@@ -114,14 +110,9 @@ def gen_invoice(orders_json, username):
 
         invoice.append(new_tag)
 
-    # create new link
-    # new_link = soup.new_tag("link", rel="icon", type="image/png", href="img/tor.png")
-    # insert it into the document
-    # soup.head.append(new_link)
-
     # save the file again
     with open(get_file_dir(username, "html"), "w", encoding="utf-8") as outf:
         outf.write(str(soup))
-        
+
     return_url = get_file_dir(username, "html")
     return return_url

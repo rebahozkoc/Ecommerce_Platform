@@ -1,17 +1,14 @@
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from crud.base import CRUDBase
-from models import Order, User
+from models import Order, User, OrderItem, RefundOrder, Product
 from schemas.order import OrderShoppingCart
 import crud, models, schemas
 from typing import List
-import json
 from utilities.gen_invoice import gen_invoice
 import utilities.sendMail
-import reportlab
-import pdfkit
-import json
 import utilities.gen_invoice
+
 
 class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
     def create_order(
@@ -27,34 +24,42 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
             .first()
         )
         item_list["address"] = jsonable_encoder(gorkem)
+        path_wkthmltopdf = "/usr/local/bin/wkhtmltopdf"
 
-        path_wkthmltopdf = '/usr/local/bin/wkhtmltopdf'
-        
         # Load the json data file
-        usermail = "yasinugur.cs@gmail.com"
+        usermail = current_user.email
         username = usermail.split("@")[0]
-        
+
         # Create the invoice pdf
         return_URL = gen_invoice(item_list, username)
-        
-        css = 'example.css'
-        options = {'enable-local-file-access': True}
-        
+
+        css = "example.css"
+        options = {"enable-local-file-access": True}
+
         files = [return_URL.replace("html", "html")]
         content = "Hello Dear user, \n This is an invoice for your recent purchase. \n Thank you for your business."
-        
-        utilities.sendMail.send_mail(usermail, "Your Invoice from Voidture Inc.", content, files)
+
+        utilities.sendMail.send_mail(
+            usermail, "Your Invoice from Voidture Inc.", content, files
+        )
+
+        new_order = models.Order(
+            user_id=current_user.id,
+            address_id=order_details.address_id,
+            credit_id=order_details.credit_id,
+        )
+
+        db.add(new_order)
+        db.commit()
 
         for item in shopping_cart_items:
-            order = models.Order(
+            orderitem = models.OrderItem(
                 order_status="PROCESSING",
+                order_id=new_order.id,
                 product_id=item.product_id,
-                user_id=item.user_id,
                 quantity=item.quantity,
-                address_id=order_details.address_id,
-                credit_id=order_details.credit_id,
             )
-            db.add(order)
+            db.add(orderitem)
             crud.product.decrease_stock(
                 db=db, product_id=item.product_id, quantity=item.quantity
             )
@@ -74,5 +79,31 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
             .all()
         )
 
+    def get_order_item(self, db: Session, id: int):
+        return db.query(OrderItem).filter(OrderItem.id == id).first()
+
+    def create_refund_request(self, db: Session, refund: schemas.RefundCreate):
+        order_item = self.get_order_item(db, refund.orderitem_id)
+        obj_in_data = jsonable_encoder(refund)
+        db_obj = models.RefundOrder(**obj_in_data)  # type: ignore
+        db.add(db_obj)
+        db.commit()
+
+    def change_refund_status(self, db: Session, id: int, value: bool):
+        order_item = self.get_order_item(db, id)
+        refundorder = (
+            db.query(RefundOrder).filter(RefundOrder.orderitem_id == id).first()
+        )
+        refundorder.status = value
+        product = db.query(Product).filter(Product.id == order_item.product_id).first()
+        product.stock += order_item.quantity
+        order_item.order_status = "REFUNDED"
+        db.add(product)
+        db.add(refundorder)
+        db.add(order_item)
+        db.commit()
+
+    def get_refund_requests(self, db: Session):
+        return db.query(RefundOrder).all()
 
 order = CRUDOrder(Order)
