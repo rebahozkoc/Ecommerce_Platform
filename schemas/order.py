@@ -1,16 +1,25 @@
 from datetime import datetime
-from pydantic import BaseModel, validator
-from pydantic import Extra
+from pydantic import BaseModel, validator, Extra
+from typing import List
 from schemas import Product, AddressBase, CreditBase
 from models.order import OrderStatusEnum
 
 # Shared properties
-class Order(BaseModel):
-    quantity: int
+
+
+class OrderItem(BaseModel):
+    id: int
     product: Product
+    quantity: int
+    order_status: OrderStatusEnum
+
+
+    class Config:
+        orm_mode = True
+class Order(BaseModel):
     address: AddressBase
     credit: CreditBase
-    order_status: OrderStatusEnum
+    order_details: List[OrderItem]
 
     class Config:
         orm_mode = True

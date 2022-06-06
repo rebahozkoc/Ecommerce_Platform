@@ -22,30 +22,30 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
 
         item_list = schemas.ShoppingCartList(data=shopping_cart_items)
         item_list = item_list.dict()
-        # gorkem = (
-        #    db.query(models.Address)
-        #    .filter(models.Address.id == order_details.address_id)
-        #    .first()
-        # )
-        # item_list["address"] = jsonable_encoder(gorkem)
-        # path_wkthmltopdf = "/usr/local/bin/wkhtmltopdf"
+        gorkem = (
+           db.query(models.Address)
+           .filter(models.Address.id == order_details.address_id)
+           .first()
+        )
+        item_list["address"] = jsonable_encoder(gorkem)
+        path_wkthmltopdf = "/usr/local/bin/wkhtmltopdf"
 
-        ## Load the json data file
-        # usermail = "yasinugur.cs@gmail.com"
-        # username = usermail.split("@")[0]
+        # Load the json data file
+        usermail = current_user.email
+        username = usermail.split("@")[0]
 
-        ## Create the invoice pdf
-        # return_URL = gen_invoice(item_list, username)
+        # Create the invoice pdf
+        return_URL = gen_invoice(item_list, username)
 
-        # css = "example.css"
-        # options = {"enable-local-file-access": True}
+        css = "example.css"
+        options = {"enable-local-file-access": True}
 
-        # files = [return_URL.replace("html", "html")]
-        # content = "Hello Dear user, \n This is an invoice for your recent purchase. \n Thank you for your business."
+        files = [return_URL.replace("html", "html")]
+        content = "Hello Dear user, \n This is an invoice for your recent purchase. \n Thank you for your business."
 
-        # utilities.sendMail.send_mail(
-        #    usermail, "Your Invoice from Voidture Inc.", content, files
-        # )
+        utilities.sendMail.send_mail(
+           usermail, "Your Invoice from Voidture Inc.", content, files
+        )
 
         new_order = models.Order(
             user_id=current_user.id,

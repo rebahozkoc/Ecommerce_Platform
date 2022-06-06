@@ -5,7 +5,7 @@ import enum
 import datetime
 
 
-class OrderStatusEnum(enum.Enum):
+class OrderStatusEnum(str, enum.Enum):
     PROCESSING = "PROCESSING"
     INTRANSIT = "INTRANSIT"
     DELIVERED = "DELIVERED"
@@ -27,7 +27,7 @@ class Order(Base):
     credit_id = Column(ForeignKey("credit.id"))
     credit = relationship("Credit", back_populates="orders")
 
-    order_details = relationship("OrderItem", cascade="all,delete")
+    order_details = relationship("OrderItem", cascade="all,delete", back_populates="order")
 
 
 class OrderItem(Base):
