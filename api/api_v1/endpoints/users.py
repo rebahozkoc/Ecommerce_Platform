@@ -57,4 +57,18 @@ def update_password(
     """
     #check the efficacy of the old_password
     return crud.user.update_password(db=db, current_user=current_user, change_in= change_in)
+
+#send user a mail with a subject and a body using the send_mail_to_current_user function
+@router.post("/send_mail", response_model=Response)
+def send_mail(
+    *,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+    subject: str,
+    body: str
+) -> Any:
+    """
+    Sends a mail to the current user
+    """
+    return crud.user.send_mail_to_current_user(db=db, user_id=current_user.id, subject=subject, message=body)
     

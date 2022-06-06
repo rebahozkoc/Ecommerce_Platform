@@ -12,7 +12,7 @@ from schemas.favorite import FavoriteBase
 router = APIRouter()
 
 #get post and update favorite table
-@router.post("/favorite", response_model=Response[FavoriteBase])
+@router.post("/favorites", response_model=Response[FavoriteBase])
 async def favorite(
     favorite_details: schemas.FavoriteCreate,
     db: Session = Depends(deps.get_db),
@@ -22,7 +22,7 @@ async def favorite(
     Add product to favorite table.
     """
     #an exeption if product does not exist
-    product = crud.product.get(db=db, id=favorite_details.product_id)
+    product = crud.product.get(db=db, field="id",value=favorite_details.product_id)
     if not product:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -55,7 +55,7 @@ async def previous_favorites(
 
     return Response(data=data)
 
-@router.patch("/favorite/{product_id}", response_model=Response[FavoriteBase])
+@router.patch("/favorites/{product_id}", response_model=Response[FavoriteBase])
 async def update_favorite(
     product_id: int,
     favorite_details: schemas.FavoriteUpdate,
@@ -66,7 +66,7 @@ async def update_favorite(
     Update favorite
     """
     #an exeption if favorite does not exist
-    favorite = crud.favorite.get(db=db, user_id=current_user.id, id=product_id)
+    favorite = crud.favorite.get_with_product_and_user(db=db, user_id=current_user.id, id=product_id)
     if not favorite:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -82,7 +82,7 @@ async def update_favorite(
 
     return Response(data=favorite, message="Successfully updated favorite")
 
-@router.delete("/favorite/{product_id}", response_model=Response)
+@router.delete("/favorites/{product_id}", response_model=Response)
 async def delete_favorite(
     product_id: int,
     db: Session = Depends(deps.get_db),
@@ -92,7 +92,7 @@ async def delete_favorite(
     Delete product from favorite table.
     """
     #an exeption if favorite does not exist
-    favorite = crud.favorite.get(db=db, user_id=current_user.id, id=product_id)
+    favorite = crud.favorite.get_with_product_and_user(db=db, user_id=current_user.id, id=product_id)
     if not favorite:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

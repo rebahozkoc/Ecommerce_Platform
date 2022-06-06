@@ -9,6 +9,8 @@ import schemas
 from schemas.response import Response
 from schemas.user import ChangePasswordIn, UserCreate, UserUpdate
 from fastapi import status, HTTPException
+from utilities.gen_invoice import gen_invoice
+import utilities.sendMail
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -84,6 +86,17 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                     detail={"message": f"User does not exists"})
         return user_info.credit.offset(skip).limit(limit).all()
+    
+    def send_mail_to_current_user(self, db: Session, user_id:int, subject: str, message: str) -> Response:
+        #return_URL = gen_invoice(item_list, current_user.full_name)
+        #files = [return_URL.replace("html", "html")]
+        current_user=db.query(User).filter(User.id==user_id).first()
+        if not current_user:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                    detail={"message": f"User does not exists"})
+                    #it may be a bad idea to put an exeption here since it would stop the discount in its tracks
+        utilities.sendMail.send_mail(current_user.email, subject, message)
+        return Response(message="Mail sent successfully.")
 
 
 user = CRUDUser(User)

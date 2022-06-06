@@ -23,7 +23,7 @@ async def get_product_price(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Product does not exists"},
         )
-
+    
     price = product.price
     if product.discount is not None:
         price -= price * product.discount / 100
@@ -52,6 +52,16 @@ async def update_price(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Product does not exists"},
         )
+    #get list of users who have favorited the product from the favorites table
+    users = crud.favorite.get_multi_by_product_id(db=db, product_id=id)
+    #get the list of user id from users object
+    if users:
+        user_ids = [users.user_id for users in users]
+        #using the send_mail_to_current_user function in crud_user.py to send email to all users who have favorited the product in a loop
+        for user_id in user_ids:
+            crud.user.send_mail_to_current_user(db=db, user_id=user_id,
+            subject="Discount on your favorite product",
+            message=f"We have a discount on your favorite product. Check it out here: NEED PRODUCT URL\n The discount is {product.discount}%")
     return Response(data=product)
 
 
@@ -77,4 +87,14 @@ async def update_discount(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"message": f"Product does not exists"},
         )
+    #get list of users who have favorited the product from the favorites table
+    users = crud.favorite.get_multi_by_product_id(db=db, product_id=id)
+    #get the list of user id from users object
+    if users:
+        user_ids = [users.user_id for users in users]
+        #using the send_mail_to_current_user function in crud_user.py to send email to all users who have favorited the product in a loop
+        for user_id in user_ids:
+            crud.user.send_mail_to_current_user(db=db, user_id=user_id,
+            subject="Discount on your favorite product",
+            message=f"We have a discount on your favorite product. Check it out here: NEED PRODUCT URL\n The discount is {product.discount}%")
     return Response(data=product)
