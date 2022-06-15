@@ -51,7 +51,7 @@ const Product = () => {
 
   const stateParamValue = useLocation();
   const productId = stateParamValue.state.id;
-  const admin = useRecoilValue(nameState);
+  const admin = getCookie("user_type");
 
   const clickHandler = () => {
     setMakeComment(true);
@@ -258,7 +258,7 @@ const Product = () => {
                 <List>
                   {comments.map(
                     (card) =>
-                      (admin || card.is_active) && (
+                      (admin == "PRODUCT_MANAGER" || card.is_active) && (
                         <ListItem key={card.id}>
                           <CommentCard
                             name={card.user.full_name}

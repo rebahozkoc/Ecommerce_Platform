@@ -36,11 +36,8 @@ const AdminPanelContainer = (props) => {
     ["Add Categories", "../addCategories"],
     ["Delete Categories", "../deleteCategories"],
     ["Add Products", "../addProducts"],
-    ["Delete Products", "../coupons"],
-
-    ["Manage Stocks", "../update-payment"],
-    ["View Invoices", "../update-favorites"],
-    ["View Delivery", "../update-favorites"],
+    ["View Invoices", "../view_invoice"],
+    ["View Delivery", "../view_delivery"],
   ];
 
   const handleOnClickList = columnItems.map((item) => {

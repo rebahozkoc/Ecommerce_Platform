@@ -10,13 +10,13 @@ import {
   Box,
   TextField,
 } from "@mui/material";
-import AdminPanelContainer from "./AdminPanel";
+import AdminPanelContainer from "../AdminPanel";
 import { useState } from "react";
 import axios from "axios";
-import { getCookie } from "../recoils/atoms";
+import { getCookie } from "../../recoils/atoms";
 
 const access = getCookie("access_token");
-const AddCategories = (props) => {
+const AddProducts = (props) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [value, setValue] = React.useState(3);
   const addNewCategory = (event) => {
@@ -50,7 +50,7 @@ const AddCategories = (props) => {
     <Card>
       <Box sx={{ m: 2 }} />
       <Typography sx={{ fontSize: 20 }} pl={2}>
-        Add New Category
+        Add New Product
       </Typography>
       <Box sx={{ m: 2 }} />
       <Box
@@ -72,7 +72,7 @@ const AddCategories = (props) => {
             sx={{ padding: (1, 1, 1, 1) }}
           />
           <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
-            Add Category Image
+            Add Product Images
           </Typography>
           <Box sx={{ m: 1 }} />
           {selectedImage && (
@@ -124,10 +124,10 @@ const AddCategories = (props) => {
 
   return (
     <AdminPanelContainer
-      pageIndex={1}
+      pageIndex={2}
       widget={newCategoryWidget}
     ></AdminPanelContainer>
   );
 };
 
-export default AddCategories;
+export default AddProducts;

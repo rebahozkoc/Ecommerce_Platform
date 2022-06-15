@@ -25,10 +25,10 @@ import PaymentSuccessPage from "./components/payment/paymentSuccess/paymentSucce
 import { RecoilRoot } from "recoil";
 import SearchPage from "./components/search/searchPage";
 import Export from "./components/invoicePdf/Invoice";
-import Dashboard from "./components/admin_panel/Dashboard";
 import Admin from "./components/admin_panel/AdminPanel";
 import AddCategories from "./components/admin_panel/add_remove/AddCategory";
 import DeleteCategories from "./components/admin_panel/add_remove/DeleteCategory";
+import AddProducts from "./components/admin_panel/add_remove/AddProducts";
 ReactDOM.render(
   <RecoilRoot>
     <BrowserRouter>
@@ -56,6 +56,9 @@ ReactDOM.render(
         <Route path="/admin-panel" element={<Admin />}></Route>
         <Route path="/addCategories" element={<AddCategories />}></Route>
         <Route path="/deleteCategories" element={<DeleteCategories />}></Route>
+        <Route path="/addProducts" element={<AddProducts />}></Route>
+        <Route path="/view_invoice" element={<AddProducts />}></Route>
+        <Route path="/view_delivery" element={<AddProducts />}></Route>
       </Routes>
     </BrowserRouter>
   </RecoilRoot>,
