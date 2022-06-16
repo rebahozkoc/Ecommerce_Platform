@@ -26,13 +26,15 @@ class UserModel {
   String? email;
   bool? isActive;
   String? fullName;
+  String? userType;
 
-  UserModel({this.email, this.isActive, this.fullName});
+  UserModel({this.email, this.isActive, this.fullName, this.userType});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     isActive = json['is_active'];
     fullName = json['full_name'];
+    userType = json['user_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +42,7 @@ class UserModel {
     data['email'] = email;
     data['is_active'] = isActive;
     data['full_name'] = fullName;
+    data['user_type'] = userType;
     return data;
   }
 }

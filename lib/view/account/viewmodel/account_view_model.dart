@@ -32,7 +32,7 @@ abstract class _AccountViewModelBase with Store, BaseViewModel {
   void dispose() {}
 
   @observable
-  UserModel user = UserModel(fullName: "User");
+  UserModel user = UserModel(fullName: "User", userType: "CUSTOMER");
 
   @action
   setUser(UserModel user) {
