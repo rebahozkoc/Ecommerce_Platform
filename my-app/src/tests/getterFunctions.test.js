@@ -3,12 +3,13 @@
  */
 // hello.test.js
 import React from "react";
-import "babel-polyfill";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
+import { ThemeProvider } from "@emotion/react";
 
-import Hello from "../routes/hello";
 
+import createShoppingDict from '../components/recoils/getterFunctions';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -23,21 +24,13 @@ afterEach(() => {
   container = null;
 });
 
-it("Application renders without error", () => {
-  act(() => {
-    render(<Hello />, container);
-  });
-  expect(container.textContent).toBe("Hey, stranger");
 
+it('theme activates correctly', () => {
   act(() => {
-    render(<Hello name="Jenny" />, container);
+    var cartdict = createShoppingDict();
   });
-  expect(container.textContent).toBe("Hello, Jenny!");
+    
+  
+  expect(container).toBeTruthy();
 
-  act(() => {
-    render(<Hello name="Margaret" />, container);
-  });
-  expect(container.textContent).toBe("Hello, Margaret!");
 });
-
-// ok

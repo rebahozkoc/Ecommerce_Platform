@@ -3,12 +3,11 @@
  */
 // hello.test.js
 import React from "react";
-import "babel-polyfill";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import Hello from "../routes/hello";
-
+import OrderItem from '../components/account/order/OrderItem';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -23,21 +22,15 @@ afterEach(() => {
   container = null;
 });
 
-it("Application renders without error", () => {
-  act(() => {
-    render(<Hello />, container);
-  });
-  expect(container.textContent).toBe("Hey, stranger");
 
+it('Payment page renders correctly', () => {
   act(() => {
-    render(<Hello name="Jenny" />, container);
+    var order = {product: { title: "title", id: "1", model: "model" , photos: [{photo_url: "furn1.jpg"}]}};
+    render(<BrowserRouter><OrderItem key={0} data={order} /></BrowserRouter>, container);
   });
-  expect(container.textContent).toBe("Hello, Jenny!");
+    
+  
+  expect(container.textContent).toContain("titleQuantity");
+  expect(container.textContent).toContain("Price");
 
-  act(() => {
-    render(<Hello name="Margaret" />, container);
-  });
-  expect(container.textContent).toBe("Hello, Margaret!");
 });
-
-// ok

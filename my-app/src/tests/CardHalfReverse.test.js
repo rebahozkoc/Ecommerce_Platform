@@ -3,12 +3,11 @@
  */
 // hello.test.js
 import React from "react";
-import "babel-polyfill";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import Hello from "../routes/hello";
-
+import CardHalfReverse from '../components/card/mediaMiddle/CardHalfReverse';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -23,21 +22,14 @@ afterEach(() => {
   container = null;
 });
 
-it("Application renders without error", () => {
-  act(() => {
-    render(<Hello />, container);
-  });
-  expect(container.textContent).toBe("Hey, stranger");
 
+it('Card Half reverse component renders correctly', () => {
   act(() => {
-    render(<Hello name="Jenny" />, container);
+    render(<BrowserRouter><CardHalfReverse /></BrowserRouter>, container);
   });
-  expect(container.textContent).toBe("Hello, Jenny!");
+    
+  
+  expect(container.textContent).toContain("titleQuantity");
+  expect(container.textContent).toContain("Price");
 
-  act(() => {
-    render(<Hello name="Margaret" />, container);
-  });
-  expect(container.textContent).toBe("Hello, Margaret!");
 });
-
-// ok
