@@ -8,25 +8,20 @@ import Typography from "@mui/material/Typography";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import themeOptions from "../../style/theme";
 import { ThemeProvider } from "@emotion/react";
-import { Box, Stack, Divider, Button } from "@mui/material";
+import { Box, Stack, Divider, Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { getCookie } from "../../recoils/atoms";
+import axios from "axios";
 
+const admin = getCookie("user_type");
+const access = getCookie("access_token");
 const Description = (props) => {
-  const [expanded, setExpanded] = React.useState(false);
   const [outStock, setoutStock] = React.useState(false);
   const [notZero, setnotzero] = React.useState(false);
+  const [stock, setStock] = React.useState(props.stock);
+  const [price, setPrice] = React.useState(props.cost);
   const removeHandler = () => {
     props.delete(props.id);
   };
@@ -82,14 +77,84 @@ const Description = (props) => {
             <Typography variant="body1">{props.title}</Typography>
             <Divider />
             <Typography variant="body2">{props.description}</Typography>
-            <Box sx={{ m: 2 }} />
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              fontWeight="bold"
-            >
-              Stock Availability: {props.stock}
-            </Typography>
+
+            <Stack direction="row" spacing={1}>
+              <Stack direction="column" spacing={1}>
+                <Box sx={{ m: 0.5 }} />
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  fontWeight="bold"
+                >
+                  Stock Availability: {stock}
+                </Typography>
+              </Stack>
+              {admin == "PRODUCT_MANAGER" && (
+                <Box
+                  component="form"
+                  sx={{
+                    "& > :not(style)": { width: "20ch", height: "4ch" },
+                  }}
+                  noValidate
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const data = new FormData(e.currentTarget);
+
+                    const newStock = data.get("stock");
+                    console.log(newStock);
+
+                    let headersList = {
+                      Accept: "*/*",
+                      Authorization: `Bearer ${access}`,
+                    };
+
+                    let reqOptions = {
+                      url: `http://164.92.208.145/api/v1/products/${props.id}/updateStock?stock=${newStock} `,
+                      method: "PATCH",
+                      headers: headersList,
+                    };
+
+                    axios
+                      .request(reqOptions)
+                      .then(function (response) {
+                        console.log(response.data);
+                        setStock(newStock);
+                      })
+                      .catch((res) => {
+                        console.log(res);
+                      });
+                  }}
+                  autoComplete="off"
+                  direction="row"
+                >
+                  <TextField
+                    sx={{
+                      "& > :not(style)": { m: 1, width: "20ch", height: "4ch" },
+                    }}
+                    id="stock"
+                    name="stock"
+                    label="New Stock Count"
+                    variant="outlined"
+                  />
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#ff6600",
+                      margin: (8, 1, 8, 1.2),
+                      padding: (8, 1, 8, 1),
+                      justify: "flex-end",
+                      align: "right",
+                    }}
+                  >
+                    <Typography sx={{ color: "black" }}>
+                      Change Stock
+                    </Typography>
+                  </Button>
+                </Box>
+              )}
+            </Stack>
           </Stack>
 
           <Typography variant="body1" color="text.secondary" fontWeight="bold">
@@ -162,10 +227,83 @@ const Description = (props) => {
               </Typography>
             )}
           </Stack>
-          <Box sx={{ m: 1 }} />
+
+          <Stack direction="row" spacing={1}>
+            <Stack direction="column" spacing={1}>
+              <Box sx={{ m: 0.4 }} />
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                fontWeight="bold"
+              >
+                Product Price: {price}$
+              </Typography>
+            </Stack>
+            {admin == "SALES_MANAGER" && (
+              <Box
+                component="form"
+                sx={{
+                  "& > :not(style)": { width: "18ch", height: "4ch" },
+                }}
+                noValidate
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const data = new FormData(e.currentTarget);
+
+                  const newPrice = data.get("price");
+
+                  let headersList = {
+                    Accept: "*/*",
+                    Authorization: `Bearer ${access}`,
+                  };
+
+                  let reqOptions = {
+                    url: `http://164.92.208.145/api/v1/products/${props.id}/updatePrice?price=${newPrice} `,
+                    method: "POST",
+                    headers: headersList,
+                  };
+                  axios
+                    .request(reqOptions)
+                    .then(function (response) {
+                      console.log(response.data);
+                      setPrice(newPrice);
+                    })
+                    .catch((res) => {
+                      console.log(res);
+                    });
+                }}
+                autoComplete="off"
+                direction="row"
+              >
+                <TextField
+                  sx={{
+                    "& > :not(style)": { m: 1, width: "15ch", height: "4ch" },
+                  }}
+                  id="price"
+                  name="price"
+                  label="New Price"
+                  variant="outlined"
+                />
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#ff6600",
+                    margin: (0, 1, 0, 1.2),
+                    padding: (8, 1, 8, 1),
+                    justify: "flex-end",
+                    align: "right",
+                  }}
+                >
+                  <Typography sx={{ color: "black" }}>Change Price</Typography>
+                </Button>
+              </Box>
+            )}
+          </Stack>
 
           <Typography variant="body1" color="text.secondary" fontWeight="bold">
-            Total Price {(props.cost * props.count).toFixed(2)}$
+            Total Price {(price * props.count).toFixed(2)}$
           </Typography>
           <CardActions>
             <Button

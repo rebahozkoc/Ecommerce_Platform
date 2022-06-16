@@ -56,9 +56,9 @@ const SignIn = () => {
           })
           .then((userResponse) => {
             document.cookie = `user_type=${userResponse.data.data.user_type}; expires=${expiration}`;
+            window.location.href = "http://localhost:3000";
           });
         //window.location.reload();
-        //window.location.href = "http://localhost:3000";
       })
       .catch(function (error) {
         console.log(error);
