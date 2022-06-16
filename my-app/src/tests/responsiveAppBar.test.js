@@ -6,7 +6,7 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import DiscountItem from '../components/header/categories/DiscountItem';
+import ResponsiveAppBar from '../components/header/responsiveAppBar';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 let container = null;
 beforeEach(() => {
@@ -23,20 +23,16 @@ afterEach(() => {
 });
 
 
-it('Discount Item renders correctly', () => {
+it('Appbar resonsive renders correctly', () => {
   act(() => {
-    render(<BrowserRouter><DiscountItem img={"furn1.jpg"} /></BrowserRouter>, container);
+    var order = {product: { title: "title", id: "1", model: "model" , photos: [{photo_url: "furn1.jpg"}]}};
+    render(<BrowserRouter><ResponsiveAppBar /></BrowserRouter>, container);
   });
     
   
-  expect(container).toBeTruthy();
-});
+  expect(container.textContent).toContain("VoidtureVoidtureLiving");
+  expect(container.textContent).toContain("RoomDining");
+  expect(container.textContent).toContain("RoomStudy");
 
-it('Discount Item with empty image', () => {
-  act(() => {
-    render(<BrowserRouter><DiscountItem/></BrowserRouter>, container);
-  });
-    
-  
-  expect(container).toBeTruthy();
+
 });
