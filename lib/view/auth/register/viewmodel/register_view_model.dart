@@ -32,6 +32,9 @@ abstract class _RegisterViewModelBase with Store, BaseViewModel {
   TextEditingController passwordController = TextEditingController();
 
   @observable
+  TextEditingController passwordConfirmController = TextEditingController();
+
+  @observable
   TextEditingController fullNameController = TextEditingController();
 
   void dispose() {}
@@ -51,12 +54,27 @@ abstract class _RegisterViewModelBase with Store, BaseViewModel {
           context: context!,
           message: "Please enter a valid password",
           isSuccess: false);
+    } else if (passwordConfirmController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please confirm your password",
+          isSuccess: false);
+    } else if (passwordConfirmController.text != passwordController.text) {
+      showToast(
+          context: context!,
+          message: "Passwords do not match",
+          isSuccess: false);
+    } else if (fullNameController.text.isEmpty) {
+      showToast(
+          context: context!,
+          message: "Please enter your full name",
+          isSuccess: false);
     } else {
       await register();
     }
   }
 
-  Future<void> register() async{
+  Future<void> register() async {
     RegisterModel _register = RegisterModel(
       email: emailController.text,
       fullName: fullNameController.text,
@@ -75,9 +93,7 @@ abstract class _RegisterViewModelBase with Store, BaseViewModel {
           context: context!,
           message: "Register has been added",
           isSuccess: true);
-      await NavigationService.instance.navigateToPage(
-        
-      );
+      await NavigationService.instance.navigateToPage();
     } else {
       showToast(
           context: context!,

@@ -115,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
   TextFormField confirmPassword() => TextFormField(
         autofocus: false,
         obscureText: true,
-        controller: viewModel.passwordController,
+        controller: viewModel.passwordConfirmController,
         decoration: const InputDecoration(
           labelText: "Confirm Password",
           labelStyle: TextStyle(
