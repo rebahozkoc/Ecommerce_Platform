@@ -28,7 +28,7 @@ import Export from "./components/invoicePdf/Invoice";
 import Admin from "./components/admin_panel/AdminPanel";
 import AddCategories from "./components/admin_panel/add_remove/AddCategory";
 import DeleteCategories from "./components/admin_panel/add_remove/DeleteCategory";
-import AddProducts from "./components/admin_panel/add_remove/AddProducts";
+import AddProduct from "./components/admin_panel/add_remove/AddProduct";
 import SalesManagerPanel from "./components/sales_manager/SalesManager";
 ReactDOM.render(
   <RecoilRoot>
@@ -57,9 +57,9 @@ ReactDOM.render(
         <Route path="/admin-panel" element={<Admin />}></Route>
         <Route path="/addCategories" element={<AddCategories />}></Route>
         <Route path="/deleteCategories" element={<DeleteCategories />}></Route>
-        <Route path="/addProducts" element={<AddProducts />}></Route>
-        <Route path="/view_invoice" element={<AddProducts />}></Route>
-        <Route path="/view_delivery" element={<AddProducts />}></Route>
+        <Route path="/addProduct" element={<AddProduct />}></Route>
+        <Route path="/view_invoice" element={<AddProduct />}></Route>
+        <Route path="/view_delivery" element={<AddProduct />}></Route>
         <Route path="/salesManager" element={<SalesManagerPanel />}></Route>
       </Routes>
     </BrowserRouter>

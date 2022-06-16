@@ -10,16 +10,66 @@ import {
   Box,
   TextField,
 } from "@mui/material";
+import { useState, useEffect, useCallback } from "react";
+
 import AdminPanelContainer from "../AdminPanel";
-import { useState } from "react";
 import axios from "axios";
 import { getCookie } from "../../recoils/atoms";
+import AddProductDropDown from "./AddProductDropDown";
 
 const access = getCookie("access_token");
-const AddProducts = (props) => {
+const AddProduct = (props) => {
+  // Get categories to add product
+  const [categoryList, setDataCategory] = useState([]);
+  const [isLoadedCategory, setIsLoadedCategory] = useState(false);
+  const [categoryId, setCategoryId] = useState(1);
+
+  const getDataCategory = async () => {
+    //const { data } = await axios.get("http://localhost:8000/customMockData/1");
+
+    const { data } = await axios({
+      method: "get",
+      url: "http://164.92.208.145/api/v1/categories/?skip=0&limit=100",
+      withCredentials: false,
+    });
+
+    setDataCategory(data.data);
+    console.log(data.data);
+    setIsLoadedCategory(true);
+  };
+
+  useEffect(() => {
+    getDataCategory(categoryId);
+
+    
+  }, [categoryId]);
+
+
+  const [subcategoryList, setDataSubcategory] = useState([]);
+  const [isLoadedSubcategory, setIsLoadedSubcategory] = useState(false);
+
+  const getDataSubcategory = async (categoryId) => {
+    //const { data } = await axios.get("http://localhost:8000/customMockData/1");
+
+    const { data } = await axios({
+      method: "get",
+      url: `http://164.92.208.145/api/v1/categories/${categoryId}`,
+      withCredentials: false,
+    });
+
+    setDataSubcategory(data.data);
+    console.log(data.data);
+    setIsLoadedSubcategory(true);
+  };
+
+  useEffect(() => {
+    getDataSubcategory(categoryId);
+  }, []);
+  
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [value, setValue] = React.useState(3);
-  const addNewCategory = (event) => {
+  const addNewProduct = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const newCat = data.get("catName");
@@ -46,7 +96,13 @@ const AddProducts = (props) => {
         console.log(err);
       });
   };
-  const newCategoryWidget = (
+
+  // Set the dropdown menu category names
+  const handleCategoryName = (selectedCategory) => {
+    console.log("selected category ", selectedCategory);
+  };
+
+  const newProductWidget = (
     <Card>
       <Box sx={{ m: 2 }} />
       <Typography sx={{ fontSize: 20 }} pl={2}>
@@ -60,10 +116,44 @@ const AddProducts = (props) => {
           alignItems: "center",
         }}
         component="form"
-        onSubmit={addNewCategory}
+        onSubmit={addNewProduct}
         noValidate
-      >
-        <Grid container justifyContent="center">
+      > 
+
+        <AddProductDropDown handleCategoryName={handleCategoryName} dataList ={isLoadedCategory ? categoryList: []} defaultValue= {"Select Category"}  ></AddProductDropDown>
+
+      </Box>
+    </Card>
+  );
+
+  return (
+    <AdminPanelContainer
+      pageIndex={2}
+      widget={newProductWidget}
+    ></AdminPanelContainer>
+  );
+};
+
+export default AddProduct;
+
+// TODO        
+//<AddProductDropDown handleCategoryName={handleCategoryName} dataList ={isLoadedSubcategory ? subcategoryList: []} defaultValue= {"Select Subcategory"} ></AddProductDropDown>
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+<Grid container justifyContent="center">
+
           <TextField
             id="catName"
             label="New Category Name"
@@ -115,19 +205,9 @@ const AddProducts = (props) => {
               align: "right",
             }}
           >
-            <Typography sx={{ color: "black" }}>New Category</Typography>
+            <Typography sx={{ color: "black" }}>Add New Product</Typography>
           </Button>
         </Box>
-      </Box>
-    </Card>
-  );
 
-  return (
-    <AdminPanelContainer
-      pageIndex={2}
-      widget={newCategoryWidget}
-    ></AdminPanelContainer>
-  );
-};
 
-export default AddProducts;
+        */

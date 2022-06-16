@@ -20,6 +20,7 @@ const OrderItem = (props) => {
     >
       <CardContent sx={{ pt: 3 }}>
         <Stack direction="row" alignItems="center">
+          
           <Link
             to={`/product/${order.product.title}`}
             underline="none"
