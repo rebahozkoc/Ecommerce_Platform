@@ -520,7 +520,7 @@ export default function PrimarySearchAppBar() {
               </Button>
             </Link>
           </Box>
-          {
+          {user_type == "PRODUCT_MANAGER" && (
             <Box
               sx={{
                 fontWeight: "bold",
@@ -546,8 +546,8 @@ export default function PrimarySearchAppBar() {
                 </Button>
               </Link>
             </Box>
-          }
-          {user_type == "SALES_MANAGER" && (
+          )}
+          {
             <Box
               sx={{
                 fontWeight: "bold",
@@ -556,7 +556,7 @@ export default function PrimarySearchAppBar() {
               }}
             >
               <Link
-                to="/Basket"
+                to="/salesManager"
                 style={{ textDecoration: "none", color: "black" }}
               >
                 <Button
@@ -573,7 +573,7 @@ export default function PrimarySearchAppBar() {
                 </Button>
               </Link>
             </Box>
-          )}
+          }
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <Button
