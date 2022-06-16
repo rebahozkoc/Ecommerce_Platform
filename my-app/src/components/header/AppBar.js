@@ -17,7 +17,8 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import SmallShopCard from "../card/smallShopCard/SmallShopCard";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { loggedState } from "../recoils/atoms";
+import { getCookie, loggedState } from "../recoils/atoms";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { nameState } from "../recoils/atoms";
 import {
   RecoilRoot,
@@ -28,6 +29,7 @@ import {
 } from "recoil";
 
 import { Link } from "react-router-dom";
+const user_type = getCookie("user_type");
 let c = [
   {
     key: 61,
@@ -392,6 +394,18 @@ export default function PrimarySearchAppBar() {
         </Link>
         <p>Basket</p>
       </MenuItem>
+      {user_type == "ADMIN" && (
+        <MenuItem>
+          <Link to="/Basket" style={{ textDecoration: "none", color: "black" }}>
+            <Button size="large" color="inherit">
+              <Badge color="primary">
+                <AdminPanelSettingsIcon />
+              </Badge>
+            </Button>
+          </Link>
+          <p>Admin Panel</p>
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -464,7 +478,7 @@ export default function PrimarySearchAppBar() {
             }}
           >
             <Link
-              to="/admin-panel"
+              to="/Dummy"
               style={{ textDecoration: "none", color: "black" }}
             >
               <Button
@@ -506,6 +520,60 @@ export default function PrimarySearchAppBar() {
               </Button>
             </Link>
           </Box>
+          {user_type == "PRODUCT_MANAGER" && (
+            <Box
+              sx={{
+                fontWeight: "bold",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Link
+                to="/admin-panel"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <Button
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                >
+                  <Badge color="primary">
+                    <AdminPanelSettingsIcon />
+                  </Badge>
+                  <Box sx={{ fontSize: 8 }}>
+                    <div>&nbsp;</div> Admin Panel
+                  </Box>
+                </Button>
+              </Link>
+            </Box>
+          )}
+          {
+            <Box
+              sx={{
+                fontWeight: "bold",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Link
+                to="/salesManager"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <Button
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                >
+                  <Badge color="primary">
+                    <AdminPanelSettingsIcon />
+                  </Badge>
+                  <Box sx={{ fontSize: 8 }}>
+                    <div>&nbsp;</div> Admin Panel
+                  </Box>
+                </Button>
+              </Link>
+            </Box>
+          }
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <Button

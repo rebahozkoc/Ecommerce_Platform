@@ -27,17 +27,16 @@ import {
   useRecoilValue,
 } from "recoil";
 
-const AdminPanelContainer = (props) => {
+const SalesManagerPanel = (props) => {
   const pageIndex = props.pageIndex;
 
   const navigate = useNavigate();
 
   const columnItems = [
-    ["Add Categories", "../addCategories"],
-    ["Delete Categories", "../deleteCategories"],
-    ["Add Products", "../addProducts"],
-    ["View Invoices", "../view_invoice"],
-    ["View Delivery", "../view_delivery"],
+    ["View Invoices", "../addCategories"],
+    ["Calculate Loss/Profit", "../deleteCategories"],
+    ["Refund Request", "../addProducts"],
+    ["Set a Discount", "../view_invoice"],
   ];
 
   const handleOnClickList = columnItems.map((item) => {
@@ -74,7 +73,7 @@ const AdminPanelContainer = (props) => {
                   }}
                 >
                   <Typography variant="h4" align="center" sx={{ p: 2 }}>
-                    Admin Panel
+                    Sales Manager Functions
                   </Typography>
 
                   <nav aria-label="category-items">
@@ -130,4 +129,4 @@ const AdminPanelContainer = (props) => {
   );
 };
 
-export default AdminPanelContainer;
+export default SalesManagerPanel;
