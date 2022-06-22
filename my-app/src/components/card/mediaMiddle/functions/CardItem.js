@@ -183,9 +183,6 @@ const CardItem = (props) => {
               </IconButton>
             </CardActions>
             <CardActions>
-              <IconButton aria-label="add to favorites" onClick={addFavourite}>
-                <FavoriteIcon />
-              </IconButton>
             </CardActions>
           </Stack>
         </Stack>
