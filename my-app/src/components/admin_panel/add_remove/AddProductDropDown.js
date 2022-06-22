@@ -4,7 +4,6 @@ import themeOptions from "../../style/theme";
 import { Typography, Menu, MenuItem, Button } from "@mui/material";
 export default function AddProductDropDown(props) {
   const dataList = props.dataList;
-
   const [buttonText, setButtonText] = React.useState(props.defaultValue);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -12,15 +11,14 @@ export default function AddProductDropDown(props) {
     handleClose();
     // Send the category name back to the parent component
     props.handleCategoryName(event.target.value);
-    
+
     // Change the visible text on the button
     for (let i = 0; i < dataList.length; i++) {
-        if (dataList[i].id === event.target.value) {
-            setButtonText(dataList[i].title);
-            break;
-        }
+      if (dataList[i].id === event.target.value) {
+        setButtonText(dataList[i].title);
+        break;
+      }
     }
-    
   };
 
   const handleClick = (event) => {
@@ -29,7 +27,6 @@ export default function AddProductDropDown(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log("dataList", props.dataList);
   return (
     <div>
       <Button
@@ -71,15 +68,15 @@ export default function AddProductDropDown(props) {
           horizontal: "right",
         }}
       >
-      {dataList.map((category, index) => {
-        return (
-          <div style={{ display: "block" }}>
-            <MenuItem onClick={handleSelect} value={category.id}>
-             {category.title}
-            </MenuItem>
-          </div>
-        );
-      })}
+        {dataList.map((category, index) => {
+          return (
+            <div style={{ display: "block" }}>
+              <MenuItem onClick={handleSelect} value={category.id}>
+                {category.title}
+              </MenuItem>
+            </div>
+          );
+        })}
       </Menu>
     </div>
   );

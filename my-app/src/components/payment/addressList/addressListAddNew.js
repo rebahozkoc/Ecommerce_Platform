@@ -144,6 +144,8 @@ const AddressListAddNew = (props) => {
               fullWidth
               autoComplete="shipping postal-code"
               variant="standard"
+              type="number"
+
             />
           </Grid>
           <Grid item xs={12} sm={6}>
