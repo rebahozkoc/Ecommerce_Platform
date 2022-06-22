@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/extension/string_extension.dart';
@@ -97,4 +98,16 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
           ),
         ),
       );
+
+  Observer _gridView() => Observer(builder: (_) {
+        return GridView.count(
+          crossAxisCount: 2,
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          childAspectRatio: 4 / 5,
+          crossAxisSpacing: 28,
+          mainAxisSpacing: 24,
+        );
+      });
 }
