@@ -307,7 +307,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem onClick={handleProfileMenuOpen}>
-        <Link to="/Dummy" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/update-favorites" style={{ textDecoration: "none", color: "black" }}>
           <Button
             size="large"
             aria-label="account of current user"
@@ -424,7 +424,7 @@ export default function PrimarySearchAppBar() {
             }}
           >
             <Link
-              to="/Dummy"
+              to="/update-favorites"
               style={{ textDecoration: "none", color: "black" }}
             >
               <Button
