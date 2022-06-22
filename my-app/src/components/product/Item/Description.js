@@ -323,6 +323,7 @@ const Description = (props) => {
                   name="price"
                   label="New Price"
                   variant="outlined"
+                  type="number"
                 />
 
                 <Button
@@ -401,6 +402,7 @@ const Description = (props) => {
                   name="discount"
                   label="New Discount"
                   variant="outlined"
+                  type="number"
                 />
 
                 <Button
