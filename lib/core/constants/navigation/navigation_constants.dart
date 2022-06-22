@@ -20,4 +20,5 @@ class NavigationConstants {
   static const LOGIN_REQUIRED = '/loginReq';
   static const COMMENTS = '/comments';
   static const ADD_COMMENT = '/addComments';
+  static const REGISTER = 'register';
 }

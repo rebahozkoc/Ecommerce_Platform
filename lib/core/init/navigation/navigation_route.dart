@@ -6,6 +6,7 @@ import 'package:mobile/core/widgets/bottombar_view.dart';
 import 'package:mobile/core/widgets/login_requreid_widget.dart';
 import 'package:mobile/view/address/view/change_address_view.dart';
 import 'package:mobile/view/auth/login/view/login_view.dart';
+import 'package:mobile/view/auth/register/view/register_view.dart';
 import 'package:mobile/view/categories/model/category_model.dart';
 import 'package:mobile/view/categories/view/category_view.dart';
 import 'package:mobile/view/comments/add_comments/view/add_comments_view.dart';
@@ -55,8 +56,7 @@ class NavigationRoute {
         return bottomToTopNavigate(
             const ChangeAddressView(), NavigationConstants.CHANGE_ADRESS);
       case NavigationConstants.COMMENTS:
-        return cupertinoNavigate(
-            CommentsView(productId: args.arguments as int),
+        return cupertinoNavigate(CommentsView(productId: args.arguments as int),
             NavigationConstants.COMMENTS);
       case NavigationConstants.ADD_COMMENT:
         return cupertinoNavigate(
@@ -69,6 +69,8 @@ class NavigationRoute {
         return bottomToTopNavigate(
             LoginRequired(message: args.arguments as String),
             NavigationConstants.LOGIN_REQUIRED);
+      case NavigationConstants.REGISTER:
+        return cupertinoNavigate(RegisterView(), NavigationConstants.REGISTER);
       default:
         return defaultNavigate(
             const BottomBarView(), NavigationConstants.DEFAULT);
