@@ -87,18 +87,10 @@ abstract class _RegisterViewModelBase with Store, BaseViewModel {
       fullName: _register.fullName,
       password: _register.password,
     );
-
-    if (_registerResponse.isSuccess ?? false) {
-      showToast(
-          context: context!,
-          message: "Register has been added",
-          isSuccess: true);
-      await NavigationService.instance.navigateToPage();
-    } else {
-      showToast(
-          context: context!,
-          message: "Register has not been added",
-          isSuccess: false);
-    }
+    showToast(
+        context: context!, message: "Register has been added", isSuccess: true);
+    await NavigationService.instance.navigateToPage(
+      path: NavigationConstants.LOGIN,
+    );
   }
 }
