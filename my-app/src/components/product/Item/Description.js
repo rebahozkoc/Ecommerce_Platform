@@ -22,11 +22,13 @@ const Description = (props) => {
   const [notZero, setnotzero] = React.useState(false);
   const [stock, setStock] = React.useState(props.stock);
   const [price, setPrice] = React.useState(props.cost);
+  const [discount, setDiscount] = React.useState(props.discount ?? 0);
   const removeHandler = () => {
     props.delete(props.id);
   };
 
   const decreaser = () => {
+    console.log(`props id is ${props.id}`);
     setoutStock(false);
     if (props.count === 0) {
       setnotzero(true);
@@ -56,20 +58,20 @@ const Description = (props) => {
           pt: 1,
           pb:
             props.description.length > 900
-              ? 70
+              ? 85
               : props.description.length > 750
-              ? 60
+              ? 70
               : props.description.length > 600
-              ? 50
+              ? 60
               : props.description.length > 500
-              ? 40
+              ? 50
               : props.description.length > 400
-              ? 30
+              ? 45
               : props.description.length > 300
-              ? 30
+              ? 40
               : props.description.length > 100
-              ? 20
-              : 5,
+              ? 30
+              : 15,
         }}
       >
         <Stack direction="column" spacing={2} sx={{ height: "60px" }}>
@@ -229,27 +231,65 @@ const Description = (props) => {
           </Stack>
 
           <Stack direction="row" spacing={1}>
-            <Stack direction="column" spacing={1}>
-              <Box sx={{ m: 0.4 }} />
+            {discount == 0 ? (
               <Typography
                 variant="body1"
                 color="text.secondary"
                 fontWeight="bold"
+                sx={{
+                  marginTop: 2,
+                }}
               >
                 Product Price: {price}$
               </Typography>
-            </Stack>
+            ) : (
+              <Stack direction="row">
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  fontWeight="bold"
+                  sx={{
+                    marginTop: 2,
+                  }}
+                >
+                  Product Price:
+                </Typography>
+                <div>&nbsp;</div>
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  fontWeight="bold"
+                  sx={{
+                    marginTop: 2,
+                    textDecoration: "line-through",
+                  }}
+                >
+                  {price}$
+                </Typography>
+                <div>&nbsp;</div>
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  fontWeight="bold"
+                  sx={{
+                    marginTop: 2,
+                  }}
+                >
+                  {price - (price * discount) / 100}$
+                </Typography>
+              </Stack>
+            )}
+
             {admin == "SALES_MANAGER" && (
               <Box
                 component="form"
                 sx={{
-                  "& > :not(style)": { width: "18ch", height: "4ch" },
+                  "& > :not(style)": { height: "4ch" },
                 }}
                 noValidate
                 onSubmit={async (e) => {
                   e.preventDefault();
                   const data = new FormData(e.currentTarget);
-
                   const newPrice = data.get("price");
 
                   let headersList = {
@@ -290,7 +330,8 @@ const Description = (props) => {
                   variant="contained"
                   sx={{
                     backgroundColor: "#ff6600",
-                    margin: (0, 1, 0, 1.2),
+                    marginLeft: 0.5,
+                    marginTop: 1.3,
                     padding: (8, 1, 8, 1),
                     justify: "flex-end",
                     align: "right",
@@ -301,7 +342,86 @@ const Description = (props) => {
               </Box>
             )}
           </Stack>
+          <Stack direction="row" spacing={1}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              fontWeight="bold"
+              sx={{
+                marginTop: 2,
+              }}
+            >
+              Discount Rate: {discount}%
+            </Typography>
+            {admin == "SALES_MANAGER" && (
+              <Box
+                component="form"
+                sx={{
+                  "& > :not(style)": { height: "4ch" },
+                }}
+                noValidate
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const data = new FormData(e.currentTarget);
+                  const newDiscount = data.get("discount");
 
+                  let headersList = {
+                    Accept: "*/*",
+                    Authorization: `Bearer ${access}`,
+                  };
+
+                  let reqOptions = {
+                    url: `http://164.92.208.145/api/v1/products/${props.id}/discount?discount=${newDiscount} `,
+                    method: "POST",
+                    headers: headersList,
+                  };
+                  axios
+                    .request(reqOptions)
+                    .then(function (response) {
+                      console.log(response.data);
+                      setDiscount(newDiscount);
+                    })
+                    .catch((res) => {
+                      console.log(res);
+                    });
+                }}
+                autoComplete="off"
+                direction="row"
+              >
+                <TextField
+                  sx={{
+                    "& > :not(style)": {
+                      m: 1,
+                      width: "15ch",
+                      height: "4ch",
+                      paddingBottom: 2,
+                    },
+                  }}
+                  id="discount"
+                  name="discount"
+                  label="New Discount"
+                  variant="outlined"
+                />
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#ff6600",
+                    marginLeft: 0.5,
+                    marginTop: 1.3,
+                    padding: (8, 1, 8, 1),
+                    justify: "flex-end",
+                    align: "right",
+                  }}
+                >
+                  <Typography sx={{ color: "black" }}>
+                    Change Discount
+                  </Typography>
+                </Button>
+              </Box>
+            )}
+          </Stack>
           <Typography variant="body1" color="text.secondary" fontWeight="bold">
             Total Price {(price * props.count).toFixed(2)}$
           </Typography>
