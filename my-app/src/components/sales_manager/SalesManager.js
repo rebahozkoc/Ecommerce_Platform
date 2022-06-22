@@ -35,7 +35,7 @@ const SalesManagerPanel = (props) => {
   const columnItems = [
     ["View Invoices", "../addCategories"],
     ["Calculate Loss/Profit", "../deleteCategories"],
-    ["Refund Request", "../addProducts"],
+    ["Refund Request", "../addProduct"],
     ["Set a Discount", "../view_invoice"],
   ];
 

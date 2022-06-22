@@ -27,7 +27,7 @@ export default function PaymentAddNew(props) {
     let bodyContent = JSON.stringify({
       payment_method: data2.get("paymentName"),
       card_name: data2.get("cardName"),
-      card_number: data2.get("cardNumber"),
+      cardnumber: data2.get("cardNumber"),
       CW: data2.get("cvv"),
       expiry_date: data2.get("expDate"),
     });
