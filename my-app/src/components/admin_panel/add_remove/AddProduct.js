@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "@mui/material/Link";
-import { Card, Typography, Box } from "@mui/material";
+import { Card, Typography, Box, Grid, TextField, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import AdminPanelContainer from "../AdminPanel";
 import axios from "axios";
@@ -15,6 +15,7 @@ const AddProduct = (props) => {
   const [isLoadedCategory, setIsLoadedCategory] = useState(false);
   const [categoryId, setCategoryId] = useState(-1);
   const [categoryName, setCategoryName] = useState("");
+
   // Get categories and fill the select category button
   const getDataCategory = async () => {
     const { data } = await axios({
@@ -57,8 +58,9 @@ const AddProduct = (props) => {
     setDataSubcategory(data.data.subcategories);
     setIsLoadedSubcategory(true);
   };
+
   useEffect(() => {
-    getDataSubcategory(categoryId);
+    categoryId != -1 && getDataSubcategory(categoryId);
   }, [categoryId]);
 
   // get the dropdown menu subcategory names
@@ -72,7 +74,16 @@ const AddProduct = (props) => {
         (subcategory) => subcategory.id === selectedSubcategoryId
       ).title
     );
+    console.log("catname:", categoryName);
     console.log("subname:", subcategoryName);
+  };
+
+  //Product added time to add image
+  const [productId, setProductId] = useState(-1);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const adderHandler = (id) => {
+    console.log("tuttmu");
+    setProductId(id);
   };
 
   const newProductWidget = (
@@ -90,6 +101,7 @@ const AddProduct = (props) => {
         }}
       >
         <AddProductDropDown
+          key={1}
           handleCategoryName={handleCategoryName}
           dataList={isLoadedCategory ? categoryList : []}
           defaultValue={"Select Category"}
@@ -98,6 +110,7 @@ const AddProduct = (props) => {
           <div></div>
         ) : (
           <AddProductDropDown
+            key={2}
             handleCategoryName={handleSubCategoryName}
             dataList={isLoadedSubcategory ? subcategoryList : []}
             defaultValue={"Select Subcategory"}
@@ -111,16 +124,79 @@ const AddProduct = (props) => {
             subcategoryId={subcategoryId}
             categoryName={categoryName}
             subcategoryName={subcategoryName}
+            adderHandler={(id) => {
+              console.log(id);
+              adderHandler(id);
+            }}
           ></AddProductForm>
         )}
       </Box>
     </Card>
   );
+  const addImage = (
+    <Card>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        noValidate
+      >
+        <Grid container justifyContent="center">
+          <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
+            Add Product Image
+          </Typography>
+          <Box sx={{ m: 1 }} />
+          {selectedImage && (
+            <div>
+              <img
+                alt="not fount"
+                width={"250px"}
+                src={URL.createObjectURL(selectedImage)}
+              />
+              <br />
+              <button onClick={() => setSelectedImage(null)}>Remove</button>
+            </div>
+          )}
+          <input
+            type="file"
+            name="myImage"
+            onChange={(event) => {
+              setSelectedImage(event.target.files[0]);
+            }}
+          />
+          <Box sx={{ m: 1 }} />
+        </Grid>
 
+        <Box
+          m={1}
+          //margin
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+        >
+          <Button
+            type="button"
+            variant="contained"
+            sx={{
+              backgroundColor: "#ff6600",
+              display: "block",
+              padding: (8, 1, 8, 1),
+              justify: "flex-end",
+              align: "right",
+            }}
+          >
+            <Typography sx={{ color: "black" }}>Add Image</Typography>
+          </Button>
+        </Box>
+      </Box>
+    </Card>
+  );
   return (
     <AdminPanelContainer
       pageIndex={2}
-      widget={newProductWidget}
+      widget={productId == -1 ? newProductWidget : addImage}
     ></AdminPanelContainer>
   );
 };

@@ -30,6 +30,7 @@ export default function AddProductDropDown(props) {
   return (
     <div>
       <Button
+        key={123123}
         id="sort-button"
         aria-controls={open ? "sort-menu" : undefined}
         aria-haspopup="true"
@@ -51,6 +52,7 @@ export default function AddProductDropDown(props) {
       </Button>
 
       <Menu
+        key="asda"
         id="sort-menu"
         anchorEl={anchorEl}
         open={open}
@@ -71,7 +73,11 @@ export default function AddProductDropDown(props) {
         {dataList.map((category, index) => {
           return (
             <div style={{ display: "block" }}>
-              <MenuItem onClick={handleSelect} value={category.id}>
+              <MenuItem
+                key={`${category.title} $index`}
+                onClick={handleSelect}
+                value={category.id}
+              >
                 {category.title}
               </MenuItem>
             </div>

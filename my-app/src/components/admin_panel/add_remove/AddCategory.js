@@ -19,44 +19,32 @@ const access = getCookie("access_token");
 const AddCategories = (props) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [value, setValue] = React.useState(3);
-  const addNewCategory = (event) => {
+  const addNewCategory = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const newCat = data.get("catName");
     const newCatImage = data.get("myImage");
-    var binaryBlob;
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      //console.log("Encoded Base 64 File String:", reader.result);
-
-      /******************* for Binary ***********************/
-      var data = reader.result.split(",")[1];
-      binaryBlob = atob(data);
-      console.log("Encoded Binary File String:", binaryBlob);
-      //console.log(newCatImage);
-    };
-    reader.readAsDataURL(newCatImage);
 
     let headersList = {
-      Accept: "*/*",
       Authorization: `Bearer ${access}`,
-      "Content-Type": "image/jpeg",
+      "Content-Type": "multipart/form-data",
     };
-    let bodyContent = binaryBlob;
-    let reqOptions = {
-      url: `http://164.92.208.145/api/v1/categories/?title=${newCat}&order_id=0`,
-      method: "POST",
-      headers: headersList,
-      data: bodyContent,
-    };
+    let bodyContent = newCatImage;
 
-    axios
-      .request(reqOptions)
-      .then(function (response) {
-        console.log(response.data);
+    await axios
+      .post(
+        `http://164.92.208.145/api/v1/categories/?title=${newCat}&order_id=0`,
+        bodyContent,
+        {
+          headers: headersList,
+        }
+      )
+      .then((response) => {
+        console.log("response", response);
+        //props.adderHandler(response.data.data.id);
       })
-      .catch((res) => {
-        console.log(res);
+      .catch((err) => {
+        console.log(err);
       });
   };
   const newCategoryWidget = (

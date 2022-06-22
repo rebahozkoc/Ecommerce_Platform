@@ -84,6 +84,29 @@ const Product = () => {
       count--;
     }
   };
+  ///api/v1/products/{product_id}
+  const deleteProduct = async () => {
+    let headersList = {
+      Authorization: `Bearer ${access}`,
+      "Content-Type": "application/json",
+    };
+
+    await axios
+      .delete(
+        `http://164.92.208.145/api/v1/products/${productId}`,
+
+        {
+          headers: headersList,
+        }
+      )
+      .then((response) => {
+        console.log("response", response);
+        console.log("succesfulll");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     if (isLogged) {
@@ -234,6 +257,7 @@ const Product = () => {
               setChecker(true);
               addBasket(itemTemp.id);
             }}
+            delete={deleteProduct}
           ></Description>
         </Stack>
 
