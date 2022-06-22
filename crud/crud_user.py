@@ -95,7 +95,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                     detail={"message": f"User does not exists"})
                     #it may be a bad idea to put an exeption here since it would stop the discount in its tracks
-        utilities.sendMail.send_mail(current_user.email, subject, message)
+        #utilities.sendMail.send_mail(current_user.email, subject, message)
         return Response(message="Mail sent successfully.")
 
 
