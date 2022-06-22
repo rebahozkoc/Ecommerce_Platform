@@ -16,14 +16,31 @@ const UpdateFavoritesPage = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [dynamicData, setDynamicData] = useState([]);
     useEffect(() => {
-      getData(`http://164.92.208.145/api/v1/products/?query=masa`).then(
+      const tempPrdouctData = [];
+
+      getData(`http://164.92.208.145/api/v1/users/favorites?skip=0&limit=100`).then(
         (res) => {
-          console.log(res.data);
-          setDynamicData(res.data);
-          setIsLoaded(true);
+          console.log("resposensss", res);
+          // for every item id in the response, get the product data from the database and then add it to the dynamicData array
+          for (var i = 0; i < res.data.length; i++) {
+            console.log("iddddd", res.data[i].id);
+            getData(`http://164.92.208.145/api/v1/products/${res.data[i].id}`).then(
+              (res2) => {
+                tempPrdouctData.push(res2.data);
+              }
+            );
+          }; 
         }
-      );
-    }, [isLoaded]);
+        ).then(
+          () => {
+            console.log("dynamicData setted", dynamicData);
+            setDynamicData(tempPrdouctData);
+            setIsLoaded(true);
+          }
+        )
+      ;
+
+    }, []);
 
     //const favouritesWidget = 
   
@@ -41,8 +58,6 @@ const UpdateFavoritesPage = () => {
             </Typography>
           </Box>
         )}>
-
-
         </ProfilePageContainer>
     )
 };
