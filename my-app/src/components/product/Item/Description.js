@@ -14,6 +14,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { getCookie } from "../../recoils/atoms";
 import axios from "axios";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const admin = getCookie("user_type");
 const access = getCookie("access_token");
@@ -76,8 +77,21 @@ const Description = (props) => {
       >
         <Stack direction="column" spacing={2} sx={{ height: "60px" }}>
           <Stack direction="column" spacing={1}>
-            <Typography variant="body1">{props.title}</Typography>
+            <Stack direction="row">
+              <Typography variant="body1">{props.title}</Typography>
+
+              {admin == "PRODUCT_MANAGER" && (
+                <DeleteIcon
+                  sx={{ marginLeft: 40 }}
+                  onClick={() => {
+                    console.log("hellooo there");
+                    removeHandler();
+                  }}
+                />
+              )}
+            </Stack>
             <Divider />
+
             <Typography variant="body2">{props.description}</Typography>
 
             <Stack direction="row" spacing={1}>
