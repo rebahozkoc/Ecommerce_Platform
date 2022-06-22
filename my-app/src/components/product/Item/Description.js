@@ -13,9 +13,10 @@ import { Link } from "react-router-dom";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { getCookie } from "../../recoils/atoms";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
 const admin = getCookie("user_type");
 const access = getCookie("access_token");
 const Description = (props) => {
@@ -29,7 +30,8 @@ const Description = (props) => {
   };
 
   const decreaser = () => {
-    console.log(`props id is ${props.id}`);
+    console.log(`props id is ${parseInt(props.id)})`);
+    console.log(props.id);
     setoutStock(false);
     if (props.count === 0) {
       setnotzero(true);
@@ -45,7 +47,28 @@ const Description = (props) => {
       props.inc();
     }
   };
+  const addFavourite = async () => {
+    let headersList = {
+      Accept: "*/*",
+      Authorization: `Bearer ${access}`,
+      "Content-Type": "application/json",
+    };
 
+    let bodyContent = JSON.stringify({
+      product_id: props.id,
+    });
+
+    let reqOptions = {
+      url: "http://164.92.208.145/api/v1/users/favorites",
+      method: "POST",
+      headers: headersList,
+      data: bodyContent,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+  };
   React.useEffect(() => {}, [outStock, notZero]);
   return (
     <ThemeProvider theme={themeOptions}>
@@ -77,17 +100,20 @@ const Description = (props) => {
       >
         <Stack direction="column" spacing={2} sx={{ height: "60px" }}>
           <Stack direction="column" spacing={1}>
-            <Stack direction="row">
+            <Stack direction="row" justifyContent="space-evenly">
               <Typography variant="body1">{props.title}</Typography>
-
+              <IconButton aria-label="add to favorites" onClick={addFavourite}>
+                <FavoriteIcon />
+              </IconButton>
               {admin == "PRODUCT_MANAGER" && (
-                <DeleteIcon
-                  sx={{ marginLeft: 40 }}
+                <IconButton
                   onClick={() => {
                     console.log("hellooo there");
                     removeHandler();
                   }}
-                />
+                >
+                  <DeleteIcon />
+                </IconButton>
               )}
             </Stack>
             <Divider />
@@ -439,7 +465,8 @@ const Description = (props) => {
             )}
           </Stack>
           <Typography variant="body1" color="text.secondary" fontWeight="bold">
-            Total Price {(price * props.count).toFixed(2)}$
+            Total Price:{" "}
+            {(price - (price * discount) / 100) * props.count.toFixed(2)}$
           </Typography>
           <CardActions>
             <Button
