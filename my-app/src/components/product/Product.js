@@ -89,7 +89,7 @@ const Product = () => {
     if (isLogged) {
       getData(`http://164.92.208.145/api/v1/users/shopping_cart`)
         .then((res) => {
-          //console.log(res.data);
+          console.log(res.data);
           setProducts(res.data);
           setLoaded3(true);
         })
@@ -113,6 +113,7 @@ const Product = () => {
           console.log(err);
         });
       setProduct(res.data);
+      console.log(res.data);
     });
   }, []);
 
@@ -228,6 +229,7 @@ const Product = () => {
             dec={decCard}
             inc={incCard}
             model={itemTemp.model}
+            discount={itemTemp.discount}
             clickHandler={() => {
               setChecker(true);
               addBasket(itemTemp.id);
