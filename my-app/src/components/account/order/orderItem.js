@@ -13,7 +13,7 @@ const OrderItem = (props) => {
   var totalPrice = 0;
   for (var i = 0; i < order.order_details.length; i++) {
     totalPrice +=
-      order.order_details[i].product.price * order.order_details[i].quantity;
+      order.order_details[i].price * order.order_details[i].quantity;
   }
 
   return (
