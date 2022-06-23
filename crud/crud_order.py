@@ -39,9 +39,9 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         files = [return_URL.replace("html", "html")]
         content = "Hello Dear user, \n This is an invoice for your recent purchase. \n Thank you for your business."
 
-        #utilities.sendMail.send_mail(
-        #    usermail, "Your Invoice from Voidture Inc.", content, files
-        #)
+        utilities.sendMail.send_mail(
+            usermail, "Your Invoice from Voidture Inc.", content, files
+        )
 
         new_order = models.Order(
             user_id=current_user.id,
