@@ -15,12 +15,7 @@ class CreditBase(BaseModel):
     CW: str
     expiry_date: str
 
-    @validator("cardnumber")
-    def hash_credit_number(cls, pw: str) -> str:
-        decoded = Hash.decode(pw)
-        str_index = int(len(decoded) / 4)
-        showen_part = decoded[:str_index] + ((len(decoded) - str_index) * "*")
-        return showen_part
+   
 
     class Config:
         extra = Extra.allow
@@ -28,9 +23,7 @@ class CreditBase(BaseModel):
 
 
 class CreditCreate(CreditBase):
-    @validator("cardnumber")
-    def hash_credit_number(cls, pw: str) -> str:
-        return Hash.encode(pw)
+    pass
 
 
 class CreditUpdate(CreditBase):

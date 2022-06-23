@@ -32,3 +32,6 @@ class OrderShoppingCart(BaseModel):
 
     class Config:
         extra = Extra.allow
+
+class OrderList(BaseModel):
+    data: List[Order]

@@ -40,6 +40,26 @@ async def previous_orders(
 
     return Response(data=data)
 
+@router.get("/all_orders",  response_model=Response[List[schemas.Order]])
+async def previous_orders(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    Get all previous orders, regardless of current_user, only non-customers can use this endpoint
+    """
+    if current_user.user_type == UserType.CUSTOMER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message":"Only sales managers and product managers can see all orders"},
+        )
+    data = crud.order.get_multi_all(db=db, skip=skip, limit=limit)
+
+    return Response(data=data)
+
+
 @router.post("/orders/refund", response_model=Response)
 async def refund_order_request(
     refund: schemas.RefundCreate,
@@ -114,3 +134,19 @@ async def update_order_status_(
     crud.order.update_order_status(id=order_id, order_status=order_status, db=db)
     #return a success response
     return Response(message="Successfully updated the order request")
+
+@router.get("/orders/get_all_invoices", response_model=Response)
+async def get_all_invoices(
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    sends the current user a mail containşng a html file that contains all the orders ever and the total revanue gathered from them
+    """
+    if current_user.user_type == UserType.CUSTOMER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message":"Only product managers and sales managesr can view all orders"},
+        )
+    crud.order.create_invoice_list_of_all_time(db=db, current_user=current_user)
+    return Response(message="sent email about all orders to the current user")
