@@ -34,7 +34,7 @@ export default function OrderMiniItem(props) {
       orderitem_id: product.id,
     };
     await axios
-      .post(`http://164.92.208.145//api/v1/users/orders/refund`, bodyContent, {
+      .post(`http://164.92.208.145/api/v1/users/orders/refund`, bodyContent, {
         headers: headersList,
       })
       .then((response) => {
@@ -54,7 +54,7 @@ export default function OrderMiniItem(props) {
       status: true,
     };
     await axios
-      .patch(
+      .post(
         `http://164.92.208.145/api/v1/users/orders/refund/status/{id}?orderItemId=${product.id}`,
         bodyContent,
         {
@@ -98,7 +98,7 @@ export default function OrderMiniItem(props) {
         height={64}
         alt={"Voidture not Found"}
       />
-      <Typography variant="body1" color="text.primary">
+      <Typography variant="body1" color="text.primary" fontSize={10}>
         {product.product.title}
       </Typography>
       <Typography variant="body2" color="text.secondary">
@@ -119,6 +119,7 @@ export default function OrderMiniItem(props) {
                 style={{ fontSize: 25 }}
               />
               {orderState}
+              <div>&nbsp;</div>
             </Stack>
           );
         } else if (orderState === "In-transit") {
@@ -129,6 +130,7 @@ export default function OrderMiniItem(props) {
                 style={{ fontSize: 25 }}
               />
               {orderState}
+              <div>&nbsp;</div>
             </Stack>
           );
         } else if (orderState === "Delivered") {
@@ -139,6 +141,7 @@ export default function OrderMiniItem(props) {
                 style={{ fontSize: 25 }}
               />
               {orderState}
+              <div>&nbsp;</div>
             </Stack>
           );
         } else {
@@ -149,14 +152,17 @@ export default function OrderMiniItem(props) {
                 style={{ fontSize: 25 }}
               />
               {orderState}
+              <div>&nbsp;</div>
             </Stack>
           );
         }
       })()}
-
-      <Typography variant="h6" style={{ fontWeight: 600 }}>
-        $ {product.product.price * product.quantity}{" "}
-      </Typography>
+      <Stack direction="row" gap={1}>
+        <Typography variant="h6" style={{ fontWeight: 600 }}>
+          {`  ${product.product.price * product.quantity}`}$
+        </Typography>
+        <div>&nbsp;</div>
+      </Stack>
       {user_type == "PRODUCT_MANAGER" ? (
         product.order_status != "REFUNDED" ? (
           <DeliveryChangeDropDown
@@ -171,20 +177,16 @@ export default function OrderMiniItem(props) {
             Done
           </Typography>
         )
+      ) : product.order_status == "REFUNDED" ? (
+        <Typography />
       ) : user_type == "SALES_MANAGER" ? (
-        props.status == false && product.order_status != "REFUNDED" ? (
+        props.isRefund == true ? (
           <IconButton onClick={acceptRefund}>
             <DoneIcon />
           </IconButton>
         ) : (
-          <Typography variant="h6" style={{ fontWeight: 600 }}>
-            Accepted
-          </Typography>
+          <Typography />
         )
-      ) : product.order_status == "REFUNDED" ? (
-        <Typography variant="h6" style={{ fontWeight: 600 }}>
-          Accepted
-        </Typography>
       ) : (
         <Button onClick={makeRefund}>Make Refund</Button>
       )}
