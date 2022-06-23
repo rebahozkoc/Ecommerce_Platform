@@ -20,6 +20,7 @@ class OrderItem(BaseModel):
 class Order(BaseModel):
     address: AddressBase
     credit: CreditBase
+    created_at: datetime
     order_details: List[OrderItem]
 
     class Config:
