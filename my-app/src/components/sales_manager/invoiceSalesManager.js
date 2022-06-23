@@ -35,7 +35,7 @@ const InvoiceSalesManager = (props) => {
   useEffect(() => {
     if (startDate !== "" && endDate !== "") {
       getData(
-        `http://164.92.208.145/api/v1/users/orders/get_all_invoices?start=${startDate}&end=${endDate}`
+        `http://164.92.208.145/api/v1/users/all_orders?skip=0&limit=100`
       )
         .then((res) => {
           console.log("Order response", res.data);
@@ -105,7 +105,7 @@ const InvoiceSalesManager = (props) => {
       </Typography>
       {isLoaded ? (
         <Stack direction="column">
-          {orderList.data.map((order, index) => {
+          {orderList.map((order, index) => {
             return (
               <div style={{ display: "block" }}>
                 <OrderItem key={index} data={order}></OrderItem>
