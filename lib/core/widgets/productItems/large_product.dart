@@ -50,7 +50,7 @@ class LargeProduct extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _favoriteButton(),
+              _favoriteButton(context),
               const SizedBox(height: 12),
               _shoppingCartButton(context),
             ],
@@ -75,18 +75,36 @@ class LargeProduct extends StatelessWidget {
     );
   }
 
-  InkWell _favoriteButton() => InkWell(
+  InkWell _favoriteButton(BuildContext context) => InkWell(
         onTap: (() async {
+          bool isAdded = false;
           FavoritesResponseModel _favoritesResponseModel;
           FavoritesRepository _favoritesRepository =
               locator<FavoritesRepository>();
           _favoritesResponseModel = await _favoritesRepository.getFavorites();
           for (var data in _favoritesResponseModel.data!) {
-            debugPrint(data.toString());
+            if (data.productId == product?.id) {
+              isAdded = true;
+              break;
+            }
           }
-          _favoritesRepository.deleteFavorite(
-            productId: product!.id,
-          );
+          if (isAdded) {
+            _favoritesRepository.deleteFavorite(
+              productId: product!.id,
+            );
+            showToast(
+                message: "Item removed from favorites",
+                isSuccess: false,
+                context: context);
+          } else {
+            _favoritesRepository.setFavorite(
+              productId: product!.id,
+            );
+            showToast(
+                message: "Item added to favorites",
+                isSuccess: true,
+                context: context);
+          }
         }),
         child: Container(
           height: 28,

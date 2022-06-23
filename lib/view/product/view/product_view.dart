@@ -8,6 +8,7 @@ import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/productItems/product_page_product.dart';
 import 'package:mobile/view/comments/view/comments_view.dart';
+import 'package:mobile/view/favorites/model/favorites_model.dart';
 import 'package:mobile/view/favorites/repository/favorites_repository.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/product/model/product_model.dart';
@@ -18,13 +19,13 @@ import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
 class ProductView extends StatefulWidget {
   final ProductModel product;
   const ProductView({Key? key, required this.product}) : super(key: key);
-
   @override
   State<ProductView> createState() => _ProductViewState();
 }
 
 class _ProductViewState extends BaseState<ProductView> {
   late ProductViewModel viewModel;
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -34,6 +35,16 @@ class _ProductViewState extends BaseState<ProductView> {
           model.init();
           viewModel = model;
           viewModel.product = widget.product;
+          FavoritesResponseModel _favoritesResponseModel;
+          FavoritesRepository _favoritesRepository =
+              locator<FavoritesRepository>();
+          _favoritesResponseModel = await _favoritesRepository.getFavorites();
+          for (var data in _favoritesResponseModel.data!) {
+            if (data.productId == viewModel.product.id) {
+              isFavorite = true;
+              break;
+            }
+          }
         },
         onPageBuilder: (context, value) {
           return Scaffold(
@@ -133,19 +144,41 @@ class _ProductViewState extends BaseState<ProductView> {
         onPressed: () async {
           FavoritesRepository _favoritesRepository =
               locator<FavoritesRepository>();
-          await _favoritesRepository.setFavorite(
-            productId: viewModel.product.id,
-          );
-          showToast(message: "Item added to favorites", isSuccess: true, context: context);
+          if (isFavorite) {
+            _favoritesRepository.deleteFavorite(
+              productId: viewModel.product.id,
+            );
+            showToast(
+                message: "Item removed from favorites",
+                isSuccess: false,
+                context: context);
+          } else {
+            await _favoritesRepository.setFavorite(
+              productId: viewModel.product.id,
+            );
+            showToast(
+                message: "Item added to favorites",
+                isSuccess: true,
+                context: context);
+          }
         },
-        child: const Text(
-          "Add To Favorites",
-          style: TextStyle(
-            color: AppColors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        child: isFavorite
+            ? const Text(
+                "Add To Favorites",
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              )
+            : const Text(
+                "Remove From Favorites",
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
         style: OutlinedButton.styleFrom(
             primary: AppColors.primary,
             fixedSize: const Size(150, 50),
