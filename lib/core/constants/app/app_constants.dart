@@ -35,4 +35,6 @@ class ApplicationConstants {
 
   static const PRODUCT_ID = 12;
 
+  static const FAVORITES_LIMIT = 100;
+  static const FAVORITES_SKIP = 0;
 }

@@ -31,4 +31,6 @@ class PathConstants {
 
   // REGISTER
   static const REGISTER = _URL + 'api/v1/auth/registration';
+  // FAVORITES
+  static const FAVORITES = _URL + 'api/v1/users/favorites';
 }

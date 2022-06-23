@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/extension/string_extension.dart';
@@ -30,7 +31,7 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
       },
       onPageBuilder: (context, value) {
         return FutureBuilder(
-            future: viewModel.load(),
+            future: viewModel.getData(),
             builder: ((context, snapshot) => snapshot.hasData
                 ? Scaffold(
                     appBar: _appBar(),
@@ -61,8 +62,8 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
               },
             );
           },
-          child: SingleChildScrollView(
-            child: Column(
+          child: ListView(children: [
+            Column(
               children: [
                 const SearchButtonWidget(),
                 GridView.count(
@@ -73,28 +74,25 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
                   mainAxisSpacing: 16,
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
-                  children: const [
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                    LargeProduct(),
-                  ],
+                  children: viewModel.products
+                      .map((product) => LargeProduct(product: product))
+                      .toList(),
                 ),
               ],
             ),
-          ),
+          ]),
         ),
       );
+
+  Observer _gridView() => Observer(builder: (_) {
+        return GridView.count(
+          crossAxisCount: 2,
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          childAspectRatio: 4 / 5,
+          crossAxisSpacing: 28,
+          mainAxisSpacing: 24,
+        );
+      });
 }

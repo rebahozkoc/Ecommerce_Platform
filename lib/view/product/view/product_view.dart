@@ -7,6 +7,9 @@ import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/productItems/product_page_product.dart';
+import 'package:mobile/view/comments/view/comments_view.dart';
+import 'package:mobile/view/favorites/repository/favorites_repository.dart';
+import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 import 'package:mobile/view/shopList/model/shoplist_model.dart';
@@ -127,8 +130,13 @@ class _ProductViewState extends BaseState<ProductView> {
       );
 
   OutlinedButton addToFavorites() => OutlinedButton(
-        onPressed: () {
-          debugPrint("Favorite Button Clicked...");
+        onPressed: () async {
+          FavoritesRepository _favoritesRepository =
+              locator<FavoritesRepository>();
+          await _favoritesRepository.setFavorite(
+            productId: viewModel.product.id,
+          );
+          showToast(message: "Item added to favorites", isSuccess: true, context: context);
         },
         child: const Text(
           "Add To Favorites",
