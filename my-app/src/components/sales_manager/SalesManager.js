@@ -37,8 +37,7 @@ const SalesManagerPanel = (props) => {
   const columnItems = [
     ["View Invoices", "../addCategories"],
     ["Calculate Loss/Profit", "../deleteCategories"],
-    ["Refund Request", "../addProduct"],
-    ["Set a Discount", "../view_invoice"],
+    ["Refund Request", "../refund"],
   ];
 
   const handleOnClickList = columnItems.map((item) => {
