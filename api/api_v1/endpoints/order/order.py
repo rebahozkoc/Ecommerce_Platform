@@ -5,6 +5,8 @@ from models.user import UserType
 import crud, models, schemas
 from schemas import Response
 from typing import List
+from datetime import date
+
 
 router = APIRouter()
 
@@ -40,7 +42,8 @@ async def previous_orders(
 
     return Response(data=data)
 
-@router.get("/all_orders",  response_model=Response[List[schemas.Order]])
+
+@router.get("/all_orders", response_model=Response[List[schemas.Order]])
 async def previous_orders(
     skip: int = 0,
     limit: int = 100,
@@ -53,7 +56,9 @@ async def previous_orders(
     if current_user.user_type == UserType.CUSTOMER:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"message":"Only sales managers and product managers can see all orders"},
+            detail={
+                "message": "Only sales managers and product managers can see all orders"
+            },
         )
     data = crud.order.get_multi_all(db=db, skip=skip, limit=limit)
 
@@ -73,6 +78,7 @@ async def refund_order_request(
     orderitem = crud.order.create_refund_request(db, refund)
     return Response(message="Successfully sent the refund request")
 
+
 @router.get("/orders/refunds", response_model=Response[List[schemas.RefundRequestBase]])
 async def refund_requests(
     db: Session = Depends(deps.get_db),
@@ -84,10 +90,11 @@ async def refund_requests(
     if current_user.user_type != UserType.SALES_MANAGER:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"message":"Only sales managers can see refund requests"},
+            detail={"message": "Only sales managers can see refund requests"},
         )
     refund_requests = crud.order.get_refund_requests(db)
     return Response(data=refund_requests)
+
 
 @router.post("/orders/refund/status/{id}", response_model=Response)
 async def change_order_request(
@@ -102,10 +109,11 @@ async def change_order_request(
     if current_user.user_type != UserType.SALES_MANAGER:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"message":"Only sales managers can update refund request"},
+            detail={"message": "Only sales managers can update refund request"},
         )
     crud.order.change_refund_status(db, orderItemId, refund_request.status)
     return Response(message="Successfully sent the refund request")
+
 
 @router.patch("/orders/change_status", response_model=Response)
 async def update_order_status_(
@@ -123,20 +131,29 @@ async def update_order_status_(
     if current_user.user_type != UserType.PRODUCT_MANAGER:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"message":"Only product managers can update order stats"},
+            detail={"message": "Only product managers can update order stats"},
         )
-    if order_status != "PROCESSING" and order_status != "INTRANSIT" and order_status != "DELIVERED":
+    if (
+        order_status != "PROCESSING"
+        and order_status != "INTRANSIT"
+        and order_status != "DELIVERED"
+    ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"message":"PROCESSING INTRANSIT DELIVERED are the only accepted statuses"},
+            detail={
+                "message": "PROCESSING INTRANSIT DELIVERED are the only accepted statuses"
+            },
         )
-    #update the order by using the update_order_status function
+    # update the order by using the update_order_status function
     crud.order.update_order_status(id=order_id, order_status=order_status, db=db)
-    #return a success response
+    # return a success response
     return Response(message="Successfully updated the order request")
 
-@router.get("/orders/get_all_invoices", response_model=Response)
+
+@router.get("/orders/get_all_invoices", response_model=Response[schemas.order.OrderList])
 async def get_all_invoices(
+    start: date,
+    end: date,
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user),
 ):
@@ -146,7 +163,11 @@ async def get_all_invoices(
     if current_user.user_type == UserType.CUSTOMER:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"message":"Only product managers and sales managesr can view all orders"},
+            detail={
+                "message": "Only product managers and sales managesr can view all orders"
+            },
         )
-    crud.order.create_invoice_list_of_all_time(db=db, current_user=current_user)
-    return Response(message="sent email about all orders to the current user")
+    item_list_schema = crud.order.create_invoice_list_of_all_time(
+        db=db, current_user=current_user, start=start, end=end
+    )
+    return Response(data=item_list_schema, message="sent email about all orders to the current user")

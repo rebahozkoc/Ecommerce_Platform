@@ -9,7 +9,7 @@ from utilities.gen_invoice import gen_invoice
 from utilities.gen_invoice_list import gen_invoice_list
 import utilities.sendMail
 import utilities.gen_invoice
-
+import datetime
 
 class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
     def create_order(
@@ -79,13 +79,20 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
             .limit(limit)
             .all()
         )
-    
-    def get_multi_all(self, db: Session, *, skip: int = 0, limit: int = 100
+
+    def get_multi_all(
+        self, db: Session, *, skip: int = 0, limit: int = 100
     ) -> List[Order]:
+        return db.query(Order).offset(skip).limit(limit).all()
+
+    def get_with_date(
+        self, db: Session, *, start: datetime.datetime, end: datetime.datetime, user_id: int
+    ):
         return (
             db.query(Order)
-            .offset(skip)
-            .limit(limit)
+            .filter(Order.user_id == user_id)
+            .filter(Order.created_at >= start)
+            .filter(Order.created_at <= end)
             .all()
         )
 
@@ -115,24 +122,32 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
 
     def get_refund_requests(self, db: Session):
         return db.query(RefundOrder).all()
-    
+
     def update_order_status(self, db: Session, id: int, order_status: str):
         order = db.query(OrderItem).filter(OrderItem.id == id).first()
-        #check if order_status is valid
+        # check if order_status is valid
         order.order_status = order_status
         db.add(order)
         db.commit()
         db.refresh(order)
-    def create_invoice_list_of_all_time(self, db: Session, current_user: User,):
+
+    def create_invoice_list_of_all_time(
+        self,
+        db: Session,
+        current_user: User,
+        start: datetime.datetime, end = datetime.datetime,
+    ):
         usermail = current_user.email
         username = usermail.split("@")[0]
 
         # Create the invoice pdf
-        order_list = crud.order.get_multi_all(db=db)
+        order_list = crud.order.get_with_date(
+            db=db, user_id=current_user.id, start=start, end=end
+        )
 
-        item_list = schemas.order.OrderList(data=order_list)
-        item_list = item_list.dict()
-       
+        item_list_schema = schemas.order.OrderList(data=order_list)
+        item_list = item_list_schema.dict()
+
         return_URL = gen_invoice_list(item_list, username)
 
         css = "example.css"
@@ -144,5 +159,7 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         utilities.sendMail.send_mail(
             usermail, "Your Invoice from Voidture Inc.", content, files
         )
+        return item_list_schema
+
 
 order = CRUDOrder(Order)
