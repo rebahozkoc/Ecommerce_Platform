@@ -43,6 +43,7 @@ class CommentModel {
     content = json['content'];
     user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
     rate = json['rate'];
+    isActive = json['is_active'];
   }
 
   Map<String, dynamic> toJson() {

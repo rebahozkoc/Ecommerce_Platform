@@ -89,7 +89,7 @@ class TrackProductBig extends StatelessWidget {
       ),
       collapsed: const Text(""),
       expanded: _status(_orderDetails.product?.id, _orderDetails.price,
-          _orderDetails.orderStatus!),
+          _orderDetails.orderStatus!, _orderDetails.quantity.toString()),
     );
   }
 
@@ -108,7 +108,26 @@ class TrackProductBig extends StatelessWidget {
     );
   }
 
-  InkWell _status(int? _id, double? _price, String status) {
+  OutlinedButton _refundButton() {
+    return OutlinedButton(
+      onPressed: () {},
+      child: const Text(
+        "Refund",
+        style: TextStyle(
+          color: AppColors.primaryLight,
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      style: OutlinedButton.styleFrom(
+          backgroundColor: AppColors.white,
+          primary: AppColors.primary,
+          fixedSize: const Size(100, 30),
+          side: const BorderSide(width: 1.0, color: AppColors.darkGray)),
+    );
+  }
+
+  InkWell _status(int? _id, double? _price, String status, String quantity) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -123,16 +142,23 @@ class TrackProductBig extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Order-ID: $_id",
                       style: const TextStyle(
                         color: AppColors.black,
                         fontWeight: FontWeight.w700,
+                      )),
+                  Text("Quantitiy: $quantity",
+                      style: const TextStyle(
+                        color: AppColors.darkGray,
+                        fontWeight: FontWeight.w600,
                       ))
                 ],
               ),
               const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (status == "PROCESSING")
                     RichText(
@@ -144,7 +170,7 @@ class TrackProductBig extends StatelessWidget {
                           TextSpan(
                               text: " PROCESSING",
                               style: TextStyle(
-                                  color: AppColors.primaryLight, fontSize: 24))
+                                  color: AppColors.primaryLight, fontSize: 24)),
                         ],
                       ),
                     ),
@@ -185,11 +211,12 @@ class TrackProductBig extends StatelessWidget {
                                   color: Colors.indigoAccent, size: 24)),
                           TextSpan(
                               text: " REFUNDED",
-                              style:
-                                  TextStyle(color: Colors.indigoAccent, fontSize: 24))
+                              style: TextStyle(
+                                  color: Colors.indigoAccent, fontSize: 24))
                         ],
                       ),
                     ),
+                  if (status != "REFUNDED") _refundButton(),
                 ],
               ),
               const SizedBox(height: 10),
@@ -202,6 +229,21 @@ class TrackProductBig extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    order.address?.personalName ?? "",
+                    style: TextStyle(
+                        color: AppColors.black, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    order.address?.phoneNumber ?? "",
+                    style: TextStyle(
+                        color: AppColors.black, fontWeight: FontWeight.w400),
                   ),
                 ],
               ),
@@ -245,7 +287,41 @@ class TrackProductBig extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Text(
+                    "Payment Method: ${order.credit?.paymentMethod}",
+                    style: const TextStyle(
+                      color: AppColors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Card information: ${order.credit?.cardNumber ?? "**** **** **** ****"}",
+                    style: const TextStyle(
+                      color: AppColors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    order.credit?.cardName ?? "",
+                    style: const TextStyle(
+                      color: AppColors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
