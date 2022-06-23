@@ -24,17 +24,18 @@ const AddCategories = (props) => {
     const data = new FormData(event.currentTarget);
     const newCat = data.get("catName");
     const newCatImage = data.get("myImage");
-
+    console.log(newCatImage);
     let headersList = {
       Authorization: `Bearer ${access}`,
       "Content-Type": "multipart/form-data",
     };
-    let bodyContent = newCatImage;
+    var formData = new FormData();
+    formData.append("image", newCatImage);
 
     await axios
       .post(
         `http://164.92.208.145/api/v1/categories/?title=${newCat}&order_id=0`,
-        bodyContent,
+        formData,
         {
           headers: headersList,
         }

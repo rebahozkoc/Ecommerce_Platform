@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "@mui/material/Link";
 import { Card, Typography, Box, Grid, TextField, Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import AdminPanelContainer from "../AdminPanel";
 import axios from "axios";
 import { getCookie } from "../../recoils/atoms";
@@ -81,9 +81,36 @@ const AddProduct = (props) => {
   //Product added time to add image
   const [productId, setProductId] = useState(-1);
   const [selectedImage, setSelectedImage] = useState(null);
+
   const adderHandler = (id) => {
     console.log("tuttmu");
     setProductId(id);
+  };
+
+  const addImageHandler = async () => {
+    //console.log(selectedImage);
+    console.log(productId);
+    let headersList = {
+      Authorization: `Bearer ${access}`,
+      "Content-Type": "multipart/form-data",
+    };
+    var formData = new FormData();
+    formData.append("files", selectedImage);
+
+    await axios
+      .post(
+        `http://164.92.208.145/api/v1/products/${productId}/photo/add`,
+        formData,
+        {
+          headers: headersList,
+        }
+      )
+      .then((response) => {
+        console.log("response", response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const newProductWidget = (
@@ -179,6 +206,7 @@ const AddProduct = (props) => {
           <Button
             type="button"
             variant="contained"
+            onClick={addImageHandler}
             sx={{
               backgroundColor: "#ff6600",
               display: "block",

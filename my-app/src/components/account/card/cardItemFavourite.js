@@ -8,21 +8,20 @@ import CardActions from "@mui/material/CardActions";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
-import themeOptions from "../../../style/theme";
+import themeOptions from "../../style/theme";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
-import { getCookie, loggedState } from "../../../recoils/atoms";
+import { getCookie, loggedState } from "../../recoils/atoms";
 import { useRecoilValue } from "recoil";
-import { getData } from "../../../recoils/getterFunctions";
-import { addCardtoCookie } from "../../../recoils/getterFunctions";
+import { addCardtoCookie, getData } from "../../recoils/getterFunctions";
 
 import axios from "axios";
 const access = getCookie("access_token");
 
-const CardItem = (props) => {
+const CardItemFavourite = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const isLogged = useRecoilValue(loggedState);
   const [products, setProducts] = useState([]);
@@ -126,6 +125,28 @@ const CardItem = (props) => {
     console.log("hello");
   };
 
+  const removeFavourite = async () => {
+    let headersList = {
+      Authorization: `Bearer ${access}`,
+      "Content-Type": "application/json",
+    };
+
+    await axios
+      .delete(
+        `http://164.92.208.145/api/v1/users/favorites/${props.productId}`,
+        {
+          headers: headersList,
+        }
+      )
+      .then((response) => {
+        console.log("response", response);
+        console.log("succesfulll");
+        //props.removeFromList();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <ThemeProvider theme={themeOptions}>
       <CssBaseline></CssBaseline>
@@ -180,10 +201,20 @@ const CardItem = (props) => {
                 <ShoppingBasketOutlinedIcon />
               </IconButton>
             </CardActions>
+            <CardActions>
+              <IconButton
+                aria-label="share"
+                onClick={() => {
+                  removeFavourite(props.productId);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </CardActions>
           </Stack>
         </Stack>
       </Card>
     </ThemeProvider>
   );
 };
-export default CardItem;
+export default CardItemFavourite;

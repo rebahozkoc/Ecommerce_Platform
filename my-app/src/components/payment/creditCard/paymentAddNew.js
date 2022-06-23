@@ -83,6 +83,7 @@ export default function PaymentAddNew(props) {
               required
               id="cardNumber"
               name="cardNumber"
+              type="number"
               label="Card number"
               fullWidth
               defaultValue={data ? data["cardNumber"] : ""}

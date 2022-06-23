@@ -87,6 +87,7 @@ const AddressListAddNew = (props) => {
           <Grid item xs={12} sm={6}>
             <TextField
               required
+              type="number"
               id="phoneNumber"
               name="phoneNumber"
               label="Phone Number"
@@ -139,13 +140,12 @@ const AddressListAddNew = (props) => {
               required
               id="zip"
               name="zip"
+              type="number"
               label="Zip / Postal code"
               defaultValue={data ? data["zip"] : ""}
               fullWidth
               autoComplete="shipping postal-code"
               variant="standard"
-              type="number"
-
             />
           </Grid>
           <Grid item xs={12} sm={6}>

@@ -72,7 +72,9 @@ const InvoiceCard = (props) => {
               color="text.secondary"
               sx={{ fontSize: 8 }}
             >
-              {(props.cost * props.count).toFixed(2)}
+              {(props.cost - (props.cost * props.discount) / 100) *
+                props.count.toFixed(2)}
+              $
             </Typography>
           </Stack>
         </Stack>
