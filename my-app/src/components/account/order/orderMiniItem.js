@@ -105,7 +105,7 @@ export default function OrderMiniItem(props) {
         Quantity: {product.quantity}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        Price: {product.product.price}
+        Price: {product.price}
       </Typography>
 
       {(() => {
@@ -159,7 +159,7 @@ export default function OrderMiniItem(props) {
       })()}
       <Stack direction="row" gap={1}>
         <Typography variant="h6" style={{ fontWeight: 600 }}>
-          {`  ${product.product.price * product.quantity}`}$
+          {`  ${product.price * product.quantity}`}$
         </Typography>
         <div>&nbsp;</div>
       </Stack>
