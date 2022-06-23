@@ -1,3 +1,4 @@
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from crud.base import CRUDBase
@@ -88,7 +89,7 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         return (
             db.query(Order)
             .filter(Order.created_at >= start)
-            .filter(Order.created_at <= end)
+            .filter(Order.created_at <= end).order_by(Order.created_at.asc())
             .all()
         )
 
