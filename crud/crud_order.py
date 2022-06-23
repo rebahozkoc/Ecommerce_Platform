@@ -110,9 +110,8 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         product.stock += order_item.quantity
         order_item.order_status = "REFUNDED"
         order_itself=db.query(Order).filter(Order.order_id==order_item.order_id).first()
-        order_itself.user.email
         utilities.sendMail.send_mail(
-            order_itself.user.email, "A refund request has been accepted", order_item.product[0].title
+            order_itself.user.email, "A refund request has been accepted", order_item.product[0].price
         )
         db.add(product)
         db.add(refundorder)

@@ -151,13 +151,13 @@ async def get_all_invoices(
     crud.order.create_invoice_list_of_all_time(db=db, current_user=current_user)
     return Response(message="sent email about all orders to the current user")
 
-@router.get("/orders/get_refunds_of_user", response_model=Response[List[schemas.RefundRequestBase]])
-async def get_refund_reqs_of_user(
-    db: Session = Depends(deps.get_db),
-    current_user: models.User = Depends(deps.get_current_user),
-):
-    """
-    get a list of refund requests from the current user
-    """
-    return Response(data=crud.user.refund_request_check(current_user=current_user, db=db))
+# @router.get("/orders/get_refunds_of_user", response_model=Response[List[schemas.RefundRequestBase]])
+# async def get_refund_reqs_of_user(
+#     db: Session = Depends(deps.get_db),
+#     current_user: models.User = Depends(deps.get_current_user),
+# ):
+#     """
+#     get a list of refund requests from the current user
+#     """
+#     return Response(data=crud.user.refund_request_check(current_user=current_user, db=db))
 
