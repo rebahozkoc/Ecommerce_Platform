@@ -34,7 +34,7 @@ const InvoiceSalesManager = (props) => {
   useEffect(() => {
     if (startDate !== "" && endDate !== "") {
       getData(
-        `http://164.92.208.145/api/v1/users/all_orders?skip=0&limit=100`
+        `http://164.92.208.145/api/v1/users/all_orders?start=${startDate}&end=${endDate}&skip=0&limit=100`
       )
         .then((res) => {
           console.log("Order response", res.data);
@@ -54,12 +54,11 @@ const InvoiceSalesManager = (props) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
         }}
         onClick={addNewCategory}
         noValidate
       >
-        <Stack direction="row" justifyContent="space-around" sx={{ m: 2 }}>
+        <Stack direction="row" justifyContent="space-between" sx={{ m: 2 }}>
           <TextField
             required
             id="dateStart"
@@ -85,6 +84,8 @@ const InvoiceSalesManager = (props) => {
             }}
           />
         </Stack>
+        <Stack direction="row" justifyContent="space-between" sx={{ m: 2 }}>
+
         <Button
           type="submit"
           variant="contained"
@@ -96,8 +97,23 @@ const InvoiceSalesManager = (props) => {
             align: "right",
           }}
         >
-          Selected
+          Select Date
         </Button>
+
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            backgroundColor: "#2BFF00",
+            display: "block",
+            padding: (8, 1, 8, 1),
+            justify: "flex-end",
+            align: "right",
+          }}
+        >
+          Downlad Invoice
+        </Button>
+        </Stack>
       </Box>
       <Typography sx={{ fontSize: 20 }} pl={2}>
         Invoices In The Selected Date Range
