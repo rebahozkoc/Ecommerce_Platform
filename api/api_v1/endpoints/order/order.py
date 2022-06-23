@@ -2,7 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from api import deps
 from models.user import UserType
-import crud, models, schemas
+import crud
+import models
+import schemas
 from schemas import Response
 from typing import List
 from datetime import date
@@ -21,6 +23,14 @@ async def order_shopping_cart(
     Order all items in shopping cart.
     """
 
+    if current_user.user_type == UserType.SALES_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "message": "You are not authorized to perform this action."
+                },
+        )
+
     order = crud.order.create_order(
         db=db, current_user=current_user, order_details=order_details
     )
@@ -38,7 +48,8 @@ async def previous_orders(
     """
     Get previous orders
     """
-    data = crud.order.get_multi(db=db, user_id=current_user.id, skip=skip, limit=limit)
+    data = crud.order.get_multi(
+        db=db, user_id=current_user.id, skip=skip, limit=limit)
 
     return Response(data=data)
 
@@ -49,7 +60,7 @@ async def previous_orders(
     end: date,
     skip: int = 0,
     limit: int = 100,
-    
+
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user),
 ):
@@ -148,7 +159,8 @@ async def update_order_status_(
             },
         )
     # update the order by using the update_order_status function
-    crud.order.update_order_status(id=order_id, order_status=order_status, db=db)
+    crud.order.update_order_status(
+        id=order_id, order_status=order_status, db=db)
     # return a success response
     return Response(message="Successfully updated the order request")
 
