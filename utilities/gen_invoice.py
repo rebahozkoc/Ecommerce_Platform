@@ -74,7 +74,7 @@ def gen_invoice(orders_json, username):
         for order in orders_json["data"]:
             product = order["product"]
             quantity = order["quantity"]
-            price = product["price"]
+            price = int(order["product"]["price"])*(100-int(order["product"]["discount"]))/100
             title = trChar(product["title"])
             photo = None
             if len(product["photos"]) != 0:
