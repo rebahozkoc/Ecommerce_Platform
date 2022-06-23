@@ -3,13 +3,24 @@ import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import CheckCircleOutlineTwoToneIcon from "@mui/icons-material/CheckCircleOutlineTwoTone";
 import { Link } from "react-router-dom";
 import React from "react";
-import { Box, Stack, Card, CardContent, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  IconButton,
+} from "@mui/material";
+import DoneIcon from "@mui/icons-material/Done";
+import { getCookie } from "../../recoils/atoms";
+import DeleteIcon from "@mui/icons-material/Delete";
+const user_type = getCookie("user_type");
 
 export default function OrderMiniItem(props) {
   const product = props.data;
   return (
-    <Stack direction="row" justifyContent="space-between"
-    alignItems="center">
+    <Stack direction="row" justifyContent="space-between" alignItems="center">
       <img
         src={product.product.photos[0].photo_url}
         height={64}
@@ -61,16 +72,21 @@ export default function OrderMiniItem(props) {
         }
       })()}
 
-        <Typography variant="h6" style={{ fontWeight: 600 }}>
-        ${" "}
-              {product.product.price *
-                product.quantity}{" "}
-              
-            </Typography>
-
-        <Button>
-            Make Refund
-        </Button>
+      <Typography variant="h6" style={{ fontWeight: 600 }}>
+        $ {product.product.price * product.quantity}{" "}
+      </Typography>
+      {user_type == "SALES_MANAGER" ? (
+        <>
+          <IconButton onClick={() => {}}>
+            <DoneIcon />
+          </IconButton>
+          <IconButton onClick={() => {}}>
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ) : (
+        <Button>Make Refund</Button>
+      )}
     </Stack>
   );
 }
