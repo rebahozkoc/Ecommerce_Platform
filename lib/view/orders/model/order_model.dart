@@ -2,6 +2,25 @@ import 'package:mobile/view/address/model/adress_model.dart';
 import 'package:mobile/view/payment/model/payment_model.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 
+class RefundResponseModel {
+  String? message;
+  bool? isSuccess;
+
+  RefundResponseModel({this.message, this.isSuccess});
+
+  RefundResponseModel.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    isSuccess = json['isSuccess'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['isSuccess'] = isSuccess;
+    return data;
+  }
+}
+
 class OrderResponseModel {
   String? message;
   bool? isSuccess;

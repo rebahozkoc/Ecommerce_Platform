@@ -45,4 +45,44 @@ class OrderService extends OrderServiceBase {
       return _responseModel;
     }
   }
+
+  @override
+  Future<RefundResponseModel> refund({
+    BuildContext? context,
+    String? token,
+    int? orderId,
+  }) async {
+    RefundResponseModel _responseModel = locator<RefundResponseModel>();
+
+    try {
+      Response response;
+      Dio dio = Dio();
+
+      var header = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      var data = {
+        'orderitem_id': orderId ?? 0,
+        'reason': '',
+      };
+
+      response = await dio.post(
+        PathConstants.REFUND,
+        data: data,
+        options: Options(headers: header),
+      );
+
+      _responseModel = RefundResponseModel.fromJson(response.data);
+      return _responseModel;
+    } on DioError catch (exception) {
+      NetworkError networkError =
+          NetworkError.fromJson(exception.response!.data);
+      _responseModel = locator<RefundResponseModel>();
+      _responseModel.isSuccess = false;
+      _responseModel.message = networkError.message;
+      return _responseModel;
+    }
+  }
 }

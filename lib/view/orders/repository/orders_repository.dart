@@ -28,4 +28,21 @@ class OrderRepository extends OrderServiceBase {
     );
     return _responseModel;
   }
+
+  @override
+  Future<RefundResponseModel> refund({
+    BuildContext? context,
+    String? token,
+    int? orderId,
+  }) async {
+    await getUserToken();
+    var token = LocaleManager.instance.getStringValue(PreferencesKeys.TOKEN)!;
+
+    RefundResponseModel _responseModel = await _service.refund(
+      context: context,
+      token: token,
+      orderId: orderId,
+    );
+    return _responseModel;
+  }
 }

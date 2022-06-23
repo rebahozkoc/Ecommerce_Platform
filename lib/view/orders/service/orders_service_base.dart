@@ -8,4 +8,10 @@ abstract class OrderServiceBase {
     int skip,
     int limit,
   });
+
+  Future<RefundResponseModel> refund({
+    BuildContext context,
+    String token,
+    int orderId,
+  });
 }

@@ -17,7 +17,7 @@ class PathConstants {
   // CATEGORY
   static const CATEGORY = _URL + 'api/v1/categories';
 
-  // ADDRESS  
+  // ADDRESS
   static const ADDRESS = _URL + 'api/v1/user/addresses';
 
   // CREDIT CARD
@@ -28,6 +28,9 @@ class PathConstants {
 
   // SHOPLIST
   static const SHOPLIST = _URL + 'api/v1/users/shopping_cart';
+
+  // REFUND
+  static const REFUND = _URL + 'api/v1/users/orders/refund';
 
   // REGISTER
   static const REGISTER = _URL + 'api/v1/auth/registration';

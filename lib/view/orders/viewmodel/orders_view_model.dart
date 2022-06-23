@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/base/model/base_view_model.dart';
+import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/model/order_model.dart';
@@ -12,6 +13,7 @@ class OrdersViewModel = _OrdersViewModelBase with _$OrdersViewModel;
 abstract class _OrdersViewModelBase with Store, BaseViewModel {
   late OrderRepository _repository;
   late OrderResponseModel _orderResponseModel;
+  late RefundResponseModel _refundResponseModel;
 
   @override
   void setContext(BuildContext context) => this.context = context;
@@ -56,5 +58,32 @@ abstract class _OrdersViewModelBase with Store, BaseViewModel {
     }
 
     return _orderResponseModel.isSuccess ?? false;
+  }
+
+  Future<bool> refund({
+    BuildContext? context,
+    String? token,
+    int? orderId,
+  }) async {
+    _refundResponseModel = await _repository.refund(
+      context: context,
+      token: token,
+      orderId: orderId,
+    );
+    debugPrint("_orderResponseModel: ${_orderResponseModel.toString()}");
+    if (_refundResponseModel.isSuccess ?? false) {
+      showToast(
+          context: context!,
+          message: _refundResponseModel.message ??
+              ApplicationConstants.SUCCESS_MESSAGE,
+          isSuccess: true);
+    } else {
+      showToast(
+          context: context!,
+          message: _refundResponseModel.message ??
+              ApplicationConstants.ERROR_MESSAGE,
+          isSuccess: false);
+    }
+    return _refundResponseModel.isSuccess ?? false;
   }
 }
