@@ -23,17 +23,6 @@ const Refund = (props) => {
   const [refundId, setRefundId] = useState(-1);
   //const [categoryName, setCategoryName] = useState("");
 
-  const getRefunds = async () => {
-    const { data } = await axios({
-      method: "get",
-      url: "http://164.92.208.145/api/v1/users/orders/refunds",
-      withCredentials: false,
-    });
-
-    setRefundList(data.data);
-    //console.log(data.data);
-    setIsLoaded(true);
-  };
   useEffect(() => {
     getData("http://164.92.208.145/api/v1/users/orders/refunds")
       .then((res) => {
