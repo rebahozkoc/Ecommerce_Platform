@@ -24,8 +24,9 @@ const InvoiceSalesManager = (props) => {
   const addNewCategory = async (event) => {
     setStartDate(startRef.current.value);
     setEndDate(endRef.current.value);
-    console.log("date start", startDate, "date end", endDate);
+
     if (startDate !== "" && endDate !== "") {
+      console.log("date start", startDate, "date end", endDate);
       setIsDateValid(!isDateValid);
     }
   };

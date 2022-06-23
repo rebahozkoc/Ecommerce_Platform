@@ -45,6 +45,7 @@ const Refund = (props) => {
             return (
               <div style={{ display: "block" }}>
                 <OrderMiniItem
+                  isRefund={true}
                   key={index}
                   data={order.orderitem}
                   status={order.status}

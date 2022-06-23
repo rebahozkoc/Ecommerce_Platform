@@ -59,10 +59,14 @@ const OrderItem = (props) => {
           </Stack>
 
           {order.order_details.map((product, index) => {
-            return <OrderMiniItem data={product} />;
+            return (
+              <OrderMiniItem
+                data={product}
+                isRefund={props.isRefund ?? false}
+              />
+            );
           })}
           <Box flexGrow={5}></Box>
-
           <Stack direction="row" justifyContent="end" gap={1}>
             <Typography variant="h6" style={{ fontWeight: 600 }}>
               Order total: {totalPrice} $

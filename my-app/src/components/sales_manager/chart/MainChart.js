@@ -30,7 +30,41 @@ const MainChart = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  // const [refundList, setRefundList] = useState([]);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [refundId, setRefundId] = useState(-1);
+  // const startRef = useRef("");
+  // const endRef = useRef("");
+  // const [startDate, setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
+  // const [isDateValid, setIsDateValid] = useState(false);
+  // const addNewCategory = async (event) => {
+  //   setStartDate(startRef.current.value);
+  //   setEndDate(endRef.current.value);
 
+  //   if (startDate !== "" && endDate !== "") {
+  //     console.log("date start", startDate, "date end", endDate);
+  //     setIsDateValid(!isDateValid);
+  //   }
+  // };
+
+  // const [orderList, setData] = useState([]);
+  // useEffect(() => {
+  //   if (startDate !== "" && endDate !== "") {
+  //     getData(
+  //       `http://164.92.208.145/api/v1/users/orders/get_all_invoices?start=${startDate}&end=${endDate}`
+  //     )
+  //       .then((res) => {
+  //         console.log("Order response", res.data);
+
+  //         setData(res.data);
+  //         setIsLoaded(true);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, [isDateValid]);
   const chartWidget = (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -87,7 +121,7 @@ const MainChart = () => {
     </ThemeProvider>
   );
   return (
-    <SalesManagerPanel pageIndex={2} widget={chartWidget}></SalesManagerPanel>
+    <SalesManagerPanel pageIndex={1} widget={chartWidget}></SalesManagerPanel>
   );
 };
 

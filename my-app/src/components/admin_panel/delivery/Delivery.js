@@ -23,19 +23,10 @@ const Delivery = (props) => {
   const [orderId, setorderId] = useState(-1);
   //const [categoryName, setCategoryName] = useState("");
 
-  const getorders = async () => {
-    const { data } = await axios({
-      method: "get",
-      url: "http://164.92.208.145/api/v1/users/orders/orders",
-      withCredentials: false,
-    });
-
-    setorderList(data.data);
-    //console.log(data.data);
-    setIsLoaded(true);
-  };
   useEffect(() => {
-    getData("http://164.92.208.145/api/v1/users/all_orders")
+    getData(
+      "http://164.92.208.145/api/v1/users/all_orders?start=2022-01-01&end=2022-06-25&skip=0&limit=100"
+    )
       .then((res) => {
         setorderList(res.data);
         console.log(res.data);
