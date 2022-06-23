@@ -62,8 +62,8 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
               },
             );
           },
-          child: SingleChildScrollView(
-            child: Column(
+          child: ListView(children: [
+            Column(
               children: [
                 const SearchButtonWidget(),
                 GridView.count(
@@ -80,7 +80,7 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
                 ),
               ],
             ),
-          ),
+          ]),
         ),
       );
 

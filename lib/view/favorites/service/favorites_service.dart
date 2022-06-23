@@ -9,6 +9,7 @@ class FavoritesService with FavoritesServiceBase {
   @override
   Future<FavoritesResponseModel> getFavorites({
     BuildContext? context,
+    String? token,
     int? skip,
     int? limit,
   }) async {
@@ -19,6 +20,7 @@ class FavoritesService with FavoritesServiceBase {
 
       var header = {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       };
 
       var data = {

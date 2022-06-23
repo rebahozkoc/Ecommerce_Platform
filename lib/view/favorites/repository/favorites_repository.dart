@@ -17,10 +17,14 @@ class FavoritesRepository with FavoritesServiceBase {
     int? skip,
     int? limit,
   }) async {
+    await getUserToken();
+      var token = LocaleManager.instance.getStringValue(PreferencesKeys.TOKEN)!;
+
     FavoritesResponseModel _responseModel = await _service.getFavorites(
       context: context,
       skip: skip ?? ApplicationConstants.FAVORITES_SKIP,
       limit: limit ?? ApplicationConstants.FAVORITES_LIMIT,
+      token: token,
     );
     return _responseModel;
   }

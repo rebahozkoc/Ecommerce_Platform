@@ -3,7 +3,6 @@ import 'package:mobile/core/base/model/base_view_model.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
-import 'package:mobile/view/comments/view/comments_view.dart';
 import 'package:mobile/view/favorites/model/favorites_model.dart';
 import 'package:mobile/view/favorites/repository/favorites_repository.dart';
 import 'package:mobile/view/product/model/product_model.dart';
@@ -52,13 +51,13 @@ abstract class _FavoritesViewModelBase with Store, BaseViewModel {
 
   Future<void> addFavorite() async {
     FavoritesModel _favorite = FavoritesModel(
-      productId: productId,
+      productId: 3,
     );
 
     FavoritesResponseModel _favoritesResponseModel =
         await _repository.setFavorite(
       context: context,
-      productId: productId,
+      productId: 3,
     );
 
     if (_favoritesResponseModel.isSuccess ?? false) {
@@ -79,11 +78,19 @@ abstract class _FavoritesViewModelBase with Store, BaseViewModel {
   void dispose() {}
 
   Future<bool> getData() async {
-      _productResponseModel = await _repositoryProduct.getProduct(
-        context: context,
-        id: favorites.productId,
+    _favoritesResponseModel = await _repository.getFavorites(
+      context: context,
     );
     if (_favoritesResponseModel.isSuccess ?? false) {
+      List<ProductModel> productList = [];
+      for (var data in _favoritesResponseModel.data!) {
+        _productResponseModel = await _repositoryProduct.getProduct(
+          context: context,
+          id: data.productId,
+        );
+        productList.add(_productResponseModel.data!);
+      }
+      setProducts(productList);
     } else {
       showToast(
           context: context!,
