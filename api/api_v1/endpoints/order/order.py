@@ -86,3 +86,31 @@ async def change_order_request(
         )
     crud.order.change_refund_status(db, orderItemId, refund_request.status)
     return Response(message="Successfully sent the refund request")
+
+@router.patch("/orders/change_status", response_model=Response)
+async def update_order_status_(
+    order_id: int,
+    order_status: str,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
+):
+    """
+    change the status of an order to either
+    PROCESSING = "PROCESSING" or
+    INTRANSIT = "INTRANSIT" or
+    DELIVERED = "DELIVERED"
+    """
+    if current_user.user_type != UserType.PRODUCT_MANAGER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"message":"Only product managers can update order stats"},
+        )
+    if order_status != "PROCESSING" & order_status != "INTRANSIT" & order_status != "DELIVERED":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"message":"PROCESSING INTRANSIT DELIVERED are the only accepted statuses"},
+        )
+    #update the order by using the update_order_status function
+    crud.order.update_order_status(id=order_id, order_status=order_status, db=db)
+    #return a success response
+    return Response(message="Successfully updated the order request")

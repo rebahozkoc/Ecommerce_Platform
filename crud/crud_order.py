@@ -105,5 +105,14 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
 
     def get_refund_requests(self, db: Session):
         return db.query(RefundOrder).all()
+    
+    def update_order_status(self, db: Session, id: int, order_status: str):
+        order = db.query(OrderItem).filter(OrderItem.id == id).first()
+        #check if order_status is valid
+        order.order_status = order_status
+        db.add(order)
+        db.commit()
+        db.refresh(order)
+
 
 order = CRUDOrder(Order)
