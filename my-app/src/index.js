@@ -30,6 +30,7 @@ import AddCategories from "./components/admin_panel/add_remove/AddCategory";
 import DeleteCategories from "./components/admin_panel/add_remove/DeleteCategory";
 import AddProduct from "./components/admin_panel/add_remove/AddProduct";
 import SalesManagerPanel from "./components/sales_manager/SalesManager";
+import AddSubCategory from "./components/admin_panel/add_remove/AddSubCategory";
 ReactDOM.render(
   <RecoilRoot>
     <BrowserRouter>
@@ -56,6 +57,7 @@ ReactDOM.render(
         <Route path="/" element={<App />}></Route>
         <Route path="/admin-panel" element={<Admin />}></Route>
         <Route path="/addCategories" element={<AddCategories />}></Route>
+        <Route path="/addSubcategories" element={<AddSubCategory />}></Route>
         <Route path="/deleteCategories" element={<DeleteCategories />}></Route>
         <Route path="/addProduct" element={<AddProduct />}></Route>
         <Route path="/view_invoice" element={<AddProduct />}></Route>

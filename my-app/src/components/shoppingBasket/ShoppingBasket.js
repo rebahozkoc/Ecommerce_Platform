@@ -519,7 +519,7 @@ const ShoppingBasket = () => {
                       fontWeight="bold"
                       sx={{ fontSize: 16 }}
                     >
-                      -{tCost + totalDiscount}$
+                      {tCost + totalDiscount}$
                     </Typography>
                   </Stack>
                   <Box sx={{ m: 1 }} />
@@ -540,7 +540,7 @@ const ShoppingBasket = () => {
                       fontWeight="bold"
                       sx={{ fontSize: 16 }}
                     >
-                      {totalDiscount}$
+                      -{totalDiscount}$
                     </Typography>
                   </Stack>
                   <Divider />

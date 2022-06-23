@@ -36,6 +36,7 @@ const AdminPanelContainer = (props) => {
 
   const columnItems = [
     ["Add Categories", "../addCategories"],
+    ["Add Subcategories", "../addSubcategories"],
     ["Delete Categories", "../deleteCategories"],
     ["Add Product", "../addProduct"],
     ["View Invoices", "../view_invoice"],
