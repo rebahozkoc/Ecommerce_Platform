@@ -3,7 +3,9 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants/app/app_constants.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
+import 'package:mobile/locator.dart';
 import 'package:mobile/view/orders/model/order_model.dart';
+import 'package:mobile/view/orders/viewmodel/orders_view_model.dart';
 
 class TrackProductBig extends StatelessWidget {
   final OrderModel order;
@@ -109,8 +111,13 @@ class TrackProductBig extends StatelessWidget {
   }
 
   OutlinedButton _refundButton() {
+    late OrdersViewModel viewModel;
+
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: () {
+        viewModel = locator<OrdersViewModel>();
+        viewModel.refund(orderId: order.orderDetails!.first.id);
+      },
       child: const Text(
         "Refund",
         style: TextStyle(

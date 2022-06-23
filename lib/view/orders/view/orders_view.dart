@@ -42,14 +42,13 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin {
       },
       onPageBuilder: (context, value) {
         return FutureBuilder(
-          future: viewModel.getOrders(context: context),
+            future: viewModel.getOrders(context: context),
             builder: ((context, snapshot) => snapshot.hasData
                 ? Scaffold(
                     appBar: _appBar(),
                     body: _body(),
                   )
                 : const CategoriesShimmerView()));
-        
       },
     );
   }
@@ -72,21 +71,21 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin {
               },
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ListView.builder(
-                itemCount: viewModel.orders.length,
-                shrinkWrap: true,
-                //physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return TrackProductBig(
-                    order: viewModel.orders[index],
-                  );
-                },
-              ),
-            ],
+          child: Expanded(
+            child: ListView(
+              children: [
+                ListView.builder(
+                  itemCount: viewModel.orders.length,
+                  shrinkWrap: true,
+                  //physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return TrackProductBig(
+                      order: viewModel.orders[index],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       );
