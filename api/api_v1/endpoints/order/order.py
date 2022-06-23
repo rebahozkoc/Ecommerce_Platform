@@ -45,8 +45,11 @@ async def previous_orders(
 
 @router.get("/all_orders", response_model=Response[List[schemas.Order]])
 async def previous_orders(
+    start: date,
+    end: date,
     skip: int = 0,
     limit: int = 100,
+    
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user),
 ):
@@ -60,7 +63,7 @@ async def previous_orders(
                 "message": "Only sales managers and product managers can see all orders"
             },
         )
-    data = crud.order.get_multi_all(db=db, skip=skip, limit=limit)
+    data = crud.order.get_with_date(db=db, start=start, end=end)
 
     return Response(data=data)
 

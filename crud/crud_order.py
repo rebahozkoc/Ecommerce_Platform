@@ -81,17 +81,12 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
             .all()
         )
 
-    def get_multi_all(
-        self, db: Session, *, skip: int = 0, limit: int = 100
-    ) -> List[Order]:
-        return db.query(Order).offset(skip).limit(limit).all()
-
+    
     def get_with_date(
-        self, db: Session, *, start: datetime.datetime, end: datetime.datetime, user_id: int
+        self, db: Session, *, start: datetime.datetime, end: datetime.datetime
     ):
         return (
             db.query(Order)
-            .filter(Order.user_id == user_id)
             .filter(Order.created_at >= start)
             .filter(Order.created_at <= end)
             .all()
@@ -148,7 +143,7 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
 
         # Create the invoice pdf
         order_list = crud.order.get_with_date(
-            db=db, user_id=current_user.id, start=start, end=end
+            db=db, start=start, end=end
         )
 
         item_list_schema = schemas.order.OrderList(data=order_list)
