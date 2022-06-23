@@ -41,6 +41,23 @@ mixin _$RegisterViewModel on _RegisterViewModelBase, Store {
     });
   }
 
+  final _$passwordConfirmControllerAtom =
+      Atom(name: '_RegisterViewModelBase.passwordConfirmController');
+
+  @override
+  TextEditingController get passwordConfirmController {
+    _$passwordConfirmControllerAtom.reportRead();
+    return super.passwordConfirmController;
+  }
+
+  @override
+  set passwordConfirmController(TextEditingController value) {
+    _$passwordConfirmControllerAtom
+        .reportWrite(value, super.passwordConfirmController, () {
+      super.passwordConfirmController = value;
+    });
+  }
+
   final _$fullNameControllerAtom =
       Atom(name: '_RegisterViewModelBase.fullNameController');
 
@@ -83,6 +100,7 @@ mixin _$RegisterViewModel on _RegisterViewModelBase, Store {
     return '''
 emailController: ${emailController},
 passwordController: ${passwordController},
+passwordConfirmController: ${passwordConfirmController},
 fullNameController: ${fullNameController}
     ''';
   }
