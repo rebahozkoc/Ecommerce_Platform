@@ -11,7 +11,9 @@ const OrderItem = (props) => {
   const order = props.data;
   console.log("OrderItem", order);
   var totalPrice = 0;
-
+  for (var i = 0; i < order.order_details.length; i++) {
+    totalPrice += order.order_details[i].product.price * order.order_details[i].quantity;
+  }
 
   return (
     <Card
@@ -27,19 +29,25 @@ const OrderItem = (props) => {
       <CardContent sx={{ pt: 3 }}>
         <Stack direction="column" justifyContent="center">
           <Stack direction="row" alignItems="center">
-            <img
-              src={order.order_details[0].product.photos[0].photo_url}
-              height={64}
-              alt={"Voidture not Found"}
-            />
             <Stack
               direction="column"
               alignItems="flex-start"
               justifyContent="center"
               ml={2}
             >
-              <Typography component="div" sx={{ mb: 1 }} fontSize={10}>
-                {order.address.name}
+              <Typography variant="h6" style={{ fontWeight: 600 }}>
+              Your Order
+              
+            </Typography>
+              <Typography sx={{ mb: 1 }} >
+                <b>Shipping Address:</b> {order.address.name} - {order.address.personal_name} - {order.address.phone_number} 
+                 - {order.address.full_address} - {order.address.city} - {order.address.province} - 
+                {order.address.state} {order.address.country}
+              </Typography>
+
+              <Typography sx={{mb: 1}}>
+                <b>Payment information:</b> {order.credit.payment_method} - {order.credit.cardnumber} - {order.credit.card_name}
+
               </Typography>
             </Stack>
 
@@ -57,8 +65,7 @@ const OrderItem = (props) => {
             <Typography variant="h6" style={{ fontWeight: 600 }}>
               Order total:{" "}
               
-              {order.order_details[0].product.price *
-                order.order_details[0].quantity}{" "}
+              {totalPrice}{" "}
               $
             </Typography>
           </Stack>
