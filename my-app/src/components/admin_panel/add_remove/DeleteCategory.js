@@ -133,7 +133,7 @@ const DeleteCategories = (props) => {
 
   return (
     <AdminPanelContainer
-      pageIndex={1}
+      pageIndex={2}
       widget={deleteCategoryWidget}
     ></AdminPanelContainer>
   );

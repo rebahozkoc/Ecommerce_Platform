@@ -12,7 +12,8 @@ const OrderItem = (props) => {
   console.log("OrderItem", order);
   var totalPrice = 0;
   for (var i = 0; i < order.order_details.length; i++) {
-    totalPrice += order.order_details[i].product.price * order.order_details[i].quantity;
+    totalPrice +=
+      order.order_details[i].product.price * order.order_details[i].quantity;
   }
 
   return (
@@ -36,18 +37,19 @@ const OrderItem = (props) => {
               ml={2}
             >
               <Typography variant="h6" style={{ fontWeight: 600 }}>
-              Your Order
-              
-            </Typography>
-              <Typography sx={{ mb: 1 }} >
-                <b>Shipping Address:</b> {order.address.name} - {order.address.personal_name} - {order.address.phone_number} 
-                 - {order.address.full_address} - {order.address.city} - {order.address.province} - 
-                {order.address.state} {order.address.country}
+                Your Order
+              </Typography>
+              <Typography sx={{ mb: 1 }}>
+                <b>Shipping Address:</b> {order.address.name} -{" "}
+                {order.address.personal_name} - {order.address.phone_number}-{" "}
+                {order.address.full_address} - {order.address.city} -{" "}
+                {order.address.province} -{order.address.state}{" "}
+                {order.address.country}
               </Typography>
 
-              <Typography sx={{mb: 1}}>
-                <b>Payment information:</b> {order.credit.payment_method} - {order.credit.cardnumber} - {order.credit.card_name}
-
+              <Typography sx={{ mb: 1 }}>
+                <b>Payment information:</b> {order.credit.payment_method} -
+                ****************- {order.credit.card_name}
               </Typography>
             </Stack>
 
@@ -63,10 +65,7 @@ const OrderItem = (props) => {
 
           <Stack direction="row" justifyContent="end" gap={1}>
             <Typography variant="h6" style={{ fontWeight: 600 }}>
-              Order total:{" "}
-              
-              {totalPrice}{" "}
-              $
+              Order total: {totalPrice} $
             </Typography>
           </Stack>
         </Stack>
