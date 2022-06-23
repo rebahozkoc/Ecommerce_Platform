@@ -22,6 +22,9 @@ import 'package:mobile/view/comments/model/comments_model.dart';
 import 'package:mobile/view/comments/repository/comments_repository.dart';
 import 'package:mobile/view/comments/service/comments_service.dart';
 import 'package:mobile/view/comments/viewmodel/comments_view_model.dart';
+import 'package:mobile/view/favorites/model/favorites_model.dart';
+import 'package:mobile/view/favorites/repository/favorites_repository.dart';
+import 'package:mobile/view/favorites/service/favorites_service.dart';
 import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/home/viewmodel/home_view_model.dart';
 import 'package:mobile/view/orders/model/order_model.dart';
@@ -68,7 +71,6 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => PaymentViewModel());
   locator.registerLazySingleton(() => CommentsViewModel());
   locator.registerLazySingleton(() => AddCommentsViewModel());
-
   // Model
   locator.registerLazySingleton(() => UserTokenModel());
   locator.registerLazySingleton(() => CategoriesResponseModel());
@@ -85,6 +87,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => UserResponseModel());
   locator.registerLazySingleton(() => CommentsModelResponse());
   locator.registerLazySingleton(() => OrderResponseModel());
+  locator.registerLazySingleton(() => FavoritesResponseModel());
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());
@@ -97,7 +100,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => AccountRepository());
   locator.registerLazySingleton(() => CommentsRepository());
   locator.registerLazySingleton(() => OrderRepository());
-  
+  locator.registerLazySingleton(() => FavoritesRepository());
+
   // Service
   locator.registerLazySingleton(() => LoginService());
   locator.registerLazySingleton(() => CategoryService());
@@ -109,6 +113,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => AccountService());
   locator.registerLazySingleton(() => CommentsService());
   locator.registerLazySingleton(() => OrderService());
+  locator.registerLazySingleton(() => FavoritesService());
 }
 
 Future<void> resetLocator() async {

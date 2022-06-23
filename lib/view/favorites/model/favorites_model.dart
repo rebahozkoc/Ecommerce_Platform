@@ -23,7 +23,6 @@ class FavoritesModel {
   int? id;
   int? productId;
   int? userId;
-
   FavoritesModel({this.id, this.productId, this.userId});
 
   FavoritesModel.fromJson(Map<String, dynamic> json) {

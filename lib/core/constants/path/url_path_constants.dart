@@ -29,4 +29,6 @@ class PathConstants {
   // SHOPLIST
   static const SHOPLIST = _URL + 'api/v1/users/shopping_cart';
 
+  // FAVORITES
+  static const FAVORITES = _URL + 'api/v1/users/favorites';
 }
