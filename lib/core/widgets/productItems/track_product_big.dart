@@ -7,15 +7,18 @@ import 'package:mobile/view/orders/model/order_model.dart';
 
 class TrackProductBig extends StatelessWidget {
   final OrderModel order;
-  final String status;
   const TrackProductBig({
     Key? key,
     required this.order,
-    required this.status,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+        children: order.orderDetails!.map((e) => _expandablePanel(e)).toList());
+  }
+
+  ExpandablePanel _expandablePanel(OrderDetails _orderDetails) {
     return ExpandablePanel(
       header: InkWell(
         child: Container(
@@ -32,7 +35,7 @@ class TrackProductBig extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              imageClip(),
+              imageClip(_orderDetails.product?.photos?.first.photoUrl),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +44,7 @@ class TrackProductBig extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 15, 5, 5),
                     child: Text(
-                      order.product!.title?.substring(0, 12) ??
+                      _orderDetails.product!.title?.substring(0, 12) ??
                           "Slipover armchair",
                       style: const TextStyle(
                         fontSize: 16,
@@ -55,7 +58,7 @@ class TrackProductBig extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
                         child: Text(
-                          order.product!.distributor ?? "Goal Design",
+                          _orderDetails.product!.distributor ?? "Goal Design",
                           style: const TextStyle(
                             color: AppColors.darkGray,
                             fontWeight: FontWeight.w200,
@@ -71,7 +74,7 @@ class TrackProductBig extends StatelessWidget {
                 children: [
                   const SizedBox(width: 30),
                   Text(
-                    "${(order.product!.price ?? 0) * (order.quantity ?? 0)}",
+                    "${(_orderDetails.product!.price ?? 0) * (_orderDetails.quantity ?? 0)}",
                     style: const TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w800,
@@ -85,32 +88,27 @@ class TrackProductBig extends StatelessWidget {
         ),
       ),
       collapsed: const Text(""),
-      expanded: _status(),
+      expanded: _status(_orderDetails.product?.id, _orderDetails.price,
+          _orderDetails.orderStatus!),
     );
   }
 
-  ClipRRect imageClip() {
+  ClipRRect imageClip(String? img) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: _image(),
-    );
-  }
-
-  AspectRatio _image() {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: CachedNetworkImage(
-        imageUrl: order.product?.photos?.first.photoUrl ??
-            ApplicationConstants.PRODUCT_IMG,
-        width: 60,
-        height: 60,
-        fit: BoxFit.fill,
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: CachedNetworkImage(
+          imageUrl: img ?? ApplicationConstants.PRODUCT_IMG,
+          width: 60,
+          height: 60,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }
 
-  InkWell _status() {
-    debugPrint(status);
+  InkWell _status(int? _id, double? _price, String status) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -126,7 +124,7 @@ class TrackProductBig extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text("Order-ID: ${order.product?.id}",
+                  Text("Order-ID: $_id",
                       style: const TextStyle(
                         color: AppColors.black,
                         fontWeight: FontWeight.w700,
@@ -144,7 +142,7 @@ class TrackProductBig extends StatelessWidget {
                               child: Icon(Icons.call_received,
                                   color: AppColors.primaryLight, size: 24)),
                           TextSpan(
-                              text: " Preparing",
+                              text: " PROCESSING",
                               style: TextStyle(
                                   color: AppColors.primaryLight, fontSize: 24))
                         ],
@@ -158,7 +156,7 @@ class TrackProductBig extends StatelessWidget {
                               child: Icon(Icons.local_shipping,
                                   color: AppColors.azure, size: 24)),
                           TextSpan(
-                              text: " Shipped",
+                              text: " INTRANSIT",
                               style: TextStyle(
                                   color: AppColors.azure, fontSize: 24))
                         ],
@@ -169,12 +167,26 @@ class TrackProductBig extends StatelessWidget {
                       text: const TextSpan(
                         children: [
                           WidgetSpan(
-                              child: Icon(Icons.inbox,
+                              child: Icon(Icons.local_shipping,
                                   color: Colors.green, size: 24)),
                           TextSpan(
-                              text: " Delivered",
+                              text: " DELIVERED",
                               style:
                                   TextStyle(color: Colors.green, fontSize: 24))
+                        ],
+                      ),
+                    ),
+                  if (status == "REFUNDED")
+                    RichText(
+                      text: const TextSpan(
+                        children: [
+                          WidgetSpan(
+                              child: Icon(Icons.local_shipping,
+                                  color: Colors.indigoAccent, size: 24)),
+                          TextSpan(
+                              text: " REFUNDED",
+                              style:
+                                  TextStyle(color: Colors.indigoAccent, fontSize: 24))
                         ],
                       ),
                     ),
@@ -265,7 +277,7 @@ class TrackProductBig extends StatelessWidget {
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    order.product!.price?.toString() ?? "₺380",
+                    "₺${_price ?? 380}",
                     style: const TextStyle(
                         color: AppColors.black,
                         fontSize: 14,

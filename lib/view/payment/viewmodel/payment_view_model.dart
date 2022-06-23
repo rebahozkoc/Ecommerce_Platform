@@ -51,7 +51,6 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
 
   @action
   void addNewAddress(AddressModel address) {
-    insertFirstAddress(address);
     addresses.add(address);
   }
 
@@ -99,6 +98,7 @@ abstract class _PaymentViewModelBase with Store, BaseViewModel {
     AddressesResponseModel addressResponse =
         await _addressRepository.getAddresses(context: context);
     setAddresses(addressResponse.data!);
+    print(addresses.length);
     return _paymentsResponseModel.isSuccess!;
   }
 

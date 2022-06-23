@@ -34,7 +34,6 @@ class OrderService extends OrderServiceBase {
         queryParameters: data,
         options: Options(headers: header),
       );
-
       _responseModel = OrderResponseModel.fromJson(response.data);
       return _responseModel;
     } on DioError catch (exception) {

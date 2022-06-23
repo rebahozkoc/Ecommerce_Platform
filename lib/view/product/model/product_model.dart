@@ -11,6 +11,7 @@ class ProductModel {
   String? subcategoryTitle;
   List<Photo>? photos;
   int? commentCount;
+  num? discount;
   num? rateCount;
   num? rate;
 
@@ -27,6 +28,8 @@ class ProductModel {
       this.subcategoryTitle,
       this.photos,
       this.commentCount,
+      this.discount,
+      this.rateCount,
       this.rate});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -49,6 +52,7 @@ class ProductModel {
     }
     commentCount = json['comment_count'];
     rateCount = json['rate_count'];
+    discount = json['discount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +73,7 @@ class ProductModel {
     data['comment_count'] = commentCount;
     data['rate'] = rate;
     data['rate_count'] = rateCount;
+    data['discount'] = discount;
     return data;
   }
 }
