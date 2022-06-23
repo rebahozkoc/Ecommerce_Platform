@@ -1,5 +1,6 @@
-import smtplib, ssl, time
 import smtplib
+import ssl
+import time
 import smtplib
 from os.path import basename
 from email.mime.application import MIMEApplication
@@ -20,7 +21,7 @@ def send_mail(send_to, subject, message, files=None):
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
     sender_email = "voidture@gmail.com"  # Enter your address
-    password = "cemal308"
+    password = "vysnfnnsodlchrnw"
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         server.login(sender_email, password)
@@ -40,7 +41,10 @@ def send_mail(send_to, subject, message, files=None):
                     Name=basename(f)
                 )
             # After the file is closed
-            part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
+            part['Content-Disposition'] = 'attachment; filename="%s"' % basename(
+                f)
             msg.attach(part)
 
         server.sendmail(sender_email, send_to, msg.as_string())
+
+
