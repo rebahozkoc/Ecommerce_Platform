@@ -58,7 +58,7 @@ def gen_invoice_list(orders_json, username):
         for order in orders_json["data"]:
             product = order["order_details"][0]["product"]
             quantity = order["order_details"][0]["quantity"]
-            price = product["price"]
+            price = order["order_details"][0]["price"]
             title = trChar(product["title"])
             photo = None
             if len(product["photos"]) != 0:
