@@ -27,15 +27,15 @@ class FavoritesModel {
 
   FavoritesModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    productId = json['productId'];
-    userId = json['userId'];
+    productId = json['product_id'];
+    userId = json['user_id'];
   }
 
   Map<String, dynamic> toJson(){
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['productId'] = productId;
-    data['userId'] = userId;
+    data['product_id'] = productId;
+    data['user_id'] = userId;
     return data;
   }
 }

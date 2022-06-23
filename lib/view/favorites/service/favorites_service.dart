@@ -42,4 +42,39 @@ class FavoritesService with FavoritesServiceBase {
       return _responseModel;
     }
   }
+
+  @override
+  Future<FavoritesResponseModel> setFavorite({
+    BuildContext? context,
+    int? productId,
+    String? token,
+  }) async {
+    FavoritesResponseModel _responseModel = locator<FavoritesResponseModel>();
+    try {
+      Response response;
+      Dio dio = Dio();
+
+      var header = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      response = await dio.post(
+        PathConstants.FAVORITES,
+        data: {
+          'product_id': productId,
+        },
+        options: Options(headers: header),
+      );
+
+      _responseModel = FavoritesResponseModel.fromJson(response.data);
+      return _responseModel;
+    } on DioError catch (exception) {
+      debugPrint("Error");
+      debugPrint(exception.response!.data);
+      _responseModel = locator<FavoritesResponseModel>();
+      _responseModel.isSuccess = false;
+      return _responseModel;
+    }
+  }
 }

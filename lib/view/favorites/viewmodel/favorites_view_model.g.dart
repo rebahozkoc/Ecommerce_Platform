@@ -24,6 +24,13 @@ mixin _$FavoritesViewModel on _FavoritesViewModelBase, Store {
     });
   }
 
+  final _$submitAsyncAction = AsyncAction('_FavoritesViewModelBase.submit');
+
+  @override
+  Future submit() {
+    return _$submitAsyncAction.run(() => super.submit());
+  }
+
   final _$_FavoritesViewModelBaseActionController =
       ActionController(name: '_FavoritesViewModelBase');
 

@@ -31,7 +31,7 @@ class _FavoritesViewState extends BaseState<FavoritesView> {
       },
       onPageBuilder: (context, value) {
         return FutureBuilder(
-            future: viewModel.load(),
+            future: viewModel.getData(),
             builder: ((context, snapshot) => snapshot.hasData
                 ? Scaffold(
                     appBar: _appBar(),

@@ -7,4 +7,10 @@ abstract class FavoritesServiceBase {
     int skip,
     int limit,
   });
+
+  Future<FavoritesResponseModel> setFavorite({
+    BuildContext context,
+    int productId,
+    String token,
+  });
 }
