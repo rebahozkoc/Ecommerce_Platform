@@ -14,13 +14,13 @@ import { getData } from "../recoils/getterFunctions";
 
 const Export = () => {
   const [isLoaded, setLoaded] = useState(false);
-  const [lastOrder, setOrder] = useState([]);
+  const [c, setOrder] = useState([]);
 
   useEffect(() => {
     getData(`http://164.92.208.145/api/v1/users/orders`)
       .then((res) => {
-        setOrder(res.data[0]);
-        console.log("response.data", res.data[0]);
+        setOrder(res.data);
+        console.log(res.data);
         setLoaded(true);
       })
       .catch((err) => {
@@ -48,7 +48,7 @@ const Export = () => {
         {isLoaded ? (
           <>
             <List>
-              {lastOrder.order_details.map(
+              {c.map(
                 (card) => (
                   console.log("card", card),
                   (
@@ -70,12 +70,12 @@ const Export = () => {
               )}
             </List>
             <InvoiceAddress
-              country={lastOrder.address.country}
-              zip={lastOrder.address.postal_code}
-              id={lastOrder.address.id}
-              city={lastOrder.address.city}
-              full_address={lastOrder.address.full_address}
-              personal_name={lastOrder.address.personal_name}
+              country={c[0].address.country}
+              zip={c[0].address.postal_code}
+              id={c[0].address.id}
+              city={c[0].address.city}
+              full_address={c[0].address.full_address}
+              personal_name={c[0].address.personal_name}
             ></InvoiceAddress>
             <Box disableRipple sx={{ width: 500 }}>
               <Typography fontSize={12} sx={{ pl: 3 }}>
