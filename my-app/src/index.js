@@ -4,7 +4,6 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-
 import SignIn from "./components/signIn/SignIn";
 import ResetPassword from "./components/signIn/resetPassword";
 import SignUp from "./components/signIn/SignUp";
@@ -34,6 +33,7 @@ import AddSubCategory from "./components/admin_panel/add_remove/AddSubCategory";
 import Refund from "./components/sales_manager/Refund";
 import InvoiceSalesManager from "./components/sales_manager/invoiceSalesManager"; 
 import Delivery from "./components/admin_panel/delivery/Delivery";
+
 ReactDOM.render(
   <RecoilRoot>
     <BrowserRouter>
