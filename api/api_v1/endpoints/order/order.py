@@ -105,7 +105,7 @@ async def update_order_status_(
             status_code=status.HTTP_403_FORBIDDEN,
             detail={"message":"Only product managers can update order stats"},
         )
-    if order_status != "PROCESSING" & order_status != "INTRANSIT" & order_status != "DELIVERED":
+    if order_status != "PROCESSING" and order_status != "INTRANSIT" and order_status != "DELIVERED":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"message":"PROCESSING INTRANSIT DELIVERED are the only accepted statuses"},
