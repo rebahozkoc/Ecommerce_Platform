@@ -15,10 +15,59 @@ import {
 import DoneIcon from "@mui/icons-material/Done";
 import { getCookie } from "../../recoils/atoms";
 import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+const access = getCookie("access_token");
 const user_type = getCookie("user_type");
 
 export default function OrderMiniItem(props) {
   const product = props.data;
+  console.log(props);
+  const makeRefund = async () => {
+    let headersList = {
+      Authorization: `Bearer ${access}`,
+      "Content-Type": "application/json",
+    };
+    let bodyContent = {
+      reason: "deneme",
+      orderitem_id: product.id,
+    };
+    await axios
+      .post(`http://164.92.208.145//api/v1/users/orders/refund`, bodyContent, {
+        headers: headersList,
+      })
+      .then((response) => {
+        console.log("response", response);
+        //props.adderHandler(response.data.data.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const acceptRefund = async () => {
+    let headersList = {
+      Authorization: `Bearer ${access}`,
+      "Content-Type": "application/json",
+    };
+    let bodyContent = {
+      status: true,
+    };
+    await axios
+      .post(
+        `http://164.92.208.145/api/v1/users/orders/refund/status/{id}?orderItemId=${product.id}`,
+        bodyContent,
+        {
+          headers: headersList,
+        }
+      )
+      .then((response) => {
+        console.log("response", response);
+        //props.adderHandler(response.data.data.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
       <img
@@ -69,6 +118,16 @@ export default function OrderMiniItem(props) {
               {product.order_status}
             </Stack>
           );
+        } else {
+          return (
+            <Stack direction="row" gap={1}>
+              <CheckCircleOutlineTwoToneIcon
+                color="primary"
+                style={{ fontSize: 25 }}
+              />
+              {product.order_status}
+            </Stack>
+          );
         }
       })()}
 
@@ -76,16 +135,21 @@ export default function OrderMiniItem(props) {
         $ {product.product.price * product.quantity}{" "}
       </Typography>
       {user_type == "SALES_MANAGER" ? (
-        <>
-          <IconButton onClick={() => {}}>
+        props.status == false && product.order_status != "REFUNDED" ? (
+          <IconButton onClick={acceptRefund}>
             <DoneIcon />
           </IconButton>
-          <IconButton onClick={() => {}}>
-            <DeleteIcon />
-          </IconButton>
-        </>
+        ) : (
+          <Typography variant="h6" style={{ fontWeight: 600 }}>
+            Accepted
+          </Typography>
+        )
+      ) : product.order_status == "REFUNDED" ? (
+        <Typography variant="h6" style={{ fontWeight: 600 }}>
+          Accepted
+        </Typography>
       ) : (
-        <Button>Make Refund</Button>
+        <Button onClick={makeRefund}>Make Refund</Button>
       )}
     </Stack>
   );

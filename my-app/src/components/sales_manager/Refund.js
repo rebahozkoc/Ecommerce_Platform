@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { getCookie } from "../recoils/atoms";
 import { getData } from "../recoils/getterFunctions";
-import OrderItem from "../account/order/orderItem";
+import OrderMiniItem from "../account/order/orderMiniItem";
 const access = getCookie("access_token");
 const Refund = (props) => {
   const [refundList, setRefundList] = useState([]);
@@ -31,14 +31,14 @@ const Refund = (props) => {
     });
 
     setRefundList(data.data);
-    console.log(data.data);
+    //console.log(data.data);
     setIsLoaded(true);
   };
   useEffect(() => {
     getData("http://164.92.208.145/api/v1/users/orders/refunds")
       .then((res) => {
-        setRefundList(res);
-        console.log(res.data);
+        setRefundList(res.data);
+        //console.log(res.data);
       })
       .then(() => {
         setIsLoaded(true);
@@ -50,19 +50,23 @@ const Refund = (props) => {
       <Typography sx={{ fontSize: 20 }} pl={2}>
         Refund Requested Products
       </Typography>
-      {/* {isLoaded ? (
+      {isLoaded ? (
         <Stack direction="column">
           {refundList.map((order, index) => {
             return (
               <div style={{ display: "block" }}>
-                <OrderItem key={index} data={order}></OrderItem>
+                <OrderMiniItem
+                  key={index}
+                  data={order.orderitem}
+                  status={order.status}
+                ></OrderMiniItem>
               </div>
             );
           })}
         </Stack>
       ) : (
         <div>Loading...</div>
-      )} */}
+      )}
     </Card>
   );
 

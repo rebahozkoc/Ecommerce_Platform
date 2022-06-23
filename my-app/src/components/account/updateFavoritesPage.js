@@ -25,7 +25,7 @@ const UpdateFavoritesPage = () => {
         for (var i = 0; i < res.data.length; i++) {
           console.log("iddddd", res.data[i].id);
           await getData(
-            `http://164.92.208.145/api/v1/products/${res.data[i].id}`
+            `http://164.92.208.145/api/v1/products/${res.data[i].product_id}`
           ).then((res2) => {
             tempPrdouctData.push(res2.data);
           });
