@@ -46,6 +46,41 @@ class FavoritesService with FavoritesServiceBase {
   }
 
   @override
+  Future<FavoritesResponseModel> deleteFavorite({
+    BuildContext? context,
+    int? productId,
+    String? token,
+  }) async{
+    FavoritesResponseModel _responseModel = locator<FavoritesResponseModel>();
+    try {
+      Response response;
+      Dio dio = Dio();
+
+      var header = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      var data = {
+        'productId': productId,
+      };
+      response = await dio.delete(
+        PathConstants.FAVORITES + "/$productId",
+        queryParameters: data,
+        options: Options(headers: header),
+      );
+
+      _responseModel = FavoritesResponseModel.fromJson(response.data);
+      }on DioError catch (exception) {
+      debugPrint("Error");
+      _responseModel = locator<FavoritesResponseModel>();
+      _responseModel.isSuccess = false;
+      return _responseModel;
+    }
+    return _responseModel;
+  }
+
+  @override
   Future<FavoritesResponseModel> setFavorite({
     BuildContext? context,
     int? productId,
@@ -73,10 +108,10 @@ class FavoritesService with FavoritesServiceBase {
       return _responseModel;
     } on DioError catch (exception) {
       debugPrint("Error");
-      debugPrint(exception.response!.data);
       _responseModel = locator<FavoritesResponseModel>();
       _responseModel.isSuccess = false;
       return _responseModel;
     }
   }
 }
+

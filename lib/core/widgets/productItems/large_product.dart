@@ -7,6 +7,9 @@ import 'package:mobile/core/init/navigation/navigation_service.dart';
 import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
+import 'package:mobile/view/favorites/model/favorites_model.dart';
+import 'package:mobile/view/favorites/repository/favorites_repository.dart';
+import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/shopList/model/shoplist_model.dart';
 import 'package:mobile/view/shopList/viewmodel/shoplist_view_model.dart';
@@ -73,8 +76,17 @@ class LargeProduct extends StatelessWidget {
   }
 
   InkWell _favoriteButton() => InkWell(
-        onTap: (() {
-          debugPrint("Favorite Button Clicked...");
+        onTap: (() async {
+          FavoritesResponseModel _favoritesResponseModel;
+          FavoritesRepository _favoritesRepository =
+              locator<FavoritesRepository>();
+          _favoritesResponseModel = await _favoritesRepository.getFavorites();
+          for (var data in _favoritesResponseModel.data!) {
+            debugPrint(data.toString());
+          }
+          _favoritesRepository.deleteFavorite(
+            productId: product!.id,
+          );
         }),
         child: Container(
           height: 28,
