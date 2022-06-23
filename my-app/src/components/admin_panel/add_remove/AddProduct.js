@@ -223,7 +223,7 @@ const AddProduct = (props) => {
   );
   return (
     <AdminPanelContainer
-      pageIndex={2}
+      pageIndex={3}
       widget={productId == -1 ? newProductWidget : addImage}
     ></AdminPanelContainer>
   );

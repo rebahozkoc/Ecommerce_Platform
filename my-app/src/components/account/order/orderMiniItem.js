@@ -16,11 +16,13 @@ import DoneIcon from "@mui/icons-material/Done";
 import { getCookie } from "../../recoils/atoms";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import DeliveryChangeDropDown from "../../admin_panel/delivery/DeliveryChangeDropDown";
 const access = getCookie("access_token");
 const user_type = getCookie("user_type");
 
 export default function OrderMiniItem(props) {
   const product = props.data;
+  const [orderState, setOrderStatus] = React.useState(product.order_status);
   console.log(props);
   const makeRefund = async () => {
     let headersList = {
@@ -52,7 +54,7 @@ export default function OrderMiniItem(props) {
       status: true,
     };
     await axios
-      .post(
+      .patch(
         `http://164.92.208.145/api/v1/users/orders/refund/status/{id}?orderItemId=${product.id}`,
         bodyContent,
         {
@@ -67,11 +69,32 @@ export default function OrderMiniItem(props) {
         console.log(err);
       });
   };
+  const changeStatus = async (e) => {
+    let headersList = {
+      Accept: "*/*",
 
+      Authorization: `Bearer ${access}`,
+    };
+
+    let reqOptions = {
+      url: `http://164.92.208.145/api/v1/users/orders/change_status?order_id=${product.id}&order_status=${e}`,
+      method: "PATCH",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+    setOrderStatus(e);
+  };
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
       <img
-        src={product.product.photos[0].photo_url}
+        src={
+          product.product.photos.length != 0
+            ? product.product.photos[0].photo_url
+            : ""
+        }
         height={64}
         alt={"Voidture not Found"}
       />
@@ -88,34 +111,34 @@ export default function OrderMiniItem(props) {
       {(() => {
         //change status to order.order_status
 
-        if (product.order_status === "PROCESSING") {
+        if (orderState === "PROCESSING") {
           return (
             <Stack direction="row" gap={1}>
               <PendingActionsTwoToneIcon
                 color="primary"
                 style={{ fontSize: 25 }}
               />
-              {product.order_status}
+              {orderState}
             </Stack>
           );
-        } else if (product.order_status === "In-transit") {
+        } else if (orderState === "In-transit") {
           return (
             <Stack direction="row" gap={1}>
               <LocalShippingTwoToneIcon
                 color="primary"
                 style={{ fontSize: 25 }}
               />
-              {product.order_status}
+              {orderState}
             </Stack>
           );
-        } else if (product.order_status === "Delivered") {
+        } else if (orderState === "Delivered") {
           return (
             <Stack direction="row" gap={1}>
               <CheckCircleOutlineTwoToneIcon
                 color="primary"
                 style={{ fontSize: 25 }}
               />
-              {product.order_status}
+              {orderState}
             </Stack>
           );
         } else {
@@ -125,7 +148,7 @@ export default function OrderMiniItem(props) {
                 color="primary"
                 style={{ fontSize: 25 }}
               />
-              {product.order_status}
+              {orderState}
             </Stack>
           );
         }
@@ -134,7 +157,21 @@ export default function OrderMiniItem(props) {
       <Typography variant="h6" style={{ fontWeight: 600 }}>
         $ {product.product.price * product.quantity}{" "}
       </Typography>
-      {user_type == "SALES_MANAGER" ? (
+      {user_type == "PRODUCT_MANAGER" ? (
+        product.order_status != "REFUNDED" ? (
+          <DeliveryChangeDropDown
+            key={2}
+            handleStatus={(e) => {
+              changeStatus(e);
+            }}
+            defaultValue={product.order_status}
+          ></DeliveryChangeDropDown>
+        ) : (
+          <Typography variant="h6" style={{ fontWeight: 600 }}>
+            Done
+          </Typography>
+        )
+      ) : user_type == "SALES_MANAGER" ? (
         props.status == false && product.order_status != "REFUNDED" ? (
           <IconButton onClick={acceptRefund}>
             <DoneIcon />
