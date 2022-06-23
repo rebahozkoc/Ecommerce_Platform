@@ -33,6 +33,8 @@ import SalesManagerPanel from "./components/sales_manager/SalesManager";
 import AddSubCategory from "./components/admin_panel/add_remove/AddSubCategory";
 import Refund from "./components/sales_manager/Refund";
 import Delivery from "./components/admin_panel/delivery/Delivery";
+import MainChart from "./components/sales_manager/chart/MainChart";
+
 ReactDOM.render(
   <RecoilRoot>
     <BrowserRouter>
@@ -64,6 +66,7 @@ ReactDOM.render(
         <Route path="/addProduct" element={<AddProduct />}></Route>
         <Route path="/changeDelivery" element={<Delivery />}></Route>
         <Route path="/salesManager" element={<SalesManagerPanel />}></Route>
+        <Route path="/chart" element={<MainChart />}></Route>
         <Route path="/refund" element={<Refund />}></Route>
       </Routes>
     </BrowserRouter>
