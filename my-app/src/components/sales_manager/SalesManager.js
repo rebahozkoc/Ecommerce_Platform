@@ -35,7 +35,7 @@ const SalesManagerPanel = (props) => {
   const navigate = useNavigate();
 
   const columnItems = [
-    ["View Invoices", "../addCategories"],
+    ["View Invoices", "../view_invoice_sales_manager"],
     ["Calculate Loss/Profit", "../chart"],
     ["Refund Request", "../refund"],
   ];
@@ -48,7 +48,7 @@ const SalesManagerPanel = (props) => {
 
   return (
     <RecoilRoot>
-      {user_type != "SALES_MANAGER" ? (
+      {user_type !== "SALES_MANAGER" ? (
         <PreventerPage />
       ) : (
         <ThemeProvider theme={themeOptions}>
