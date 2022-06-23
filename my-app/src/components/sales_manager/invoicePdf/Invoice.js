@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js";
 
 import { List, ListItem, Typography, Card, Box, Button } from "@mui/material";
 import { useState, useEffect } from "react";
@@ -14,13 +15,13 @@ import { getData } from "../recoils/getterFunctions";
 
 const Export = () => {
   const [isLoaded, setLoaded] = useState(false);
-  const [c, setOrder] = useState([]);
+  const [lastOrder, setOrder] = useState([]);
 
   useEffect(() => {
     getData(`http://164.92.208.145/api/v1/users/orders`)
       .then((res) => {
-        setOrder(res.data);
-        console.log(res.data);
+        setOrder(res.data[0]);
+        console.log("response.data", res.data[0]);
         setLoaded(true);
       })
       .catch((err) => {
@@ -31,13 +32,16 @@ const Export = () => {
   console.log("hellooooo");
   const printDocument = () => {
     const input = document.getElementById("divToPrint");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0);
-      // pdf.output('dataurlnewwindow');
-      pdf.save("invoice.pdf");
-    });
+    var opt = {
+      margin:       1,
+      filename:     'myfile.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { useCORS: true, scale: 2 ,allowTaint: true},
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(input).save();
+
+
   };
 
   let totalCost = 0;
@@ -48,13 +52,13 @@ const Export = () => {
         {isLoaded ? (
           <>
             <List>
-              {c.map(
+              {lastOrder.order_details.map(
                 (card) => (
                   console.log("card", card),
                   (
                     <ListItem key={card.product.id}>
                       <InvoiceCard
-                        imageId={card.product.photos[0].photo_url}
+                        discount={card.product.discount}
                         cost={card.product.price}
                         title={card.product.title}
                         id={card.product.id}
@@ -62,7 +66,7 @@ const Export = () => {
                         count={card.quantity}
                         model={card.product.model}
                       >
-                        {(totalCost += card.product.price * card.quantity)}
+                        {totalCost += (card.product.price - (card.product.price * card.product.discount?? 0) / 100) * card.quantity}
                       </InvoiceCard>
                     </ListItem>
                   )
@@ -70,15 +74,15 @@ const Export = () => {
               )}
             </List>
             <InvoiceAddress
-              country={c[0].address.country}
-              zip={c[0].address.postal_code}
-              id={c[0].address.id}
-              city={c[0].address.city}
-              full_address={c[0].address.full_address}
-              personal_name={c[0].address.personal_name}
+              country={lastOrder.address.country}
+              zip={lastOrder.address.postal_code}
+              id={lastOrder.address.id}
+              city={lastOrder.address.city}
+              full_address={lastOrder.address.full_address}
+              personal_name={lastOrder.address.personal_name}
             ></InvoiceAddress>
             <Box disableRipple sx={{ width: 500 }}>
-              <Typography fontSize={12} sx={{ pl: 3 }}>
+              <Typography sx={{ pl: 3 }}>
                 Total Cost is {totalCost}$
               </Typography>
             </Box>

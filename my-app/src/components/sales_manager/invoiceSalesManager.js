@@ -9,6 +9,7 @@ import { getData } from "../recoils/getterFunctions";
 import OrderMiniItem from "../account/order/orderMiniItem";
 import OrderItem from "../account/order/orderItem";
 import { useRef } from "react";
+import html2pdf from "html2pdf.js";
 
 const access = getCookie("access_token");
 
@@ -48,6 +49,22 @@ const InvoiceSalesManager = (props) => {
         });
     }
   }, [isDateValid]);
+
+  
+  const downloadInvoice = (orderId) => {
+    console.log("orderId", orderId);
+    const input = document.getElementById("divToPrint");
+    var opt = {
+      margin:       1,
+      filename:     'myfile.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { useCORS: true, scale: 2 ,allowTaint: true},
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+    html2pdf().set(opt).from(input).save();
+
+  }
 
   const newCategoryWidget = (
     <Card>
@@ -102,7 +119,7 @@ const InvoiceSalesManager = (props) => {
         </Button>
 
         <Button
-          type="submit"
+          onClick={downloadInvoice}
           variant="contained"
           sx={{
             backgroundColor: "#2BFF00",
@@ -120,7 +137,7 @@ const InvoiceSalesManager = (props) => {
         Invoices In The Selected Date Range
       </Typography>
       {isLoaded ? (
-        <Stack direction="column">
+        <Stack direction="column" id="divToPrint">
           {orderList.map((order, index) => {
             return (
               <div style={{ display: "block" }}>

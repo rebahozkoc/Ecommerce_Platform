@@ -16,15 +16,14 @@ import AddIcon from "@mui/icons-material/Add";
 const InvoiceAddress = (props) => {
   return (
     <ThemeProvider theme={themeOptions}>
-      <Box disableRipple sx={{ width: 350 }}>
-        <Stack direction="row" spacing={2} sx={{ height: "40px" }}>
+      <Box disableRipple sx={{ width: 600 }}>
+        <Stack direction="row" spacing={2} sx={{ }}>
           <Box sx={{ m: 2 }} />
           <Stack direction="column">
             <Typography
               variant="body2"
               color="text.secondary"
               fontWeight="bold"
-              fontSize={8}
             >
               country: {props.country}
             </Typography>
@@ -34,7 +33,6 @@ const InvoiceAddress = (props) => {
             variant="body2"
             color="text.secondary"
             fontWeight="bold"
-            fontSize={8}
           >
             {props.city}: {props.zip}
           </Typography>
@@ -42,7 +40,6 @@ const InvoiceAddress = (props) => {
             variant="body1"
             color="text.secondary"
             fontWeight="bold"
-            fontSize={6}
           >
             {props.full_address}
           </Typography>
@@ -53,7 +50,6 @@ const InvoiceAddress = (props) => {
             variant="body2"
             color="text.secondary"
             fontWeight="bold"
-            fontSize={8}
           >
             {props.personal_name}
           </Typography>
