@@ -7,10 +7,8 @@ import 'package:mobile/core/init/theme/color_theme.dart';
 import 'package:mobile/core/widgets/ToastMessage.dart';
 import 'package:mobile/locator.dart';
 import 'package:mobile/core/widgets/productItems/product_page_product.dart';
-import 'package:mobile/view/comments/view/comments_view.dart';
 import 'package:mobile/view/favorites/model/favorites_model.dart';
 import 'package:mobile/view/favorites/repository/favorites_repository.dart';
-import 'package:mobile/view/favorites/viewmodel/favorites_view_model.dart';
 import 'package:mobile/view/product/model/product_model.dart';
 import 'package:mobile/view/product/viewmodel/product_view_model.dart';
 import 'package:mobile/view/shopList/model/shoplist_model.dart';
@@ -25,7 +23,6 @@ class ProductView extends StatefulWidget {
 
 class _ProductViewState extends BaseState<ProductView> {
   late ProductViewModel viewModel;
-  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -38,13 +35,6 @@ class _ProductViewState extends BaseState<ProductView> {
           FavoritesResponseModel _favoritesResponseModel;
           FavoritesRepository _favoritesRepository =
               locator<FavoritesRepository>();
-          _favoritesResponseModel = await _favoritesRepository.getFavorites();
-          for (var data in _favoritesResponseModel.data!) {
-            if (data.productId == viewModel.product.id) {
-              isFavorite = true;
-              break;
-            }
-          }
         },
         onPageBuilder: (context, value) {
           return Scaffold(
@@ -144,41 +134,31 @@ class _ProductViewState extends BaseState<ProductView> {
         onPressed: () async {
           FavoritesRepository _favoritesRepository =
               locator<FavoritesRepository>();
-          if (isFavorite) {
-            _favoritesRepository.deleteFavorite(
-              productId: viewModel.product.id,
-            );
-            showToast(
-                message: "Item removed from favorites",
-                isSuccess: false,
-                context: context);
-          } else {
-            await _favoritesRepository.setFavorite(
-              productId: viewModel.product.id,
-            );
+
+          FavoriteItemResponseModel _response =
+              await _favoritesRepository.setFavorite(
+            productId: viewModel.product.id,
+          );
+          if (_response.isSuccess ?? false) {
             showToast(
                 message: "Item added to favorites",
                 isSuccess: true,
                 context: context);
+          } else {
+            showToast(
+                message: "Item already added to favorites",
+                isSuccess: false,
+                context: context);
           }
         },
-        child: isFavorite
-            ? const Text(
-                "Add To Favorites",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              )
-            : const Text(
-                "Remove From Favorites",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+        child: const Text(
+          "Add To Favorites",
+          style: TextStyle(
+            color: AppColors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         style: OutlinedButton.styleFrom(
             primary: AppColors.primary,
             fixedSize: const Size(150, 50),

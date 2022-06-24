@@ -17,10 +17,15 @@ class TrackProductBig extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: order.orderDetails!.map((e) => _expandablePanel(e)).toList());
+        children: order.orderDetails!
+            .map((e) => _expandablePanel(context, e))
+            .toList());
   }
 
-  ExpandablePanel _expandablePanel(OrderDetails _orderDetails) {
+  ExpandablePanel _expandablePanel(
+    BuildContext context,
+    OrderDetails _orderDetails,
+  ) {
     return ExpandablePanel(
       header: InkWell(
         child: Container(
@@ -76,7 +81,7 @@ class TrackProductBig extends StatelessWidget {
                 children: [
                   const SizedBox(width: 30),
                   Text(
-                    "${(_orderDetails.product!.price ?? 0) * (_orderDetails.quantity ?? 0)}",
+                    "₺${(_orderDetails.product!.price ?? 0) * (_orderDetails.quantity ?? 0)}",
                     style: const TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w800,
@@ -90,8 +95,15 @@ class TrackProductBig extends StatelessWidget {
         ),
       ),
       collapsed: const Text(""),
-      expanded: _status(_orderDetails.product?.id, _orderDetails.price,
-          _orderDetails.orderStatus!, _orderDetails.quantity.toString()),
+      expanded: _status(
+        context,
+        _orderDetails.product?.id,
+        (_orderDetails.product!.price ?? 0).toDouble(),
+        ((_orderDetails.product!.price ?? 0) * (_orderDetails.quantity ?? 0))
+            .toDouble(),
+        _orderDetails.orderStatus!,
+        _orderDetails.quantity.toString(),
+      ),
     );
   }
 
@@ -110,13 +122,16 @@ class TrackProductBig extends StatelessWidget {
     );
   }
 
-  OutlinedButton _refundButton() {
+  OutlinedButton _refundButton(BuildContext context) {
     late OrdersViewModel viewModel;
 
     return OutlinedButton(
-      onPressed: () {
+      onPressed: () async {
         viewModel = locator<OrdersViewModel>();
-        viewModel.refund(orderId: order.orderDetails!.first.id);
+        await viewModel.refund(
+          context: context,
+          orderId: order.orderDetails!.first.id,
+        );
       },
       child: const Text(
         "Refund",
@@ -134,7 +149,14 @@ class TrackProductBig extends StatelessWidget {
     );
   }
 
-  InkWell _status(int? _id, double? _price, String status, String quantity) {
+  InkWell _status(
+    BuildContext context,
+    int? _id,
+    double? _price,
+    double? _total,
+    String status,
+    String quantity,
+  ) {
     return InkWell(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -223,7 +245,7 @@ class TrackProductBig extends StatelessWidget {
                         ],
                       ),
                     ),
-                  if (status != "REFUNDED") _refundButton(),
+                  if (status != "REFUNDED") _refundButton(context),
                 ],
               ),
               const SizedBox(height: 10),
@@ -244,12 +266,12 @@ class TrackProductBig extends StatelessWidget {
                 children: [
                   Text(
                     order.address?.personalName ?? "",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: AppColors.black, fontWeight: FontWeight.w600),
                   ),
                   Text(
                     order.address?.phoneNumber ?? "",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: AppColors.black, fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -361,6 +383,26 @@ class TrackProductBig extends StatelessWidget {
                   ),
                   Text(
                     "₺${_price ?? 380}",
+                    style: const TextStyle(
+                        color: AppColors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Sum",
+                    style: TextStyle(
+                        color: AppColors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    "₺${_total ?? 380}",
                     style: const TextStyle(
                         color: AppColors.black,
                         fontSize: 14,

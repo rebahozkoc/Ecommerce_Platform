@@ -425,7 +425,7 @@ class _PaymentViewState extends BaseState<PaymentView> {
         width: double.infinity,
         margin: const EdgeInsets.only(left: 16, bottom: 3, top: 16),
         child: Text(
-          text ?? "1234 56•• •••• 7890",
+          text ?? "**** **** **** ****",
           style: const TextStyle(
             color: AppColors.textColorGray,
             fontSize: 15.5,

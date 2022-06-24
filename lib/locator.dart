@@ -96,6 +96,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => RegisterModelResponse());
   locator.registerLazySingleton(() => FavoritesResponseModel());
   locator.registerLazySingleton(() => RefundResponseModel());
+  locator.registerLazySingleton(() => FavoriteItemResponseModel());
 
   // Repository
   locator.registerLazySingleton(() => LoginRepository());

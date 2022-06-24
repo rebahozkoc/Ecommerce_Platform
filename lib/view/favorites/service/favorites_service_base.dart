@@ -8,7 +8,13 @@ abstract class FavoritesServiceBase {
     int limit,
   });
 
-  Future<FavoritesResponseModel> setFavorite({
+  Future<FavoriteItemResponseModel> setFavorite({
+    BuildContext context,
+    int productId,
+    String token,
+  });
+
+  Future<FavoriteItemResponseModel> deleteFavorite({
     BuildContext context,
     int productId,
     String token,

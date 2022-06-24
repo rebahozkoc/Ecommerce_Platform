@@ -92,9 +92,22 @@ class LargeProduct extends StatelessWidget {
             _favoritesRepository.deleteFavorite(
               productId: product!.id,
             );
+            if (_favoritesResponseModel.isSuccess ?? false) {
+              showToast(
+                  context: context,
+                  message: _favoritesResponseModel.message ??
+                      ApplicationConstants.SUCCESS_MESSAGE,
+                  isSuccess: true);
+            } else {
+              showToast(
+                  context: context,
+                  message: _favoritesResponseModel.message ??
+                      ApplicationConstants.ERROR_MESSAGE,
+                  isSuccess: false);
+            }
             showToast(
                 message: "Item removed from favorites",
-                isSuccess: false,
+                isSuccess: true,
                 context: context);
           } else {
             _favoritesRepository.setFavorite(

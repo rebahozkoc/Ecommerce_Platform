@@ -30,7 +30,7 @@ class FavoritesRepository with FavoritesServiceBase {
   }
 
   @override
-  Future<FavoritesResponseModel> deleteFavorite({
+  Future<FavoriteItemResponseModel> deleteFavorite({
     BuildContext? context,
     int? productId,
     String? token,
@@ -38,7 +38,7 @@ class FavoritesRepository with FavoritesServiceBase {
     await getUserToken();
     var token = LocaleManager.instance.getStringValue(PreferencesKeys.TOKEN)!;
     
-    FavoritesResponseModel _responseModel = await _service.deleteFavorite(
+    FavoriteItemResponseModel _responseModel = await _service.deleteFavorite(
       context: context,
       productId: productId,
       token: token,
@@ -47,7 +47,7 @@ class FavoritesRepository with FavoritesServiceBase {
   }
 
   @override
-  Future<FavoritesResponseModel> setFavorite({
+  Future<FavoriteItemResponseModel> setFavorite({
     BuildContext? context,
     int? productId,
     String? token,
@@ -55,7 +55,7 @@ class FavoritesRepository with FavoritesServiceBase {
     await getUserToken();
     var token = LocaleManager.instance.getStringValue(PreferencesKeys.TOKEN)!;
 
-    FavoritesResponseModel _responseModel = await _service.setFavorite(
+    FavoriteItemResponseModel _responseModel = await _service.setFavorite(
       context: context,
       productId: productId,
       token: token,

@@ -71,21 +71,19 @@ class _OrdersViewState extends State<OrdersView> with TickerProviderStateMixin {
               },
             );
           },
-          child: Expanded(
-            child: ListView(
-              children: [
-                ListView.builder(
-                  itemCount: viewModel.orders.length,
-                  shrinkWrap: true,
-                  //physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return TrackProductBig(
-                      order: viewModel.orders[index],
-                    );
-                  },
-                ),
-              ],
-            ),
+          child: ListView(
+            children: [
+              ListView.builder(
+                itemCount: viewModel.orders.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return TrackProductBig(
+                    order: viewModel.orders[index],
+                  );
+                },
+              ),
+            ],
           ),
         ),
       );

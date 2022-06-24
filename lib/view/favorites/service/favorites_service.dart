@@ -13,7 +13,8 @@ class FavoritesService with FavoritesServiceBase {
     int? skip,
     int? limit,
   }) async {
-    FavoritesResponseModel _responseModel = locator<FavoritesResponseModel>();
+    FavoritesResponseModel _responseModel =
+        locator<FavoritesResponseModel>();
     try {
       Response response;
       Dio dio = Dio();
@@ -46,12 +47,13 @@ class FavoritesService with FavoritesServiceBase {
   }
 
   @override
-  Future<FavoritesResponseModel> deleteFavorite({
+  Future<FavoriteItemResponseModel> deleteFavorite({
     BuildContext? context,
     int? productId,
     String? token,
-  }) async{
-    FavoritesResponseModel _responseModel = locator<FavoritesResponseModel>();
+  }) async {
+    FavoriteItemResponseModel _responseModel =
+        locator<FavoriteItemResponseModel>();
     try {
       Response response;
       Dio dio = Dio();
@@ -70,23 +72,25 @@ class FavoritesService with FavoritesServiceBase {
         options: Options(headers: header),
       );
 
-      _responseModel = FavoritesResponseModel.fromJson(response.data);
-      }on DioError catch (exception) {
+      _responseModel = FavoriteItemResponseModel.fromJson(response.data);
+    } on DioError catch (exception) {
       debugPrint("Error");
-      _responseModel = locator<FavoritesResponseModel>();
+      _responseModel = locator<FavoriteItemResponseModel>();
       _responseModel.isSuccess = false;
+      _responseModel.message = "Error!!!";
+
       return _responseModel;
     }
     return _responseModel;
   }
 
   @override
-  Future<FavoritesResponseModel> setFavorite({
+  Future<FavoriteItemResponseModel> setFavorite({
     BuildContext? context,
     int? productId,
     String? token,
   }) async {
-    FavoritesResponseModel _responseModel = locator<FavoritesResponseModel>();
+    FavoriteItemResponseModel _responseModel = locator<FavoriteItemResponseModel>();
     try {
       Response response;
       Dio dio = Dio();
@@ -104,14 +108,14 @@ class FavoritesService with FavoritesServiceBase {
         options: Options(headers: header),
       );
 
-      _responseModel = FavoritesResponseModel.fromJson(response.data);
+      _responseModel = FavoriteItemResponseModel.fromJson(response.data);
       return _responseModel;
     } on DioError catch (exception) {
       debugPrint("Error");
-      _responseModel = locator<FavoritesResponseModel>();
+      _responseModel = locator<FavoriteItemResponseModel>();
       _responseModel.isSuccess = false;
+      _responseModel.message = "Error!!!";
       return _responseModel;
     }
   }
 }
-

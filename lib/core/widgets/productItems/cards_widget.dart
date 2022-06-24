@@ -79,7 +79,7 @@ class CardsWidget extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.only(left: 8, bottom: 3),
         child: Text(
-          payment.cardNumber!,
+          payment.cardNumber ?? "**** **** **** ****",
           style: const TextStyle(
             color: AppColors.textColorGray,
             fontSize: 15.5,

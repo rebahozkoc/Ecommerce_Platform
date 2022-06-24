@@ -16,6 +16,7 @@ abstract class _FavoritesViewModelBase with Store, BaseViewModel {
   late FavoritesModel favorites;
   late FavoritesRepository _repository;
   late FavoritesResponseModel _favoritesResponseModel;
+  late FavoriteItemResponseModel _favoriteItemResponseModel;
   late ProductRepository _repositoryProduct;
   late ProductResponseModel _productResponseModel;
 
@@ -50,26 +51,22 @@ abstract class _FavoritesViewModelBase with Store, BaseViewModel {
   }
 
   Future<void> addFavorite() async {
-    FavoritesModel _favorite = FavoritesModel(
-      productId: 3,
-    );
-
-    FavoritesResponseModel _favoritesResponseModel =
+    _favoriteItemResponseModel =
         await _repository.setFavorite(
       context: context,
       productId: 3,
     );
 
-    if (_favoritesResponseModel.isSuccess ?? false) {
+    if (_favoriteItemResponseModel.isSuccess ?? false) {
       showToast(
           context: context!,
-          message: _favoritesResponseModel.message ??
-              ApplicationConstants.ERROR_MESSAGE,
+          message: _favoriteItemResponseModel.message ??
+              ApplicationConstants.SUCCESS_MESSAGE,
           isSuccess: true);
     } else {
       showToast(
           context: context!,
-          message: _favoritesResponseModel.message ??
+          message: _favoriteItemResponseModel.message ??
               ApplicationConstants.ERROR_MESSAGE,
           isSuccess: false);
     }
