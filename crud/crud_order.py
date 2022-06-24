@@ -91,7 +91,6 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
             db.query(Order)
             .filter(Order.created_at >= start)
             .filter(Order.created_at <= end)
-            .filter(Order.order_details.order_status is not "REFUNDED")
             .order_by(Order.created_at.asc())
             .all()
         )
