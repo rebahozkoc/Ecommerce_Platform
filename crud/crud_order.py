@@ -1,3 +1,4 @@
+
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
@@ -89,7 +90,9 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         return (
             db.query(Order)
             .filter(Order.created_at >= start)
-            .filter(Order.created_at <= end).order_by(Order.created_at.asc())
+            .filter(Order.created_at <= end)
+            .filter(Order.order_details.order_status is not "REFUNDED")
+            .order_by(Order.created_at.asc())
             .all()
         )
 
@@ -115,7 +118,7 @@ class CRUDOrder(CRUDBase[Order, OrderShoppingCart, OrderShoppingCart]):
         order_item.order_status = "REFUNDED"
         order_itself=db.query(Order).filter(Order.id==order_item.order_id).first()
         utilities.sendMail.send_mail(
-            order_itself.user.email, "A refund request has been accepted", "The were returned "+str(order_item.price)+"$ for your refunding of the product "+str(order_item.product.title)+"."
+            order_itself.user.email, "A refund request has been accepted", "The were returned "+str((order_item.quantity)*(order_item.price))+"$ for your refunding of the product "+str(order_item.product.title)+"."
         )
         db.add(product)
         db.add(refundorder)
