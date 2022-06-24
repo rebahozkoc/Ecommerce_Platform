@@ -20,8 +20,9 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
-  late final String _title =
-      widget.shopItem!.product!.title!.substring(0, 17) + '...';
+  late final String _title = widget.shopItem!.product!.title!.length >= 17
+      ? widget.shopItem!.product!.title!.substring(0, 17) + '...'
+      : widget.shopItem!.product!.title!;
   @override
   Widget build(BuildContext context) {
     return InkWell(

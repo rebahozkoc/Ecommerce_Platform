@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile/core/base/state/base_state.dart';
 import 'package:mobile/core/base/view/base_widget.dart';
 import 'package:mobile/core/constants/navigation/navigation_constants.dart';
@@ -32,9 +33,6 @@ class _ProductViewState extends BaseState<ProductView> {
           model.init();
           viewModel = model;
           viewModel.product = widget.product;
-          FavoritesResponseModel _favoritesResponseModel;
-          FavoritesRepository _favoritesRepository =
-              locator<FavoritesRepository>();
         },
         onPageBuilder: (context, value) {
           return Scaffold(
@@ -165,37 +163,39 @@ class _ProductViewState extends BaseState<ProductView> {
             side: const BorderSide(width: 1.0, color: AppColors.white)),
       );
 
-  OutlinedButton addToCart() => OutlinedButton(
-        onPressed: () async {
-          ShopListViewModel _shopList = locator<ShopListViewModel>();
-          _shopList.init();
-          bool _isSuccess = await _shopList.addQuantity(
-              ShopListItem(
-                quantity: viewModel.quantity,
-                product: widget.product,
-              ),
-              context: context);
-          showToast(
-              context: context,
-              message: _isSuccess
-                  ? "Product added to shopping cart"
-                  : "You cannot add items more than there is in stock.",
-              isSuccess: _isSuccess);
-        },
-        child: const Text(
-          "Add To Cart",
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
+  Observer addToCart() => Observer(builder: (_) {
+        return OutlinedButton(
+          onPressed: () async {
+            ShopListViewModel _shopList = locator<ShopListViewModel>();
+            _shopList.init();
+            bool _isSuccess = await _shopList.addQuantity(
+                ShopListItem(
+                  quantity: viewModel.quantity,
+                  product: widget.product,
+                ),
+                context: context);
+            showToast(
+                context: context,
+                message: _isSuccess
+                    ? "Product added to shopping cart"
+                    : "You cannot add items more than there is in stock.",
+                isSuccess: _isSuccess);
+          },
+          child: const Text(
+            "Add To Cart",
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-        style: OutlinedButton.styleFrom(
-            backgroundColor: AppColors.white,
-            primary: AppColors.white,
-            fixedSize: const Size(150, 50),
-            side: const BorderSide(width: 1.0, color: AppColors.white)),
-      );
+          style: OutlinedButton.styleFrom(
+              backgroundColor: AppColors.white,
+              primary: AppColors.white,
+              fixedSize: const Size(150, 50),
+              side: const BorderSide(width: 1.0, color: AppColors.white)),
+        );
+      });
 }
 
 class RoundedContainer extends StatelessWidget {

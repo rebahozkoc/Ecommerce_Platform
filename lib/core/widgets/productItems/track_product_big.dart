@@ -50,9 +50,9 @@ class TrackProductBig extends StatelessWidget {
                   const SizedBox(width: 20),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 15, 5, 5),
-                    child: Text(
-                      _orderDetails.product!.title?.substring(0, 12) ??
-                          "Slipover armchair",
+                    child: Text(_orderDetails.product!.title!.length >= 12 ?
+                      _orderDetails.product!.title!.substring(0, 12) :
+                          _orderDetails.product!.title!,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

@@ -19,7 +19,7 @@ class PaymentModel {
   PaymentModel.fromJson(Map<String, dynamic> json) {
     paymentMethod = json['payment_method'];
     cardName = json['card_name'];
-    cardNumber = json['card_number'];
+    cardNumber = json['cardnumber'];
     cW = json['CW'];
     expiryDate = json['expiry_date'];
     id = json['id'];
@@ -30,7 +30,7 @@ class PaymentModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['payment_method'] = paymentMethod;
     data['card_name'] = cardName;
-    data['card_number'] = cardNumber;
+    data['cardnumber'] = cardNumber;
     data['CW'] = cW;
     data['expiry_date'] = expiryDate;
     data['id'] = id;
