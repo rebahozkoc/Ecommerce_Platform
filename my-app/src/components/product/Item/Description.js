@@ -84,18 +84,18 @@ const Description = (props) => {
             props.description.length > 900
               ? 85
               : props.description.length > 750
-              ? 70
+              ? 76
               : props.description.length > 600
-              ? 60
+              ? 72
               : props.description.length > 500
-              ? 50
+              ? 66
               : props.description.length > 400
-              ? 45
+              ? 62
               : props.description.length > 300
-              ? 40
+              ? 58
               : props.description.length > 100
-              ? 30
-              : 15,
+              ? 54
+              : 40,
         }}
       >
         <Stack direction="column" spacing={2} sx={{ height: "60px" }}>

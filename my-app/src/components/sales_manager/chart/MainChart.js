@@ -133,20 +133,6 @@ const MainChart = () => {
               >
                 Select Date
               </Button>
-
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                  backgroundColor: "#2BFF00",
-                  display: "block",
-                  padding: (8, 1, 8, 1),
-                  justify: "flex-end",
-                  align: "right",
-                }}
-              >
-                Downlad Invoice
-              </Button>
             </Stack>
           </Box>
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
